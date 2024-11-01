@@ -16,6 +16,13 @@ def calculate_mean(data):
     float
         The mean value of the provided time series.
         
+    Raises
+    ------
+    TypeError
+        If the data is not a valid time series type.
+    ValueError
+        If the data contains NaN values.
+        
     Examples
     --------
     >>> import pandas as pd
@@ -23,7 +30,8 @@ def calculate_mean(data):
     >>> calculate_mean(data)
     3.0
     """
-    # Validate the time series using sktime's validation tools
-    data = validate_time_series_data(data)  
-      
-    return data.mean()
+    # Validate the time series without requiring a DateTime index
+    validate_time_series_data(data, require_datetime_index=False)
+    
+    # Calculate and return the mean, handling empty series by returning NaN
+    return data.mean() if len(data) > 0 else np.nan

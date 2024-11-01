@@ -28,6 +28,6 @@ def calculate_length(data):
         return 0
     
     # Validate the time series using sktime's validation tools
-    data = validate_time_series_data(data)
+    data = validate_time_series_data(data, require_datetime_index=False)
     
     return len(data)
