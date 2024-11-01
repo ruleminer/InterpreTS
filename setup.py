@@ -9,7 +9,7 @@ setup(
         "numpy>=1.18.0"
     ],
     description="Feature extraction from time series to support the creation of interpretable and explainable predictive models.",
-    long_description=open("README.md").read(),
+    long_description=open("docs/README.md").read(),
     long_description_content_type="text/markdown",
     author="Your Name",
     author_email="your.email@example.com",
