@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-def validate_time_series_data(data):
+def validate_time_series_data(data, require_datetime_index=False):
     """
     Validate if the input data is suitable for time series processing.
     
@@ -9,6 +9,8 @@ def validate_time_series_data(data):
     ----------
     data : pd.Series, pd.DataFrame, or np.ndarray
         The time series data to be validated.
+    require_datetime_index : bool, optional
+        If True, validation will ensure the data has a DateTime index (for time-based operations).
         
     Returns
     -------
@@ -20,7 +22,7 @@ def validate_time_series_data(data):
     TypeError
         If data is not a pd.Series, pd.DataFrame, or np.ndarray.
     ValueError
-        If the data contains NaN values or if pd.Series/pd.DataFrame has no DateTime index.
+        If the data contains NaN values or lacks a DateTime index when required.
         
     Examples
     --------
@@ -30,18 +32,16 @@ def validate_time_series_data(data):
     True
     """
     
-    
     if not isinstance(data, (pd.Series, pd.DataFrame, np.ndarray)):
         raise TypeError("Data must be a pandas Series, DataFrame, or numpy array.")
     
     if isinstance(data, (pd.Series, pd.DataFrame)):
         if data.isnull().any().any():
             raise ValueError("Data contains NaN values.")
-        if isinstance(data, pd.Series) and data.index.is_all_dates:
-            pass
-        elif isinstance(data, pd.DataFrame) and isinstance(data.index, pd.DatetimeIndex):
-            pass
-        else:
-            raise ValueError("DataFrame or Series must have a DateTime index for time-based operations.")
+        if require_datetime_index:
+            if isinstance(data, pd.Series) and not data.index.is_all_dates:
+                raise ValueError("Series must have a DateTime index for time-based operations.")
+            elif isinstance(data, pd.DataFrame) and not isinstance(data.index, pd.DatetimeIndex):
+                raise ValueError("DataFrame must have a DateTime index for time-based operations.")
     
     return True
