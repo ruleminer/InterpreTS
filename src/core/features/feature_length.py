@@ -1,4 +1,4 @@
-from sktime.utils.validation.series import check_series
+from src.utils.data_validation import validate_time_series_data
 
 def calculate_feature_length(data):
     """
@@ -28,6 +28,6 @@ def calculate_feature_length(data):
         return 0
     
     # Validate the time series using sktime's validation tools
-    data = check_series(data)
+    data = validate_time_series_data(data)
     
     return len(data)
