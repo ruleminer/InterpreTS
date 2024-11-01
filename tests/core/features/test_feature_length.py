@@ -15,7 +15,7 @@ def test_calculate_length_empty_series():
     """
     Test the calculate_length function with an empty pandas Series.
     """
-    data = pd.Series([])
+    data = pd.Series([], dtype="float64")  # Określenie dtype jako "float64"
     assert calculate_length(data) == 0, "The length of an empty series should be 0"
 
 def test_calculate_length_array():
