@@ -1,4 +1,5 @@
-from .features.feature_length import calculate_feature_length
+from .features.feature_length import calculate_length
+from .features.feature_mean import calculate_mean
 
 class FeatureExtractor:
     """
@@ -45,6 +46,9 @@ class FeatureExtractor:
         extracted_features = {}
         
         if 'length' in self.features:
-            extracted_features['length'] = calculate_feature_length(data)
-                
+            extracted_features['length'] = calculate_length(data)
+
+        if 'mean' in self.features:
+            extracted_features['mean'] = calculate_mean(data)
+            
         return extracted_features
