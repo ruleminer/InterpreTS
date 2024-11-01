@@ -1,6 +1,6 @@
 from src.utils.data_validation import validate_time_series_data
 
-def calculate_feature_length(data):
+def calculate_length(data):
     """
     Calculate the number of data points in a time series.
 

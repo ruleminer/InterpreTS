@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-from src.core.features.feature_length import calculate_feature_length
+from src.core.features.feature_length import calculate_length
 
 def test_calculate_length():
     """
@@ -11,7 +11,7 @@ def test_calculate_length():
     data = pd.Series([1, 2, 3, 4, 5])
 
     # Sprawdzenie poprawności wyniku
-    assert calculate_feature_length(data) == 5, "The length of the time series should be 5"
+    assert calculate_length(data) == 5, "The length of the time series should be 5"
 
 def test_calculate_length_empty_series():
     """
@@ -20,7 +20,7 @@ def test_calculate_length_empty_series():
     data = pd.Series([])
 
     # Sprawdzenie poprawności wyniku dla pustego szeregu
-    assert calculate_feature_length(data) == 0, "The length of an empty time series should be 0"
+    assert calculate_length(data) == 0, "The length of an empty time series should be 0"
 
 def test_calculate_length_array():
     """
@@ -30,4 +30,4 @@ def test_calculate_length_array():
     data = np.array([1, 2, 3, 4, 5])
 
     # Sprawdzenie poprawności wyniku dla numpy array
-    assert calculate_feature_length(data) == 5, "The length of the numpy array time series should be 5"
+    assert calculate_length(data) == 5, "The length of the numpy array time series should be 5"
