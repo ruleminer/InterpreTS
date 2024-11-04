@@ -41,14 +41,20 @@ class FeatureExtractor:
         >>> extractor.extract_features(data)
         {'length': 5}
         """
-        
-        
+
+
         extracted_features = {}
-        
+
         if 'length' in self.features:
             extracted_features['length'] = calculate_length(data)
 
         if 'mean' in self.features:
             extracted_features['mean'] = calculate_mean(data)
-            
+
+        if 'peak' in self.features:
+            extracted_features['peak'] = calculate_peak(data)
+
+        if 'trough' in self.features:
+            extracted_features['trough'] = calculate_trough(data)
+
         return extracted_features
