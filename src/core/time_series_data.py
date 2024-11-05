@@ -50,10 +50,10 @@ class TimeSeriesData:
         """
         
         
-        if isinstance(self.data, pd.Series) and self.data.index.is_all_dates:
-            resampled_data = self.data.resample(interval).mean()
-        else:
+        if not isinstance(self.data.index, pd.DatetimeIndex):
             raise ValueError("Data must have a DateTime index for resampling.")
+
+        resampled_data = self.data.resample(interval).mean()
         
         return TimeSeriesData(resampled_data)
 
