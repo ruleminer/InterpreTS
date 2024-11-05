@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 import numpy as np
-from src.core.feature_extractor import FeatureExtractor
+from interpreTS.core.feature_extractor import FeatureExtractor
 
 def test_extract_peak_feature_with_params():
     """

@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 import numpy as np
-from src.core.features.feature_length import calculate_length
+from interpreTS.core.features.feature_length import calculate_length
 
 def test_calculate_length_series():
     """

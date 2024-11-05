@@ -1,4 +1,4 @@
-from src.utils.data_validation import validate_time_series_data
+from interpreTS.utils.data_validation import validate_time_series_data
 
 def calculate_length(data):
     """

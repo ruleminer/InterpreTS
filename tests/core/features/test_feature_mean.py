@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 import numpy as np
-from src.core.features.feature_mean import calculate_mean
+from interpreTS.core.features.feature_mean import calculate_mean
 
 def test_calculate_mean():
     """

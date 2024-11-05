@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 import numpy as np
-from src.core.features.feature_std_1st_der import calculate_std_1st_der
+from interpreTS.core.features.feature_std_1st_der import calculate_std_1st_der
 
 def test_calculate_std_1st_derivative_constant_series():
     """

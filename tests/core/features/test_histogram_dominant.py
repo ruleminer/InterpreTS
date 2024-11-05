@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 import numpy as np
-from src.core.features.histogram_dominant import calculate_dominant
+from interpreTS.core.features.histogram_dominant import calculate_dominant
 
 def test_calculate_dominant_basic():
     """

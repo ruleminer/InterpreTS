@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 import numpy as np
-from src.core.features.feature_variance import calculate_variance
+from interpreTS.core.features.feature_variance import calculate_variance
 
 def test_calculate_variance():
     """

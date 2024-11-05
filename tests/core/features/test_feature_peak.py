@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 import numpy as np
-from src.core.features.feature_peak import calculate_peak
+from interpreTS.core.features.feature_peak import calculate_peak
 
 def test_calculate_peak():
     """
