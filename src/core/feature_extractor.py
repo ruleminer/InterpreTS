@@ -1,5 +1,6 @@
 from .features.feature_length import calculate_length
 from .features.feature_mean import calculate_mean
+from .features.feature_std_1st_der import calculate_std_1st_der
 from .features.feature_variance import calculate_variance
 
 class FeatureExtractor:
@@ -52,13 +53,16 @@ class FeatureExtractor:
         if 'mean' in self.features:
             extracted_features['mean'] = calculate_mean(data)
 
-        if 'variance' in self.features:
-            extracted_features['variance'] = calculate_variance(data)
-
         if 'peak' in self.features:
             extracted_features['peak'] = calculate_peak(data)
 
+        if 'std_1st_der' in self.features:
+            extracted_features['std_1st_der'] = calculate_std_1st_der(data)
+
         if 'trough' in self.features:
             extracted_features['trough'] = calculate_trough(data)
+
+        if 'variance' in self.features:
+            extracted_features['variance'] = calculate_variance(data)
 
         return extracted_features
