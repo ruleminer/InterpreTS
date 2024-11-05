@@ -43,8 +43,8 @@ def test_calculate_peak_with_out_of_range_indices():
     Test that calculate_peak handles out-of-range start and end indices gracefully.
     """
     data = pd.Series([1, 2, 3, 4, 5])
-    assert calculate_peak(data, start=10) == np.nan, "The peak with out-of-range start index should be NaN"
-    assert calculate_peak(data, end=-10) == np.nan, "The peak with out-of-range end index should be NaN"
+    assert np.isnan(calculate_peak(data, start=10)), "The peak with out-of-range start index should be NaN"
+    assert np.isnan(calculate_peak(data, end=-10)), "The peak with out-of-range end index should be NaN"
 
 def test_calculate_peak_with_start_greater_than_end():
     """

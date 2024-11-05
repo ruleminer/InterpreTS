@@ -31,7 +31,7 @@ def test_calculate_dominant_multiple_modes():
     when there are multiple modes in the data.
     """
     data = pd.Series([1, 2, 2, 3, 3, 4])
-    dominant_value = calculate_dominant(data)
+    dominant_value = calculate_dominant(data, return_bin_center=True)
     assert dominant_value in [2.5, 3.5], "The dominant value should be one of the modes"
 
 def test_calculate_dominant_bins_parameter():
@@ -40,7 +40,8 @@ def test_calculate_dominant_bins_parameter():
     """
     data = pd.Series([1, 1, 2, 2, 3, 3, 4, 4, 5, 5])
     # With fewer bins, the dominant should approximate the most frequent bin
-    assert calculate_dominant(data, bins=3) in [1.5, 4.5], "The dominant value should approximate the largest bin center"
+    dominant_value = calculate_dominant(data, bins=3, return_bin_center=True)
+    assert dominant_value in [1.5, 4.5], "The dominant value should approximate the largest bin center"
 
 def test_calculate_dominant_negative_values():
     """
