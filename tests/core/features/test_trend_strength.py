@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 import numpy as np
-from src.core.features.feature_trend_strength import calculate_trend_strength
+from src.core.features.trend_strength import calculate_trend_strength
 
 def test_calculate_trend_strength_increasing():
     """
