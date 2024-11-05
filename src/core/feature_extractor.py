@@ -1,5 +1,8 @@
 from .features.feature_length import calculate_length
 from .features.feature_mean import calculate_mean
+from .features.feature_peak import calculate_peak
+from .features.feature_trough import calculate_trough
+from .features.seasonality_strength import calculate_seasonality_strength
 
 class FeatureExtractor:
     """
@@ -56,5 +59,8 @@ class FeatureExtractor:
 
         if 'trough' in self.features:
             extracted_features['trough'] = calculate_trough(data)
+
+        if 'seasonality_strength' in self.features:
+            extracted_features['seasonality_strength'] = calculate_seasonality_strength(data, frequency=7)
 
         return extracted_features

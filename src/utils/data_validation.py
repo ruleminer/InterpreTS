@@ -23,13 +23,6 @@ def validate_time_series_data(data, require_datetime_index=False):
         If data is not a pd.Series, pd.DataFrame, or np.ndarray.
     ValueError
         If the data contains NaN values or lacks a DateTime index when required.
-        
-    Examples
-    --------
-    >>> import pandas as pd
-    >>> data = pd.Series([1, 2, 3, 4, 5])
-    >>> validate_time_series_data(data)
-    True
     """
     
     if not isinstance(data, (pd.Series, pd.DataFrame, np.ndarray)):
@@ -39,9 +32,9 @@ def validate_time_series_data(data, require_datetime_index=False):
         if data.isnull().any().any():
             raise ValueError("Data contains NaN values.")
         if require_datetime_index:
-            if isinstance(data, pd.Series) and not data.index.is_all_dates:
+            if len(data) == 0:  # Allow empty series if datetime index is not required
+                return True
+            if not isinstance(data.index, pd.DatetimeIndex):
                 raise ValueError("Series must have a DateTime index for time-based operations.")
-            elif isinstance(data, pd.DataFrame) and not isinstance(data.index, pd.DatetimeIndex):
-                raise ValueError("DataFrame must have a DateTime index for time-based operations.")
     
     return True
