@@ -39,9 +39,13 @@ def validate_time_series_data(data, require_datetime_index=False):
         if data.isnull().any().any():
             raise ValueError("Data contains NaN values.")
         if require_datetime_index:
-            if isinstance(data, pd.Series) and not data.index.is_all_dates:
+            if isinstance(data, pd.Series) and not isinstance(data.index, pd.DatetimeIndex):
                 raise ValueError("Series must have a DateTime index for time-based operations.")
             elif isinstance(data, pd.DataFrame) and not isinstance(data.index, pd.DatetimeIndex):
                 raise ValueError("DataFrame must have a DateTime index for time-based operations.")
     
+    elif isinstance(data, np.ndarray):
+        if np.isnan(data).any():
+            raise ValueError("Data contains NaN values.")
+
     return True

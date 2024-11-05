@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from src.utils.data_validation import validate_time_series_data
 
-def calculate_dominant(data, bins=10):
+def calculate_dominant(data, bins=10, return_bin_center=False):
     """
     Calculate the dominant value (mode) of a time series histogram.
 
@@ -35,15 +35,21 @@ def calculate_dominant(data, bins=10):
     # Validate the time series data
     validate_time_series_data(data, require_datetime_index=False)
     
-    # Check if data is empty after validation
     if len(data) == 0:
         return np.nan
     
-    # Calculate histogram and find the bin with the maximum frequency
+    # Get unique values and use them as bin edges
+    unique_values = np.unique(data)
+    bins = np.append(unique_values, unique_values[-1] + 1)  # Add an extra edge to cover the last bin
+
+    # Calculate histogram with specific bin edges
     counts, bin_edges = np.histogram(data, bins=bins)
     max_bin_index = np.argmax(counts)
-    
-    # Calculate the center of the bin with the highest frequency
-    dominant_value = (bin_edges[max_bin_index] + bin_edges[max_bin_index + 1]) / 2
+
+    # Calculate the center or lower bound of the bin with the highest frequency
+    if return_bin_center:
+        dominant_value = (bin_edges[max_bin_index] + bin_edges[max_bin_index + 1]) / 2
+    else:
+        dominant_value = bin_edges[max_bin_index]
     
     return dominant_value
