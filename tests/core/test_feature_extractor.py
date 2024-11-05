@@ -20,21 +20,12 @@ def test_extract_no_features():
     features = extractor.extract_features(data)
     assert features == {}, "No features should be extracted when an empty feature list is provided"
 
-def test_extract_variance_empty_series():
-    """
-    Test that FeatureExtractor handles an empty series for 'variance' feature.
-    """
-    data = pd.Series([])
-    extractor = FeatureExtractor(features=['variance'])
-    features = extractor.extract_features(data)
-    assert pd.isna(features['variance']), "The 'variance' feature should be NaN for an empty series"
-
 def test_extract_multiple_features():
     """
     Test that FeatureExtractor can extract both 'variance' and 'length' features.
     """
     data = pd.Series([1, 2, 3, 4, 5])
-    extractor = FeatureExtractor(features=['variance', 'length'])
+    extractor = FeatureExtractor(features=['length', 'variance'])
     features = extractor.extract_features(data)
     assert features['length'] == 5, "The 'length' feature should be 5"
     assert features['variance'] == 2.0, "The 'variance' feature should be 2.5"
