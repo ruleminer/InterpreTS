@@ -71,5 +71,8 @@ class FeatureExtractor:
         if 'variance' in self.features:
             variance_params = self.feature_params.get('variance', {})
             extracted_features['variance'] = calculate_variance(data, **variance_params)
-
+            
+        if 'spikeness' in self.features:
+            extracted_features['spikeness'] = calculate_skewness(data)  
+            
         return extracted_features
