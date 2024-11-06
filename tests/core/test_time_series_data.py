@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-from src.core.time_series_data import TimeSeriesData
+from interpreTS.core.time_series_data import TimeSeriesData
 
 def test_time_series_initialization():
     """
