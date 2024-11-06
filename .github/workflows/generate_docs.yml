@@ -1,8 +1,10 @@
 name: Generate Documentation
 
 on:
+  push:
+    branches:
+      - main
   release:
-    types: [published]
 
 jobs:
   build-docs:
