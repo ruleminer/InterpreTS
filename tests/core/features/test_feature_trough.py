@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 import numpy as np
-from src.core.features.feature_trough import calculate_trough
+from interpreTS.core.features.feature_trough import calculate_trough
 
 def test_calculate_trough():
     """

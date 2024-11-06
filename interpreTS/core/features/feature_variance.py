@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from src.utils.data_validation import validate_time_series_data
+from interpreTS.utils.data_validation import validate_time_series_data
 
 def calculate_variance(data, ddof=0):
     """

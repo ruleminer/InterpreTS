@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 import numpy as np
-from src.core.features.feature_spikeness import calculate_spikeness
+from interpreTS.core.features.feature_spikeness import calculate_spikeness
 
 def test_spikeness_positive_skew():
     """

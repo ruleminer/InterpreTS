@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from statsmodels.tsa.stattools import acf
-from src.utils.data_validation import validate_time_series_data
+from interpreTS.utils.data_validation import validate_time_series_data
 
 def calculate_seasonality_strength(data, period=2, max_lag=12):
     """
