@@ -1,3 +1,4 @@
+from .features.feature_spikeness import calculate_spikeness
 from .features.feature_peak import calculate_peak
 from .features.feature_trough import calculate_trough
 from .features.feature_length import calculate_length
@@ -13,7 +14,8 @@ class Features:
     STD_1ST_DER = 'std_1st_der'
     TROUGH = 'trough'
     VARIANCE = 'variance'
-
+    SPIKENESS = 'spikeness'
+    CALCULATE_SEASONALITY_STRENGTH = 'seasonality_strength'
 
 class FeatureExtractor:
     """
@@ -44,6 +46,8 @@ class FeatureExtractor:
             Features.STD_1ST_DER: calculate_std_1st_der,
             Features.TROUGH: calculate_trough,
             Features.VARIANCE: calculate_variance,
+            Features.SPIKENESS: calculate_spikeness,
+            Features.CALCULATE_SEASONALITY_STRENGTH: calculate_seasonality_strength,
         }
 
     def extract_features(self, data):
@@ -71,12 +75,6 @@ class FeatureExtractor:
                 
                 # Call the feature calculation function with parameters
                 extracted_features[feature_name] = self.feature_functions[feature_name](data, **params)
-
-        if 'spikeness' in self.features:
-            extracted_features['spikeness'] = calculate_spikeness(data)  
-
-        if 'seasonality_strength' in self.features:
-            extracted_features['seasonality_strength'] = calculate_seasonality_strength(data, frequency=7)
 
         return extracted_features
 
