@@ -2,8 +2,9 @@ from .features.feature_peak import calculate_peak
 from .features.feature_trough import calculate_trough
 from .features.feature_length import calculate_length
 from .features.feature_mean import calculate_mean
-from .features.feature_std_1st_der import calculate_std_1st_der
+from .features.seasonality_strength import calculate_seasonality_strength
 from .features.feature_variance import calculate_variance
+from .features.feature_std_1st_der import calculate_std_1st_der
 
 class FeatureExtractor:
     """
@@ -71,8 +72,11 @@ class FeatureExtractor:
         if 'variance' in self.features:
             variance_params = self.feature_params.get('variance', {})
             extracted_features['variance'] = calculate_variance(data, **variance_params)
-            
+
         if 'spikeness' in self.features:
             extracted_features['spikeness'] = calculate_spikeness(data)  
-            
+
+        if 'seasonality_strength' in self.features:
+            extracted_features['seasonality_strength'] = calculate_seasonality_strength(data, frequency=7)
+
         return extracted_features
