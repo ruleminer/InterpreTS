@@ -1,0 +1,336 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>interpreTS.core package &#8212; InterpreTS 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="interpreTS.core.features package" href="interpreTS.core.features.html" />
+    <link rel="prev" title="interpreTS package" href="interpreTS.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="interprets-core-package">
+<h1>interpreTS.core package<a class="headerlink" href="#interprets-core-package" title="Permalink to this heading">¶</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="interpreTS.core.features.html">interpreTS.core.features package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="interpreTS.core.features.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpreTS.core.features.html#module-interpreTS.core.features.feature_length">interpreTS.core.features.feature_length module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="interpreTS.core.features.html#interpreTS.core.features.feature_length.calculate_length"><code class="docutils literal notranslate"><span class="pre">calculate_length()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="interpreTS.core.features.html#module-interpreTS.core.features.feature_mean">interpreTS.core.features.feature_mean module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="interpreTS.core.features.html#interpreTS.core.features.feature_mean.calculate_mean"><code class="docutils literal notranslate"><span class="pre">calculate_mean()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="interpreTS.core.features.html#module-interpreTS.core.features.feature_peak">interpreTS.core.features.feature_peak module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="interpreTS.core.features.html#interpreTS.core.features.feature_peak.calculate_peak"><code class="docutils literal notranslate"><span class="pre">calculate_peak()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="interpreTS.core.features.html#module-interpreTS.core.features.feature_spikeness">interpreTS.core.features.feature_spikeness module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="interpreTS.core.features.html#interpreTS.core.features.feature_spikeness.calculate_spikeness"><code class="docutils literal notranslate"><span class="pre">calculate_spikeness()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="interpreTS.core.features.html#module-interpreTS.core.features.feature_std_1st_der">interpreTS.core.features.feature_std_1st_der module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="interpreTS.core.features.html#interpreTS.core.features.feature_std_1st_der.calculate_std_1st_der"><code class="docutils literal notranslate"><span class="pre">calculate_std_1st_der()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="interpreTS.core.features.html#module-interpreTS.core.features.feature_trough">interpreTS.core.features.feature_trough module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="interpreTS.core.features.html#interpreTS.core.features.feature_trough.calculate_trough"><code class="docutils literal notranslate"><span class="pre">calculate_trough()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="interpreTS.core.features.html#module-interpreTS.core.features.feature_variance">interpreTS.core.features.feature_variance module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="interpreTS.core.features.html#interpreTS.core.features.feature_variance.calculate_variance"><code class="docutils literal notranslate"><span class="pre">calculate_variance()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="interpreTS.core.features.html#module-interpreTS.core.features.histogram_dominant">interpreTS.core.features.histogram_dominant module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="interpreTS.core.features.html#interpreTS.core.features.histogram_dominant.calculate_dominant"><code class="docutils literal notranslate"><span class="pre">calculate_dominant()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="interpreTS.core.features.html#module-interpreTS.core.features.seasonality_strength">interpreTS.core.features.seasonality_strength module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="interpreTS.core.features.html#interpreTS.core.features.seasonality_strength.calculate_seasonality_strength"><code class="docutils literal notranslate"><span class="pre">calculate_seasonality_strength()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="interpreTS.core.features.html#module-interpreTS.core.features.trend_strength">interpreTS.core.features.trend_strength module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="interpreTS.core.features.html#interpreTS.core.features.trend_strength.calculate_trend_strength"><code class="docutils literal notranslate"><span class="pre">calculate_trend_strength()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="interpreTS.core.features.html#module-interpreTS.core.features">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="module-interpreTS.core.feature_extractor">
+<span id="interprets-core-feature-extractor-module"></span><h2>interpreTS.core.feature_extractor module<a class="headerlink" href="#module-interpreTS.core.feature_extractor" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interpreTS.core.feature_extractor.</span></span><span class="sig-name descname"><span class="pre">FeatureExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor.available_features">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">available_features</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.available_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all available features.</p>
+<section id="returns">
+<h3>Returns<a class="headerlink" href="#returns" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>list</dt><dd><p>List of feature names.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor.extract_features">
+<span class="sig-name descname"><span class="pre">extract_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.extract_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract features from a time series dataset.</p>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>data<span class="classifier">pd.DataFrame or pd.Series</span></dt><dd><p>The time series data for which features are to be extracted.</p>
+</dd>
+</dl>
+</section>
+<section id="id1">
+<h3>Returns<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>pd.DataFrame</dt><dd><p>A DataFrame containing calculated features for each window.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interpreTS.core.feature_extractor.</span></span><span class="sig-name descname"><span class="pre">Features</span></span><a class="headerlink" href="#interpreTS.core.feature_extractor.Features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.CALCULATE_SEASONALITY_STRENGTH">
+<span class="sig-name descname"><span class="pre">CALCULATE_SEASONALITY_STRENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'seasonality_strength'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.CALCULATE_SEASONALITY_STRENGTH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.LENGTH">
+<span class="sig-name descname"><span class="pre">LENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'length'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.LENGTH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.MEAN">
+<span class="sig-name descname"><span class="pre">MEAN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mean'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.MEAN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.PEAK">
+<span class="sig-name descname"><span class="pre">PEAK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'peak'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.PEAK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.SPIKENESS">
+<span class="sig-name descname"><span class="pre">SPIKENESS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spikeness'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.SPIKENESS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.STD_1ST_DER">
+<span class="sig-name descname"><span class="pre">STD_1ST_DER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'std_1st_der'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.STD_1ST_DER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.TROUGH">
+<span class="sig-name descname"><span class="pre">TROUGH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'trough'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.TROUGH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.VARIANCE">
+<span class="sig-name descname"><span class="pre">VARIANCE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'variance'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.VARIANCE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-interpreTS.core.time_series_data">
+<span id="interprets-core-time-series-data-module"></span><h2>interpreTS.core.time_series_data module<a class="headerlink" href="#module-interpreTS.core.time_series_data" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="interpreTS.core.time_series_data.TimeSeriesData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interpreTS.core.time_series_data.</span></span><span class="sig-name descname"><span class="pre">TimeSeriesData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.core.time_series_data.TimeSeriesData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to manage and process time series data.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="interpreTS.core.time_series_data.TimeSeriesData.resample">
+<span class="sig-name descname"><span class="pre">resample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.core.time_series_data.TimeSeriesData.resample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resample the time series data to a specified interval.</p>
+<section id="id2">
+<h3>Parameters<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>interval<span class="classifier">str</span></dt><dd><p>The interval to resample the data, e.g., ‘D’ for daily, ‘H’ for hourly.</p>
+</dd>
+</dl>
+</section>
+<section id="id3">
+<h3>Returns<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>TimeSeriesData</dt><dd><p>A new TimeSeriesData object with resampled data.</p>
+</dd>
+</dl>
+</section>
+<section id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">¶</a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;D&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ts_data</span> <span class="o">=</span> <span class="n">TimeSeriesData</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">resampled_data</span> <span class="o">=</span> <span class="n">ts_data</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s2">&quot;2D&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interpreTS.core.time_series_data.TimeSeriesData.split">
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.7</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.core.time_series_data.TimeSeriesData.split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split the time series data into training and test sets.</p>
+<section id="id4">
+<h3>Parameters<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>train_size<span class="classifier">float, optional</span></dt><dd><p>The proportion of the data to use for training, by default 0.7.</p>
+</dd>
+</dl>
+</section>
+<section id="id5">
+<h3>Returns<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>tuple of TimeSeriesData</dt><dd><p>A tuple containing the training and test sets as TimeSeriesData objects.</p>
+</dd>
+</dl>
+</section>
+<section id="id6">
+<h3>Examples<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ts_data</span> <span class="o">=</span> <span class="n">TimeSeriesData</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">ts_data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="mf">0.6</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-interpreTS.core">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-interpreTS.core" title="Permalink to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">InterpreTS</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">InterpreTS</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="interpreTS.html">interpreTS package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html">tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="interpreTS.html">interpreTS package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="interpreTS.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpreTS.html#module-interpreTS">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">tests package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">setup module</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">InterpreTS</a><ul>
+  <li><a href="interpreTS.html">interpreTS package</a><ul>
+      <li>Previous: <a href="interpreTS.html" title="previous chapter">interpreTS package</a></li>
+      <li>Next: <a href="interpreTS.core.features.html" title="next chapter">interpreTS.core.features package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, Łukasz Wróbel, Sławomir Put, Martyna Żur, Martyna Kramarz, Jarosław Strzelczyk, Weronika Wołowczyk, Piotr Krupiński.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 6.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/interpreTS.core.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
