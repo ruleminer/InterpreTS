@@ -24,7 +24,7 @@ def test_validate_without_datetime_index():
     """
     data = pd.Series([1, 2, 3, 4, 5])
     with pytest.raises(ValueError):
-        validate_time_series_data(data)
+        validate_time_series_data(data, require_datetime_index=True)
 
 def test_validate_numpy_array():
     """
