@@ -1,75 +1,116 @@
+import pandas as pd
+import numpy as np
+from .features.feature_spikeness import calculate_spikeness
 from .features.feature_peak import calculate_peak
 from .features.feature_trough import calculate_trough
 from .features.feature_length import calculate_length
 from .features.feature_mean import calculate_mean
-from .features.feature_std_1st_der import calculate_std_1st_der
+from .features.seasonality_strength import calculate_seasonality_strength
 from .features.feature_variance import calculate_variance
+from .features.feature_std_1st_der import calculate_std_1st_der
+
+class Features:
+    LENGTH = 'length'
+    MEAN = 'mean'
+    PEAK = 'peak'
+    STD_1ST_DER = 'std_1st_der'
+    TROUGH = 'trough'
+    VARIANCE = 'variance'
+    SPIKENESS = 'spikeness'
+    CALCULATE_SEASONALITY_STRENGTH = 'seasonality_strength'
 
 class FeatureExtractor:
-    """
-    A class to manage and execute feature extraction on time series data.
-    """
-
-    def __init__(self, features=None, feature_params=None):
+    def __init__(self, features=None, feature_params=None, window_size=5, stride=1, id_column=None, sort_column=None):
         """
         Initialize the FeatureExtractor with a list of features to calculate and optional parameters for each feature.
         
         Parameters
         ----------
-        features : list of str, optional
+        features : list of Features constants, optional
             A list of features to calculate. Default is None, which calculates all available features.
         feature_params : dict, optional
-            A dictionary of parameters for specific features, where keys are feature names and values are dicts of parameters.
-            For example, {'variance': {'ddof': 0}} to set ddof to 0 for the variance calculation.
+            Parameters for specific features, where keys are feature names and values are dicts of parameters.
+        window_size : int, optional
+            The size of the window for feature extraction (default is 5).
+        stride : int, optional
+            The step size for moving the window (default is 1).
+        id_column : str, optional
+            The name of the column used to identify different time series (optional).
+        sort_column : str, optional
+            The column to sort by before feature extraction (optional).
         """
         
-        self.features = features if features is not None else ['length']
+        self.features = features if features is not None else [Features.LENGTH]
         self.feature_params = feature_params if feature_params is not None else {}
+        self.window_size = window_size
+        self.stride = stride
+        self.id_column = id_column
+        self.sort_column = sort_column
+
+        # Map of feature names to calculation functions
+        self.feature_functions = {
+            Features.LENGTH: calculate_length,
+            Features.MEAN: calculate_mean,
+            Features.PEAK: calculate_peak,
+            Features.STD_1ST_DER: calculate_std_1st_der,
+            Features.TROUGH: calculate_trough,
+            Features.VARIANCE: calculate_variance,
+            Features.SPIKENESS: calculate_spikeness,
+            Features.CALCULATE_SEASONALITY_STRENGTH: calculate_seasonality_strength,
+        }
 
     def extract_features(self, data):
         """
         Extract features from a time series dataset.
-        
+
         Parameters
         ----------
-        data : pd.Series or np.ndarray
+        data : pd.DataFrame or pd.Series
             The time series data for which features are to be extracted.
-            
+
         Returns
         -------
-        dict
-            A dictionary containing calculated features and their values.
-            
-        Examples
-        --------
-        >>> import pandas as pd
-        >>> data = pd.Series([1, 2, 3, 4, 5])
-        >>> extractor = FeatureExtractor(features=['length'])
-        >>> extractor.extract_features(data)
-        {'length': 5}
+        pd.DataFrame
+            A DataFrame containing calculated features for each window.
         """
+        # Convert Series to DataFrame with 'value' column if necessary
+        if isinstance(data, pd.Series):
+            data = data.to_frame(name='value')
 
-        extracted_features = {}
+        # Sort data if sort_column is provided
+        if self.sort_column:
+            data = data.sort_values(by=self.sort_column)
 
-        if 'length' in self.features:
-            extracted_features['length'] = calculate_length(data)
+        # Group by id_column if provided``
+        grouped_data = data.groupby(self.id_column) if self.id_column else [(None, data)]
 
-        if 'mean' in self.features:
-            extracted_features['mean'] = calculate_mean(data)
+        results = []
 
-        if 'peak' in self.features:
-            peak_params = self.feature_params.get('peak', {})
-            extracted_features['peak'] = calculate_peak(data, **peak_params)
+        # Process each group separately
+        for _, group in grouped_data:
+            for start in range(0, len(group) - self.window_size + 1, self.stride):
+                window = group.iloc[start:start + self.window_size]
+                extracted_features = {self.id_column: group[self.id_column].iloc[0]} if self.id_column else {}
 
-        if 'std_1st_der' in self.features:
-            extracted_features['std_1st_der'] = calculate_std_1st_der(data)
+                # Calculate each selected feature on the window
+                for feature_name in self.features:
+                    if feature_name in self.feature_functions:
+                        params = self.feature_params.get(feature_name, {})
+                        feature_data = window['value'] if 'value' in window else window.iloc[:, 0]
+                        extracted_features[feature_name] = self.feature_functions[feature_name](feature_data, **params)
 
-        if 'trough' in self.features:
-            trough_params = self.feature_params.get('trough', {})
-            extracted_features['trough'] = calculate_trough(data, **trough_params)
+                results.append(extracted_features)
 
-        if 'variance' in self.features:
-            variance_params = self.feature_params.get('variance', {})
-            extracted_features['variance'] = calculate_variance(data, **variance_params)
+        return pd.DataFrame(results) 
 
-        return extracted_features
+    @staticmethod
+    def available_features():
+        """
+        Returns a list of all available features.
+        
+        Returns
+        -------
+        list
+            List of feature names.
+        """
+        return list(Features.__dict__.values())
