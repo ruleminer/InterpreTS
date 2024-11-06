@@ -1,4 +1,3 @@
-import pytest
 import pandas as pd
 import numpy as np
 from src.core.feature_extractor import FeatureExtractor
