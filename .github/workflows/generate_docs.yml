@@ -25,7 +25,7 @@ jobs:
 
       - name: Build documentation
         run: |
-          sphinx-build -b html docs/source build
+          sphinx-build -b html docs/source docs/build
 
       - name: Deploy to GitHub Pages
         if: success()
