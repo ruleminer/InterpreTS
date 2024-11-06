@@ -1,9 +1,9 @@
 # InterpreTS
 
-Feature extraction from time series to support the creation of interpretable and explainable predictive models.
+InterpreTS is a Python library designed for extracting meaningful and interpretable features from time series data to support the creation of interpretable and explainable predictive models.
 
 ## Overview
-InterpreTS is a Python library designed for extracting meaningful and interpretable features from time series data. With the growing importance of interpretability in machine learning and AI, InterpreTS focuses on creating feature representations that facilitate the development of interpretable and explainable predictive models.
+With the growing importance of interpretability in machine learning and AI, InterpreTS focuses on creating feature representations that facilitate the development of interpretable and explainable predictive models.
 
 ## Key Features
 - **Statistical Features**: Extract basic statistics like mean, standard deviation, minimum, and maximum values.
@@ -14,26 +14,75 @@ InterpreTS is a Python library designed for extracting meaningful and interpreta
 
 ## Requirements
 - Python 3.8 or above
-- pandas
-- numpy
-- statsmodels
+- `pandas`
+- `numpy`
+- `statsmodels`
 
-## Installation
-To install InterpreTS, follow the steps in [Installation Guide](docs/INSTALLATION.md).
+## Installation Guide
+Follow these steps to install InterpreTS and its dependencies:
 
-## Quickstart
-To begin using InterpreTS, see the [Usage Guide](docs/USAGE.md) or follow the example below:
+1. **Clone the Repository**  
+   Clone the InterpreTS repository to your local machine:
+   
+   ```bash
+   git clone https://github.com/ruleminer/InterpreTS.git
+   cd InterpreTS
+   ```
 
-```python
-from interpreTS import FeatureExtractor, TimeSeriesData
-import pandas as pd
+2. Install dependencies: Install the required packages listed in the `requirements.txt` file:
 
-# Sample data
-data = pd.DataFrame({'value': [1, 2, 3, 4, 5]})
+    ```python
+    pip install -r requirements.txt
+    ```
 
-# Initialize the feature extractor with desired features
-extractor = FeatureExtractor(features=['length'])
+3. Install InterpreTS: Run the following command to install InterpreTS:
 
-# Extract features
-features = extractor.extract_features(data)
-print("Extracted Features:", features)
+    ```python
+    pip install interpreTS
+    ```
+
+
+## Verifying Installation
+Once installed, you can verify the installation by running a simple feature extraction example:
+
+    ```python
+    from interpreTS.core.feature_extractor import FeatureExtractor, Features
+    import pandas as pd
+
+    # Sample time series data
+    data = pd.DataFrame({'value': [1, 2, 3, 4, 5]})
+    extractor = FeatureExtractor(features=[Features.LENGTH, Features.MEAN, Features.VARIANCE])
+    features = extractor.extract_features(data)
+    print("Extracted Features:\n", features)
+    ```
+
+## Additional Usage Example with Time Series Data
+You can also use InterpreTS with time-indexed data:
+
+    ```python
+
+    from interpreTS.core.time_series_data import TimeSeriesData
+    from interpreTS.core.feature_extractor import FeatureExtractor, Features
+    import pandas as pd
+
+    # Time-indexed data
+    data_with_date = pd.Series(
+        [5, 3, 6, 2, 7, 4, 8, 3, 9, 1],
+        index=pd.date_range("2023-01-01", periods=10, freq="D")
+    )
+    ts_data = TimeSeriesData(data_with_date)
+
+    # Feature extraction
+    extractor = FeatureExtractor(features=[Features.LENGTH, Features.MEAN, Features.VARIANCE])
+    features = extractor.extract_features(ts_data.data)
+    print("\nExtracted Features from Time Series Data:\n", features)
+    ```
+
+## Documentation
+
+Complete documentation is available in the [docs folder](./docs).
+
+
+## Issues and Support
+
+For any issues, please consult our [Issue Tracker](https://github.com/ruleminer/InterpreTS/issues) on GitHub.
