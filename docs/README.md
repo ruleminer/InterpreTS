@@ -24,59 +24,59 @@ Follow these steps to install InterpreTS and its dependencies:
 1. **Clone the Repository**  
    Clone the InterpreTS repository to your local machine:
    
-   ```bash
-   git clone https://github.com/ruleminer/InterpreTS.git
-   cd InterpreTS
-   ```
+```bash
+git clone https://github.com/ruleminer/InterpreTS.git
+cd InterpreTS
+```
 
 2. Install dependencies: Install the required packages listed in the `requirements.txt` file:
 
-    ```python
-    pip install -r requirements.txt
-    ```
+ ```python
+ pip install -r requirements.txt
+ ```
 
 3. Install InterpreTS: Run the following command to install InterpreTS:
 
-    ```python
-    pip install interpreTS
-    ```
+ ```python
+ pip install interpreTS
+ ```
 
 
 ## Verifying Installation
 Once installed, you can verify the installation by running a simple feature extraction example:
 
-    ```python
-    from interpreTS.core.feature_extractor import FeatureExtractor, Features
-    import pandas as pd
+ ```python
+ from interpreTS.core.feature_extractor import FeatureExtractor, Features
+ import pandas as pd
 
-    # Sample time series data
-    data = pd.DataFrame({'value': [1, 2, 3, 4, 5]})
-    extractor = FeatureExtractor(features=[Features.LENGTH, Features.MEAN, Features.VARIANCE])
-    features = extractor.extract_features(data)
-    print("Extracted Features:\n", features)
-    ```
+ # Sample time series data
+ data = pd.DataFrame({'value': [1, 2, 3, 4, 5]})
+ extractor = FeatureExtractor(features=[Features.LENGTH, Features.MEAN, Features.VARIANCE])
+ features = extractor.extract_features(data)
+ print("Extracted Features:\n", features)
+ ```
 
 ## Additional Usage Example with Time Series Data
 You can also use InterpreTS with time-indexed data:
 
-    ```python
+ ```python
 
-    from interpreTS.core.time_series_data import TimeSeriesData
-    from interpreTS.core.feature_extractor import FeatureExtractor, Features
-    import pandas as pd
+ from interpreTS.core.time_series_data import TimeSeriesData
+ from interpreTS.core.feature_extractor import FeatureExtractor, Features
+ import pandas as pd
 
-    # Time-indexed data
-    data_with_date = pd.Series(
-        [5, 3, 6, 2, 7, 4, 8, 3, 9, 1],
-        index=pd.date_range("2023-01-01", periods=10, freq="D")
-    )
-    ts_data = TimeSeriesData(data_with_date)
+ # Time-indexed data
+ data_with_date = pd.Series(
+     [5, 3, 6, 2, 7, 4, 8, 3, 9, 1],
+     index=pd.date_range("2023-01-01", periods=10, freq="D")
+ )
+ ts_data = TimeSeriesData(data_with_date)
 
-    # Feature extraction
-    extractor = FeatureExtractor(features=[Features.LENGTH, Features.MEAN, Features.VARIANCE])
-    features = extractor.extract_features(ts_data.data)
-    print("\nExtracted Features from Time Series Data:\n", features)
-    ```
+ # Feature extraction
+ extractor = FeatureExtractor(features=[Features.LENGTH, Features.MEAN, Features.VARIANCE])
+ features = extractor.extract_features(ts_data.data)
+ print("\nExtracted Features from Time Series Data:\n", features)
+ ```
 
 ## Documentation
 
