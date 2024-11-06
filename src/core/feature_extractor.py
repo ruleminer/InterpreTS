@@ -73,6 +73,9 @@ class FeatureExtractor:
             variance_params = self.feature_params.get('variance', {})
             extracted_features['variance'] = calculate_variance(data, **variance_params)
 
+        if 'spikeness' in self.features:
+            extracted_features['spikeness'] = calculate_spikeness(data)  
+
         if 'seasonality_strength' in self.features:
             extracted_features['seasonality_strength'] = calculate_seasonality_strength(data, frequency=7)
 
