@@ -3,44 +3,72 @@ import pandas as pd
 import numpy as np
 from src.core.features.seasonality_strength import calculate_seasonality_strength
 
-def test_calculate_seasonality_strength_with_seasonality():
+def test_calculate_seasonality_strength_strong_seasonality():
     """
-    Test that calculate_seasonality_strength correctly identifies seasonality in a time series.
+    Test that calculate_seasonality_strength identifies strong seasonality.
+    This test uses a repeating seasonal pattern (e.g., a sine wave).
     """
-    # Dane z wyraźną sezonowością (tygodniową)
-    data = pd.Series([1, 2, 1, 2, 1, 2, 1] * 10, index=pd.date_range("2023-01-01", periods=70))
-    strength = calculate_seasonality_strength(data, frequency=7)
-    assert strength > 0.8, "The seasonality strength should be high for clearly seasonal data"
+    t = np.linspace(0, 10, 100)
+    data = pd.Series(np.sin(t))
+    result = calculate_seasonality_strength(data)
+    assert result > 0.7, "The seasonality strength should be strong for periodic data"
+
+def test_calculate_seasonality_strength_weak_seasonality():
+    """
+    Test that calculate_seasonality_strength identifies weak seasonality.
+    This test uses a data set with some periodicity but lower correlation.
+    """
+    data = pd.Series([1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3])
+    result = calculate_seasonality_strength(data)
+    assert result > 0.3, "The seasonality strength should be moderate for periodic data"
+    assert result < 0.7, "The seasonality strength should not be too strong for weak seasonality"
 
 def test_calculate_seasonality_strength_no_seasonality():
     """
-    Test that calculate_seasonality_strength returns low seasonality strength for non-seasonal data.
+    Test that calculate_seasonality_strength identifies no seasonality.
+    This test uses random data without any periodic pattern.
     """
-    data = pd.Series(np.arange(100), index=pd.date_range("2023-01-01", periods=100))
-    strength = calculate_seasonality_strength(data, frequency=7)
-    assert strength < 0.1, "The seasonality strength should be low for non-seasonal data"
+    np.random.seed(0)
+    data = pd.Series(np.random.randn(100))
+    result = calculate_seasonality_strength(data)
+    assert result < 0.2, "The seasonality strength should be low for random data"
 
 def test_calculate_seasonality_strength_empty_series():
     """
-    Test that calculate_seasonality_strength returns 0 for an empty time series.
+    Test that calculate_seasonality_strength returns NaN for an empty series.
     """
-    data = pd.Series([], dtype=float)
-    strength = calculate_seasonality_strength(data, frequency=7)
-    assert strength == 0, "The seasonality strength should be 0 for an empty series"
+    data = pd.Series([])
+    result = calculate_seasonality_strength(data)
+    assert pd.isna(result), "The seasonality strength of an empty series should be NaN"
 
-def test_calculate_seasonality_strength_single_value():
+def test_calculate_seasonality_strength_insufficient_data():
     """
-    Test that calculate_seasonality_strength returns 0 for a time series with a single value.
+    Test that calculate_seasonality_strength returns NaN for insufficient data.
     """
-    data = pd.Series([5], index=pd.date_range("2023-01-01", periods=1))
-    strength = calculate_seasonality_strength(data, frequency=7)
-    assert strength == 0, "The seasonality strength should be 0 for a single-value series"
+    data = pd.Series([5])
+    result = calculate_seasonality_strength(data)
+    assert pd.isna(result), "The seasonality strength should be NaN for insufficient data"
 
-def test_calculate_seasonality_strength_specified_frequency():
+def test_calculate_seasonality_strength_with_short_periodicity():
     """
-    Test that calculate_seasonality_strength correctly uses the specified frequency.
+    Test that calculate_seasonality_strength detects seasonality with short periodicity.
     """
-    data = pd.Series([1, 2, 3, 2] * 25, index=pd.date_range("2023-01-01", periods=100))
-    strength_weekly = calculate_seasonality_strength(data, frequency=7)
-    strength_monthly = calculate_seasonality_strength(data, frequency=30)
-    assert strength_monthly > strength_weekly, "Monthly seasonality strength should be higher than weekly"
+    data = pd.Series([1, 2, 3, 4, 5, 1, 2, 3, 4, 5])
+    result = calculate_seasonality_strength(data)
+    assert result > 0.5, "The seasonality strength should be significant for short periodicity data"
+
+def test_calculate_seasonality_strength_with_long_periodicity():
+    """
+    Test that calculate_seasonality_strength detects seasonality with longer periodicity.
+    """
+    data = pd.Series([1, 0, 1, 0, 1, 0, 1, 0])  # A repeating cycle with a period of 2
+    result = calculate_seasonality_strength(data)
+    assert result > 0.5, "The seasonality strength should be significant for longer periodicity data"
+
+def test_calculate_seasonality_strength_numpy_array():
+    """
+    Test that calculate_seasonality_strength works with a numpy array.
+    """
+    data = np.array([1, 2, 3, 2, 1, 2, 3, 2, 1])
+    result = calculate_seasonality_strength(data)
+    assert result > 0.5, "The seasonality strength should be significant for periodic data"

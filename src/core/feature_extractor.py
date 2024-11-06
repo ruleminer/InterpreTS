@@ -2,6 +2,9 @@ from .features.feature_peak import calculate_peak
 from .features.feature_trough import calculate_trough
 from .features.feature_length import calculate_length
 from .features.feature_mean import calculate_mean
+from .features.feature_mean import calculate_seasonality_strength
+from .features.feature_mean import calculate_variance
+from .features.feature_mean import calculate_std_1st_der
 
 class FeatureExtractor:
     """
