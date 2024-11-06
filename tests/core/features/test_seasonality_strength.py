@@ -1,4 +1,3 @@
-import pytest
 import pandas as pd
 import numpy as np
 from src.core.features.seasonality_strength import calculate_seasonality_strength
@@ -18,7 +17,7 @@ def test_calculate_seasonality_strength_weak_seasonality():
     Test that calculate_seasonality_strength identifies weak seasonality.
     This test uses a data set with some periodicity but lower correlation.
     """
-    data = pd.Series([1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3])
+    data = pd.Series([1, 2, 3, 1, 2, 3, 1, 2, 2.5, 1, 1.5, 3])
     result = calculate_seasonality_strength(data)
     assert result > 0.3, "The seasonality strength should be moderate for periodic data"
     assert result < 0.7, "The seasonality strength should not be too strong for weak seasonality"
@@ -53,7 +52,7 @@ def test_calculate_seasonality_strength_with_short_periodicity():
     """
     Test that calculate_seasonality_strength detects seasonality with short periodicity.
     """
-    data = pd.Series([1, 2, 3, 4, 5, 1, 2, 3, 4, 5])
+    data = pd.Series([1, 2, 3, 4, 5] * 3)
     result = calculate_seasonality_strength(data)
     assert result > 0.5, "The seasonality strength should be significant for short periodicity data"
 
