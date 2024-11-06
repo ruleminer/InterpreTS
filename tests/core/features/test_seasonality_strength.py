@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from src.core.features.seasonality_strength import calculate_seasonality_strength
+from interpreTS.core.features.seasonality_strength import calculate_seasonality_strength
 
 def test_calculate_seasonality_strength_strong_seasonality():
     """

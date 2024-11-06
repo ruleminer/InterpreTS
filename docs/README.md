@@ -16,7 +16,7 @@ InterpreTS is a Python library designed for extracting meaningful and interpreta
 - Python 3.8 or above
 - pandas
 - numpy
-- sktime
+- statsmodels
 
 ## Installation
 To install InterpreTS, follow the steps in [Installation Guide](docs/INSTALLATION.md).

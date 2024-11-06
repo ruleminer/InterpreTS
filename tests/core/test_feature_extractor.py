@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from src.core.feature_extractor import FeatureExtractor, Features
+from interpreTS.core.feature_extractor import FeatureExtractor, Features
 
 def test_extract_length_feature():
     """
