@@ -43,8 +43,8 @@ def test_calculate_trough_with_out_of_range_indices():
     Test that calculate_trough handles out-of-range start and end indices gracefully.
     """
     data = pd.Series([1, 2, 3, 4, 5])
-    assert calculate_trough(data, start=10) == np.nan, "The trough with out-of-range start index should be NaN"
-    assert calculate_trough(data, end=-10) == np.nan, "The trough with out-of-range end index should be NaN"
+    assert np.isnan(calculate_trough(data, start=10)), "The trough with out-of-range start index should be NaN"
+    assert np.isnan(calculate_trough(data, end=-10)), "The trough with out-of-range end index should be NaN"
 
 def test_calculate_trough_with_start_greater_than_end():
     """
