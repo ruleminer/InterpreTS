@@ -5,6 +5,15 @@ from .features.feature_mean import calculate_mean
 from .features.feature_std_1st_der import calculate_std_1st_der
 from .features.feature_variance import calculate_variance
 
+class Features:
+    LENGTH = 'length'
+    MEAN = 'mean'
+    PEAK = 'peak'
+    STD_1ST_DER = 'std_1st_der'
+    TROUGH = 'trough'
+    VARIANCE = 'variance'
+
+
 class FeatureExtractor:
     """
     A class to manage and execute feature extraction on time series data.
@@ -16,15 +25,25 @@ class FeatureExtractor:
         
         Parameters
         ----------
-        features : list of str, optional
+        features : list of Features constants, optional
             A list of features to calculate. Default is None, which calculates all available features.
         feature_params : dict, optional
             A dictionary of parameters for specific features, where keys are feature names and values are dicts of parameters.
             For example, {'variance': {'ddof': 0}} to set ddof to 0 for the variance calculation.
         """
         
-        self.features = features if features is not None else ['length']
+        self.features = features if features is not None else [Features.LENGTH]
         self.feature_params = feature_params if feature_params is not None else {}
+
+        # Map of feature names to calculation functions
+        self.feature_functions = {
+            Features.LENGTH: calculate_length,
+            Features.MEAN: calculate_mean,
+            Features.PEAK: calculate_peak,
+            Features.STD_1ST_DER: calculate_std_1st_der,
+            Features.TROUGH: calculate_trough,
+            Features.VARIANCE: calculate_variance,
+        }
 
     def extract_features(self, data):
         """
@@ -39,37 +58,29 @@ class FeatureExtractor:
         -------
         dict
             A dictionary containing calculated features and their values.
-            
-        Examples
-        --------
-        >>> import pandas as pd
-        >>> data = pd.Series([1, 2, 3, 4, 5])
-        >>> extractor = FeatureExtractor(features=['length'])
-        >>> extractor.extract_features(data)
-        {'length': 5}
         """
 
         extracted_features = {}
 
-        if 'length' in self.features:
-            extracted_features['length'] = calculate_length(data)
-
-        if 'mean' in self.features:
-            extracted_features['mean'] = calculate_mean(data)
-
-        if 'peak' in self.features:
-            peak_params = self.feature_params.get('peak', {})
-            extracted_features['peak'] = calculate_peak(data, **peak_params)
-
-        if 'std_1st_der' in self.features:
-            extracted_features['std_1st_der'] = calculate_std_1st_der(data)
-
-        if 'trough' in self.features:
-            trough_params = self.feature_params.get('trough', {})
-            extracted_features['trough'] = calculate_trough(data, **trough_params)
-
-        if 'variance' in self.features:
-            variance_params = self.feature_params.get('variance', {})
-            extracted_features['variance'] = calculate_variance(data, **variance_params)
+        # Iterate through selected features and calculate them
+        for feature_name in self.features:
+            if feature_name in self.feature_functions:
+                # Retrieve any parameters specific to this feature
+                params = self.feature_params.get(feature_name, {})
+                
+                # Call the feature calculation function with parameters
+                extracted_features[feature_name] = self.feature_functions[feature_name](data, **params)
 
         return extracted_features
+
+    @staticmethod
+    def available_features():
+        """
+        Returns a list of all available features.
+        
+        Returns
+        -------
+        list
+            List of feature names.
+        """
+        return list(Features.__dict__.values())
