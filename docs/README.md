@@ -41,7 +41,6 @@ cd InterpreTS
  pip install interpreTS
  ```
 
-
 ## Verifying Installation
 Once installed, you can verify the installation by running a simple feature extraction example:
 
