@@ -79,7 +79,7 @@ You can also use InterpreTS with time-indexed data:
 
 ## Documentation
 
-Complete documentation is available in the [docs folder](./docs).
+Complete documentation is available on [GitHub Pages](https://ruleminer.github.io/InterpreTS/).
 
 
 ## Issues and Support
