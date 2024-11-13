@@ -8,6 +8,7 @@ from .features.feature_mean import calculate_mean
 from .features.seasonality_strength import calculate_seasonality_strength
 from .features.feature_variance import calculate_variance
 from .features.feature_std_1st_der import calculate_std_1st_der
+from .features.feature_stability import calculate_stability
 
 class Features:
     LENGTH = 'length'
@@ -18,6 +19,7 @@ class Features:
     VARIANCE = 'variance'
     SPIKENESS = 'spikeness'
     CALCULATE_SEASONALITY_STRENGTH = 'seasonality_strength'
+    STABILITY = 'stability'
 
 class FeatureExtractor:
     def __init__(self, features=None, feature_params=None, window_size=5, stride=1, id_column=None, sort_column=None):
@@ -57,6 +59,7 @@ class FeatureExtractor:
             Features.VARIANCE: calculate_variance,
             Features.SPIKENESS: calculate_spikeness,
             Features.CALCULATE_SEASONALITY_STRENGTH: calculate_seasonality_strength,
+            Features.STABILITY: calculate_stability,
         }
 
     def extract_features(self, data):
