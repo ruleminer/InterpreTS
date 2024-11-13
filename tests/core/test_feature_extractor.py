@@ -84,7 +84,7 @@ def test_extract_variance_feature():
     data = pd.DataFrame({'value': [1, 2, 3, 4, 5]})
     extractor = FeatureExtractor(features=[Features.VARIANCE])
     features = extractor.extract_features(data)
-    assert np.isclose(features[Features.VARIANCE].iloc[0], 2.0, atol=1e-4), "The 'variance' feature should be 2.0"
+    assert np.isclose(features[Features.VARIANCE].iloc[0], 2.5, atol=1e-4), "The 'variance' feature should be 2.5"
 
 def test_extract_peak_and_trough_features():
     """

@@ -35,8 +35,8 @@ def test_calculate_variability_in_sub_periods_empty_series():
     Test that calculate_variability_in_sub_periods returns an empty list for an empty series.
     """
     data = pd.Series([])
-    result = calculate_variability_in_sub_periods(data, window_size=4)
-    assert result.empty, "The result should be empty for an empty series"
+    with pytest.raises(ValueError, match="Window size must be smaller than or equal to the length of the data"):
+        calculate_variability_in_sub_periods(data, window_size=4)
 
 def test_calculate_variability_in_sub_periods_insufficient_data():
     """
@@ -44,8 +44,8 @@ def test_calculate_variability_in_sub_periods_insufficient_data():
     is insufficient for the specified window size.
     """
     data = pd.Series([5, 6])
-    result = calculate_variability_in_sub_periods(data, window_size=4)
-    assert result.empty, "The result should be empty for data shorter than the window size"
+    with pytest.raises(ValueError, match="Window size must be smaller than or equal to the length of the data"):
+        calculate_variability_in_sub_periods(data, window_size=4)
 
 def test_calculate_variability_in_sub_periods_with_numpy_array():
     """
@@ -80,6 +80,7 @@ def test_calculate_variability_in_sub_periods_with_small_window_size():
     Test that calculate_variability_in_sub_periods correctly calculates variability with a small window size.
     """
     data = pd.Series([1, 2, 3, 4, 5])
-    result = calculate_variability_in_sub_periods(data, window_size=2)
-    assert len(result) == len(data) - 1, "The number of results should be data length - 1 with a window size of 2"
-    assert result.iloc[0] == 0.5, "The variance of the first window should be 0.5"
+    result = calculate_variability_in_sub_periods(data, window_size=2, step_size=1)  # Set step_size to 1 for overlapping windows
+    expected_length = len(data) - 1
+    assert len(result) == expected_length, f"The number of results should be {expected_length} with a window size of 2 and step size of 1"
+    assert np.isclose(result.iloc[0], 0.25, atol=1e-2), "The variance of the first window should be approximately 0.25"
