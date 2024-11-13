@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-from features.feature_crossing_points import calculate_crossing_points
+from .features.feature_crossing_points import calculate_crossing_points
 from .features.feature_spikeness import calculate_spikeness
 from .features.feature_peak import calculate_peak
 from .features.feature_trough import calculate_trough

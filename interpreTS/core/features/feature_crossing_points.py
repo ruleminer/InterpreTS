@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from interpreTS.utils.data_validation import validate_time_series_data
 
 def calculate_crossing_points(data):
     """
@@ -20,28 +21,36 @@ def calculate_crossing_points(data):
     Raises
     ------
     ValueError
-        If the data contains NaN values.
-    
-    Examples
-    --------
-    >>> data = pd.Series([1, 2, 3, 2, 1, 3, 1, 0])
-    >>> calculate_crossing_points(data)
-    {'crossing_count': 3, 'crossing_points': [2, 4, 5]}
+        If the data contains NaN values or is empty.
     """
+    # Walidacja danych
+    validate_time_series_data(data)
+
+    # Konwersja do np.ndarray, jeśli to seria pandas
     if isinstance(data, pd.Series):
-        data = data.values  # Convert to np.ndarray for consistency
-    
-    # Ensure there are no NaN values
-    if np.isnan(data).any():
-        raise ValueError("Data contains NaN values.")
-    
+        data = data.values
+
+    # Sprawdzenie, czy dane są puste
+    if len(data) == 0:
+        return {'crossing_count': 0, 'crossing_points': []}
+
     mean_value = np.mean(data)
-    # Boolean array indicating if the data points are above or below the mean
+
+    # Obliczenie powyżej/poniżej średniej
     above_mean = data > mean_value
-    # Detect crossings by finding where the difference between consecutive points changes
+
+    # Sprawdzenie, czy wszystkie wartości są powyżej lub poniżej średniej
+    if np.all(above_mean) or np.all(~above_mean):  # Wszystkie powyżej lub wszystkie poniżej
+        return {'crossing_count': 0, 'crossing_points': []}
+
+    # Identyfikacja przecięć
     crossings = np.where(np.diff(above_mean.astype(int)) != 0)[0] + 1
-    
+
+    # Dodatkowe sprawdzenie: upewnij się, że wynik jest poprawny
+    crossing_count = len(crossings) if len(crossings) > 0 else 0
+    crossing_points = list(crossings) if len(crossings) > 0 else []
+
     return {
-        'crossing_count': len(crossings),
-        'crossing_points': list(crossings)
+        'crossing_count': crossing_count,
+        'crossing_points': crossing_points
     }

@@ -2,7 +2,7 @@ import pytest
 import pandas as pd
 import numpy as np
 
-from data_validation import validate_time_series_data
+from interpreTS.utils.data_validation import validate_time_series_data
 
 def test_validate_pandas_series():
     """
