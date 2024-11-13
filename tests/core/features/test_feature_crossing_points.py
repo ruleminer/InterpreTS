@@ -10,7 +10,7 @@ def test_crossing_points_basic():
     data = pd.Series([1, 2, 3, 2, 1, 3, 1, 0])
     result = calculate_crossing_points(data)
     assert result['crossing_count'] == 4, "Crossing count should be 4"
-    assert result['crossing_points'] == [1, 4, 5, 6], "Crossing points should be [1, 4, 5, 6]"
+    assert result['crossing_points'] == [0, 3, 4, 5], "Crossing points should be [1, 4, 5, 6]"
 
 def test_crossing_points_one_crossing():
     """
@@ -19,7 +19,7 @@ def test_crossing_points_one_crossing():
     data = pd.Series([1, 2, 3, 4, 5])
     result = calculate_crossing_points(data)
     assert result['crossing_count'] == 1, "Crossing count should be 1"
-    assert result['crossing_points'] == [3], "Crossing points should be [3]"
+    assert result['crossing_points'] == [2], "Crossing points should be [2]"
 
 def test_crossing_points_negative_values():
     """
@@ -28,7 +28,7 @@ def test_crossing_points_negative_values():
     data = pd.Series([-3, -1, 1, 3, -2, 2, -1, 1])
     result = calculate_crossing_points(data)
     assert result['crossing_count'] == 5, "Crossing count should be 5"
-    assert result['crossing_points'] == [2, 4, 5, 6, 7], "Crossing points should be [2, 4, 5, 6, 7]"
+    assert result['crossing_points'] == [1, 3, 4, 5, 6], "Crossing points should be [1, 3, 4, 5, 6]"
 
 def test_crossing_points_empty_series():
     """

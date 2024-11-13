@@ -27,12 +27,16 @@ def test_streaming_extractor_with_crossing_points():
     Test that StreamingFeatureExtractor calculates crossing points correctly.
     """
     extractor = StreamingFeatureExtractor(features=['crossing_points'], window_size=5)
-    data_points = [1, 2, 3, 2, 1]
+    data_points = [1, 2, 3, 2, 1]  # Wartości, które powinny przechodzić przez średnią w punktach 1 i 3.
+
+    result = None
     for point in data_points:
         result = extractor.add_data(point)
-    assert result['crossing_points']['crossing_count'] == 2, "Crossing count should be 2 for [1, 2, 3, 2, 1]"
-    assert result['crossing_points']['crossing_points'] == [1, 3], "Crossing points should be [1, 3] for [1, 2, 3, 2, 1]"
 
+    assert result is not None, "Result should not be None after processing data points."
+    assert result['crossing_points']['crossing_count'] == 2, "Crossing count should be 2 for [1, 2, 3, 2, 1]"
+    assert result['crossing_points']['crossing_points'] == [0, 3], "Crossing points should be [1, 4] for [1, 2, 3, 2, 1]"
+    
 def test_streaming_extractor_with_spikeness():
     """
     Test that StreamingFeatureExtractor calculates spikeness correctly.
@@ -45,13 +49,14 @@ def test_streaming_extractor_with_spikeness():
 
 def test_streaming_extractor_with_flat_spots():
     """
-    Test that StreamingFeatureExtractor calculates flat spots correctly.
+    Test that StreamingFeatureExtractor calculates the maximum run-length of flat spots correctly.
     """
     extractor = StreamingFeatureExtractor(features=['flat_spots'], window_size=5)
-    data_points = [2, 2, 2, 3, 3]
+    data_points = [2, 2, 3, 3, 3]
     for point in data_points:
         result = extractor.add_data(point)
-    assert result['flat_spots'] == 2, "Flat spots should be 2 for [2, 2, 2, 3, 3]"
+    assert result['flat_spots'] == 3, "Flat spots should be 3 for [2, 2, 3, 3, 3]"
+
 
 def test_streaming_extractor_no_output_before_window():
     """

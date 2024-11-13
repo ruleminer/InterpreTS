@@ -65,13 +65,14 @@ class StreamingFeatureExtractor:
         """
         self.data_buffer.append(new_data)
 
-        # Check if the buffer has reached the window size
-        if len(self.data_buffer) >= self.window_size:
-            window_data = pd.Series(self.data_buffer[-self.window_size:])
-            features = self._calculate_features(window_data)
-            return features
+        # Sprawdzanie długości bufora przed obliczaniem cech
+        if len(self.data_buffer) < self.window_size:
+            return None
 
-        return None
+        window_data = pd.Series(self.data_buffer[-self.window_size:])
+        features = self._calculate_features(window_data)
+        return features
+
 
     def _calculate_features(self, data):
         """
