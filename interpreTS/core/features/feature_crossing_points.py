@@ -23,34 +23,23 @@ def calculate_crossing_points(data):
     ValueError
         If the data contains NaN values or is empty.
     """
-    # Walidacja danych
     validate_time_series_data(data)
 
-    # Konwersja do np.ndarray, jeśli to seria pandas
     if isinstance(data, pd.Series):
-        data = data.values
+        data = data.to_numpy()
 
-    # Sprawdzenie, czy dane są puste
     if len(data) == 0:
         return {'crossing_count': 0, 'crossing_points': []}
 
     mean_value = np.mean(data)
 
-    # Obliczenie powyżej/poniżej średniej
-    above_mean = data > mean_value
-
-    # Sprawdzenie, czy wszystkie wartości są powyżej lub poniżej średniej
-    if np.all(above_mean) or np.all(~above_mean):  # Wszystkie powyżej lub wszystkie poniżej
+    if np.all(data <= mean_value) or np.all(data >= mean_value):
         return {'crossing_count': 0, 'crossing_points': []}
 
-    # Identyfikacja przecięć
+    above_mean = data > mean_value
     crossings = np.where(np.diff(above_mean.astype(int)) != 0)[0] + 1
 
-    # Dodatkowe sprawdzenie: upewnij się, że wynik jest poprawny
-    crossing_count = len(crossings) if len(crossings) > 0 else 0
-    crossing_points = list(crossings) if len(crossings) > 0 else []
-
     return {
-        'crossing_count': crossing_count,
-        'crossing_points': crossing_points
+        'crossing_count': len(crossings),
+        'crossing_points': list(crossings)
     }

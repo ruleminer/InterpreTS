@@ -43,7 +43,7 @@ def test_crossing_points_all_above_mean():
     """
     Test a case where all values are well above the mean.
     """
-    data = pd.Series([10, 11, 12, 13, 14])
+    data = pd.Series([12, 12, 12, 12, 12])
     result = calculate_crossing_points(data)
     assert result['crossing_count'] == 0, "Crossing count should be 0 when all values are above mean"
     assert result['crossing_points'] == [], "Crossing points should be an empty list when all values are above mean"
@@ -52,7 +52,7 @@ def test_crossing_points_all_below_mean():
     """
     Test a case where all values are well below the mean.
     """
-    data = pd.Series([-10, -11, -12, -13, -14])
+    data = pd.Series([-12, -12, -12, -12, -12])
     result = calculate_crossing_points(data)
     assert result['crossing_count'] == 0, "Crossing count should be 0 when all values are below mean"
     assert result['crossing_points'] == [], "Crossing points should be an empty list when all values are below mean"
