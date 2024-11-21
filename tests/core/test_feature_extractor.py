@@ -110,6 +110,19 @@ def test_extract_with_sort_column():
     features = extractor.extract_features(data)
     assert Features.MEAN in features.columns, "The 'mean' feature should be in the features DataFrame"
     assert features[Features.MEAN].iloc[0] == 20, "The mean should be calculated after sorting by 'time'"
+    
+def test_extract_missing_points_feature():
+    """
+    Test that FeatureExtractor correctly extracts the 'missing_points' feature.
+    """
+    data = pd.DataFrame({'value': [1, 3, None, 1, np.nan]})
+    extractor = FeatureExtractor(features=[Features.MISSING_POINTS])
+    features = extractor.extract_features(data)
+    extractor2 = FeatureExtractor(features=[Features.MISSING_POINTS, ], feature_params={Features.MISSING_POINTS: {'percentage': False}})
+    features2 = extractor2.extract_features(data)
+    
+    assert features[Features.MISSING_POINTS].iloc[0] == 0.4, "The percentage of missing points should be 40%"
+    assert features2[Features.MISSING_POINTS].iloc[0] == 2, "The amount of missing points should be 2"
 
 def test_extract_entropy_feature():
     """
