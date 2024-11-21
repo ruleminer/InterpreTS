@@ -110,3 +110,12 @@ def test_extract_with_sort_column():
     features = extractor.extract_features(data)
     assert Features.MEAN in features.columns, "The 'mean' feature should be in the features DataFrame"
     assert features[Features.MEAN].iloc[0] == 20, "The mean should be calculated after sorting by 'time'"
+
+def test_extract_absolute_energy_feature():
+    """
+    Test that FeatureExtractor correctly extracts the 'absolute_energy' feature.
+    """
+    data = pd.Series([1, 2, 3, -4, 5])
+    extractor = FeatureExtractor(features=[Features.ABSOLUTE_ENERGY])
+    features = extractor.extract_features(data)
+    assert np.isclose(features[Features.ABSOLUTE_ENERGY].iloc[0], 55.0, atol=1e-4), "The 'absolute_energy' feature should be 55.0"
