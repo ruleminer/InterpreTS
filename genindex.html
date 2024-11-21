@@ -321,6 +321,7 @@ document.write(`
 
 <div class="genindex-jumpbox">
  <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
  | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
@@ -337,7 +338,19 @@ document.write(`
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.ABSOLUTE_ENERGY">ABSOLUTE_ENERGY (interpreTS.core.feature_extractor.Features attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.available_features">available_features() (interpreTS.core.feature_extractor.FeatureExtractor static method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.BINARIZE_MEAN">BINARIZE_MEAN (interpreTS.core.feature_extractor.Features attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -371,11 +384,17 @@ document.write(`
 </li>
       <li><a href="interpreTS.utils.html#interpreTS.utils.data_conversion.convert_to_time_series">convert_to_time_series() (in module interpreTS.utils.data_conversion)</a>
 </li>
+      <li><a href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.CROSSING_POINTS">CROSSING_POINTS (interpreTS.core.feature_extractor.Features attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.ENTROPY">ENTROPY (interpreTS.core.feature_extractor.Features attribute)</a>
+</li>
+  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.extract_features">extract_features() (interpreTS.core.feature_extractor.FeatureExtractor method)</a>
 </li>
@@ -390,6 +409,8 @@ document.write(`
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="interpreTS.core.html#interpreTS.core.feature_extractor.Features">Features (class in interpreTS.core.feature_extractor)</a>
+</li>
+      <li><a href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.FLAT_SPOTS">FLAT_SPOTS (interpreTS.core.feature_extractor.Features attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -541,6 +562,8 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.MEAN">MEAN (interpreTS.core.feature_extractor.Features attribute)</a>
 </li>
+      <li><a href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.MISSING_POINTS">MISSING_POINTS (interpreTS.core.feature_extractor.Features attribute)</a>
+</li>
       <li>
     module
 
@@ -642,9 +665,11 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.SPIKENESS">SPIKENESS (interpreTS.core.feature_extractor.Features attribute)</a>
 </li>
+      <li><a href="interpreTS.core.html#interpreTS.core.time_series_data.TimeSeriesData.split">split() (interpreTS.core.time_series_data.TimeSeriesData method)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="interpreTS.core.html#interpreTS.core.time_series_data.TimeSeriesData.split">split() (interpreTS.core.time_series_data.TimeSeriesData method)</a>
+      <li><a href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.STABILITY">STABILITY (interpreTS.core.feature_extractor.Features attribute)</a>
 </li>
       <li><a href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.STD_1ST_DER">STD_1ST_DER (interpreTS.core.feature_extractor.Features attribute)</a>
 </li>
@@ -758,23 +783,37 @@ document.write(`
 </li>
       <li><a href="tests.core.features.html#tests.core.features.test_feature_variance.test_calculate_variance_numpy_array">test_calculate_variance_numpy_array() (in module tests.core.features.test_feature_variance)</a>
 </li>
+      <li><a href="tests.core.features.html#tests.core.features.test_feature_variance.test_calculate_variance_with_ddof_0">test_calculate_variance_with_ddof_0() (in module tests.core.features.test_feature_variance)</a>
+</li>
+      <li><a href="tests.core.features.html#tests.core.features.test_feature_variance.test_calculate_variance_with_identical_values">test_calculate_variance_with_identical_values() (in module tests.core.features.test_feature_variance)</a>
+</li>
+      <li><a href="tests.core.features.html#tests.core.features.test_feature_variance.test_calculate_variance_with_single_value">test_calculate_variance_with_single_value() (in module tests.core.features.test_feature_variance)</a>
+</li>
       <li><a href="tests.utils.html#tests.utils.test_convert_to_time_series.test_convert_invalid_type">test_convert_invalid_type() (in module tests.utils.test_convert_to_time_series)</a>
 </li>
       <li><a href="tests.utils.html#tests.utils.test_convert_to_time_series.test_convert_numpy_array">test_convert_numpy_array() (in module tests.utils.test_convert_to_time_series)</a>
 </li>
       <li><a href="tests.utils.html#tests.utils.test_convert_to_time_series.test_convert_pandas_series">test_convert_pandas_series() (in module tests.utils.test_convert_to_time_series)</a>
 </li>
+      <li><a href="tests.core.html#tests.core.test_feature_extractor.test_extract_absolute_energy_feature">test_extract_absolute_energy_feature() (in module tests.core.test_feature_extractor)</a>
+</li>
+      <li><a href="tests.core.html#tests.core.test_feature_extractor.test_extract_entropy_feature">test_extract_entropy_feature() (in module tests.core.test_feature_extractor)</a>
+</li>
       <li><a href="tests.core.html#tests.core.test_feature_extractor.test_extract_length_feature">test_extract_length_feature() (in module tests.core.test_feature_extractor)</a>
 </li>
       <li><a href="tests.core.html#tests.core.test_feature_extractor.test_extract_mean_feature">test_extract_mean_feature() (in module tests.core.test_feature_extractor)</a>
 </li>
-      <li><a href="tests.core.html#tests.core.test_feature_extractor.test_extract_peak_and_trough_features">test_extract_peak_and_trough_features() (in module tests.core.test_feature_extractor)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="tests.core.html#tests.core.test_feature_extractor.test_extract_missing_points_feature">test_extract_missing_points_feature() (in module tests.core.test_feature_extractor)</a>
+</li>
+      <li><a href="tests.core.html#tests.core.test_feature_extractor.test_extract_peak_and_trough_features">test_extract_peak_and_trough_features() (in module tests.core.test_feature_extractor)</a>
+</li>
       <li><a href="tests.core.html#tests.core.test_feature_extractor.test_extract_seasonality_strength_feature">test_extract_seasonality_strength_feature() (in module tests.core.test_feature_extractor)</a>
 </li>
       <li><a href="tests.core.html#tests.core.test_feature_extractor.test_extract_spikeness_feature">test_extract_spikeness_feature() (in module tests.core.test_feature_extractor)</a>
+</li>
+      <li><a href="tests.core.html#tests.core.test_feature_extractor.test_extract_stability_features">test_extract_stability_features() (in module tests.core.test_feature_extractor)</a>
 </li>
       <li><a href="tests.core.html#tests.core.test_feature_extractor.test_extract_std_1st_der_feature">test_extract_std_1st_der_feature() (in module tests.core.test_feature_extractor)</a>
 </li>

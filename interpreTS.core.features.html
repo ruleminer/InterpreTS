@@ -659,14 +659,15 @@ If None, the series ends at the last value.</p>
 <span id="interprets-core-features-feature-variance-module"></span><h2>interpreTS.core.features.feature_variance module<a class="headerlink" href="#module-interpreTS.core.features.feature_variance" title="Permalink to this heading">#</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="interpreTS.core.features.feature_variance.calculate_variance">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_variance.</span></span><span class="sig-name descname"><span class="pre">calculate_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ddof</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.core.features.feature_variance.calculate_variance" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_variance.</span></span><span class="sig-name descname"><span class="pre">calculate_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ddof</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.core.features.feature_variance.calculate_variance" title="Permalink to this definition">#</a></dt>
 <dd><p>Calculate the variance value of a time series with specified degrees of freedom.</p>
 <section id="id21">
 <h3>Parameters<a class="headerlink" href="#id21" title="Permalink to this heading">#</a></h3>
 <dl class="simple">
 <dt>data<span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>The time series data for which the variance is to be calculated.</p>
 </dd>
-<dt>ddof<span class="classifier">int, optional</span></dt><dd><p>The degrees of freedom to use when calculating the variance. Default is 0 (population variance).</p>
+<dt>ddof<span class="classifier">int, optional</span></dt><dd><p>Delta degrees of freedom. The divisor used in calculations is N - ddof, where N is the number of elements. 
+A ddof of 1 provides the sample variance, and a ddof of 0 provides the population variance. Default is 1.</p>
 </dd>
 </dl>
 </section>

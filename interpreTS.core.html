@@ -486,8 +486,33 @@ document.write(`
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interpreTS.core.feature_extractor.</span></span><span class="sig-name descname"><span class="pre">Features</span></span><a class="headerlink" href="#interpreTS.core.feature_extractor.Features" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.ABSOLUTE_ENERGY">
+<span class="sig-name descname"><span class="pre">ABSOLUTE_ENERGY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'absolute_energy'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.ABSOLUTE_ENERGY" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.BINARIZE_MEAN">
+<span class="sig-name descname"><span class="pre">BINARIZE_MEAN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'binarize_mean'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.BINARIZE_MEAN" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.CALCULATE_SEASONALITY_STRENGTH">
 <span class="sig-name descname"><span class="pre">CALCULATE_SEASONALITY_STRENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'seasonality_strength'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.CALCULATE_SEASONALITY_STRENGTH" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.CROSSING_POINTS">
+<span class="sig-name descname"><span class="pre">CROSSING_POINTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'crossing_points'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.CROSSING_POINTS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.ENTROPY">
+<span class="sig-name descname"><span class="pre">ENTROPY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'entropy'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.ENTROPY" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.FLAT_SPOTS">
+<span class="sig-name descname"><span class="pre">FLAT_SPOTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'flat_spots'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.FLAT_SPOTS" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -501,6 +526,11 @@ document.write(`
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.MISSING_POINTS">
+<span class="sig-name descname"><span class="pre">MISSING_POINTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'missing_points'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.MISSING_POINTS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.PEAK">
 <span class="sig-name descname"><span class="pre">PEAK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'peak'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.PEAK" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
@@ -508,6 +538,11 @@ document.write(`
 <dl class="py attribute">
 <dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.SPIKENESS">
 <span class="sig-name descname"><span class="pre">SPIKENESS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spikeness'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.SPIKENESS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.STABILITY">
+<span class="sig-name descname"><span class="pre">STABILITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'stability'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.STABILITY" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -652,11 +687,18 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features"><code class="docutils literal notranslate"><span class="pre">Features</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.ABSOLUTE_ENERGY"><code class="docutils literal notranslate"><span class="pre">Features.ABSOLUTE_ENERGY</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.BINARIZE_MEAN"><code class="docutils literal notranslate"><span class="pre">Features.BINARIZE_MEAN</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.CALCULATE_SEASONALITY_STRENGTH"><code class="docutils literal notranslate"><span class="pre">Features.CALCULATE_SEASONALITY_STRENGTH</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.CROSSING_POINTS"><code class="docutils literal notranslate"><span class="pre">Features.CROSSING_POINTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.ENTROPY"><code class="docutils literal notranslate"><span class="pre">Features.ENTROPY</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.FLAT_SPOTS"><code class="docutils literal notranslate"><span class="pre">Features.FLAT_SPOTS</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.LENGTH"><code class="docutils literal notranslate"><span class="pre">Features.LENGTH</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.MEAN"><code class="docutils literal notranslate"><span class="pre">Features.MEAN</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.MISSING_POINTS"><code class="docutils literal notranslate"><span class="pre">Features.MISSING_POINTS</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.PEAK"><code class="docutils literal notranslate"><span class="pre">Features.PEAK</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.SPIKENESS"><code class="docutils literal notranslate"><span class="pre">Features.SPIKENESS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.STABILITY"><code class="docutils literal notranslate"><span class="pre">Features.STABILITY</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.STD_1ST_DER"><code class="docutils literal notranslate"><span class="pre">Features.STD_1ST_DER</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.TROUGH"><code class="docutils literal notranslate"><span class="pre">Features.TROUGH</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.VARIANCE"><code class="docutils literal notranslate"><span class="pre">Features.VARIANCE</span></code></a></li>

@@ -447,6 +447,9 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="tests.core.features.html#tests.core.features.test_feature_variance.test_calculate_variance_empty_series"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_empty_series()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="tests.core.features.html#tests.core.features.test_feature_variance.test_calculate_variance_negative_values"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_negative_values()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="tests.core.features.html#tests.core.features.test_feature_variance.test_calculate_variance_numpy_array"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_numpy_array()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tests.core.features.html#tests.core.features.test_feature_variance.test_calculate_variance_with_ddof_0"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_with_ddof_0()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tests.core.features.html#tests.core.features.test_feature_variance.test_calculate_variance_with_identical_values"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_with_identical_values()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tests.core.features.html#tests.core.features.test_feature_variance.test_calculate_variance_with_single_value"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_with_single_value()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="tests.core.features.html#module-tests.core.features.test_histogram_dominant">tests.core.features.test_histogram_dominant module</a><ul>
@@ -491,6 +494,18 @@ document.write(`
 <section id="module-tests.core.test_feature_extractor">
 <span id="tests-core-test-feature-extractor-module"></span><h2>tests.core.test_feature_extractor module<a class="headerlink" href="#module-tests.core.test_feature_extractor" title="Permalink to this heading">#</a></h2>
 <dl class="py function">
+<dt class="sig sig-object py" id="tests.core.test_feature_extractor.test_extract_absolute_energy_feature">
+<span class="sig-prename descclassname"><span class="pre">tests.core.test_feature_extractor.</span></span><span class="sig-name descname"><span class="pre">test_extract_absolute_energy_feature</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.test_feature_extractor.test_extract_absolute_energy_feature" title="Permalink to this definition">#</a></dt>
+<dd><p>Test that FeatureExtractor correctly extracts the ‘absolute_energy’ feature.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.core.test_feature_extractor.test_extract_entropy_feature">
+<span class="sig-prename descclassname"><span class="pre">tests.core.test_feature_extractor.</span></span><span class="sig-name descname"><span class="pre">test_extract_entropy_feature</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.test_feature_extractor.test_extract_entropy_feature" title="Permalink to this definition">#</a></dt>
+<dd><p>Test that FeatureExtractor correctly extracts the ‘entropy’ feature.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="tests.core.test_feature_extractor.test_extract_length_feature">
 <span class="sig-prename descclassname"><span class="pre">tests.core.test_feature_extractor.</span></span><span class="sig-name descname"><span class="pre">test_extract_length_feature</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.test_feature_extractor.test_extract_length_feature" title="Permalink to this definition">#</a></dt>
 <dd><p>Test that FeatureExtractor correctly extracts the ‘length’ feature.</p>
@@ -500,6 +515,12 @@ document.write(`
 <dt class="sig sig-object py" id="tests.core.test_feature_extractor.test_extract_mean_feature">
 <span class="sig-prename descclassname"><span class="pre">tests.core.test_feature_extractor.</span></span><span class="sig-name descname"><span class="pre">test_extract_mean_feature</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.test_feature_extractor.test_extract_mean_feature" title="Permalink to this definition">#</a></dt>
 <dd><p>Test that FeatureExtractor correctly extracts the ‘mean’ feature.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.core.test_feature_extractor.test_extract_missing_points_feature">
+<span class="sig-prename descclassname"><span class="pre">tests.core.test_feature_extractor.</span></span><span class="sig-name descname"><span class="pre">test_extract_missing_points_feature</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.test_feature_extractor.test_extract_missing_points_feature" title="Permalink to this definition">#</a></dt>
+<dd><p>Test that FeatureExtractor correctly extracts the ‘missing_points’ feature.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -518,6 +539,12 @@ document.write(`
 <dt class="sig sig-object py" id="tests.core.test_feature_extractor.test_extract_spikeness_feature">
 <span class="sig-prename descclassname"><span class="pre">tests.core.test_feature_extractor.</span></span><span class="sig-name descname"><span class="pre">test_extract_spikeness_feature</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.test_feature_extractor.test_extract_spikeness_feature" title="Permalink to this definition">#</a></dt>
 <dd><p>Test that FeatureExtractor correctly extracts the ‘spikeness’ feature.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.core.test_feature_extractor.test_extract_stability_features">
+<span class="sig-prename descclassname"><span class="pre">tests.core.test_feature_extractor.</span></span><span class="sig-name descname"><span class="pre">test_extract_stability_features</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.test_feature_extractor.test_extract_stability_features" title="Permalink to this definition">#</a></dt>
+<dd><p>Test that FeatureExtractor correctly extracts the ‘peak’ and ‘trough’ features.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -624,11 +651,15 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.core.test_feature_extractor">tests.core.test_feature_extractor module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.test_feature_extractor.test_extract_absolute_energy_feature"><code class="docutils literal notranslate"><span class="pre">test_extract_absolute_energy_feature()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.test_feature_extractor.test_extract_entropy_feature"><code class="docutils literal notranslate"><span class="pre">test_extract_entropy_feature()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.test_feature_extractor.test_extract_length_feature"><code class="docutils literal notranslate"><span class="pre">test_extract_length_feature()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.test_feature_extractor.test_extract_mean_feature"><code class="docutils literal notranslate"><span class="pre">test_extract_mean_feature()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.test_feature_extractor.test_extract_missing_points_feature"><code class="docutils literal notranslate"><span class="pre">test_extract_missing_points_feature()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.test_feature_extractor.test_extract_peak_and_trough_features"><code class="docutils literal notranslate"><span class="pre">test_extract_peak_and_trough_features()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.test_feature_extractor.test_extract_seasonality_strength_feature"><code class="docutils literal notranslate"><span class="pre">test_extract_seasonality_strength_feature()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.test_feature_extractor.test_extract_spikeness_feature"><code class="docutils literal notranslate"><span class="pre">test_extract_spikeness_feature()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.test_feature_extractor.test_extract_stability_features"><code class="docutils literal notranslate"><span class="pre">test_extract_stability_features()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.test_feature_extractor.test_extract_std_1st_der_feature"><code class="docutils literal notranslate"><span class="pre">test_extract_std_1st_der_feature()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.test_feature_extractor.test_extract_variance_feature"><code class="docutils literal notranslate"><span class="pre">test_extract_variance_feature()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.test_feature_extractor.test_extract_with_id_column"><code class="docutils literal notranslate"><span class="pre">test_extract_with_id_column()</span></code></a></li>

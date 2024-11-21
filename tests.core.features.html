@@ -636,6 +636,24 @@ the number of data points in a pandas Series.</p>
 <dd><p>Test that calculate_variance correctly calculates the variance of a numpy array.</p>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.core.features.test_feature_variance.test_calculate_variance_with_ddof_0">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_variance.</span></span><span class="sig-name descname"><span class="pre">test_calculate_variance_with_ddof_0</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_variance.test_calculate_variance_with_ddof_0" title="Permalink to this definition">#</a></dt>
+<dd><p>Test that calculate_variance correctly calculates the population variance (ddof=0).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.core.features.test_feature_variance.test_calculate_variance_with_identical_values">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_variance.</span></span><span class="sig-name descname"><span class="pre">test_calculate_variance_with_identical_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_variance.test_calculate_variance_with_identical_values" title="Permalink to this definition">#</a></dt>
+<dd><p>Test that calculate_variance returns 0 for a series with identical values.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.core.features.test_feature_variance.test_calculate_variance_with_single_value">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_variance.</span></span><span class="sig-name descname"><span class="pre">test_calculate_variance_with_single_value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_variance.test_calculate_variance_with_single_value" title="Permalink to this definition">#</a></dt>
+<dd><p>Test that calculate_variance returns 0 for a series with a single value.</p>
+</dd></dl>
+
 </section>
 <section id="module-tests.core.features.test_histogram_dominant">
 <span id="tests-core-features-test-histogram-dominant-module"></span><h2>tests.core.features.test_histogram_dominant module<a class="headerlink" href="#module-tests.core.features.test_histogram_dominant" title="Permalink to this heading">#</a></h2>
@@ -883,6 +901,9 @@ This test uses a data set with some periodicity but lower correlation.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_variance.test_calculate_variance_empty_series"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_empty_series()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_variance.test_calculate_variance_negative_values"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_negative_values()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_variance.test_calculate_variance_numpy_array"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_numpy_array()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_variance.test_calculate_variance_with_ddof_0"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_with_ddof_0()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_variance.test_calculate_variance_with_identical_values"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_with_identical_values()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_variance.test_calculate_variance_with_single_value"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_with_single_value()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.core.features.test_histogram_dominant">tests.core.features.test_histogram_dominant module</a><ul class="nav section-nav flex-column">
