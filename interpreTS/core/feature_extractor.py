@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 
+from .features.feature_binarize_mean import calculate_binarize_mean
 from .features.feature_crossing_points import calculate_crossing_points
 from .features.feature_spikeness import calculate_spikeness
 from .features.feature_peak import calculate_peak
@@ -11,7 +12,6 @@ from .features.seasonality_strength import calculate_seasonality_strength
 from .features.feature_variance import calculate_variance
 from .features.feature_std_1st_der import calculate_std_1st_der
 from .features.feature_flat_spots import calculate_flat_spots
-from .features.binarize_mean import calculate_binarize_mean
 
 class Features:
     LENGTH = 'length'
