@@ -10,6 +10,7 @@ from .features.feature_mean import calculate_mean
 from .features.seasonality_strength import calculate_seasonality_strength
 from .features.feature_variance import calculate_variance
 from .features.feature_std_1st_der import calculate_std_1st_der
+from .features.feature_stability import calculate_stability
 from .features.feature_flat_spots import calculate_flat_spots
 
 class Features:
@@ -21,6 +22,7 @@ class Features:
     VARIANCE = 'variance'
     SPIKENESS = 'spikeness'
     CALCULATE_SEASONALITY_STRENGTH = 'seasonality_strength'
+    STABILITY = 'stability'
     FLAT_SPOTS = 'flat_spots'
     CROSSING_POINTS = 'crossing_points'
 
@@ -62,6 +64,7 @@ class FeatureExtractor:
             Features.VARIANCE: calculate_variance,
             Features.SPIKENESS: calculate_spikeness,
             Features.CALCULATE_SEASONALITY_STRENGTH: calculate_seasonality_strength,
+            Features.STABILITY: calculate_stability,
             Features.FLAT_SPOTS: calculate_flat_spots, 
             Features.CROSSING_POINTS: calculate_crossing_points, 
         }
