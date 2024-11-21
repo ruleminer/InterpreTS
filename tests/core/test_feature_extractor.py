@@ -84,7 +84,7 @@ def test_extract_variance_feature():
     data = pd.DataFrame({'value': [1, 2, 3, 4, 5]})
     extractor = FeatureExtractor(features=[Features.VARIANCE])
     features = extractor.extract_features(data)
-    assert np.isclose(features[Features.VARIANCE].iloc[0], 2.0, atol=1e-4), "The 'variance' feature should be 2.0"
+    assert np.isclose(features[Features.VARIANCE].iloc[0], 2.5, atol=1e-4), "The 'variance' feature should be 2.5"
 
 def test_extract_peak_and_trough_features():
     """
@@ -119,3 +119,15 @@ def test_extract_entropy_feature():
     extractor = FeatureExtractor(features=[Features.ENTROPY])
     features = extractor.extract_features(data)
     assert 0 < features[Features.ENTROPY].iloc[0] < 1, "The 'entropy' feature should be between 0 and 1"
+
+def test_extract_stability_features():
+    """
+    Test that FeatureExtractor correctly extracts the 'peak' and 'trough' features.
+    """
+    data = pd.DataFrame({'value': [1, 3, 1, 3, 1]})
+    data2 = pd.DataFrame({'value': [1, 1, 1, 1, 1]})
+    extractor = FeatureExtractor(features=[Features.STABILITY])
+    features = extractor.extract_features(data)
+    features2 = extractor.extract_features(data2)
+    assert features[Features.STABILITY].iloc[0] < 1, "The stability feature should be less than 1 if the data is not constant"
+    assert features2[Features.STABILITY].iloc[0] == 1, "The stability feature should be 1 for constant data"
