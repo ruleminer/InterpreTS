@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 
+from .features.feature_binarize_mean import calculate_binarize_mean
 from .features.feature_crossing_points import calculate_crossing_points
 from .features.feature_spikeness import calculate_spikeness
 from .features.feature_peak import calculate_peak
@@ -27,6 +28,7 @@ class Features:
     STABILITY = 'stability'
     FLAT_SPOTS = 'flat_spots'
     CROSSING_POINTS = 'crossing_points'
+    BINARIZE_MEAN = 'binarize_mean'
 
 
 class FeatureExtractor:
@@ -71,6 +73,7 @@ class FeatureExtractor:
             Features.STABILITY: calculate_stability,
             Features.FLAT_SPOTS: calculate_flat_spots, 
             Features.CROSSING_POINTS: calculate_crossing_points, 
+            Features.BINARIZE_MEAN: calculate_binarize_mean,
         }
 
     def extract_features(self, data):
