@@ -1,3 +1,4 @@
+from .core.streaming_feature_extractor import StreamingFeatureExtractor
 from .core.feature_extractor import FeatureExtractor
 from .core.feature_extractor import Features
 from .core.time_series_data import TimeSeriesData
