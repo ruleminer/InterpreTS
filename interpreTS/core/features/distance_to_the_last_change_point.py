@@ -35,7 +35,7 @@ def calculate_distance_to_last_trend_change(data, window_size=5):
     """
     # Validate the time series data
     validate_time_series_data(data, require_datetime_index=False)
-    
+
     # Handle empty or insufficient data
     if len(data) < window_size + 1:
         raise ValueError("The time series is too short for the specified rolling window size.")
@@ -43,7 +43,11 @@ def calculate_distance_to_last_trend_change(data, window_size=5):
     # Convert data to a pandas Series if it's an ndarray
     if isinstance(data, np.ndarray):
         data = pd.Series(data)
-
+    
+    # Check for monotonic data
+    if data.is_monotonic_increasing or data.is_monotonic_decreasing:
+        return None  # No trend change can occur in monotonic data
+    
     # Calculate rolling mean
     rolling_mean = data.rolling(window=window_size).mean()
 

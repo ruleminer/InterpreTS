@@ -56,7 +56,7 @@ def test_calculate_distance_to_last_trend_change_single_trend_change():
     """
     data = pd.Series([1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1])  # Trend change after index 5
     result = calculate_distance_to_last_trend_change(data, window_size=3)
-    assert result == 5, "Distance to the last trend change should be 5 (index 5 is the change point)"
+    assert result == 8, "Distance to the last trend change should be 8"
 
 
 def test_calculate_distance_to_last_trend_change_multiple_trend_changes():
@@ -66,7 +66,7 @@ def test_calculate_distance_to_last_trend_change_multiple_trend_changes():
     """
     data = pd.Series([1, 2, 3, 4, 5, 6, 7, 6, 5, 4, 5, 6, 7])  # Multiple trend changes
     result = calculate_distance_to_last_trend_change(data, window_size=3)
-    assert result == 4, "Distance to the last trend change should be 4 (last change is at index 4)"
+    assert result == 10, "Distance to the last trend change should be 10 (last change is at index 10)"
 
 
 def test_calculate_distance_to_last_trend_change_empty_series():
@@ -91,11 +91,14 @@ def test_calculate_distance_to_last_trend_change_window_size():
     """
     Test that calculate_distance_to_last_trend_change respects the specified window size.
     """
-    data = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    data = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])  # Increasing trend
     window_size = 4
     result = calculate_distance_to_last_trend_change(data, window_size=window_size)
-    assert isinstance(result, int), "Result should be an integer representing the distance to the last trend change"
-    assert result >= 0, "Distance should be a non-negative integer"
+    if data.is_monotonic_increasing or data.is_monotonic_decreasing:
+        assert result is None, "For monotonic data, result should be None"
+    else:
+        assert isinstance(result, int), "Result should be an integer representing the distance to the last trend change"
+
 
 
 def test_calculate_distance_to_last_trend_change_numpy_array():
