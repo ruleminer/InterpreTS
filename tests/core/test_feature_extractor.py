@@ -111,6 +111,15 @@ def test_extract_with_sort_column():
     assert Features.MEAN in features.columns, "The 'mean' feature should be in the features DataFrame"
     assert features[Features.MEAN].iloc[0] == 20, "The mean should be calculated after sorting by 'time'"
 
+def test_extract_entropy_feature():
+    """
+    Test that FeatureExtractor correctly extracts the 'entropy' feature.
+    """
+    data = pd.Series([1, -2, 9, 10, 15])
+    extractor = FeatureExtractor(features=[Features.ENTROPY])
+    features = extractor.extract_features(data)
+    assert 0 < features[Features.ENTROPY].iloc[0] < 1, "The 'entropy' feature should be between 0 and 1"
+
 def test_extract_stability_features():
     """
     Test that FeatureExtractor correctly extracts the 'peak' and 'trough' features.
