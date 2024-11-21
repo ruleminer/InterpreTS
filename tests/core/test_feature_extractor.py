@@ -111,7 +111,6 @@ def test_extract_with_sort_column():
     assert Features.MEAN in features.columns, "The 'mean' feature should be in the features DataFrame"
     assert features[Features.MEAN].iloc[0] == 20, "The mean should be calculated after sorting by 'time'"
     
-    
 def test_extract_missing_points_feature():
     """
     Test that FeatureExtractor correctly extracts the 'missing_points' feature.
@@ -124,3 +123,24 @@ def test_extract_missing_points_feature():
     
     assert features[Features.MISSING_POINTS].iloc[0] == 0.4, "The percentage of missing points should be 40%"
     assert features2[Features.MISSING_POINTS].iloc[0] == 2, "The amount of missing points should be 2"
+
+def test_extract_entropy_feature():
+    """
+    Test that FeatureExtractor correctly extracts the 'entropy' feature.
+    """
+    data = pd.Series([1, -2, 9, 10, 15])
+    extractor = FeatureExtractor(features=[Features.ENTROPY])
+    features = extractor.extract_features(data)
+    assert 0 < features[Features.ENTROPY].iloc[0] < 1, "The 'entropy' feature should be between 0 and 1"
+
+def test_extract_stability_features():
+    """
+    Test that FeatureExtractor correctly extracts the 'peak' and 'trough' features.
+    """
+    data = pd.DataFrame({'value': [1, 3, 1, 3, 1]})
+    data2 = pd.DataFrame({'value': [1, 1, 1, 1, 1]})
+    extractor = FeatureExtractor(features=[Features.STABILITY])
+    features = extractor.extract_features(data)
+    features2 = extractor.extract_features(data2)
+    assert features[Features.STABILITY].iloc[0] < 1, "The stability feature should be less than 1 if the data is not constant"
+    assert features2[Features.STABILITY].iloc[0] == 1, "The stability feature should be 1 for constant data"
