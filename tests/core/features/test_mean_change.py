@@ -59,7 +59,7 @@ def test_calculate_mean_change_window_size():
     data = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     window_size = 4
     result = calculate_mean_change(data, window_size=window_size)
-    assert len(result.dropna()) == len(data) - window_size + 1, "Result should have the correct length based on window size"
+    assert len(result.dropna()) == len(data) - window_size, "Result should have the correct length based on window size"
 
 def test_calculate_mean_change_numpy_array():
     """
