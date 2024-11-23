@@ -81,6 +81,69 @@ class FeatureExtractor:
             Features.BINARIZE_MEAN: calculate_binarize_mean,
         }
 
+        self.feature_metadata = {
+            Features.LENGTH: {
+                'level': 'easy',
+                'description': 'Number of points in the window.'
+            },
+            Features.MEAN: {
+                'level': 'easy',
+                'description': 'Mean value within the window.'
+            },
+            Features.VARIANCE: {
+                'level': 'moderate',
+                'description': 'Variance of the signal within the window.'
+            },
+            Features.ENTROPY: {
+                'level': 'advanced',
+                'description': 'Degree of randomness or disorder in the window.'
+            },
+            Features.ABSOLUTE_ENERGY: {
+                'level': 'advanced',
+                'description': 'Total energy of the signal in the window.'
+            },
+            Features.SPIKENESS: {
+                'level': 'moderate',
+                'description': 'Measure of sudden jumps or spikes in the signal.'
+            },
+            Features.STD_1ST_DER: {
+                'level': 'moderate',
+                'description': 'Standard deviation of the first derivative of the signal.'
+            },
+            Features.CALCULATE_SEASONALITY_STRENGTH: {
+                'level': 'advanced',
+                'description': 'Strength of seasonal patterns within the signal.'
+            },
+            Features.FLAT_SPOTS: {
+                'level': 'easy',
+                'description': 'Number of segments with constant values in the signal.'
+            },
+            Features.CROSSING_POINTS: {
+                'level': 'easy',
+                'description': 'Number of times the signal crosses its mean.'
+            },
+            Features.PEAK: {
+                'level': 'easy',
+                'description': 'The maximum value in the window.'
+            },
+            Features.TROUGH: {
+                'level': 'easy',
+                'description': 'The minimum value in the window.'
+            },
+            Features.STABILITY: {
+                'level': 'moderate',
+                'description': 'Measure of consistency in the signal values.'
+            },
+            Features.MISSING_POINTS: {
+                'level': 'easy',
+                'description': 'Proportion or count of missing data points in the window.'
+            },
+            Features.BINARIZE_MEAN: {
+                'level': 'moderate',
+                'description': 'Binary value indicating whether the signal mean exceeds a threshold.'
+            },
+        }
+
     def extract_features(self, data):
         """
         Extract features from a time series dataset.
@@ -124,6 +187,50 @@ class FeatureExtractor:
                 results.append(extracted_features)
 
         return pd.DataFrame(results) 
+
+    def group_features_by_interpretability(self):
+        """
+        Group features by their interpretability levels.
+
+        Returns
+        -------
+        dict
+            A dictionary where keys are interpretability levels ('easy', 'moderate', 'advanced'),
+            and values are lists of feature names.
+        """
+        groups = {'easy': [], 'moderate': [], 'advanced': []}
+        for feature_name, metadata in self.feature_metadata.items():
+            level = metadata['level']
+            groups[level].append(feature_name)
+        return groups
+    
+    def generate_feature_descriptions(self, extracted_features):
+        """
+        Generate textual descriptions for extracted features.
+
+        Parameters
+        ----------
+        extracted_features : dict
+            A dictionary where keys are feature names and values are their calculated values.
+
+        Returns
+        -------
+        dict
+            A dictionary where keys are feature names and values are textual descriptions.
+        """
+        descriptions = {}
+        for feature_name, feature_value in extracted_features.items():
+            if feature_name in self.feature_metadata:
+                metadata = self.feature_metadata[feature_name]
+                description = metadata['description']
+                descriptions[feature_name] = (
+                    f"Feature '{feature_name}': {description} Value: {feature_value}."
+                )
+            else:
+                descriptions[feature_name] = (
+                    f"Unknown feature: '{feature_name}'. Value: {feature_value}."
+                )
+        return descriptions
 
     @staticmethod
     def available_features():
