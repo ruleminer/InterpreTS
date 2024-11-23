@@ -194,12 +194,10 @@ def test_group_and_descriptions_integration():
     """
     extractor = FeatureExtractor(features=[Features.MEAN, Features.ENTROPY, Features.LENGTH])
     
-    # Group features
     groups = extractor.group_features_by_interpretability()
     assert len(groups['easy']) > 0, "There should be at least one 'easy' feature."
     assert len(groups['advanced']) > 0, "There should be at least one 'advanced' feature."
 
-    # Extract features and generate descriptions
     extracted_features = {
         Features.MEAN: 12.5,
         Features.ENTROPY: 0.92,

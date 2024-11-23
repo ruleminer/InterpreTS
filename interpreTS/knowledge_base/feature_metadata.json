@@ -1,0 +1,86 @@
+{
+    "length": {
+        "description": "Calculates the length of the time series window.",
+        "interpretation": "Represents the number of data points in the current time window.",
+        "parameters": [],
+        "examples": "Used to ensure consistent window sizes across series."
+    },
+    "mean": {
+        "description": "Calculates the average value of the time series window.",
+        "interpretation": "Higher values indicate larger average values within the time window.",
+        "parameters": [],
+        "examples": "Can be used to detect overall trends in the data."
+    },
+    "peak": {
+        "description": "Finds the maximum value in the time series window.",
+        "interpretation": "A higher peak indicates the presence of outliers or spikes.",
+        "parameters": [],
+        "examples": "Useful for detecting sudden changes or anomalies."
+    },
+    "trough": {
+        "description": "Finds the minimum value in the time series window.",
+        "interpretation": "Lower troughs may indicate dips or valleys in the data.",
+        "parameters": [],
+        "examples": "Can be combined with 'peak' to calculate ranges."
+    },
+    "variance": {
+        "description": "Calculates the variance of values in the time series window.",
+        "interpretation": "Higher variance indicates greater variability in the data.",
+        "parameters": [],
+        "examples": "Can help identify periods of instability."
+    },
+    "spikeness": {
+        "description": "Measures the degree of spikes in the time series window.",
+        "interpretation": "Higher values indicate more frequent or larger spikes in the data.",
+        "parameters": ["threshold"],
+        "examples": "Detecting periods of erratic behavior in the series."
+    },
+    "entropy": {
+        "description": "Calculates the Shannon entropy of the time series window.",
+        "interpretation": "Higher entropy indicates more randomness in the data.",
+        "parameters": [],
+        "examples": "Useful for detecting chaotic behavior."
+    },
+    "seasonality_strength": {
+        "description": "Measures the strength of seasonal patterns in the time series.",
+        "interpretation": "Higher values indicate stronger seasonal trends.",
+        "parameters": [],
+        "examples": "Useful for detecting periodic patterns in data."
+    },
+    "absolute_energy": {
+        "description": "Computes the absolute energy of the time series window.",
+        "interpretation": "Higher energy indicates larger overall values.",
+        "parameters": [],
+        "examples": "Useful for analyzing overall magnitude trends."
+    },
+    "stability": {
+        "description": "Measures the stability of the time series within the window.",
+        "interpretation": "Lower stability may indicate trends or instability.",
+        "parameters": [],
+        "examples": "Can be used for detecting transitions."
+    },
+    "flat_spots": {
+        "description": "Counts the number of flat regions in the time series window.",
+        "interpretation": "Higher counts indicate periods of no change.",
+        "parameters": ["threshold"],
+        "examples": "Useful for identifying idle or stagnant periods."
+    },
+    "crossing_points": {
+        "description": "Counts the number of times the time series crosses its mean.",
+        "interpretation": "Higher values indicate more frequent fluctuations around the mean.",
+        "parameters": [],
+        "examples": "Detecting oscillatory patterns."
+    },
+    "missing_points": {
+        "description": "Counts the number of missing values in the time series window.",
+        "interpretation": "Higher counts indicate issues with data quality or gaps.",
+        "parameters": [],
+        "examples": "Useful for pre-processing and data cleaning."
+    },
+    "binarize_mean": {
+        "description": "Binarizes the time series based on whether values are above or below the mean.",
+        "interpretation": "Creates a binary sequence for analyzing fluctuations.",
+        "parameters": [],
+        "examples": "Useful for symbolic analysis or threshold-based processing."
+    }
+}
