@@ -1,3 +1,4 @@
+import pytest
 import pandas as pd
 import numpy as np
 from interpreTS.core.feature_extractor import FeatureExtractor, Features
@@ -154,7 +155,6 @@ def test_extract_stability_features():
     assert features[Features.STABILITY].iloc[0] < 1, "The stability feature should be less than 1 if the data is not constant"
     assert features2[Features.STABILITY].iloc[0] == 1, "The stability feature should be 1 for constant data"
 
-
 def test_group_features_by_interpretability():
     """
     Test that features are correctly grouped by interpretability levels.
@@ -168,6 +168,7 @@ def test_group_features_by_interpretability():
     assert Features.LENGTH in groups['easy'], "'length' should be in the 'easy' group."
     assert Features.VARIANCE in groups['moderate'], "'variance' should be in the 'moderate' group."
     assert Features.ENTROPY in groups['advanced'], "'entropy' should be in the 'advanced' group."
+
 
 def test_generate_feature_descriptions():
     """
@@ -194,10 +195,12 @@ def test_group_and_descriptions_integration():
     """
     extractor = FeatureExtractor(features=[Features.MEAN, Features.ENTROPY, Features.LENGTH])
     
+    # Group features
     groups = extractor.group_features_by_interpretability()
     assert len(groups['easy']) > 0, "There should be at least one 'easy' feature."
     assert len(groups['advanced']) > 0, "There should be at least one 'advanced' feature."
 
+    # Extract features and generate descriptions
     extracted_features = {
         Features.MEAN: 12.5,
         Features.ENTROPY: 0.92,
@@ -206,6 +209,7 @@ def test_group_and_descriptions_integration():
     descriptions = extractor.generate_feature_descriptions(extracted_features)
     for feature, desc in descriptions.items():
         assert feature in extracted_features, f"Description should exist for feature: {feature}"
+
 
 def test_generate_all_feature_descriptions():
     """

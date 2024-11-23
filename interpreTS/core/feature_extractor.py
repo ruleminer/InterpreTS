@@ -61,6 +61,7 @@ class FeatureExtractor:
         self.stride = stride
         self.id_column = id_column
         self.sort_column = sort_column
+        
 
         # Map of feature names to calculation functions
         self.feature_functions = {
