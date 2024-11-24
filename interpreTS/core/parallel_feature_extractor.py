@@ -3,7 +3,6 @@ import numpy as np
 from dask import delayed, compute
 import ray
 
-# Funkcje cech są importowane tak jak w `FeatureExtractor`
 from .features.feature_binarize_mean import calculate_binarize_mean
 from .features.feature_crossing_points import calculate_crossing_points
 from .features.feature_spikeness import calculate_spikeness
@@ -128,22 +127,32 @@ class ParallelFeatureExtractor:
         """
         return delayed(self._calculate_features)(window)
 
-    def _calculate_features_ray(self, window):
+def _calculate_features_ray(self, data):
         """
-        Calculate features for a single window using Ray.
-        """
-        @ray.remote
-        def calculate_single_feature(feature_function, data, params):
-            return feature_function(data, **params)
+        Calculate features in parallel using Ray.
 
+        Parameters
+        ----------
+        data : pd.Series
+            The time series data for a single window.
+
+        Returns
+        -------
+        dict
+            A dictionary of calculated features.
+        """
         futures = []
         for feature_name in self.features:
             if feature_name in self.feature_functions:
+                feature_func = self.feature_functions[feature_name]
                 params = self.feature_params.get(feature_name, {})
                 futures.append(
-                    calculate_single_feature.remote(self.feature_functions[feature_name], window['value'], params)
+                    calculate_single_feature.remote(data, feature_func, **params)
                 )
-        return dict(zip(self.features, ray.get(futures)))
+        
+        # Zwracamy referencje do obiektów Ray, zamiast przetwarzać je od razu
+        results = ray.get(futures)
+        return dict(zip(self.features, results))
 
     @staticmethod
     def available_features():
