@@ -19,7 +19,30 @@ from .features.feature_stability import calculate_stability
 from .features.feature_flat_spots import calculate_flat_spots
 from .features.feature_missing_points import missing_points
 
+
 class ParallelFeatureExtractor:
+    """
+    A class for parallel feature extraction from time series data.
+    Supports both sequential, Dask-based, and Ray-based feature computation.
+
+    Attributes
+    ----------
+    features : list of str
+        A list of feature names to calculate.
+    feature_params : dict
+        A dictionary where keys are feature names and values are parameters for those features.
+    window_size : int
+        The size of the window for feature extraction.
+    stride : int
+        The step size for moving the window.
+    use_dask : bool
+        Whether to use Dask for parallel processing.
+    use_ray : bool
+        Whether to use Ray for parallel processing.
+    feature_functions : dict
+        A mapping of feature names to their respective calculation functions.
+    """
+
     def __init__(self, features=None, feature_params=None, window_size=5, stride=1, use_dask=False, use_ray=False):
         """
         Initialize the ParallelFeatureExtractor with a list of features and parallelization options.
@@ -102,17 +125,29 @@ class ParallelFeatureExtractor:
             else:
                 results.append(self._calculate_features(window))
 
+        # Process results for parallel options
         if self.use_dask:
             results = compute(*results)
-
         elif self.use_ray:
+            # Collect Ray object references
             results = ray.get(results)
 
         return pd.DataFrame(results)
 
+
     def _calculate_features(self, window):
         """
         Calculate features for a single window sequentially.
+
+        Parameters
+        ----------
+        window : pd.DataFrame
+            The data window for which to calculate features.
+
+        Returns
+        -------
+        dict
+            A dictionary of calculated features.
         """
         extracted_features = {}
         for feature_name in self.features:
@@ -124,40 +159,57 @@ class ParallelFeatureExtractor:
     def _calculate_features_dask(self, window):
         """
         Calculate features for a single window using Dask.
-        """
-        return delayed(self._calculate_features)(window)
-
-def _calculate_features_ray(self, data):
-        """
-        Calculate features in parallel using Ray.
 
         Parameters
         ----------
-        data : pd.Series
-            The time series data for a single window.
+        window : pd.DataFrame
+            The data window for which to calculate features.
+
+        Returns
+        -------
+        dask.delayed.Delayed
+            A delayed object representing the calculated features.
+        """
+        return delayed(self._calculate_features)(window)
+
+    def _calculate_features_ray(self, window):
+        """
+        Calculate features for a single window using Ray.
+
+        Parameters
+        ----------
+        window : pd.DataFrame
+            The data window for which to calculate features.
 
         Returns
         -------
         dict
             A dictionary of calculated features.
         """
+        @ray.remote
+        def calculate_single_feature(feature_function, data, params):
+            return feature_function(data, **params)
+
         futures = []
         for feature_name in self.features:
             if feature_name in self.feature_functions:
-                feature_func = self.feature_functions[feature_name]
                 params = self.feature_params.get(feature_name, {})
+                # Add Ray tasks for each feature
                 futures.append(
-                    calculate_single_feature.remote(data, feature_func, **params)
+                    calculate_single_feature.remote(self.feature_functions[feature_name], window['value'], params)
                 )
-        
-        # Zwracamy referencje do obiektów Ray, zamiast przetwarzać je od razu
-        results = ray.get(futures)
-        return dict(zip(self.features, results))
+        # Return a Ray reference to a combined dictionary of results
+        return ray.remote(lambda: dict(zip(self.features, ray.get(futures)))).remote()
 
     @staticmethod
     def available_features():
         """
         Returns a list of all available features.
+
+        Returns
+        -------
+        list
+            List of feature names.
         """
         return [
             'length', 'mean', 'peak', 'std_1st_der', 'trough', 'variance',
