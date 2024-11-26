@@ -16,6 +16,9 @@ from .features.feature_entropy import calculate_entropy
 from .features.feature_stability import calculate_stability
 from .features.feature_flat_spots import calculate_flat_spots
 from .features.feature_missing_points import missing_points
+from .features.feature_binarize_mean import calculate_binarize_mean
+from .features.feature_binarize_mean import calculate_binarize_mean
+from .features.feature_outliers_iqr import calculate_outliers_iqr
 
 class Features:
     LENGTH = 'length'
@@ -33,6 +36,7 @@ class Features:
     CROSSING_POINTS = 'crossing_points'
     MISSING_POINTS = 'missing_points'
     BINARIZE_MEAN = 'binarize_mean'
+    OUTLIERS_IQR = 'outliers_iqr'
 
 class FeatureExtractor:
     def __init__(self, features=None, feature_params=None, window_size=5, stride=1, id_column=None, sort_column=None):
@@ -79,6 +83,7 @@ class FeatureExtractor:
             Features.CROSSING_POINTS: calculate_crossing_points, 
             Features.MISSING_POINTS: missing_points,
             Features.BINARIZE_MEAN: calculate_binarize_mean,
+            Features.OUTLIERS_IQR: calculate_outliers_iqr,
         }
 
     def extract_features(self, data):
