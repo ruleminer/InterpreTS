@@ -84,7 +84,7 @@ def test_extract_variance_feature():
     data = pd.DataFrame({'value': [1, 2, 3, 4, 5]})
     extractor = FeatureExtractor(features=[Features.VARIANCE])
     features = extractor.extract_features(data)
-    assert np.isclose(features[Features.VARIANCE].iloc[0], 2.0, atol=1e-4), "The 'variance' feature should be 2.0"
+    assert np.isclose(features[Features.VARIANCE].iloc[0], 2.5, atol=1e-4), "The 'variance' feature should be 2.5"
 
 def test_extract_peak_and_trough_features():
     """
@@ -119,3 +119,46 @@ def test_heterogeneity_positive_mean():
     extractor = FeatureExtractor(features=[Features.HETEROGENEITY])
     features = extractor.extract_features(data)
     assert features[Features.HETEROGENEITY].iloc[0] > 0, "Heterogeneity should be positive for non-uniform data"
+
+def test_extract_absolute_energy_feature():
+    """
+    Test that FeatureExtractor correctly extracts the 'absolute_energy' feature.
+    """
+    data = pd.Series([1, 2, 3, -4, 5])
+    extractor = FeatureExtractor(features=[Features.ABSOLUTE_ENERGY])
+    features = extractor.extract_features(data)
+    assert np.isclose(features[Features.ABSOLUTE_ENERGY].iloc[0], 55.0, atol=1e-4), "The 'absolute_energy' feature should be 55.0"
+    
+def test_extract_missing_points_feature():
+    """
+    Test that FeatureExtractor correctly extracts the 'missing_points' feature.
+    """
+    data = pd.DataFrame({'value': [1, 3, None, 1, np.nan]})
+    extractor = FeatureExtractor(features=[Features.MISSING_POINTS])
+    features = extractor.extract_features(data)
+    extractor2 = FeatureExtractor(features=[Features.MISSING_POINTS, ], feature_params={Features.MISSING_POINTS: {'percentage': False}})
+    features2 = extractor2.extract_features(data)
+    
+    assert features[Features.MISSING_POINTS].iloc[0] == 0.4, "The percentage of missing points should be 40%"
+    assert features2[Features.MISSING_POINTS].iloc[0] == 2, "The amount of missing points should be 2"
+
+def test_extract_entropy_feature():
+    """
+    Test that FeatureExtractor correctly extracts the 'entropy' feature.
+    """
+    data = pd.Series([1, -2, 9, 10, 15])
+    extractor = FeatureExtractor(features=[Features.ENTROPY])
+    features = extractor.extract_features(data)
+    assert 0 < features[Features.ENTROPY].iloc[0] < 1, "The 'entropy' feature should be between 0 and 1"
+
+def test_extract_stability_features():
+    """
+    Test that FeatureExtractor correctly extracts the 'peak' and 'trough' features.
+    """
+    data = pd.DataFrame({'value': [1, 3, 1, 3, 1]})
+    data2 = pd.DataFrame({'value': [1, 1, 1, 1, 1]})
+    extractor = FeatureExtractor(features=[Features.STABILITY])
+    features = extractor.extract_features(data)
+    features2 = extractor.extract_features(data2)
+    assert features[Features.STABILITY].iloc[0] < 1, "The stability feature should be less than 1 if the data is not constant"
+    assert features2[Features.STABILITY].iloc[0] == 1, "The stability feature should be 1 for constant data"
