@@ -28,10 +28,11 @@ def calculate_entropy(data, bins=2):
     # Convert data to numpy array if it's a pandas Series
     if isinstance(data, pd.Series):
         data = data.values
-
+        
     # Validate data
     validate_time_series_data(data)
     
+
     if len(data) < 2:
         raise ValueError("Input data is too short to calculate entropy.")
     if bins < 2:
