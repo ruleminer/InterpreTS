@@ -4,7 +4,7 @@ import numpy as np
 from interpreTS.core.features.feature_entropy import calculate_entropy
 
 def test_calculate_entropy_with_valid_series():
-    data = pd.Series([1, 2, 3, 4, 3, 6, 7, 6, 9, 10])
+    data = pd.Series([1, 2, 3, 4, 3, 6, 7, -6, 9, 11])
     entropy = calculate_entropy(data)
     assert 0 < entropy < 1, "Entropy should be between 0 and 1"
 
@@ -20,10 +20,10 @@ def test_calculate_entropy_with_constant_changes():
     
 def test_calculate_entropy_with_empty_series():
     data = pd.Series([])
-    with pytest.raises(ValueError, match="The input data is empty."):
+    with pytest.raises(ValueError, match="Input data is too short to calculate entropy."):
         calculate_entropy(data)
 
 def test_calculate_entropy_with_short_series():
     data = pd.Series([1])
-    with pytest.raises(ValueError, match="The input data is too short to calculate entropy."):
+    with pytest.raises(ValueError, match="Input data is too short to calculate entropy."):
         calculate_entropy(data)
