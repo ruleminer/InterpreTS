@@ -41,7 +41,7 @@ class FeatureExtractor:
         Features.PEAK, Features.TROUGH, Features.ABSOLUTE_ENERGY
     ]
 
-    def __init__(self, features=None, feature_params=None, window_size=np.nan, stride=1, id_column=None, sort_column=None):
+    def __init__(self, features=None, feature_params=None, window_size=np.nan, stride=1, id_column=None, sort_column=None, feature_column=None):
         """
         Initialize the FeatureExtractor with a list of features to calculate and optional parameters for each feature.
 
@@ -59,7 +59,8 @@ class FeatureExtractor:
             The name of the column used to identify different time series (optional).
         sort_column : str, optional
             The column to sort by before feature extraction (optional).
-
+        feature_column : str or None, optional
+            The column containing feature data. If None, features are calculated for all columns except ID and sort columns.
         Raises
         ------
         ValueError
@@ -73,6 +74,7 @@ class FeatureExtractor:
         self.stride = stride
         self.id_column = id_column
         self.sort_column = sort_column
+        self.feature_column = feature_column
 
         self.feature_functions = {
             Features.LENGTH: calculate_length,
@@ -92,10 +94,30 @@ class FeatureExtractor:
             Features.BINARIZE_MEAN: calculate_binarize_mean,
         }
 
-    @staticmethod
-    def _validate_parameters(features, feature_params, window_size, stride, id_column, sort_column, feature_column):
+    def head(self, features_df, n=5):
         """
-        Validate the input parameters for FeatureExtractor.
+        Zwraca pierwsze n wierszy wynikowego DataFrame z funkcji extract_features.
+
+        Parametry
+        ----------
+        features_df : pd.DataFrame
+            DataFrame wynikowy z funkcji extract_features.
+        n : int, opcjonalne (domyślnie 5)
+            Liczba wierszy do zwrócenia. Jeśli n jest ujemne, zwraca wszystkie wiersze oprócz ostatnich |n| wierszy.
+
+        Zwraca
+        -------
+        pd.DataFrame
+            Pierwsze n wierszy DataFrame.
+        """
+        if not isinstance(features_df, pd.DataFrame):
+            raise ValueError("Input must be a DataFrame.")
+        return features_df.head(n)
+
+    @staticmethod
+    def _validate_parameters(features, feature_params, window_size, stride, id_column, sort_column):
+        """
+        Validate input parameters to ensure they are valid.
 
         Raises
         ------
@@ -104,26 +126,16 @@ class FeatureExtractor:
         """
         if features is not None and not isinstance(features, list):
             raise ValueError("Features must be a list or None.")
-        if features is not None and any(feature not in Features.__dict__.values() for feature in features):
-            raise ValueError("Invalid feature specified in the feature list.")
-
         if feature_params is not None and not isinstance(feature_params, dict):
             raise ValueError("Feature parameters must be a dictionary or None.")
-
         if not (np.isnan(window_size) or (isinstance(window_size, (int, float)) and window_size > 0)):
             raise ValueError("Window size must be a positive number or NaN.")
-
         if not isinstance(stride, int) or stride <= 0:
             raise ValueError("Stride must be a positive integer.")
-
         if id_column is not None and not isinstance(id_column, str):
             raise ValueError("ID column must be a string or None.")
-
         if sort_column is not None and not isinstance(sort_column, str):
             raise ValueError("Sort column must be a string or None.")
-
-        if not isinstance(feature_column, str):
-            raise ValueError("Feature column must be a string.")
 
     def extract_features(self, data):
         """
@@ -139,8 +151,11 @@ class FeatureExtractor:
         pd.DataFrame
             A DataFrame containing calculated features for each window.
         """
+        if data.empty:
+            return pd.DataFrame()  # Return an empty DataFrame if input data is empty
+
         if isinstance(data, pd.Series):
-            data = data.to_frame(name=self.feature_column)
+            data = data.to_frame(name=self.feature_column if self.feature_column else "value")
 
         if self.sort_column:
             data = data.sort_values(by=self.sort_column)
@@ -148,7 +163,6 @@ class FeatureExtractor:
         grouped_data = data.groupby(self.id_column) if self.id_column else [(None, data)]
 
         results = []
-        
         for _, group in grouped_data:
             group_length = len(group)
             window_size = group_length if np.isnan(self.window_size) else int(self.window_size)
@@ -157,16 +171,22 @@ class FeatureExtractor:
                 window = group.iloc[start:start + window_size]
                 extracted_features = {self.id_column: group[self.id_column].iloc[0]} if self.id_column else {}
 
-                for feature_name in self.features:
-                    if feature_name in self.feature_functions:
-                        params = self.feature_params.get(feature_name, {})
-                        feature_data = window[self.feature_column]
-                        extracted_features[feature_name] = self.feature_functions[feature_name](feature_data, **params)
+                columns_to_analyze = (
+                    [self.feature_column] if self.feature_column else 
+                    [col for col in group.columns if col not in {self.id_column, self.sort_column}]
+                )
+
+                for column in columns_to_analyze:
+                    for feature_name in self.features:
+                        if feature_name in self.feature_functions:
+                            params = self.feature_params.get(feature_name, {})
+                            feature_data = window[column]
+                            extracted_features[f"{feature_name}_{column}"] = self.feature_functions[feature_name](feature_data, **params)
 
                 results.append(extracted_features)
 
         return pd.DataFrame(results)
-
+    
     @staticmethod
     def available_features():
         """

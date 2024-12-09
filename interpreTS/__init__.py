@@ -23,7 +23,7 @@ from .core.time_series_data import TimeSeriesData
 from .utils.data_conversion import convert_to_time_series
 from .utils.data_validation import validate_time_series_data
 
-__version__ = "0.2.0"
+__version__ = "0.4.0"
 
 __all__ = [
     "FeatureExtractor",
