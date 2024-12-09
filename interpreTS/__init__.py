@@ -39,6 +39,7 @@ required_libraries = {
     "pandas": "1.1.0",
     "numpy": "1.18.0",
     "statsmodels": "0.12.0",
+    "statsmodels": None,
     "pytest": None,  
 }
 

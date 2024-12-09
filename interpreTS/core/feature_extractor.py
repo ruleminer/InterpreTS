@@ -62,7 +62,7 @@ class FeatureExtractor:
         feature_column : str or None, optional
             The column containing feature data. If None, features are calculated for all columns except ID and sort columns.
         Raises
-        ------
+        -------
         ValueError
             If any parameter is invalid.
         """
@@ -112,6 +112,8 @@ class FeatureExtractor:
         """
         if not isinstance(features_df, pd.DataFrame):
             raise ValueError("Input must be a DataFrame.")
+        if len(features_df) < n:
+            print(f"Warning: Only {len(features_df)} rows available in DataFrame.")
         return features_df.head(n)
 
     @staticmethod
@@ -149,13 +151,13 @@ class FeatureExtractor:
         Returns
         -------
         pd.DataFrame
-            A DataFrame containing calculated features for each window.
+            A DataFrame containing calculated features for each window or for the entire dataset.
         """
         if data.empty:
             return pd.DataFrame()  # Return an empty DataFrame if input data is empty
 
         if isinstance(data, pd.Series):
-            data = data.to_frame(name=self.feature_column if self.feature_column else "value")
+            data = data.to_frame(name=self.feature_column)
 
         if self.sort_column:
             data = data.sort_values(by=self.sort_column)
@@ -167,26 +169,29 @@ class FeatureExtractor:
             group_length = len(group)
             window_size = group_length if np.isnan(self.window_size) else int(self.window_size)
 
-            for start in range(0, group_length - window_size + 1, self.stride):
-                window = group.iloc[start:start + window_size]
-                extracted_features = {self.id_column: group[self.id_column].iloc[0]} if self.id_column else {}
-
-                columns_to_analyze = (
-                    [self.feature_column] if self.feature_column else 
-                    [col for col in group.columns if col not in {self.id_column, self.sort_column}]
-                )
-
-                for column in columns_to_analyze:
+            if np.isnan(self.window_size):  # Brak podziału na okna
+                extracted_features = {}
+                for feature_name in self.features:
+                    if feature_name in self.feature_functions:
+                        params = self.feature_params.get(feature_name, {})
+                        for col in group.columns.drop(self.id_column, errors='ignore'):
+                            feature_data = group[col]
+                            extracted_features[f"{feature_name}_{col}"] = self.feature_functions[feature_name](feature_data, **params)
+                results.append(extracted_features)
+            else:
+                for start in range(0, group_length - window_size + 1, self.stride):
+                    window = group.iloc[start:start + window_size]
+                    extracted_features = {}
                     for feature_name in self.features:
                         if feature_name in self.feature_functions:
                             params = self.feature_params.get(feature_name, {})
-                            feature_data = window[column]
-                            extracted_features[f"{feature_name}_{column}"] = self.feature_functions[feature_name](feature_data, **params)
-
-                results.append(extracted_features)
+                            for col in window.columns.drop(self.id_column, errors='ignore'):
+                                feature_data = window[col]
+                                extracted_features[f"{feature_name}_{col}"] = self.feature_functions[feature_name](feature_data, **params)
+                    results.append(extracted_features)
 
         return pd.DataFrame(results)
-    
+
     @staticmethod
     def available_features():
         """
