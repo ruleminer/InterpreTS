@@ -126,8 +126,17 @@ class FeatureExtractor:
         ValueError
             If any parameter is invalid.
         """
-        if features is not None and not isinstance(features, list):
-            raise ValueError("Features must be a list or None.")
+        available_features = FeatureExtractor.available_features()
+
+        if features is not None:
+            if not isinstance(features, list):
+                raise ValueError("Features must be a list or None.")
+            invalid_features = [feature for feature in features if feature not in available_features]
+            if invalid_features:
+                raise ValueError(
+                    f"The following features are invalid or not implemented: {invalid_features}. "
+                    f"Available features are: {available_features}."
+                )
         if feature_params is not None and not isinstance(feature_params, dict):
             raise ValueError("Feature parameters must be a dictionary or None.")
         if not (np.isnan(window_size) or (isinstance(window_size, (int, float)) and window_size > 0)):
