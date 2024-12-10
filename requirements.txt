@@ -2,10 +2,6 @@
 numpy>=1.18.0
 statsmodels>=0.12.0
 pytest
-<<<<<<< HEAD
-dask[dataframe]
-=======
 langchain_community
 langchain 
 openai
->>>>>>> development
