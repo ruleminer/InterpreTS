@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from interpreTS.utils.data_validation import validate_time_series_data
 
-def significant_change(data):
+def calculate_significant_changes(data):
     """
     Calculate the proportion of significant increases or decreases in the signal within the given window.
      
@@ -27,7 +27,7 @@ def significant_change(data):
     Example
     -------
     >>> data = pd.Series([1, 2, 1.5, 3, 2.5, 5, 4.5])
-    >>> significant_change(data)
+    >>> calculate_significant_change(data)
     0.3333333333333333
 
     """
