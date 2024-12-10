@@ -17,6 +17,7 @@ from .features.feature_entropy import calculate_entropy
 from .features.feature_stability import calculate_stability
 from .features.feature_flat_spots import calculate_flat_spots
 from .features.feature_missing_points import missing_points
+from .features.feature_outliers_std import calculate_outliers_std
 from .features.feature_binarize_mean import calculate_binarize_mean
 from .features.feature_binarize_mean import calculate_binarize_mean
 from .features.feature_outliers_iqr import calculate_outliers_iqr
@@ -41,6 +42,7 @@ class Features:
     CROSSING_POINTS = 'crossing_points'
     MISSING_POINTS = 'missing_points'
     BINARIZE_MEAN = 'binarize_mean'
+    OUTLIERS_STD = 'outliers_std'
     OUTLIERS_IQR = 'outliers_iqr'
     SIGNIFICANT_CHANGES = 'significant_changes'
     ABOVE_9TH_DECILE = 'above_9th_decile'
@@ -93,6 +95,7 @@ class FeatureExtractor:
             Features.CROSSING_POINTS: calculate_crossing_points, 
             Features.MISSING_POINTS: missing_points,
             Features.BINARIZE_MEAN: calculate_binarize_mean,
+            Features.OUTLIERS_STD: calculate_outliers_std,
             Features.OUTLIERS_IQR: calculate_outliers_iqr,
             Features.SIGNIFICANT_CHANGES: calculate_significant_changes
             Features.ABOVE_9TH_DECILE: calculate_above_9th_decile,
