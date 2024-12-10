@@ -11,6 +11,9 @@ from .features.seasonality_strength import calculate_seasonality_strength
 from .features.feature_variance import calculate_variance
 from .features.feature_std_1st_der import calculate_std_1st_der
 from .features.feature_flat_spots import calculate_flat_spots
+from .features.feature_significant_changes import calculate_significant_changes
+from .features.feature_above_9th_decile import calculate_above_9th_decile
+from .features.feature_below_1st_decile import calculate_below_1st_decile
 
 class StreamingFeatureExtractor:
     def __init__(self, features=None, feature_params=None, window_size=5):
@@ -29,7 +32,8 @@ class StreamingFeatureExtractor:
         self.features = features if features is not None else [
             'length', 'mean', 'peak', 'std_1st_der', 'trough', 
             'variance', 'spikeness', 'seasonality_strength', 'flat_spots', 
-            'crossing_points'
+            'crossing_points', 'significant_changes'
+            'crossing_points', 'above_9th_decile', 'below_1st_decile'
         ]
         self.feature_params = feature_params if feature_params is not None else {}
         self.window_size = window_size
@@ -47,6 +51,9 @@ class StreamingFeatureExtractor:
             'seasonality_strength': calculate_seasonality_strength,
             'flat_spots': calculate_flat_spots,
             'crossing_points': calculate_crossing_points,
+            'significant_changes': calculate_significant_changes
+            'above_9th_decile': calculate_above_9th_decile,
+            'below_1st_decile': calculate_below_1st_decile
         }
 
     def add_data(self, new_data):
