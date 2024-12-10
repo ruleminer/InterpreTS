@@ -20,6 +20,7 @@ def calculate_seasonality_strength(data, period=2, max_lag=12):
     -------
     float
         The seasonality strength, ranging from 0 to 1, where 1 indicates strong seasonality.
+        Returns np.nan if the data is insufficient or invalid.
 
     Raises
     ------
@@ -38,14 +39,37 @@ def calculate_seasonality_strength(data, period=2, max_lag=12):
     # Validate the time series data
     validate_time_series_data(data, require_datetime_index=False)
     
-    # Handle empty or insufficient data
-    if len(data) < period + 1:
+    # Convert data to numpy array for consistency
+    if isinstance(data, pd.Series):
+        data = data.values
+    
+    # Remove NaN values
+    data = data[~np.isnan(data)]
+    
+    # Handle insufficient data length
+    if len(data) <= period:
         return np.nan
+
+    try:
+        # Calculate autocorrelation using FFT for efficiency
+        autocorr_values = acf(data, nlags=max(max_lag, period), fft=True)
+        
+        # Ensure the autocorrelation result is valid
+        if len(autocorr_values) <= period:
+            return np.nan
+        
+        # Extract the autocorrelation value at the specified period
+        seasonality_strength = autocorr_values[period]
+        
+        # Ensure the strength value is in the range [0, 1]
+        seasonality_strength = max(0.0, min(seasonality_strength, 1.0))
+        return seasonality_strength
     
-    # Calculate the autocorrelation of the data
-    autocorr_values = acf(data, nlags=max(max_lag, period), fft=True)
+    except ZeroDivisionError:
+        # Handle division by zero in acf calculation (e.g., constant data)
+        return 0.0
     
-    # The seasonality strength is based on the autocorrelation at the specified period
-    seasonality_strength = autocorr_values[period] if period < len(autocorr_values) else 0.0
-    
-    return seasonality_strength
+    except Exception as e:
+        # Log or handle unexpected exceptions
+        print(f"Error calculating seasonality strength: {e}")
+        return np.nan

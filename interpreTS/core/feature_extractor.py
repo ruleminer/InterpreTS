@@ -151,16 +151,23 @@ class FeatureExtractor:
         Returns
         -------
         pd.DataFrame
-            A DataFrame containing calculated features for each window or for the entire dataset.
+            A DataFrame containing calculated features for each window.
         """
         if data.empty:
-            return pd.DataFrame()  # Return an empty DataFrame if input data is empty
+            print("Warning: Input data is empty. Returning an empty DataFrame.")
+            return pd.DataFrame()
 
         if isinstance(data, pd.Series):
             data = data.to_frame(name=self.feature_column)
 
         if self.sort_column:
             data = data.sort_values(by=self.sort_column)
+
+        # Wyklucz kolumny ID i sort_column, jeśli feature_column=None
+        feature_columns = (
+            [self.feature_column] if self.feature_column else
+            [col for col in data.columns if col not in {self.id_column, self.sort_column}]
+        )
 
         grouped_data = data.groupby(self.id_column) if self.id_column else [(None, data)]
 
@@ -169,29 +176,50 @@ class FeatureExtractor:
             group_length = len(group)
             window_size = group_length if np.isnan(self.window_size) else int(self.window_size)
 
-            if np.isnan(self.window_size):  # Brak podziału na okna
-                extracted_features = {}
+            if window_size > group_length:
+                print(f"Warning: Window size ({window_size}) exceeds group length ({group_length}). Skipping group.")
+                continue
+
+            for start in range(0, group_length - window_size + 1, self.stride):
+                window = group.iloc[start:start + window_size]
+                extracted_features = {self.id_column: group[self.id_column].iloc[0]} if self.id_column else {}
+
                 for feature_name in self.features:
                     if feature_name in self.feature_functions:
                         params = self.feature_params.get(feature_name, {})
-                        for col in group.columns.drop(self.id_column, errors='ignore'):
-                            feature_data = group[col]
-                            extracted_features[f"{feature_name}_{col}"] = self.feature_functions[feature_name](feature_data, **params)
+                        for col in feature_columns:
+                            try:
+                                feature_data = window[col].dropna()
+
+                                # Walidacja danych przed obliczeniami
+                                if feature_data.empty:
+                                    extracted_features[f"{feature_name}_{col}"] = np.nan
+                                    continue
+                                if feature_data.nunique() == 1:
+                                    # Stałe dane, np. wszystkie wartości są takie same
+                                    extracted_features[f"{feature_name}_{col}"] = np.nan
+                                    continue
+                                if len(feature_data) < 2:
+                                    # Za mało danych, aby wykonać obliczenia
+                                    extracted_features[f"{feature_name}_{col}"] = np.nan
+                                    continue
+
+                                # Wywołanie funkcji cechy
+                                extracted_features[f"{feature_name}_{col}"] = self.feature_functions[feature_name](
+                                    feature_data, **params
+                                )
+                            except Exception as e:
+                                print(f"Warning: Failed to calculate {feature_name} for column {col}: {e}")
+                                extracted_features[f"{feature_name}_{col}"] = np.nan
+
                 results.append(extracted_features)
-            else:
-                for start in range(0, group_length - window_size + 1, self.stride):
-                    window = group.iloc[start:start + window_size]
-                    extracted_features = {}
-                    for feature_name in self.features:
-                        if feature_name in self.feature_functions:
-                            params = self.feature_params.get(feature_name, {})
-                            for col in window.columns.drop(self.id_column, errors='ignore'):
-                                feature_data = window[col]
-                                extracted_features[f"{feature_name}_{col}"] = self.feature_functions[feature_name](feature_data, **params)
-                    results.append(extracted_features)
+
+        if not results:
+            print("Warning: No features could be extracted. Returning an empty DataFrame.")
+            return pd.DataFrame()
 
         return pd.DataFrame(results)
-
+    
     @staticmethod
     def available_features():
         """

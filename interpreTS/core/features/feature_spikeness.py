@@ -21,7 +21,7 @@ def calculate_spikeness(data):
     TypeError
         If the data is not a valid time series type.
     ValueError
-        If the data contains NaN values.
+        If the data contains NaN values or is empty.
 
     Examples
     --------
@@ -37,5 +37,12 @@ def calculate_spikeness(data):
     if isinstance(data, np.ndarray):
         data = pd.Series(data)
     
-    # Return spikeness (skewness), handling empty series by returning NaN
-    return data.skew() if len(data) > 0 else np.nan
+    # Drop NaN values to avoid issues with skewness calculation
+    data = data.dropna()
+
+    # Handle empty series after dropping NaNs
+    if len(data) == 0:
+        return np.nan
+
+    # Calculate and return spikeness (skewness)
+    return data.skew()
