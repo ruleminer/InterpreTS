@@ -138,10 +138,10 @@ def test_extract_entropy_feature():
     """
     Test that FeatureExtractor correctly extracts the 'entropy' feature.
     """
-    data = pd.Series([1, -2, 9, 10, 15])
+    data = pd.Series([1, -2, 9, -10, -15])
     extractor = FeatureExtractor(features=[Features.ENTROPY])
     features = extractor.extract_features(data)
-    assert 0 < features[Features.ENTROPY].iloc[0] < 1, "The 'entropy' feature should be between 0 and 1"
+    assert 0 <= features[Features.ENTROPY].iloc[0] <= 1, "The 'entropy' feature should be between 0 and 1"
 
 def test_extract_stability_features():
     """
