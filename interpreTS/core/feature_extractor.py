@@ -11,6 +11,7 @@ from .features.feature_mean import calculate_mean
 from .features.seasonality_strength import calculate_seasonality_strength
 from .features.feature_variance import calculate_variance
 from .features.feature_std_1st_der import calculate_std_1st_der
+from .features.feature_heterogeneity import heterogeneity
 from .features.feature_absolute_energy import absolute_energy
 from .features.feature_entropy import calculate_entropy
 from .features.feature_stability import calculate_stability
@@ -30,6 +31,7 @@ class Features:
     SPIKENESS = 'spikeness'
     ENTROPY = 'entropy'
     CALCULATE_SEASONALITY_STRENGTH = 'seasonality_strength'
+    HETEROGENEITY = 'heterogeneity'
     ABSOLUTE_ENERGY = 'absolute_energy'
     STABILITY = 'stability'
     FLAT_SPOTS = 'flat_spots'
@@ -79,6 +81,7 @@ class FeatureExtractor:
             Features.VARIANCE: calculate_variance,
             Features.SPIKENESS: calculate_spikeness,
             Features.CALCULATE_SEASONALITY_STRENGTH: calculate_seasonality_strength,
+            Features.HETEROGENEITY: heterogeneity,
             Features.ABSOLUTE_ENERGY: absolute_energy,
             Features.ENTROPY: calculate_entropy,
             Features.STABILITY: calculate_stability,

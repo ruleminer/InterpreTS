@@ -112,6 +112,15 @@ def test_extract_with_sort_column():
     assert Features.MEAN in features.columns, "The 'mean' feature should be in the features DataFrame"
     assert features[Features.MEAN].iloc[0] == 20, "The mean should be calculated after sorting by 'time'"
 
+def test_heterogeneity_positive_mean():
+    """
+    Test heterogeneity on a time series with a positive mean and variability.
+    """
+    data = pd.Series([1, 2, 3, -4, 10])
+    extractor = FeatureExtractor(features=[Features.HETEROGENEITY])
+    features = extractor.extract_features(data)
+    assert features[Features.HETEROGENEITY].iloc[0] > 0, "Heterogeneity should be positive for non-uniform data"
+
 def test_extract_absolute_energy_feature():
     """
     Test that FeatureExtractor correctly extracts the 'absolute_energy' feature.
