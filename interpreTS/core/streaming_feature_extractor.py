@@ -48,7 +48,7 @@ class StreamingFeatureExtractor:
             'seasonality_strength': calculate_seasonality_strength,
             'flat_spots': calculate_flat_spots,
             'crossing_points': calculate_crossing_points,
-            'significat_chamges': calculate_significant_changes
+            'significant_changes': calculate_significant_changes
         }
 
     def add_data(self, new_data):
