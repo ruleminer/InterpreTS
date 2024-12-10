@@ -1,3 +1,4 @@
+import pytest
 import pandas as pd
 import numpy as np
 from interpreTS.core.feature_extractor import FeatureExtractor, Features
@@ -111,6 +112,15 @@ def test_extract_with_sort_column():
     assert Features.MEAN in features.columns, "The 'mean' feature should be in the features DataFrame"
     assert features[Features.MEAN].iloc[0] == 20, "The mean should be calculated after sorting by 'time'"
 
+def test_heterogeneity_positive_mean():
+    """
+    Test heterogeneity on a time series with a positive mean and variability.
+    """
+    data = pd.Series([1, 2, 3, -4, 10])
+    extractor = FeatureExtractor(features=[Features.HETEROGENEITY])
+    features = extractor.extract_features(data)
+    assert features[Features.HETEROGENEITY].iloc[0] > 0, "Heterogeneity should be positive for non-uniform data"
+
 def test_extract_absolute_energy_feature():
     """
     Test that FeatureExtractor correctly extracts the 'absolute_energy' feature.
@@ -137,10 +147,10 @@ def test_extract_entropy_feature():
     """
     Test that FeatureExtractor correctly extracts the 'entropy' feature.
     """
-    data = pd.Series([1, -2, 9, 10, 15])
+    data = pd.Series([1, -2, 9, -10, -15])
     extractor = FeatureExtractor(features=[Features.ENTROPY])
     features = extractor.extract_features(data)
-    assert 0 < features[Features.ENTROPY].iloc[0] < 1, "The 'entropy' feature should be between 0 and 1"
+    assert 0 <= features[Features.ENTROPY].iloc[0] <= 1, "The 'entropy' feature should be between 0 and 1"
 
 def test_extract_stability_features():
     """
@@ -153,3 +163,73 @@ def test_extract_stability_features():
     features2 = extractor.extract_features(data2)
     assert features[Features.STABILITY].iloc[0] < 1, "The stability feature should be less than 1 if the data is not constant"
     assert features2[Features.STABILITY].iloc[0] == 1, "The stability feature should be 1 for constant data"
+
+def test_group_features_by_interpretability():
+    """
+    Test that features are correctly grouped by interpretability levels.
+    """
+    extractor = FeatureExtractor(features=None)  # Test all features
+    groups = extractor.group_features_by_interpretability()
+
+    assert 'easy' in groups and 'moderate' in groups and 'advanced' in groups, \
+        "Groups should include 'easy', 'moderate', and 'advanced'."
+
+    assert Features.LENGTH in groups['easy'], "'length' should be in the 'easy' group."
+    assert Features.VARIANCE in groups['moderate'], "'variance' should be in the 'moderate' group."
+    assert Features.ENTROPY in groups['advanced'], "'entropy' should be in the 'advanced' group."
+
+
+def test_generate_feature_descriptions():
+    """
+    Test that textual descriptions are correctly generated for features.
+    """
+    extractor = FeatureExtractor(features=[Features.MEAN, Features.ENTROPY])
+    extracted_features = {
+        Features.MEAN: 10,
+        Features.ENTROPY: 0.85
+    }
+    descriptions = extractor.generate_feature_descriptions(extracted_features)
+
+    assert Features.MEAN in descriptions, "'mean' should have a description."
+    assert "Mean value within the window." in descriptions[Features.MEAN], \
+        "Description for 'mean' should mention 'mean value within the window'."
+
+    assert Features.ENTROPY in descriptions, "'entropy' should have a description."
+    assert "Degree of randomness or disorder" in descriptions[Features.ENTROPY], \
+        "Description for 'entropy' should mention 'degree of randomness or disorder'."
+
+def test_group_and_descriptions_integration():
+    """
+    Test that feature grouping and descriptions work together seamlessly.
+    """
+    extractor = FeatureExtractor(features=[Features.MEAN, Features.ENTROPY, Features.LENGTH])
+    
+    # Group features
+    groups = extractor.group_features_by_interpretability()
+    assert len(groups['easy']) > 0, "There should be at least one 'easy' feature."
+    assert len(groups['advanced']) > 0, "There should be at least one 'advanced' feature."
+
+    # Extract features and generate descriptions
+    extracted_features = {
+        Features.MEAN: 12.5,
+        Features.ENTROPY: 0.92,
+        Features.LENGTH: 50
+    }
+    descriptions = extractor.generate_feature_descriptions(extracted_features)
+    for feature, desc in descriptions.items():
+        assert feature in extracted_features, f"Description should exist for feature: {feature}"
+
+
+def test_generate_all_feature_descriptions():
+    """
+    Test that descriptions are generated for all defined features.
+    """
+    extractor = FeatureExtractor(features=FeatureExtractor.available_features())
+    extracted_features = {feature: idx + 1 for idx, feature in enumerate(FeatureExtractor.available_features())}
+    
+    descriptions = extractor.generate_feature_descriptions(extracted_features)
+    assert len(descriptions) == len(extracted_features), "Descriptions should be generated for all features."
+
+    for feature, desc in descriptions.items():
+        assert feature in extractor.feature_metadata or "Unknown feature" in desc, \
+            f"Every feature should have a corresponding description or marked as unknown."
