@@ -1,52 +1,52 @@
 import pandas as pd
 import numpy as np
 
-from .features.feature_binarize_mean import calculate_binarize_mean
-from .features.feature_crossing_points import calculate_crossing_points
 from .features.feature_spikeness import calculate_spikeness
-from .features.feature_peak import calculate_peak
-from .features.feature_trough import calculate_trough
+from .features.feature_entropy import calculate_entropy
+from .features.feature_stability import calculate_stability
 from .features.feature_length import calculate_length
 from .features.feature_mean import calculate_mean
 from .features.seasonality_strength import calculate_seasonality_strength
 from .features.feature_variance import calculate_variance
-from .features.feature_std_1st_der import calculate_std_1st_der
-from .features.feature_heterogeneity import heterogeneity
-from .features.feature_absolute_energy import absolute_energy
-from .features.feature_entropy import calculate_entropy
-from .features.feature_stability import calculate_stability
-from .features.feature_flat_spots import calculate_flat_spots
-from .features.feature_missing_points import missing_points
-from .features.feature_outliers_std import calculate_outliers_std
-from .features.feature_binarize_mean import calculate_binarize_mean
-from .features.feature_binarize_mean import calculate_binarize_mean
-from .features.feature_outliers_iqr import calculate_outliers_iqr
-from .features.feature_significant_changes import calculate_significant_changes
-from .features.feature_above_9th_decile import calculate_above_9th_decile
-from .features.feature_below_1st_decile import calculate_below_1st_decile
+# from .features.feature_peak import calculate_peak
+# from .features.feature_trough import calculate_trough
+# from .features.feature_std_1st_der import calculate_std_1st_der
+# from .features.feature_heterogeneity import heterogeneity
+# from .features.feature_absolute_energy import absolute_energy
+# from .features.feature_flat_spots import calculate_flat_spots
+# from .features.feature_missing_points import missing_points
+# from .features.feature_outliers_std import calculate_outliers_std
+# from .features.feature_binarize_mean import calculate_binarize_mean
+# from .features.feature_binarize_mean import calculate_binarize_mean
+# from .features.feature_outliers_iqr import calculate_outliers_iqr
+# from .features.feature_significant_changes import calculate_significant_changes
+# from .features.feature_above_9th_decile import calculate_above_9th_decile
+# from .features.feature_below_1st_decile import calculate_below_1st_decile
+# from .features.feature_binarize_mean import calculate_binarize_mean
+# from .features.feature_crossing_points import calculate_crossing_points
 
 class Features:
     LENGTH = 'length'
     MEAN = 'mean'
-    PEAK = 'peak'
-    STD_1ST_DER = 'std_1st_der'
-    TROUGH = 'trough'
     VARIANCE = 'variance'
     SPIKENESS = 'spikeness'
     ENTROPY = 'entropy'
     CALCULATE_SEASONALITY_STRENGTH = 'seasonality_strength'
-    HETEROGENEITY = 'heterogeneity'
-    ABSOLUTE_ENERGY = 'absolute_energy'
     STABILITY = 'stability'
-    FLAT_SPOTS = 'flat_spots'
-    CROSSING_POINTS = 'crossing_points'
-    MISSING_POINTS = 'missing_points'
-    BINARIZE_MEAN = 'binarize_mean'
-    OUTLIERS_STD = 'outliers_std'
-    OUTLIERS_IQR = 'outliers_iqr'
-    SIGNIFICANT_CHANGES = 'significant_changes'
-    ABOVE_9TH_DECILE = 'above_9th_decile'
-    BELOW_1ST_DECILE = 'below_1st_decile'
+    # PEAK = 'peak'
+    # STD_1ST_DER = 'std_1st_der'
+    # TROUGH = 'trough'
+    # HETEROGENEITY = 'heterogeneity'
+    # ABSOLUTE_ENERGY = 'absolute_energy'
+    # FLAT_SPOTS = 'flat_spots'
+    # CROSSING_POINTS = 'crossing_points'
+    # MISSING_POINTS = 'missing_points'
+    # BINARIZE_MEAN = 'binarize_mean'
+    # OUTLIERS_STD = 'outliers_std'
+    # OUTLIERS_IQR = 'outliers_iqr'
+    # SIGNIFICANT_CHANGES = 'significant_changes'
+    # ABOVE_9TH_DECILE = 'above_9th_decile'
+    # BELOW_1ST_DECILE = 'below_1st_decile'
 
 class FeatureExtractor:
     DEFAULT_FEATURES = [
@@ -92,25 +92,25 @@ class FeatureExtractor:
         self.feature_functions = {
             Features.LENGTH: calculate_length,
             Features.MEAN: calculate_mean,
-            Features.PEAK: calculate_peak,
-            Features.STD_1ST_DER: calculate_std_1st_der,
-            Features.TROUGH: calculate_trough,
             Features.VARIANCE: calculate_variance,
             Features.SPIKENESS: calculate_spikeness,
-            Features.CALCULATE_SEASONALITY_STRENGTH: calculate_seasonality_strength,
-            Features.HETEROGENEITY: heterogeneity,
-            Features.ABSOLUTE_ENERGY: absolute_energy,
             Features.ENTROPY: calculate_entropy,
             Features.STABILITY: calculate_stability,
-            Features.FLAT_SPOTS: calculate_flat_spots,
-            Features.CROSSING_POINTS: calculate_crossing_points,
-            Features.MISSING_POINTS: missing_points,
-            Features.BINARIZE_MEAN: calculate_binarize_mean,
-            Features.OUTLIERS_STD: calculate_outliers_std,
-            Features.OUTLIERS_IQR: calculate_outliers_iqr,
-            Features.SIGNIFICANT_CHANGES: calculate_significant_changes,
-            Features.ABOVE_9TH_DECILE: calculate_above_9th_decile,
-            Features.BELOW_1ST_DECILE: calculate_below_1st_decile
+            Features.CALCULATE_SEASONALITY_STRENGTH: calculate_seasonality_strength,
+            # Features.PEAK: calculate_peak,
+            # Features.STD_1ST_DER: calculate_std_1st_der,
+            # Features.TROUGH: calculate_trough,
+            # Features.HETEROGENEITY: heterogeneity,
+            # Features.ABSOLUTE_ENERGY: absolute_energy,
+            # Features.FLAT_SPOTS: calculate_flat_spots,
+            # Features.CROSSING_POINTS: calculate_crossing_points,
+            # Features.MISSING_POINTS: missing_points,
+            # Features.BINARIZE_MEAN: calculate_binarize_mean,
+            # Features.OUTLIERS_STD: calculate_outliers_std,
+            # Features.OUTLIERS_IQR: calculate_outliers_iqr,
+            # Features.SIGNIFICANT_CHANGES: calculate_significant_changes,
+            # Features.ABOVE_9TH_DECILE: calculate_above_9th_decile,
+            # Features.BELOW_1ST_DECILE: calculate_below_1st_decile
         }
 
         self.feature_metadata = {
@@ -130,50 +130,50 @@ class FeatureExtractor:
                 'level': 'advanced',
                 'description': 'Degree of randomness or disorder in the window.'
             },
-            Features.ABSOLUTE_ENERGY: {
-                'level': 'advanced',
-                'description': 'Total energy of the signal in the window.'
-            },
             Features.SPIKENESS: {
                 'level': 'moderate',
                 'description': 'Measure of sudden jumps or spikes in the signal.'
-            },
-            Features.STD_1ST_DER: {
-                'level': 'moderate',
-                'description': 'Standard deviation of the first derivative of the signal.'
             },
             Features.CALCULATE_SEASONALITY_STRENGTH: {
                 'level': 'advanced',
                 'description': 'Strength of seasonal patterns within the signal.'
             },
-            Features.FLAT_SPOTS: {
-                'level': 'easy',
-                'description': 'Number of segments with constant values in the signal.'
-            },
-            Features.CROSSING_POINTS: {
-                'level': 'easy',
-                'description': 'Number of times the signal crosses its mean.'
-            },
-            Features.PEAK: {
-                'level': 'easy',
-                'description': 'The maximum value in the window.'
-            },
-            Features.TROUGH: {
-                'level': 'easy',
-                'description': 'The minimum value in the window.'
-            },
             Features.STABILITY: {
                 'level': 'moderate',
                 'description': 'Measure of consistency in the signal values.'
             },
-            Features.MISSING_POINTS: {
-                'level': 'easy',
-                'description': 'Proportion or count of missing data points in the window.'
-            },
-            Features.BINARIZE_MEAN: {
-                'level': 'moderate',
-                'description': 'Binary value indicating whether the signal mean exceeds a threshold.'
-            },
+            # Features.FLAT_SPOTS: {
+            #     'level': 'easy',
+            #     'description': 'Number of segments with constant values in the signal.'
+            # },
+            # Features.CROSSING_POINTS: {
+            #     'level': 'easy',
+            #     'description': 'Number of times the signal crosses its mean.'
+            # },
+            # Features.PEAK: {
+            #     'level': 'easy',
+            #     'description': 'The maximum value in the window.'
+            # },
+            # Features.TROUGH: {
+            #     'level': 'easy',
+            #     'description': 'The minimum value in the window.'
+            # },
+            #             Features.ABSOLUTE_ENERGY: {
+            #     'level': 'advanced',
+            #     'description': 'Total energy of the signal in the window.'
+            # },
+            # Features.STD_1ST_DER: {
+            #     'level': 'moderate',
+            #     'description': 'Standard deviation of the first derivative of the signal.'
+            # },
+            # Features.MISSING_POINTS: {
+            #     'level': 'easy',
+            #     'description': 'Proportion or count of missing data points in the window.'
+            # },
+            # Features.BINARIZE_MEAN: {
+            #     'level': 'moderate',
+            #     'description': 'Binary value indicating whether the signal mean exceeds a threshold.'
+            # },
         }
 
     def head(self, features_df, n=5):

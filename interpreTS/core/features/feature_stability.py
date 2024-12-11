@@ -12,7 +12,7 @@ def calculate_stability(data, max_lag=None):
     data : pd.Series or np.ndarray
         The time series data for which the stability is to be calculated.
     max_lag : int, optional
-        The maximum number of lags to consider for autocorrelation. 
+        The maximum number of lags to consider for autocorrelation.
         If None, it will be set to `min(12, len(data) - 1)`.
 
     Returns
@@ -21,19 +21,29 @@ def calculate_stability(data, max_lag=None):
         The stability strength, ranging from 0 to 1, where 1 indicates high stability.
     """
     # Validate the time series data
-    validate_time_series_data(data, require_datetime_index=False)
+    validate_time_series_data(data, require_datetime_index=False, allow_nan=False)
 
     # Convert to pandas Series if it's a numpy array
     if isinstance(data, np.ndarray):
         data = pd.Series(data)
 
+    # Ensure the data is numeric and handle empty series
+    if data.empty:
+        return np.nan
+    if not np.issubdtype(data.dtype, np.number):
+        raise TypeError("Data must be numeric.")
+
     # Dynamically determine max_lag if not provided
     if max_lag is None:
         max_lag = min(12, len(data) - 1)
 
-    # Handle insufficient data or zero variance
-    if len(data) <= max_lag or max_lag < 1 or data.var() == 0:
-        return 1.0 if data.var() == 0 else np.nan
+    # Handle insufficient data
+    if len(data) <= max_lag or max_lag < 1:
+        return np.nan
+
+    # Handle zero variance
+    if data.var() == 0:
+        return 1.0
 
     try:
         # Calculate the autocorrelation of the data up to the max lag
