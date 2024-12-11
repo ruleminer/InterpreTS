@@ -408,25 +408,21 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="interpreTS.core.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interpreTS.core.html#module-interpreTS.core.feature_extractor">interpreTS.core.feature_extractor module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.DEFAULT_FEATURES"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.DEFAULT_FEATURES</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.available_features"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.available_features()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.extract_features"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.extract_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.generate_feature_descriptions"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.generate_feature_descriptions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.group_features_by_interpretability"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.group_features_by_interpretability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.head"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.head()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.Features"><code class="docutils literal notranslate"><span class="pre">Features</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.ABSOLUTE_ENERGY"><code class="docutils literal notranslate"><span class="pre">Features.ABSOLUTE_ENERGY</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.BINARIZE_MEAN"><code class="docutils literal notranslate"><span class="pre">Features.BINARIZE_MEAN</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.CALCULATE_SEASONALITY_STRENGTH"><code class="docutils literal notranslate"><span class="pre">Features.CALCULATE_SEASONALITY_STRENGTH</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.CROSSING_POINTS"><code class="docutils literal notranslate"><span class="pre">Features.CROSSING_POINTS</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.ENTROPY"><code class="docutils literal notranslate"><span class="pre">Features.ENTROPY</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.FLAT_SPOTS"><code class="docutils literal notranslate"><span class="pre">Features.FLAT_SPOTS</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.LENGTH"><code class="docutils literal notranslate"><span class="pre">Features.LENGTH</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.MEAN"><code class="docutils literal notranslate"><span class="pre">Features.MEAN</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.MISSING_POINTS"><code class="docutils literal notranslate"><span class="pre">Features.MISSING_POINTS</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.PEAK"><code class="docutils literal notranslate"><span class="pre">Features.PEAK</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.SPIKENESS"><code class="docutils literal notranslate"><span class="pre">Features.SPIKENESS</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.STABILITY"><code class="docutils literal notranslate"><span class="pre">Features.STABILITY</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.STD_1ST_DER"><code class="docutils literal notranslate"><span class="pre">Features.STD_1ST_DER</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.TROUGH"><code class="docutils literal notranslate"><span class="pre">Features.TROUGH</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.Features.VARIANCE"><code class="docutils literal notranslate"><span class="pre">Features.VARIANCE</span></code></a></li>
 </ul>
 </li>
@@ -461,6 +457,193 @@ document.write(`
 </section>
 <section id="module-interpreTS">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-interpreTS" title="Permalink to this heading">#</a></h2>
+<p>interpreTS: A library for time series analysis and feature extraction.</p>
+<p>Available imports:
+- FeatureExtractor: Extracts features from time series data.
+- StreamingFeatureExtractor: Processes streaming time series data.
+- Features: Contains constants for supported feature calculations.
+- TimeSeriesData: Utility class for handling and manipulating time series data.
+- convert_to_time_series: Converts raw data into a time series format.
+- validate_time_series_data: Validates the integrity and format of time series data.</p>
+<p>Dependencies:
+- pandas&gt;=1.1.0
+- numpy&gt;=1.18.0
+- statsmodels&gt;=0.12.0
+- pytest</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="interpreTS.FeatureExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interpreTS.</span></span><span class="sig-name descname"><span class="pre">FeatureExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.FeatureExtractor" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.FeatureExtractor.DEFAULT_FEATURES">
+<span class="sig-name descname"><span class="pre">DEFAULT_FEATURES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['length',</span> <span class="pre">'mean',</span> <span class="pre">'variance',</span> <span class="pre">'stability',</span> <span class="pre">'entropy',</span> <span class="pre">'spikeness',</span> <span class="pre">'seasonality_strength']</span></em><a class="headerlink" href="#interpreTS.FeatureExtractor.DEFAULT_FEATURES" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interpreTS.FeatureExtractor.available_features">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">available_features</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.FeatureExtractor.available_features" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a list of all available features.</p>
+<section id="returns">
+<h3>Returns<a class="headerlink" href="#returns" title="Permalink to this heading">#</a></h3>
+<dl class="simple">
+<dt>list</dt><dd><p>List of feature names.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interpreTS.FeatureExtractor.extract_features">
+<span class="sig-name descname"><span class="pre">extract_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.FeatureExtractor.extract_features" title="Permalink to this definition">#</a></dt>
+<dd><p>Extract features from a time series dataset.</p>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading">#</a></h3>
+<dl class="simple">
+<dt>data<span class="classifier">pd.DataFrame or pd.Series</span></dt><dd><p>The time series data for which features are to be extracted.</p>
+</dd>
+</dl>
+</section>
+<section id="id1">
+<h3>Returns<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<dl class="simple">
+<dt>pd.DataFrame</dt><dd><p>A DataFrame containing calculated features for each window.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interpreTS.FeatureExtractor.generate_feature_descriptions">
+<span class="sig-name descname"><span class="pre">generate_feature_descriptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">extracted_features</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.FeatureExtractor.generate_feature_descriptions" title="Permalink to this definition">#</a></dt>
+<dd><p>Generate textual descriptions for extracted features.</p>
+<section id="id2">
+<h3>Parameters<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<dl class="simple">
+<dt>extracted_features<span class="classifier">dict</span></dt><dd><p>A dictionary where keys are feature names and values are their calculated values.</p>
+</dd>
+</dl>
+</section>
+<section id="id3">
+<h3>Returns<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<dl class="simple">
+<dt>dict</dt><dd><p>A dictionary where keys are feature names and values are textual descriptions.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interpreTS.FeatureExtractor.group_features_by_interpretability">
+<span class="sig-name descname"><span class="pre">group_features_by_interpretability</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.FeatureExtractor.group_features_by_interpretability" title="Permalink to this definition">#</a></dt>
+<dd><p>Group features by their interpretability levels.</p>
+<section id="id4">
+<h3>Returns<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<dl class="simple">
+<dt>dict</dt><dd><p>A dictionary where keys are interpretability levels (‘easy’, ‘moderate’, ‘advanced’),
+and values are lists of feature names.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interpreTS.FeatureExtractor.head">
+<span class="sig-name descname"><span class="pre">head</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.FeatureExtractor.head" title="Permalink to this definition">#</a></dt>
+<dd><p>Zwraca pierwsze n wierszy wynikowego DataFrame z funkcji extract_features.</p>
+<section id="parametry">
+<h3>Parametry<a class="headerlink" href="#parametry" title="Permalink to this heading">#</a></h3>
+<dl class="simple">
+<dt>features_df<span class="classifier">pd.DataFrame</span></dt><dd><p>DataFrame wynikowy z funkcji extract_features.</p>
+</dd>
+<dt>n<span class="classifier">int, opcjonalne (domyślnie 5)</span></dt><dd><p>Liczba wierszy do zwrócenia. Jeśli n jest ujemne, zwraca wszystkie wiersze oprócz ostatnich <a href="#id7"><span class="problematic" id="id8">|n|</span></a> wierszy.</p>
+</dd>
+</dl>
+</section>
+<section id="zwraca">
+<h3>Zwraca<a class="headerlink" href="#zwraca" title="Permalink to this heading">#</a></h3>
+<dl class="simple">
+<dt>pd.DataFrame</dt><dd><p>Pierwsze n wierszy DataFrame.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="interpreTS.Features">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interpreTS.</span></span><span class="sig-name descname"><span class="pre">Features</span></span><a class="headerlink" href="#interpreTS.Features" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.CALCULATE_SEASONALITY_STRENGTH">
+<span class="sig-name descname"><span class="pre">CALCULATE_SEASONALITY_STRENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'seasonality_strength'</span></em><a class="headerlink" href="#interpreTS.Features.CALCULATE_SEASONALITY_STRENGTH" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.ENTROPY">
+<span class="sig-name descname"><span class="pre">ENTROPY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'entropy'</span></em><a class="headerlink" href="#interpreTS.Features.ENTROPY" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.LENGTH">
+<span class="sig-name descname"><span class="pre">LENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'length'</span></em><a class="headerlink" href="#interpreTS.Features.LENGTH" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.MEAN">
+<span class="sig-name descname"><span class="pre">MEAN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mean'</span></em><a class="headerlink" href="#interpreTS.Features.MEAN" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.SPIKENESS">
+<span class="sig-name descname"><span class="pre">SPIKENESS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spikeness'</span></em><a class="headerlink" href="#interpreTS.Features.SPIKENESS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.STABILITY">
+<span class="sig-name descname"><span class="pre">STABILITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'stability'</span></em><a class="headerlink" href="#interpreTS.Features.STABILITY" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.VARIANCE">
+<span class="sig-name descname"><span class="pre">VARIANCE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'variance'</span></em><a class="headerlink" href="#interpreTS.Features.VARIANCE" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="interpreTS.validate_time_series_data">
+<span class="sig-prename descclassname"><span class="pre">interpreTS.</span></span><span class="sig-name descname"><span class="pre">validate_time_series_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">require_datetime_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_nan</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.validate_time_series_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Validate if the input data is suitable for time series processing.</p>
+<section id="id5">
+<h3>Parameters<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<dl class="simple">
+<dt>data<span class="classifier">pd.Series, pd.DataFrame, or np.ndarray</span></dt><dd><p>The time series data to be validated.</p>
+</dd>
+<dt>require_datetime_index<span class="classifier">bool, optional</span></dt><dd><p>If True, validation will ensure the data has a DateTime index (for time-based operations).</p>
+</dd>
+<dt>allow_nan<span class="classifier">bool, optional</span></dt><dd><p>If False, validation will raise an error if NaN values are present (default is True).</p>
+</dd>
+</dl>
+</section>
+<section id="id6">
+<h3>Returns<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<dl class="simple">
+<dt>bool</dt><dd><p>True if the data is valid; raises an error otherwise.</p>
+</dd>
+</dl>
+</section>
+<section id="raises">
+<h3>Raises<a class="headerlink" href="#raises" title="Permalink to this heading">#</a></h3>
+<dl class="simple">
+<dt>TypeError</dt><dd><p>If data is not a pd.Series, pd.DataFrame, or np.ndarray.</p>
+</dd>
+<dt>ValueError</dt><dd><p>If the data contains NaN values and <cite>allow_nan</cite> is False, or if the index is not a DateTime index when required.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
 </section>
 </section>
 
@@ -509,7 +692,29 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-interpreTS">Module contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-interpreTS">Module contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.FeatureExtractor"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.FeatureExtractor.DEFAULT_FEATURES"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.DEFAULT_FEATURES</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.FeatureExtractor.available_features"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.available_features()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.FeatureExtractor.extract_features"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.extract_features()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.FeatureExtractor.generate_feature_descriptions"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.generate_feature_descriptions()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.FeatureExtractor.group_features_by_interpretability"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.group_features_by_interpretability()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.FeatureExtractor.head"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.head()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features"><code class="docutils literal notranslate"><span class="pre">Features</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.CALCULATE_SEASONALITY_STRENGTH"><code class="docutils literal notranslate"><span class="pre">Features.CALCULATE_SEASONALITY_STRENGTH</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.ENTROPY"><code class="docutils literal notranslate"><span class="pre">Features.ENTROPY</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.LENGTH"><code class="docutils literal notranslate"><span class="pre">Features.LENGTH</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.MEAN"><code class="docutils literal notranslate"><span class="pre">Features.MEAN</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.SPIKENESS"><code class="docutils literal notranslate"><span class="pre">Features.SPIKENESS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.STABILITY"><code class="docutils literal notranslate"><span class="pre">Features.STABILITY</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.VARIANCE"><code class="docutils literal notranslate"><span class="pre">Features.VARIANCE</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.validate_time_series_data"><code class="docutils literal notranslate"><span class="pre">validate_time_series_data()</span></code></a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

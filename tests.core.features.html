@@ -396,404 +396,302 @@ document.write(`
 <section id="module-tests.core.features.test_feature_length">
 <span id="tests-core-features-test-feature-length-module"></span><h2>tests.core.features.test_feature_length module<a class="headerlink" href="#module-tests.core.features.test_feature_length" title="Permalink to this heading">#</a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_length.test_calculate_length_array">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_length.</span></span><span class="sig-name descname"><span class="pre">test_calculate_length_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_length.test_calculate_length_array" title="Permalink to this definition">#</a></dt>
-<dd><p>Test the calculate_length function with a numpy array.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_length.test_calculate_length_dataframe">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_length.</span></span><span class="sig-name descname"><span class="pre">test_calculate_length_dataframe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_length.test_calculate_length_dataframe" title="Permalink to this definition">#</a></dt>
-<dd><p>Test the calculate_length function with a pandas DataFrame.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_length.test_calculate_length_empty_array">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_length.</span></span><span class="sig-name descname"><span class="pre">test_calculate_length_empty_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_length.test_calculate_length_empty_array" title="Permalink to this definition">#</a></dt>
-<dd><p>Test the calculate_length function with an empty numpy array.</p>
+<dt class="sig sig-object py" id="tests.core.features.test_feature_length.test_calculate_length_basic">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_length.</span></span><span class="sig-name descname"><span class="pre">test_calculate_length_basic</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_length.test_calculate_length_basic" title="Permalink to this definition">#</a></dt>
+<dd><p>Test length calculation for a basic series.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.core.features.test_feature_length.test_calculate_length_empty_series">
 <span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_length.</span></span><span class="sig-name descname"><span class="pre">test_calculate_length_empty_series</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_length.test_calculate_length_empty_series" title="Permalink to this definition">#</a></dt>
-<dd><p>Test the calculate_length function with an empty pandas Series.</p>
+<dd><p>Test length calculation for an empty series.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_length.test_calculate_length_series">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_length.</span></span><span class="sig-name descname"><span class="pre">test_calculate_length_series</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_length.test_calculate_length_series" title="Permalink to this definition">#</a></dt>
-<dd><p>Test the calculate_length function to ensure it correctly calculates
-the number of data points in a pandas Series.</p>
+<dt class="sig sig-object py" id="tests.core.features.test_feature_length.test_calculate_length_invalid_type">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_length.</span></span><span class="sig-name descname"><span class="pre">test_calculate_length_invalid_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_length.test_calculate_length_invalid_type" title="Permalink to this definition">#</a></dt>
+<dd><p>Test length calculation for invalid input types.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.core.features.test_feature_length.test_calculate_length_large_series">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_length.</span></span><span class="sig-name descname"><span class="pre">test_calculate_length_large_series</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_length.test_calculate_length_large_series" title="Permalink to this definition">#</a></dt>
+<dd><p>Test length calculation for a large series.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.core.features.test_feature_length.test_calculate_length_multidimensional_array">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_length.</span></span><span class="sig-name descname"><span class="pre">test_calculate_length_multidimensional_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_length.test_calculate_length_multidimensional_array" title="Permalink to this definition">#</a></dt>
+<dd><p>Test length calculation for a multidimensional array.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.core.features.test_feature_length.test_calculate_length_nan_values">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_length.</span></span><span class="sig-name descname"><span class="pre">test_calculate_length_nan_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_length.test_calculate_length_nan_values" title="Permalink to this definition">#</a></dt>
+<dd><p>Test length calculation for a series with NaN values.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.core.features.test_feature_length.test_calculate_length_numpy_array">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_length.</span></span><span class="sig-name descname"><span class="pre">test_calculate_length_numpy_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_length.test_calculate_length_numpy_array" title="Permalink to this definition">#</a></dt>
+<dd><p>Test length calculation for a numpy array.</p>
 </dd></dl>
 
 </section>
 <section id="module-tests.core.features.test_feature_mean">
 <span id="tests-core-features-test-feature-mean-module"></span><h2>tests.core.features.test_feature_mean module<a class="headerlink" href="#module-tests.core.features.test_feature_mean" title="Permalink to this heading">#</a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_mean.test_calculate_mean">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_mean.</span></span><span class="sig-name descname"><span class="pre">test_calculate_mean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_mean.test_calculate_mean" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_mean correctly calculates the mean value of a time series.</p>
+<dt class="sig sig-object py" id="tests.core.features.test_feature_mean.test_calculate_mean_constant_series">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_mean.</span></span><span class="sig-name descname"><span class="pre">test_calculate_mean_constant_series</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_mean.test_calculate_mean_constant_series" title="Permalink to this definition">#</a></dt>
+<dd><p>Test mean calculation for a series with constant values.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.core.features.test_feature_mean.test_calculate_mean_empty_series">
 <span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_mean.</span></span><span class="sig-name descname"><span class="pre">test_calculate_mean_empty_series</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_mean.test_calculate_mean_empty_series" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_mean returns NaN for an empty time series.</p>
+<dd><p>Test mean calculation for an empty series.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.core.features.test_feature_mean.test_calculate_mean_large_numbers">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_mean.</span></span><span class="sig-name descname"><span class="pre">test_calculate_mean_large_numbers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_mean.test_calculate_mean_large_numbers" title="Permalink to this definition">#</a></dt>
+<dd><p>Test mean calculation for a series with very large numbers.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.core.features.test_feature_mean.test_calculate_mean_mixed_values">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_mean.</span></span><span class="sig-name descname"><span class="pre">test_calculate_mean_mixed_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_mean.test_calculate_mean_mixed_values" title="Permalink to this definition">#</a></dt>
+<dd><p>Test mean calculation for a series with mixed positive and negative values.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.core.features.test_feature_mean.test_calculate_mean_negative_values">
 <span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_mean.</span></span><span class="sig-name descname"><span class="pre">test_calculate_mean_negative_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_mean.test_calculate_mean_negative_values" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_mean correctly calculates the mean for a series with negative values.</p>
+<dd><p>Test mean calculation for a series with negative values.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.core.features.test_feature_mean.test_calculate_mean_numpy_array">
 <span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_mean.</span></span><span class="sig-name descname"><span class="pre">test_calculate_mean_numpy_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_mean.test_calculate_mean_numpy_array" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_mean correctly calculates the mean value of a numpy array.</p>
+<dd><p>Test mean calculation for a numpy array.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.core.features.test_feature_mean.test_calculate_mean_simple_series">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_mean.</span></span><span class="sig-name descname"><span class="pre">test_calculate_mean_simple_series</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_mean.test_calculate_mean_simple_series" title="Permalink to this definition">#</a></dt>
+<dd><p>Test mean calculation for a simple series.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.core.features.test_feature_mean.test_calculate_mean_single_value">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_mean.</span></span><span class="sig-name descname"><span class="pre">test_calculate_mean_single_value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_mean.test_calculate_mean_single_value" title="Permalink to this definition">#</a></dt>
+<dd><p>Test mean calculation for a series with a single value.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.core.features.test_feature_mean.test_calculate_mean_small_numbers">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_mean.</span></span><span class="sig-name descname"><span class="pre">test_calculate_mean_small_numbers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_mean.test_calculate_mean_small_numbers" title="Permalink to this definition">#</a></dt>
+<dd><p>Test mean calculation for a series with very small numbers.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.core.features.test_feature_mean.test_calculate_mean_with_nan">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_mean.</span></span><span class="sig-name descname"><span class="pre">test_calculate_mean_with_nan</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_mean.test_calculate_mean_with_nan" title="Permalink to this definition">#</a></dt>
+<dd><p>Test mean calculation for a series containing NaN values.</p>
 </dd></dl>
 
 </section>
 <section id="module-tests.core.features.test_feature_peak">
 <span id="tests-core-features-test-feature-peak-module"></span><h2>tests.core.features.test_feature_peak module<a class="headerlink" href="#module-tests.core.features.test_feature_peak" title="Permalink to this heading">#</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_peak.test_calculate_peak">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_peak.</span></span><span class="sig-name descname"><span class="pre">test_calculate_peak</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_peak.test_calculate_peak" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_peak correctly calculates the peak (maximum) value of a time series.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_peak.test_calculate_peak_empty_series">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_peak.</span></span><span class="sig-name descname"><span class="pre">test_calculate_peak_empty_series</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_peak.test_calculate_peak_empty_series" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_peak returns NaN for an empty time series.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_peak.test_calculate_peak_numpy_array">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_peak.</span></span><span class="sig-name descname"><span class="pre">test_calculate_peak_numpy_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_peak.test_calculate_peak_numpy_array" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_peak correctly calculates the peak (maximum) value of a numpy array.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_peak.test_calculate_peak_with_negative_values">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_peak.</span></span><span class="sig-name descname"><span class="pre">test_calculate_peak_with_negative_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_peak.test_calculate_peak_with_negative_values" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_peak correctly calculates the peak (maximum) for a series with negative values.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_peak.test_calculate_peak_with_out_of_range_indices">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_peak.</span></span><span class="sig-name descname"><span class="pre">test_calculate_peak_with_out_of_range_indices</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_peak.test_calculate_peak_with_out_of_range_indices" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_peak handles out-of-range start and end indices gracefully.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_peak.test_calculate_peak_with_start_and_end">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_peak.</span></span><span class="sig-name descname"><span class="pre">test_calculate_peak_with_start_and_end</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_peak.test_calculate_peak_with_start_and_end" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_peak correctly calculates the peak within a specified start and end range.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_peak.test_calculate_peak_with_start_greater_than_end">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_peak.</span></span><span class="sig-name descname"><span class="pre">test_calculate_peak_with_start_greater_than_end</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_peak.test_calculate_peak_with_start_greater_than_end" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_peak returns NaN if start index is greater than end index.</p>
-</dd></dl>
-
 </section>
 <section id="module-tests.core.features.test_feature_spikeness">
 <span id="tests-core-features-test-feature-spikeness-module"></span><h2>tests.core.features.test_feature_spikeness module<a class="headerlink" href="#module-tests.core.features.test_feature_spikeness" title="Permalink to this heading">#</a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_spikeness.test_spikeness_empty_series">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_spikeness.</span></span><span class="sig-name descname"><span class="pre">test_spikeness_empty_series</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_spikeness.test_spikeness_empty_series" title="Permalink to this definition">#</a></dt>
-<dd><p>Test calculate_spikeness on an empty time series.</p>
+<dt class="sig sig-object py" id="tests.core.features.test_feature_spikeness.test_calculate_spikeness_all_nan">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_spikeness.</span></span><span class="sig-name descname"><span class="pre">test_calculate_spikeness_all_nan</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_spikeness.test_calculate_spikeness_all_nan" title="Permalink to this definition">#</a></dt>
+<dd><p>Test spikeness for a series with all NaN values.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_spikeness.test_spikeness_negative_skew">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_spikeness.</span></span><span class="sig-name descname"><span class="pre">test_spikeness_negative_skew</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_spikeness.test_spikeness_negative_skew" title="Permalink to this definition">#</a></dt>
-<dd><p>Test calculate_spikeness on a negatively skewed time series.</p>
+<dt class="sig sig-object py" id="tests.core.features.test_feature_spikeness.test_calculate_spikeness_constant_data">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_spikeness.</span></span><span class="sig-name descname"><span class="pre">test_calculate_spikeness_constant_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_spikeness.test_calculate_spikeness_constant_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Test spikeness for a constant series.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_spikeness.test_spikeness_no_skew">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_spikeness.</span></span><span class="sig-name descname"><span class="pre">test_spikeness_no_skew</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_spikeness.test_spikeness_no_skew" title="Permalink to this definition">#</a></dt>
-<dd><p>Test calculate_spikeness on a time series with no skew (symmetric data).</p>
+<dt class="sig sig-object py" id="tests.core.features.test_feature_spikeness.test_calculate_spikeness_empty_series">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_spikeness.</span></span><span class="sig-name descname"><span class="pre">test_calculate_spikeness_empty_series</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_spikeness.test_calculate_spikeness_empty_series" title="Permalink to this definition">#</a></dt>
+<dd><p>Test spikeness for an empty series.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_spikeness.test_spikeness_numpy_array">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_spikeness.</span></span><span class="sig-name descname"><span class="pre">test_spikeness_numpy_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_spikeness.test_spikeness_numpy_array" title="Permalink to this definition">#</a></dt>
-<dd><p>Test calculate_spikeness on a numpy array (alternative data format).</p>
+<dt class="sig sig-object py" id="tests.core.features.test_feature_spikeness.test_calculate_spikeness_negative_skew">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_spikeness.</span></span><span class="sig-name descname"><span class="pre">test_calculate_spikeness_negative_skew</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_spikeness.test_calculate_spikeness_negative_skew" title="Permalink to this definition">#</a></dt>
+<dd><p>Test spikeness for a negatively skewed series.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_spikeness.test_spikeness_positive_skew">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_spikeness.</span></span><span class="sig-name descname"><span class="pre">test_spikeness_positive_skew</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_spikeness.test_spikeness_positive_skew" title="Permalink to this definition">#</a></dt>
-<dd><p>Test calculate_spikeness on a positively skewed time series.</p>
+<dt class="sig sig-object py" id="tests.core.features.test_feature_spikeness.test_calculate_spikeness_non_numeric">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_spikeness.</span></span><span class="sig-name descname"><span class="pre">test_calculate_spikeness_non_numeric</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_spikeness.test_calculate_spikeness_non_numeric" title="Permalink to this definition">#</a></dt>
+<dd><p>Test spikeness for non-numeric data.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_spikeness.test_spikeness_with_nan_values">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_spikeness.</span></span><span class="sig-name descname"><span class="pre">test_spikeness_with_nan_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_spikeness.test_spikeness_with_nan_values" title="Permalink to this definition">#</a></dt>
-<dd><p>Test calculate_spikeness on a time series containing NaN values.</p>
+<dt class="sig sig-object py" id="tests.core.features.test_feature_spikeness.test_calculate_spikeness_numpy_array">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_spikeness.</span></span><span class="sig-name descname"><span class="pre">test_calculate_spikeness_numpy_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_spikeness.test_calculate_spikeness_numpy_array" title="Permalink to this definition">#</a></dt>
+<dd><p>Test spikeness for a numpy array.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.core.features.test_feature_spikeness.test_calculate_spikeness_positive_skew">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_spikeness.</span></span><span class="sig-name descname"><span class="pre">test_calculate_spikeness_positive_skew</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_spikeness.test_calculate_spikeness_positive_skew" title="Permalink to this definition">#</a></dt>
+<dd><p>Test spikeness for a positively skewed series.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.core.features.test_feature_spikeness.test_calculate_spikeness_simple_case">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_spikeness.</span></span><span class="sig-name descname"><span class="pre">test_calculate_spikeness_simple_case</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_spikeness.test_calculate_spikeness_simple_case" title="Permalink to this definition">#</a></dt>
+<dd><p>Test spikeness for a simple series.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.core.features.test_feature_spikeness.test_calculate_spikeness_with_nan">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_spikeness.</span></span><span class="sig-name descname"><span class="pre">test_calculate_spikeness_with_nan</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_spikeness.test_calculate_spikeness_with_nan" title="Permalink to this definition">#</a></dt>
+<dd><p>Test spikeness for a series containing NaN values.</p>
 </dd></dl>
 
 </section>
 <section id="module-tests.core.features.test_feature_std_1st_der">
 <span id="tests-core-features-test-feature-std-1st-der-module"></span><h2>tests.core.features.test_feature_std_1st_der module<a class="headerlink" href="#module-tests.core.features.test_feature_std_1st_der" title="Permalink to this heading">#</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_std_1st_der.test_calculate_std_1st_derivative_constant_series">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_std_1st_der.</span></span><span class="sig-name descname"><span class="pre">test_calculate_std_1st_derivative_constant_series</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_std_1st_der.test_calculate_std_1st_derivative_constant_series" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that the standard deviation of the first derivative is zero for a constant series.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_std_1st_der.test_calculate_std_1st_derivative_linear_series">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_std_1st_der.</span></span><span class="sig-name descname"><span class="pre">test_calculate_std_1st_derivative_linear_series</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_std_1st_der.test_calculate_std_1st_derivative_linear_series" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that the standard deviation of the first derivative is zero for a linear series.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_std_1st_der.test_calculate_std_1st_derivative_numpy_array">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_std_1st_der.</span></span><span class="sig-name descname"><span class="pre">test_calculate_std_1st_derivative_numpy_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_std_1st_der.test_calculate_std_1st_derivative_numpy_array" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that the function works with a numpy array as input.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_std_1st_der.test_calculate_std_1st_derivative_varying_series">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_std_1st_der.</span></span><span class="sig-name descname"><span class="pre">test_calculate_std_1st_derivative_varying_series</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_std_1st_der.test_calculate_std_1st_derivative_varying_series" title="Permalink to this definition">#</a></dt>
-<dd><p>Test the standard deviation of the first derivative for a varying series.</p>
-</dd></dl>
-
 </section>
 <section id="module-tests.core.features.test_feature_trough">
 <span id="tests-core-features-test-feature-trough-module"></span><h2>tests.core.features.test_feature_trough module<a class="headerlink" href="#module-tests.core.features.test_feature_trough" title="Permalink to this heading">#</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_trough.test_calculate_trough">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_trough.</span></span><span class="sig-name descname"><span class="pre">test_calculate_trough</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_trough.test_calculate_trough" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_trough correctly calculates the trough (minimum) value of a time series.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_trough.test_calculate_trough_empty_series">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_trough.</span></span><span class="sig-name descname"><span class="pre">test_calculate_trough_empty_series</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_trough.test_calculate_trough_empty_series" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_trough returns NaN for an empty time series.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_trough.test_calculate_trough_numpy_array">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_trough.</span></span><span class="sig-name descname"><span class="pre">test_calculate_trough_numpy_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_trough.test_calculate_trough_numpy_array" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_trough correctly calculates the trough (minimum) value of a numpy array.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_trough.test_calculate_trough_with_negative_values">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_trough.</span></span><span class="sig-name descname"><span class="pre">test_calculate_trough_with_negative_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_trough.test_calculate_trough_with_negative_values" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_trough correctly calculates the trough (minimum) for a series with negative values.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_trough.test_calculate_trough_with_out_of_range_indices">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_trough.</span></span><span class="sig-name descname"><span class="pre">test_calculate_trough_with_out_of_range_indices</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_trough.test_calculate_trough_with_out_of_range_indices" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_trough handles out-of-range start and end indices gracefully.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_trough.test_calculate_trough_with_start_and_end">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_trough.</span></span><span class="sig-name descname"><span class="pre">test_calculate_trough_with_start_and_end</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_trough.test_calculate_trough_with_start_and_end" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_trough correctly calculates the trough within a specified start and end range.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_trough.test_calculate_trough_with_start_greater_than_end">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_trough.</span></span><span class="sig-name descname"><span class="pre">test_calculate_trough_with_start_greater_than_end</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_trough.test_calculate_trough_with_start_greater_than_end" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_trough returns NaN if start index is greater than end index.</p>
-</dd></dl>
-
 </section>
 <section id="module-tests.core.features.test_feature_variance">
 <span id="tests-core-features-test-feature-variance-module"></span><h2>tests.core.features.test_feature_variance module<a class="headerlink" href="#module-tests.core.features.test_feature_variance" title="Permalink to this heading">#</a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_variance.test_calculate_variance">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_variance.</span></span><span class="sig-name descname"><span class="pre">test_calculate_variance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_variance.test_calculate_variance" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_variance correctly calculates the variance of a time series.</p>
+<dt class="sig sig-object py" id="tests.core.features.test_feature_variance.test_calculate_variance_all_identical_values">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_variance.</span></span><span class="sig-name descname"><span class="pre">test_calculate_variance_all_identical_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_variance.test_calculate_variance_all_identical_values" title="Permalink to this definition">#</a></dt>
+<dd><p>Test variance calculation for a series with all identical values.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.core.features.test_feature_variance.test_calculate_variance_basic">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_variance.</span></span><span class="sig-name descname"><span class="pre">test_calculate_variance_basic</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_variance.test_calculate_variance_basic" title="Permalink to this definition">#</a></dt>
+<dd><p>Test variance calculation for a basic series.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.core.features.test_feature_variance.test_calculate_variance_empty_series">
 <span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_variance.</span></span><span class="sig-name descname"><span class="pre">test_calculate_variance_empty_series</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_variance.test_calculate_variance_empty_series" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_variance returns NaN for an empty time series.</p>
+<dd><p>Test variance calculation for an empty series.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_variance.test_calculate_variance_negative_values">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_variance.</span></span><span class="sig-name descname"><span class="pre">test_calculate_variance_negative_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_variance.test_calculate_variance_negative_values" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_variance correctly calculates the variance for a series with negative values.</p>
+<dt class="sig sig-object py" id="tests.core.features.test_feature_variance.test_calculate_variance_large_numbers">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_variance.</span></span><span class="sig-name descname"><span class="pre">test_calculate_variance_large_numbers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_variance.test_calculate_variance_large_numbers" title="Permalink to this definition">#</a></dt>
+<dd><p>Test variance calculation for a series with large numbers.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_variance.test_calculate_variance_numpy_array">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_variance.</span></span><span class="sig-name descname"><span class="pre">test_calculate_variance_numpy_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_variance.test_calculate_variance_numpy_array" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_variance correctly calculates the variance of a numpy array.</p>
+<dt class="sig sig-object py" id="tests.core.features.test_feature_variance.test_calculate_variance_multidimensional_array">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_variance.</span></span><span class="sig-name descname"><span class="pre">test_calculate_variance_multidimensional_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_variance.test_calculate_variance_multidimensional_array" title="Permalink to this definition">#</a></dt>
+<dd><p>Test variance calculation for a multidimensional array.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_variance.test_calculate_variance_with_ddof_0">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_variance.</span></span><span class="sig-name descname"><span class="pre">test_calculate_variance_with_ddof_0</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_variance.test_calculate_variance_with_ddof_0" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_variance correctly calculates the population variance (ddof=0).</p>
+<dt class="sig sig-object py" id="tests.core.features.test_feature_variance.test_calculate_variance_non_numeric_data">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_variance.</span></span><span class="sig-name descname"><span class="pre">test_calculate_variance_non_numeric_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_variance.test_calculate_variance_non_numeric_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Test variance calculation for non-numeric data.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_variance.test_calculate_variance_with_identical_values">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_variance.</span></span><span class="sig-name descname"><span class="pre">test_calculate_variance_with_identical_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_variance.test_calculate_variance_with_identical_values" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_variance returns 0 for a series with identical values.</p>
+<dt class="sig sig-object py" id="tests.core.features.test_feature_variance.test_calculate_variance_population">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_variance.</span></span><span class="sig-name descname"><span class="pre">test_calculate_variance_population</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_variance.test_calculate_variance_population" title="Permalink to this definition">#</a></dt>
+<dd><p>Test variance calculation for a basic series with population variance.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_feature_variance.test_calculate_variance_with_single_value">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_variance.</span></span><span class="sig-name descname"><span class="pre">test_calculate_variance_with_single_value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_variance.test_calculate_variance_with_single_value" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_variance returns 0 for a series with a single value.</p>
+<dt class="sig sig-object py" id="tests.core.features.test_feature_variance.test_calculate_variance_single_value">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_variance.</span></span><span class="sig-name descname"><span class="pre">test_calculate_variance_single_value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_variance.test_calculate_variance_single_value" title="Permalink to this definition">#</a></dt>
+<dd><p>Test variance calculation for a series with a single value.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.core.features.test_feature_variance.test_calculate_variance_small_numbers">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_variance.</span></span><span class="sig-name descname"><span class="pre">test_calculate_variance_small_numbers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_variance.test_calculate_variance_small_numbers" title="Permalink to this definition">#</a></dt>
+<dd><p>Test variance calculation for a series with very small numbers.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.core.features.test_feature_variance.test_calculate_variance_with_nan">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_feature_variance.</span></span><span class="sig-name descname"><span class="pre">test_calculate_variance_with_nan</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_feature_variance.test_calculate_variance_with_nan" title="Permalink to this definition">#</a></dt>
+<dd><p>Test variance calculation for a series containing NaN values.</p>
 </dd></dl>
 
 </section>
 <section id="module-tests.core.features.test_histogram_dominant">
 <span id="tests-core-features-test-histogram-dominant-module"></span><h2>tests.core.features.test_histogram_dominant module<a class="headerlink" href="#module-tests.core.features.test_histogram_dominant" title="Permalink to this heading">#</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_histogram_dominant.test_calculate_dominant_basic">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_histogram_dominant.</span></span><span class="sig-name descname"><span class="pre">test_calculate_dominant_basic</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_histogram_dominant.test_calculate_dominant_basic" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_dominant correctly identifies the dominant value
-in a simple time series.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_histogram_dominant.test_calculate_dominant_bins_parameter">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_histogram_dominant.</span></span><span class="sig-name descname"><span class="pre">test_calculate_dominant_bins_parameter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_histogram_dominant.test_calculate_dominant_bins_parameter" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_dominant respects the ‘bins’ parameter for histogram granularity.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_histogram_dominant.test_calculate_dominant_empty_series">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_histogram_dominant.</span></span><span class="sig-name descname"><span class="pre">test_calculate_dominant_empty_series</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_histogram_dominant.test_calculate_dominant_empty_series" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_dominant returns NaN for an empty time series.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_histogram_dominant.test_calculate_dominant_multiple_modes">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_histogram_dominant.</span></span><span class="sig-name descname"><span class="pre">test_calculate_dominant_multiple_modes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_histogram_dominant.test_calculate_dominant_multiple_modes" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_dominant returns one of the most frequent values
-when there are multiple modes in the data.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_histogram_dominant.test_calculate_dominant_negative_values">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_histogram_dominant.</span></span><span class="sig-name descname"><span class="pre">test_calculate_dominant_negative_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_histogram_dominant.test_calculate_dominant_negative_values" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_dominant correctly identifies the dominant value for a series with negative values.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_histogram_dominant.test_calculate_dominant_numpy_array">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_histogram_dominant.</span></span><span class="sig-name descname"><span class="pre">test_calculate_dominant_numpy_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_histogram_dominant.test_calculate_dominant_numpy_array" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_dominant correctly identifies the dominant value in a numpy array.</p>
-</dd></dl>
-
 </section>
 <section id="module-tests.core.features.test_seasonality_strength">
 <span id="tests-core-features-test-seasonality-strength-module"></span><h2>tests.core.features.test_seasonality_strength module<a class="headerlink" href="#module-tests.core.features.test_seasonality_strength" title="Permalink to this heading">#</a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_empty_series">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_seasonality_strength.</span></span><span class="sig-name descname"><span class="pre">test_calculate_seasonality_strength_empty_series</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_empty_series" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_seasonality_strength returns NaN for an empty series.</p>
+<dt class="sig sig-object py" id="tests.core.features.test_seasonality_strength.test_seasonality_strength_constant_data">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_seasonality_strength.</span></span><span class="sig-name descname"><span class="pre">test_seasonality_strength_constant_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_seasonality_strength.test_seasonality_strength_constant_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Test seasonality strength for constant data.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_insufficient_data">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_seasonality_strength.</span></span><span class="sig-name descname"><span class="pre">test_calculate_seasonality_strength_insufficient_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_insufficient_data" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_seasonality_strength returns NaN for insufficient data.</p>
+<dt class="sig sig-object py" id="tests.core.features.test_seasonality_strength.test_seasonality_strength_insufficient_data">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_seasonality_strength.</span></span><span class="sig-name descname"><span class="pre">test_seasonality_strength_insufficient_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_seasonality_strength.test_seasonality_strength_insufficient_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Test seasonality strength for insufficient data length.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_no_seasonality">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_seasonality_strength.</span></span><span class="sig-name descname"><span class="pre">test_calculate_seasonality_strength_no_seasonality</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_no_seasonality" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_seasonality_strength identifies no seasonality.
-This test uses random data without any periodic pattern.</p>
+<dt class="sig sig-object py" id="tests.core.features.test_seasonality_strength.test_seasonality_strength_invalid_period">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_seasonality_strength.</span></span><span class="sig-name descname"><span class="pre">test_seasonality_strength_invalid_period</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_seasonality_strength.test_seasonality_strength_invalid_period" title="Permalink to this definition">#</a></dt>
+<dd><p>Test seasonality strength with invalid period.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_numpy_array">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_seasonality_strength.</span></span><span class="sig-name descname"><span class="pre">test_calculate_seasonality_strength_numpy_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_numpy_array" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_seasonality_strength works with a numpy array.</p>
+<dt class="sig sig-object py" id="tests.core.features.test_seasonality_strength.test_seasonality_strength_large_periodic_data">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_seasonality_strength.</span></span><span class="sig-name descname"><span class="pre">test_seasonality_strength_large_periodic_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_seasonality_strength.test_seasonality_strength_large_periodic_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Test seasonality strength for a large dataset with periodicity.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_strong_seasonality">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_seasonality_strength.</span></span><span class="sig-name descname"><span class="pre">test_calculate_seasonality_strength_strong_seasonality</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_strong_seasonality" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_seasonality_strength identifies strong seasonality.
-This test uses a repeating seasonal pattern (e.g., a sine wave).</p>
+<dt class="sig sig-object py" id="tests.core.features.test_seasonality_strength.test_seasonality_strength_periodic_with_noise">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_seasonality_strength.</span></span><span class="sig-name descname"><span class="pre">test_seasonality_strength_periodic_with_noise</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_seasonality_strength.test_seasonality_strength_periodic_with_noise" title="Permalink to this definition">#</a></dt>
+<dd><p>Test seasonality strength for periodic data with added noise.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_weak_seasonality">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_seasonality_strength.</span></span><span class="sig-name descname"><span class="pre">test_calculate_seasonality_strength_weak_seasonality</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_weak_seasonality" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_seasonality_strength identifies weak seasonality.
-This test uses a data set with some periodicity but lower correlation.</p>
+<dt class="sig sig-object py" id="tests.core.features.test_seasonality_strength.test_seasonality_strength_random_data">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_seasonality_strength.</span></span><span class="sig-name descname"><span class="pre">test_seasonality_strength_random_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_seasonality_strength.test_seasonality_strength_random_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Test seasonality strength for random data.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_with_long_periodicity">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_seasonality_strength.</span></span><span class="sig-name descname"><span class="pre">test_calculate_seasonality_strength_with_long_periodicity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_with_long_periodicity" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_seasonality_strength detects seasonality with longer periodicity.</p>
+<dt class="sig sig-object py" id="tests.core.features.test_seasonality_strength.test_seasonality_strength_single_point">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_seasonality_strength.</span></span><span class="sig-name descname"><span class="pre">test_seasonality_strength_single_point</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_seasonality_strength.test_seasonality_strength_single_point" title="Permalink to this definition">#</a></dt>
+<dd><p>Test seasonality strength for a single data point.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_with_short_periodicity">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_seasonality_strength.</span></span><span class="sig-name descname"><span class="pre">test_calculate_seasonality_strength_with_short_periodicity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_with_short_periodicity" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_seasonality_strength detects seasonality with short periodicity.</p>
+<dt class="sig sig-object py" id="tests.core.features.test_seasonality_strength.test_seasonality_strength_valid_periodic">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_seasonality_strength.</span></span><span class="sig-name descname"><span class="pre">test_seasonality_strength_valid_periodic</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_seasonality_strength.test_seasonality_strength_valid_periodic" title="Permalink to this definition">#</a></dt>
+<dd><p>Test seasonality strength for periodic data.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.core.features.test_seasonality_strength.test_seasonality_strength_with_nan">
+<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_seasonality_strength.</span></span><span class="sig-name descname"><span class="pre">test_seasonality_strength_with_nan</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_seasonality_strength.test_seasonality_strength_with_nan" title="Permalink to this definition">#</a></dt>
+<dd><p>Test seasonality strength for data containing NaN values.</p>
 </dd></dl>
 
 </section>
 <section id="module-tests.core.features.test_trend_strength">
 <span id="tests-core-features-test-trend-strength-module"></span><h2>tests.core.features.test_trend_strength module<a class="headerlink" href="#module-tests.core.features.test_trend_strength" title="Permalink to this heading">#</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_trend_strength.test_calculate_trend_strength_decreasing">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_trend_strength.</span></span><span class="sig-name descname"><span class="pre">test_calculate_trend_strength_decreasing</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_trend_strength.test_calculate_trend_strength_decreasing" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_trend_strength identifies a strong negative trend.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_trend_strength.test_calculate_trend_strength_empty_series">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_trend_strength.</span></span><span class="sig-name descname"><span class="pre">test_calculate_trend_strength_empty_series</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_trend_strength.test_calculate_trend_strength_empty_series" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_trend_strength returns NaN for an empty series.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_trend_strength.test_calculate_trend_strength_increasing">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_trend_strength.</span></span><span class="sig-name descname"><span class="pre">test_calculate_trend_strength_increasing</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_trend_strength.test_calculate_trend_strength_increasing" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_trend_strength identifies a strong positive trend.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_trend_strength.test_calculate_trend_strength_insufficient_data">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_trend_strength.</span></span><span class="sig-name descname"><span class="pre">test_calculate_trend_strength_insufficient_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_trend_strength.test_calculate_trend_strength_insufficient_data" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_trend_strength returns NaN for a single data point.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_trend_strength.test_calculate_trend_strength_no_trend">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_trend_strength.</span></span><span class="sig-name descname"><span class="pre">test_calculate_trend_strength_no_trend</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_trend_strength.test_calculate_trend_strength_no_trend" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_trend_strength returns a low value for a series with no trend.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_trend_strength.test_calculate_trend_strength_numpy_array">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_trend_strength.</span></span><span class="sig-name descname"><span class="pre">test_calculate_trend_strength_numpy_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_trend_strength.test_calculate_trend_strength_numpy_array" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_trend_strength works with a numpy array.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="tests.core.features.test_trend_strength.test_calculate_trend_strength_random_data">
-<span class="sig-prename descclassname"><span class="pre">tests.core.features.test_trend_strength.</span></span><span class="sig-name descname"><span class="pre">test_calculate_trend_strength_random_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.core.features.test_trend_strength.test_calculate_trend_strength_random_data" title="Permalink to this definition">#</a></dt>
-<dd><p>Test that calculate_trend_strength returns a low value for random data.</p>
-</dd></dl>
-
 </section>
 <section id="module-tests.core.features">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-tests.core.features" title="Permalink to this heading">#</a></h2>
@@ -846,96 +744,70 @@ This test uses a data set with some periodicity but lower correlation.</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.core.features.test_feature_length">tests.core.features.test_feature_length module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_length.test_calculate_length_array"><code class="docutils literal notranslate"><span class="pre">test_calculate_length_array()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_length.test_calculate_length_dataframe"><code class="docutils literal notranslate"><span class="pre">test_calculate_length_dataframe()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_length.test_calculate_length_empty_array"><code class="docutils literal notranslate"><span class="pre">test_calculate_length_empty_array()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_length.test_calculate_length_basic"><code class="docutils literal notranslate"><span class="pre">test_calculate_length_basic()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_length.test_calculate_length_empty_series"><code class="docutils literal notranslate"><span class="pre">test_calculate_length_empty_series()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_length.test_calculate_length_series"><code class="docutils literal notranslate"><span class="pre">test_calculate_length_series()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_length.test_calculate_length_invalid_type"><code class="docutils literal notranslate"><span class="pre">test_calculate_length_invalid_type()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_length.test_calculate_length_large_series"><code class="docutils literal notranslate"><span class="pre">test_calculate_length_large_series()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_length.test_calculate_length_multidimensional_array"><code class="docutils literal notranslate"><span class="pre">test_calculate_length_multidimensional_array()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_length.test_calculate_length_nan_values"><code class="docutils literal notranslate"><span class="pre">test_calculate_length_nan_values()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_length.test_calculate_length_numpy_array"><code class="docutils literal notranslate"><span class="pre">test_calculate_length_numpy_array()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.core.features.test_feature_mean">tests.core.features.test_feature_mean module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_mean.test_calculate_mean"><code class="docutils literal notranslate"><span class="pre">test_calculate_mean()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_mean.test_calculate_mean_constant_series"><code class="docutils literal notranslate"><span class="pre">test_calculate_mean_constant_series()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_mean.test_calculate_mean_empty_series"><code class="docutils literal notranslate"><span class="pre">test_calculate_mean_empty_series()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_mean.test_calculate_mean_large_numbers"><code class="docutils literal notranslate"><span class="pre">test_calculate_mean_large_numbers()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_mean.test_calculate_mean_mixed_values"><code class="docutils literal notranslate"><span class="pre">test_calculate_mean_mixed_values()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_mean.test_calculate_mean_negative_values"><code class="docutils literal notranslate"><span class="pre">test_calculate_mean_negative_values()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_mean.test_calculate_mean_numpy_array"><code class="docutils literal notranslate"><span class="pre">test_calculate_mean_numpy_array()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_mean.test_calculate_mean_simple_series"><code class="docutils literal notranslate"><span class="pre">test_calculate_mean_simple_series()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_mean.test_calculate_mean_single_value"><code class="docutils literal notranslate"><span class="pre">test_calculate_mean_single_value()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_mean.test_calculate_mean_small_numbers"><code class="docutils literal notranslate"><span class="pre">test_calculate_mean_small_numbers()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_mean.test_calculate_mean_with_nan"><code class="docutils literal notranslate"><span class="pre">test_calculate_mean_with_nan()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.core.features.test_feature_peak">tests.core.features.test_feature_peak module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_peak.test_calculate_peak"><code class="docutils literal notranslate"><span class="pre">test_calculate_peak()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_peak.test_calculate_peak_empty_series"><code class="docutils literal notranslate"><span class="pre">test_calculate_peak_empty_series()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_peak.test_calculate_peak_numpy_array"><code class="docutils literal notranslate"><span class="pre">test_calculate_peak_numpy_array()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_peak.test_calculate_peak_with_negative_values"><code class="docutils literal notranslate"><span class="pre">test_calculate_peak_with_negative_values()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_peak.test_calculate_peak_with_out_of_range_indices"><code class="docutils literal notranslate"><span class="pre">test_calculate_peak_with_out_of_range_indices()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_peak.test_calculate_peak_with_start_and_end"><code class="docutils literal notranslate"><span class="pre">test_calculate_peak_with_start_and_end()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_peak.test_calculate_peak_with_start_greater_than_end"><code class="docutils literal notranslate"><span class="pre">test_calculate_peak_with_start_greater_than_end()</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.core.features.test_feature_peak">tests.core.features.test_feature_peak module</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.core.features.test_feature_spikeness">tests.core.features.test_feature_spikeness module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_spikeness.test_spikeness_empty_series"><code class="docutils literal notranslate"><span class="pre">test_spikeness_empty_series()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_spikeness.test_spikeness_negative_skew"><code class="docutils literal notranslate"><span class="pre">test_spikeness_negative_skew()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_spikeness.test_spikeness_no_skew"><code class="docutils literal notranslate"><span class="pre">test_spikeness_no_skew()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_spikeness.test_spikeness_numpy_array"><code class="docutils literal notranslate"><span class="pre">test_spikeness_numpy_array()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_spikeness.test_spikeness_positive_skew"><code class="docutils literal notranslate"><span class="pre">test_spikeness_positive_skew()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_spikeness.test_spikeness_with_nan_values"><code class="docutils literal notranslate"><span class="pre">test_spikeness_with_nan_values()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_spikeness.test_calculate_spikeness_all_nan"><code class="docutils literal notranslate"><span class="pre">test_calculate_spikeness_all_nan()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_spikeness.test_calculate_spikeness_constant_data"><code class="docutils literal notranslate"><span class="pre">test_calculate_spikeness_constant_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_spikeness.test_calculate_spikeness_empty_series"><code class="docutils literal notranslate"><span class="pre">test_calculate_spikeness_empty_series()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_spikeness.test_calculate_spikeness_negative_skew"><code class="docutils literal notranslate"><span class="pre">test_calculate_spikeness_negative_skew()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_spikeness.test_calculate_spikeness_non_numeric"><code class="docutils literal notranslate"><span class="pre">test_calculate_spikeness_non_numeric()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_spikeness.test_calculate_spikeness_numpy_array"><code class="docutils literal notranslate"><span class="pre">test_calculate_spikeness_numpy_array()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_spikeness.test_calculate_spikeness_positive_skew"><code class="docutils literal notranslate"><span class="pre">test_calculate_spikeness_positive_skew()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_spikeness.test_calculate_spikeness_simple_case"><code class="docutils literal notranslate"><span class="pre">test_calculate_spikeness_simple_case()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_spikeness.test_calculate_spikeness_with_nan"><code class="docutils literal notranslate"><span class="pre">test_calculate_spikeness_with_nan()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.core.features.test_feature_std_1st_der">tests.core.features.test_feature_std_1st_der module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_std_1st_der.test_calculate_std_1st_derivative_constant_series"><code class="docutils literal notranslate"><span class="pre">test_calculate_std_1st_derivative_constant_series()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_std_1st_der.test_calculate_std_1st_derivative_linear_series"><code class="docutils literal notranslate"><span class="pre">test_calculate_std_1st_derivative_linear_series()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_std_1st_der.test_calculate_std_1st_derivative_numpy_array"><code class="docutils literal notranslate"><span class="pre">test_calculate_std_1st_derivative_numpy_array()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_std_1st_der.test_calculate_std_1st_derivative_varying_series"><code class="docutils literal notranslate"><span class="pre">test_calculate_std_1st_derivative_varying_series()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.core.features.test_feature_trough">tests.core.features.test_feature_trough module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_trough.test_calculate_trough"><code class="docutils literal notranslate"><span class="pre">test_calculate_trough()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_trough.test_calculate_trough_empty_series"><code class="docutils literal notranslate"><span class="pre">test_calculate_trough_empty_series()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_trough.test_calculate_trough_numpy_array"><code class="docutils literal notranslate"><span class="pre">test_calculate_trough_numpy_array()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_trough.test_calculate_trough_with_negative_values"><code class="docutils literal notranslate"><span class="pre">test_calculate_trough_with_negative_values()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_trough.test_calculate_trough_with_out_of_range_indices"><code class="docutils literal notranslate"><span class="pre">test_calculate_trough_with_out_of_range_indices()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_trough.test_calculate_trough_with_start_and_end"><code class="docutils literal notranslate"><span class="pre">test_calculate_trough_with_start_and_end()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_trough.test_calculate_trough_with_start_greater_than_end"><code class="docutils literal notranslate"><span class="pre">test_calculate_trough_with_start_greater_than_end()</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.core.features.test_feature_std_1st_der">tests.core.features.test_feature_std_1st_der module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.core.features.test_feature_trough">tests.core.features.test_feature_trough module</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.core.features.test_feature_variance">tests.core.features.test_feature_variance module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_variance.test_calculate_variance"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_variance.test_calculate_variance_all_identical_values"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_all_identical_values()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_variance.test_calculate_variance_basic"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_basic()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_variance.test_calculate_variance_empty_series"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_empty_series()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_variance.test_calculate_variance_negative_values"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_negative_values()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_variance.test_calculate_variance_numpy_array"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_numpy_array()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_variance.test_calculate_variance_with_ddof_0"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_with_ddof_0()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_variance.test_calculate_variance_with_identical_values"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_with_identical_values()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_variance.test_calculate_variance_with_single_value"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_with_single_value()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_variance.test_calculate_variance_large_numbers"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_large_numbers()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_variance.test_calculate_variance_multidimensional_array"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_multidimensional_array()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_variance.test_calculate_variance_non_numeric_data"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_non_numeric_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_variance.test_calculate_variance_population"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_population()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_variance.test_calculate_variance_single_value"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_single_value()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_variance.test_calculate_variance_small_numbers"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_small_numbers()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_feature_variance.test_calculate_variance_with_nan"><code class="docutils literal notranslate"><span class="pre">test_calculate_variance_with_nan()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.core.features.test_histogram_dominant">tests.core.features.test_histogram_dominant module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_histogram_dominant.test_calculate_dominant_basic"><code class="docutils literal notranslate"><span class="pre">test_calculate_dominant_basic()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_histogram_dominant.test_calculate_dominant_bins_parameter"><code class="docutils literal notranslate"><span class="pre">test_calculate_dominant_bins_parameter()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_histogram_dominant.test_calculate_dominant_empty_series"><code class="docutils literal notranslate"><span class="pre">test_calculate_dominant_empty_series()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_histogram_dominant.test_calculate_dominant_multiple_modes"><code class="docutils literal notranslate"><span class="pre">test_calculate_dominant_multiple_modes()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_histogram_dominant.test_calculate_dominant_negative_values"><code class="docutils literal notranslate"><span class="pre">test_calculate_dominant_negative_values()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_histogram_dominant.test_calculate_dominant_numpy_array"><code class="docutils literal notranslate"><span class="pre">test_calculate_dominant_numpy_array()</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.core.features.test_histogram_dominant">tests.core.features.test_histogram_dominant module</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.core.features.test_seasonality_strength">tests.core.features.test_seasonality_strength module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_empty_series"><code class="docutils literal notranslate"><span class="pre">test_calculate_seasonality_strength_empty_series()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_insufficient_data"><code class="docutils literal notranslate"><span class="pre">test_calculate_seasonality_strength_insufficient_data()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_no_seasonality"><code class="docutils literal notranslate"><span class="pre">test_calculate_seasonality_strength_no_seasonality()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_numpy_array"><code class="docutils literal notranslate"><span class="pre">test_calculate_seasonality_strength_numpy_array()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_strong_seasonality"><code class="docutils literal notranslate"><span class="pre">test_calculate_seasonality_strength_strong_seasonality()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_weak_seasonality"><code class="docutils literal notranslate"><span class="pre">test_calculate_seasonality_strength_weak_seasonality()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_with_long_periodicity"><code class="docutils literal notranslate"><span class="pre">test_calculate_seasonality_strength_with_long_periodicity()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_seasonality_strength.test_calculate_seasonality_strength_with_short_periodicity"><code class="docutils literal notranslate"><span class="pre">test_calculate_seasonality_strength_with_short_periodicity()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_seasonality_strength.test_seasonality_strength_constant_data"><code class="docutils literal notranslate"><span class="pre">test_seasonality_strength_constant_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_seasonality_strength.test_seasonality_strength_insufficient_data"><code class="docutils literal notranslate"><span class="pre">test_seasonality_strength_insufficient_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_seasonality_strength.test_seasonality_strength_invalid_period"><code class="docutils literal notranslate"><span class="pre">test_seasonality_strength_invalid_period()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_seasonality_strength.test_seasonality_strength_large_periodic_data"><code class="docutils literal notranslate"><span class="pre">test_seasonality_strength_large_periodic_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_seasonality_strength.test_seasonality_strength_periodic_with_noise"><code class="docutils literal notranslate"><span class="pre">test_seasonality_strength_periodic_with_noise()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_seasonality_strength.test_seasonality_strength_random_data"><code class="docutils literal notranslate"><span class="pre">test_seasonality_strength_random_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_seasonality_strength.test_seasonality_strength_single_point"><code class="docutils literal notranslate"><span class="pre">test_seasonality_strength_single_point()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_seasonality_strength.test_seasonality_strength_valid_periodic"><code class="docutils literal notranslate"><span class="pre">test_seasonality_strength_valid_periodic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_seasonality_strength.test_seasonality_strength_with_nan"><code class="docutils literal notranslate"><span class="pre">test_seasonality_strength_with_nan()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.core.features.test_trend_strength">tests.core.features.test_trend_strength module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_trend_strength.test_calculate_trend_strength_decreasing"><code class="docutils literal notranslate"><span class="pre">test_calculate_trend_strength_decreasing()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_trend_strength.test_calculate_trend_strength_empty_series"><code class="docutils literal notranslate"><span class="pre">test_calculate_trend_strength_empty_series()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_trend_strength.test_calculate_trend_strength_increasing"><code class="docutils literal notranslate"><span class="pre">test_calculate_trend_strength_increasing()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_trend_strength.test_calculate_trend_strength_insufficient_data"><code class="docutils literal notranslate"><span class="pre">test_calculate_trend_strength_insufficient_data()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_trend_strength.test_calculate_trend_strength_no_trend"><code class="docutils literal notranslate"><span class="pre">test_calculate_trend_strength_no_trend()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_trend_strength.test_calculate_trend_strength_numpy_array"><code class="docutils literal notranslate"><span class="pre">test_calculate_trend_strength_numpy_array()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.core.features.test_trend_strength.test_calculate_trend_strength_random_data"><code class="docutils literal notranslate"><span class="pre">test_calculate_trend_strength_random_data()</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.core.features.test_trend_strength">tests.core.features.test_trend_strength module</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.core.features">Module contents</a></li>
 </ul>
   </nav></div>

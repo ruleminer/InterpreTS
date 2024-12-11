@@ -413,6 +413,8 @@ document.write(`
 <dl class="simple">
 <dt>TypeError</dt><dd><p>If the input data is not of type pd.DataFrame, pd.Series, or np.ndarray.</p>
 </dd>
+<dt>ValueError</dt><dd><p>If the input data is empty or has invalid dimensions.</p>
+</dd>
 </dl>
 </section>
 <section id="examples">
@@ -430,7 +432,7 @@ document.write(`
 <span id="interprets-utils-data-validation-module"></span><h2>interpreTS.utils.data_validation module<a class="headerlink" href="#module-interpreTS.utils.data_validation" title="Permalink to this heading">#</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="interpreTS.utils.data_validation.validate_time_series_data">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.utils.data_validation.</span></span><span class="sig-name descname"><span class="pre">validate_time_series_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">require_datetime_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.utils.data_validation.validate_time_series_data" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.utils.data_validation.</span></span><span class="sig-name descname"><span class="pre">validate_time_series_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">require_datetime_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_nan</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.utils.data_validation.validate_time_series_data" title="Permalink to this definition">#</a></dt>
 <dd><p>Validate if the input data is suitable for time series processing.</p>
 <section id="id1">
 <h3>Parameters<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
@@ -438,6 +440,8 @@ document.write(`
 <dt>data<span class="classifier">pd.Series, pd.DataFrame, or np.ndarray</span></dt><dd><p>The time series data to be validated.</p>
 </dd>
 <dt>require_datetime_index<span class="classifier">bool, optional</span></dt><dd><p>If True, validation will ensure the data has a DateTime index (for time-based operations).</p>
+</dd>
+<dt>allow_nan<span class="classifier">bool, optional</span></dt><dd><p>If False, validation will raise an error if NaN values are present (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -453,7 +457,7 @@ document.write(`
 <dl class="simple">
 <dt>TypeError</dt><dd><p>If data is not a pd.Series, pd.DataFrame, or np.ndarray.</p>
 </dd>
-<dt>ValueError</dt><dd><p>If the data contains NaN values or lacks a DateTime index when required.</p>
+<dt>ValueError</dt><dd><p>If the data contains NaN values and <cite>allow_nan</cite> is False, or if the index is not a DateTime index when required.</p>
 </dd>
 </dl>
 </section>
