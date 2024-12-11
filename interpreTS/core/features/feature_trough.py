@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 from interpreTS.utils.data_validation import validate_time_series_data
 
-
 def calculate_trough(data, start=None, end=None):
     """
     Calculate the local minimum of a time series within an optional range.
@@ -28,11 +27,10 @@ def calculate_trough(data, start=None, end=None):
     TypeError
         If the data is not a valid time series type.
     ValueError
-        If the data contains NaN values.
+        If the data contains only NaN values or is invalid.
 
     Examples
     --------
-    >>> import pandas as pd
     >>> data = pd.Series([1, 2, 5, 4, 3])
     >>> calculate_trough(data)
     1.0
@@ -40,15 +38,33 @@ def calculate_trough(data, start=None, end=None):
     2.0
     """
 
-    # Validate the time series without requiring a DateTime index
+    # Validate the input type
+    if not isinstance(data, (pd.Series, np.ndarray)):
+        raise TypeError("Data must be a pandas Series or numpy ndarray.")
+
+    # Convert ndarray to pandas Series for consistency
+    if isinstance(data, np.ndarray):
+        data = pd.Series(data)
+
+    # Validate the time series (ignoring datetime requirement)
     validate_time_series_data(data, require_datetime_index=False)
 
-    # Slice the data based on start and end, if provided
-    if end is None:
-        end = len(data)
+    # Check if data contains only NaN or is empty
+    if data.isna().all() or len(data) == 0:
+        return np.nan
+
+    # Adjust slicing parameters
     if start is None:
         start = 0
-    data = data[start:end]
-    
-    # Calculate and return the minimum, handling empty series by returning NaN
-    return data.min() if len(data) > 0 else np.nan
+    if end is None or end > len(data):
+        end = len(data)
+
+    # Ensure slicing indices are valid
+    if not (0 <= start < len(data)) or not (start < end <= len(data)):
+        raise ValueError("Invalid range for start and end indices.")
+
+    # Slice the data
+    sliced_data = data.iloc[start:end]
+
+    # Return the minimum value, handling empty slices
+    return sliced_data.min() if not sliced_data.empty else np.nan
