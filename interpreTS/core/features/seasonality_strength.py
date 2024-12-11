@@ -3,6 +3,8 @@ import numpy as np
 from statsmodels.tsa.stattools import acf
 from interpreTS.utils.data_validation import validate_time_series_data
 
+import warnings
+
 def calculate_seasonality_strength(data, period=2, max_lag=12):
     """
     Calculate the strength of the seasonality in a time series based on autocorrelation.
@@ -27,7 +29,7 @@ def calculate_seasonality_strength(data, period=2, max_lag=12):
     TypeError
         If the data is not a valid time series type.
     ValueError
-        If the data contains NaN values or is too short to calculate seasonality.
+        If the data contains NaN values, is too short to calculate seasonality, or if the period is invalid.
 
     Examples
     --------
@@ -38,21 +40,31 @@ def calculate_seasonality_strength(data, period=2, max_lag=12):
     """
     # Validate the time series data
     validate_time_series_data(data, require_datetime_index=False)
+
+    # Check for a valid period
+    if period <= 0:
+        raise ValueError("Period must be a positive integer.")
     
     # Convert data to numpy array for consistency
     if isinstance(data, pd.Series):
         data = data.values
-    
+
     # Remove NaN values
     data = data[~np.isnan(data)]
-    
+
     # Handle insufficient data length
     if len(data) <= period:
         return np.nan
 
+    # Handle constant data
+    if np.all(data == data[0]):
+        return 0.0
+
     try:
-        # Calculate autocorrelation using FFT for efficiency
-        autocorr_values = acf(data, nlags=max(max_lag, period), fft=True)
+        # Suppress warnings from acf
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", category=RuntimeWarning)
+            autocorr_values = acf(data, nlags=max(max_lag, period), fft=True)
         
         # Ensure the autocorrelation result is valid
         if len(autocorr_values) <= period:
