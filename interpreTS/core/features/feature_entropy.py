@@ -11,7 +11,7 @@ def calculate_entropy(data, bins=2):
     data : pd.Series or np.ndarray
         The time series data for which the entropy is to be calculated.
     bins : int, optional
-        The number of bins to use for discretizing the data. Default is 10.
+        The number of bins to use for discretizing the data. Default is 2.
 
     Returns
     -------
@@ -25,13 +25,12 @@ def calculate_entropy(data, bins=2):
     ValueError
         If the data contains NaN values, is too short, or bins < 2.
     """
-    # Convert data to numpy array if it's a pandas Series
-    if isinstance(data, pd.Series):
-        data = data.values
-        
-    # Validate data
-    validate_time_series_data(data)
-    
+    # Validate data, disallowing NaN values
+    validate_time_series_data(data, allow_nan=False)
+
+    # Ensure data is numeric
+    if not np.issubdtype(data.dtype, np.number):
+        raise TypeError("Data must be numeric.")
 
     if len(data) < 2:
         raise ValueError("Input data is too short to calculate entropy.")

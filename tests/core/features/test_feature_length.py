@@ -3,38 +3,48 @@ import pandas as pd
 import numpy as np
 from interpreTS.core.features.feature_length import calculate_length
 
-def test_calculate_length_series():
-    """
-    Test the calculate_length function to ensure it correctly calculates
-    the number of data points in a pandas Series.
-    """
+def test_calculate_length_basic():
+    """Test length calculation for a basic series."""
     data = pd.Series([1, 2, 3, 4, 5])
-    assert calculate_length(data) == 5, "The length of the time series should be 5"
+    expected = 5
+    result = calculate_length(data)
+    assert result == expected, f"Expected {expected}, but got {result}."
 
 def test_calculate_length_empty_series():
-    """
-    Test the calculate_length function with an empty pandas Series.
-    """
-    data = pd.Series([], dtype="float64")  # Określenie dtype jako "float64"
-    assert calculate_length(data) == 0, "The length of an empty series should be 0"
+    """Test length calculation for an empty series."""
+    data = pd.Series([], dtype=float)
+    expected = 0
+    result = calculate_length(data)
+    assert result == expected, f"Expected {expected}, but got {result}."
 
-def test_calculate_length_array():
-    """
-    Test the calculate_length function with a numpy array.
-    """
+def test_calculate_length_large_series():
+    """Test length calculation for a large series."""
+    data = pd.Series(range(1_000_000))
+    expected = 1_000_000
+    result = calculate_length(data)
+    assert result == expected, f"Expected {expected}, but got {result}."
+
+def test_calculate_length_nan_values():
+    """Test length calculation for a series with NaN values."""
+    data = pd.Series([1, np.nan, 3, np.nan, 5])
+    expected = 5  # Length counts all elements, including NaN
+    result = calculate_length(data)
+    assert result == expected, f"Expected {expected}, but got {result}."
+
+def test_calculate_length_numpy_array():
+    """Test length calculation for a numpy array."""
     data = np.array([1, 2, 3, 4, 5])
-    assert calculate_length(data) == 5, "The length of the numpy array should be 5"
+    expected = 5
+    result = calculate_length(data)
+    assert result == expected, f"Expected {expected}, but got {result}."
 
-def test_calculate_length_empty_array():
-    """
-    Test the calculate_length function with an empty numpy array.
-    """
-    data = np.array([])
-    assert calculate_length(data) == 0, "The length of an empty numpy array should be 0"
+def test_calculate_length_invalid_type():
+    """Test length calculation for invalid input types."""
+    with pytest.raises(TypeError):
+        calculate_length("invalid_type")
 
-def test_calculate_length_dataframe():
-    """
-    Test the calculate_length function with a pandas DataFrame.
-    """
-    data = pd.DataFrame({'values': [1, 2, 3, 4, 5]})
-    assert calculate_length(data) == 5, "The length of the DataFrame should be 5"
+def test_calculate_length_multidimensional_array():
+    """Test length calculation for a multidimensional array."""
+    data = np.array([[1, 2], [3, 4], [5, 6]])
+    with pytest.raises(ValueError, match="Data must be one-dimensional."):
+        calculate_length(data)
