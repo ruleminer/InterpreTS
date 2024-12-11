@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-def validate_time_series_data(data, require_datetime_index=False):
+def validate_time_series_data(data, require_datetime_index=False, allow_nan=True):
     """
     Validate if the input data is suitable for time series processing.
     
@@ -11,6 +11,8 @@ def validate_time_series_data(data, require_datetime_index=False):
         The time series data to be validated.
     require_datetime_index : bool, optional
         If True, validation will ensure the data has a DateTime index (for time-based operations).
+    allow_nan : bool, optional
+        If False, validation will raise an error if NaN values are present (default is True).
         
     Returns
     -------
@@ -22,9 +24,8 @@ def validate_time_series_data(data, require_datetime_index=False):
     TypeError
         If data is not a pd.Series, pd.DataFrame, or np.ndarray.
     ValueError
-        If the data contains NaN values or lacks a DateTime index when required.
+        If the data contains NaN values and `allow_nan` is False, or if the index is not a DateTime index when required.
     """
-    
     # Sprawdzenie typu danych
     if not isinstance(data, (pd.Series, pd.DataFrame, np.ndarray)):
         raise TypeError("Data must be a pandas Series, DataFrame, or numpy array.")
@@ -32,7 +33,7 @@ def validate_time_series_data(data, require_datetime_index=False):
     # Walidacja dla danych w formacie Series lub DataFrame
     if isinstance(data, (pd.Series, pd.DataFrame)):
         # Sprawdzenie wartości NaN
-        if data.isnull().any().any():
+        if not allow_nan and data.isnull().any().any():
             raise ValueError("Data contains NaN values.")
         
         # Sprawdzenie typu indeksu, jeśli wymagany jest DateTimeIndex

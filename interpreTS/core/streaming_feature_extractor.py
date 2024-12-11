@@ -51,7 +51,7 @@ class StreamingFeatureExtractor:
             'seasonality_strength': calculate_seasonality_strength,
             'flat_spots': calculate_flat_spots,
             'crossing_points': calculate_crossing_points,
-            'significant_changes': calculate_significant_changes
+            'significant_changes': calculate_significant_changes,
             'above_9th_decile': calculate_above_9th_decile,
             'below_1st_decile': calculate_below_1st_decile
         }

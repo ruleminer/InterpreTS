@@ -51,8 +51,7 @@ class Features:
 class FeatureExtractor:
     DEFAULT_FEATURES = [
         Features.LENGTH, Features.MEAN, Features.VARIANCE, Features.STABILITY,
-        Features.ENTROPY, Features.SPIKENESS, Features.CALCULATE_SEASONALITY_STRENGTH,
-        Features.PEAK, Features.TROUGH, Features.ABSOLUTE_ENERGY
+        Features.ENTROPY, Features.SPIKENESS, Features.CALCULATE_SEASONALITY_STRENGTH
     ]
 
     def __init__(self, features=None, feature_params=None, window_size=np.nan, stride=1, id_column=None, sort_column=None, feature_column=None):
