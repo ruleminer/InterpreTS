@@ -12,7 +12,7 @@ from .features.feature_peak import calculate_peak
 from .features.feature_trough import calculate_trough
 # from .features.feature_std_1st_der import calculate_std_1st_der
 from .features.feature_heterogeneity import heterogeneity
-# from .features.feature_absolute_energy import absolute_energy
+from .features.feature_absolute_energy import absolute_energy
 # from .features.feature_flat_spots import calculate_flat_spots
 # from .features.feature_missing_points import missing_points
 # from .features.feature_outliers_std import calculate_outliers_std
@@ -37,7 +37,7 @@ class Features:
     # STD_1ST_DER = 'std_1st_der'
     TROUGH = 'trough'
     HETEROGENEITY = 'heterogeneity'
-    # ABSOLUTE_ENERGY = 'absolute_energy'
+    ABSOLUTE_ENERGY = 'absolute_energy'
     # FLAT_SPOTS = 'flat_spots'
     # CROSSING_POINTS = 'crossing_points'
     # MISSING_POINTS = 'missing_points'
@@ -101,7 +101,7 @@ class FeatureExtractor:
             # Features.STD_1ST_DER: calculate_std_1st_der,
             Features.TROUGH: calculate_trough,
             Features.HETEROGENEITY: heterogeneity,
-            # Features.ABSOLUTE_ENERGY: absolute_energy,
+            Features.ABSOLUTE_ENERGY: absolute_energy,
             # Features.FLAT_SPOTS: calculate_flat_spots,
             # Features.CROSSING_POINTS: calculate_crossing_points,
             # Features.MISSING_POINTS: missing_points,
@@ -158,10 +158,10 @@ class FeatureExtractor:
                  'level': 'easy',
                  'description': 'The minimum value in the window.'
             },
-            #             Features.ABSOLUTE_ENERGY: {
-            #     'level': 'advanced',
-            #     'description': 'Total energy of the signal in the window.'
-            # },
+             Features.ABSOLUTE_ENERGY: {
+                 'level': 'moderate',
+                 'description': 'Total energy of the signal in the window.'
+             },
             # Features.STD_1ST_DER: {
             #     'level': 'moderate',
             #     'description': 'Standard deviation of the first derivative of the signal.'

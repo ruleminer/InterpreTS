@@ -6,13 +6,13 @@ from interpreTS.core.features.feature_trough import calculate_trough  # Zmień "
 
 
 def test_calculate_trough_full_series():
-    data = pd.Series([1, 3, 5, 2, 7])
+    data = pd.Series([1, 3, 5, 2, -2])
     result = calculate_trough(data)
-    assert result == 1, "Trough calculation failed for the full series"
+    assert result == -2, "Trough calculation failed for the full series"
 
 
 def test_calculate_trough_with_start_and_end():
-    data = pd.Series([1, 3, 5, 2, 7])
+    data = pd.Series([1, 3, 5, 2, -2])
     result = calculate_trough(data, start=1, end=4)
     assert result == 2, "Trough calculation failed for specified range"
 
