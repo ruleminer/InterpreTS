@@ -14,7 +14,7 @@ from .features.feature_trough import calculate_trough
 from .features.feature_heterogeneity import heterogeneity
 from .features.feature_absolute_energy import absolute_energy
 # from .features.feature_flat_spots import calculate_flat_spots
-# from .features.feature_missing_points import missing_points
+from .features.feature_missing_points import missing_points
 # from .features.feature_outliers_std import calculate_outliers_std
 # from .features.feature_binarize_mean import calculate_binarize_mean
 # from .features.feature_binarize_mean import calculate_binarize_mean
@@ -40,7 +40,7 @@ class Features:
     ABSOLUTE_ENERGY = 'absolute_energy'
     # FLAT_SPOTS = 'flat_spots'
     # CROSSING_POINTS = 'crossing_points'
-    # MISSING_POINTS = 'missing_points'
+    MISSING_POINTS = 'missing_points'
     # BINARIZE_MEAN = 'binarize_mean'
     # OUTLIERS_STD = 'outliers_std'
     # OUTLIERS_IQR = 'outliers_iqr'
@@ -104,7 +104,7 @@ class FeatureExtractor:
             Features.ABSOLUTE_ENERGY: absolute_energy,
             # Features.FLAT_SPOTS: calculate_flat_spots,
             # Features.CROSSING_POINTS: calculate_crossing_points,
-            # Features.MISSING_POINTS: missing_points,
+            Features.MISSING_POINTS: missing_points,
             # Features.BINARIZE_MEAN: calculate_binarize_mean,
             # Features.OUTLIERS_STD: calculate_outliers_std,
             # Features.OUTLIERS_IQR: calculate_outliers_iqr,
