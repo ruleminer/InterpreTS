@@ -8,13 +8,13 @@ from .features.feature_length import calculate_length
 from .features.feature_mean import calculate_mean
 from .features.seasonality_strength import calculate_seasonality_strength
 from .features.feature_variance import calculate_variance
-# from .features.feature_peak import calculate_peak
-# from .features.feature_trough import calculate_trough
+from .features.feature_peak import calculate_peak
+from .features.feature_trough import calculate_trough
 # from .features.feature_std_1st_der import calculate_std_1st_der
-# from .features.feature_heterogeneity import heterogeneity
-# from .features.feature_absolute_energy import absolute_energy
+from .features.feature_heterogeneity import heterogeneity
+from .features.feature_absolute_energy import absolute_energy
 # from .features.feature_flat_spots import calculate_flat_spots
-# from .features.feature_missing_points import missing_points
+from .features.feature_missing_points import missing_points
 # from .features.feature_outliers_std import calculate_outliers_std
 # from .features.feature_binarize_mean import calculate_binarize_mean
 # from .features.feature_binarize_mean import calculate_binarize_mean
@@ -33,14 +33,14 @@ class Features:
     ENTROPY = 'entropy'
     CALCULATE_SEASONALITY_STRENGTH = 'seasonality_strength'
     STABILITY = 'stability'
-    # PEAK = 'peak'
+    PEAK = 'peak'
     # STD_1ST_DER = 'std_1st_der'
-    # TROUGH = 'trough'
-    # HETEROGENEITY = 'heterogeneity'
-    # ABSOLUTE_ENERGY = 'absolute_energy'
+    TROUGH = 'trough'
+    HETEROGENEITY = 'heterogeneity'
+    ABSOLUTE_ENERGY = 'absolute_energy'
     # FLAT_SPOTS = 'flat_spots'
     # CROSSING_POINTS = 'crossing_points'
-    # MISSING_POINTS = 'missing_points'
+    MISSING_POINTS = 'missing_points'
     # BINARIZE_MEAN = 'binarize_mean'
     # OUTLIERS_STD = 'outliers_std'
     # OUTLIERS_IQR = 'outliers_iqr'
@@ -97,14 +97,14 @@ class FeatureExtractor:
             Features.ENTROPY: calculate_entropy,
             Features.STABILITY: calculate_stability,
             Features.CALCULATE_SEASONALITY_STRENGTH: calculate_seasonality_strength,
-            # Features.PEAK: calculate_peak,
+            Features.PEAK: calculate_peak,
             # Features.STD_1ST_DER: calculate_std_1st_der,
-            # Features.TROUGH: calculate_trough,
-            # Features.HETEROGENEITY: heterogeneity,
-            # Features.ABSOLUTE_ENERGY: absolute_energy,
+            Features.TROUGH: calculate_trough,
+            Features.HETEROGENEITY: heterogeneity,
+            Features.ABSOLUTE_ENERGY: absolute_energy,
             # Features.FLAT_SPOTS: calculate_flat_spots,
             # Features.CROSSING_POINTS: calculate_crossing_points,
-            # Features.MISSING_POINTS: missing_points,
+            Features.MISSING_POINTS: missing_points,
             # Features.BINARIZE_MEAN: calculate_binarize_mean,
             # Features.OUTLIERS_STD: calculate_outliers_std,
             # Features.OUTLIERS_IQR: calculate_outliers_iqr,
@@ -150,18 +150,18 @@ class FeatureExtractor:
             #     'level': 'easy',
             #     'description': 'Number of times the signal crosses its mean.'
             # },
-            # Features.PEAK: {
-            #     'level': 'easy',
-            #     'description': 'The maximum value in the window.'
-            # },
-            # Features.TROUGH: {
-            #     'level': 'easy',
-            #     'description': 'The minimum value in the window.'
-            # },
-            #             Features.ABSOLUTE_ENERGY: {
-            #     'level': 'advanced',
-            #     'description': 'Total energy of the signal in the window.'
-            # },
+            Features.PEAK: {
+                 'level': 'easy',
+                 'description': 'The maximum value in the window.'
+            },
+             Features.TROUGH: {
+                 'level': 'easy',
+                 'description': 'The minimum value in the window.'
+            },
+             Features.ABSOLUTE_ENERGY: {
+                 'level': 'moderate',
+                 'description': 'Total energy of the signal in the window.'
+             },
             # Features.STD_1ST_DER: {
             #     'level': 'moderate',
             #     'description': 'Standard deviation of the first derivative of the signal.'
