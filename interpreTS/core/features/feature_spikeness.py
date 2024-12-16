@@ -47,7 +47,7 @@ def calculate_spikeness(data):
 
     # Check if data is numeric
     if not np.issubdtype(data.dtype, np.number):
-        raise TypeError("Data must be numeric.")
+        raise TypeError("Data must contain only numeric values.")
 
     # Calculate and return spikeness (skewness)
     spikeness = data.skew()

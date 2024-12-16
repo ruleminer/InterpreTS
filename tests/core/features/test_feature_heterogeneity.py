@@ -36,12 +36,9 @@ def test_heterogeneity_with_zeros():
     assert result > 0, "Heterogeneity should handle zero values correctly"
 
 def test_heterogeneity_empty_series():
-    """
-    Test heterogeneity on an empty time series.
-    """
-    data = pd.Series([], dtype="float64")
-    result = heterogeneity(data)
-    assert np.isnan(result), "Heterogeneity should be NaN for an empty series"
+    data = pd.Series([])
+    with pytest.raises(ValueError, match="Input data is empty."):
+        heterogeneity(data)
 
 def test_heterogeneity_mean_zero():
     """

@@ -1,7 +1,7 @@
 # import pytest
 # import pandas as pd
 # import numpy as np
-# from interpreTS.core.features.feature_crossing_points import calculate_crossing_points
+from interpreTS.core.features.feature_crossing_points import calculate_crossing_points
 
 # def test_crossing_points_basic():
 #     """

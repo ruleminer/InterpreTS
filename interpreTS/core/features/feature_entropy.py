@@ -30,7 +30,7 @@ def calculate_entropy(data, bins=2):
 
     # Ensure data is numeric
     if not np.issubdtype(data.dtype, np.number):
-        raise TypeError("Data must be numeric.")
+        raise TypeError("Data must contain only numeric values.")
 
     if len(data) < 2:
         raise ValueError("Input data is too short to calculate entropy.")

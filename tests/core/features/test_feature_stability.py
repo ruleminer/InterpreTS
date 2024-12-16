@@ -16,10 +16,9 @@ def test_calculate_stability_constant_series():
     assert result == 1.0, f"Expected stability 1.0 for constant series. Got: {result}"
 
 def test_calculate_stability_empty_series():
-    """Test stability for an empty series."""
     data = pd.Series([])
-    result = calculate_stability(data)
-    assert np.isnan(result), f"Expected NaN for empty series. Got: {result}"
+    with pytest.raises(ValueError, match="Input data is empty."):
+        calculate_stability(data)
 
 def test_calculate_stability_high_variance_series():
     """Test stability for a high variance time series."""
@@ -30,7 +29,7 @@ def test_calculate_stability_high_variance_series():
 def test_calculate_stability_non_numeric_data():
     """Test stability for non-numeric data."""
     data = pd.Series(["a", "b", "c", "d"])
-    with pytest.raises(TypeError, match="Data must be numeric."):
+    with pytest.raises(TypeError, match="Data must contain only numeric values."):
         calculate_stability(data)
 
 def test_calculate_stability_with_nan_values():

@@ -42,10 +42,9 @@ def test_calculate_spikeness_with_nan():
     assert result == pytest.approx(expected_result, abs=0.001), f"Unexpected result for data with NaN. Got: {result}"
 
 def test_calculate_spikeness_empty_series():
-    """Test spikeness for an empty series."""
     data = pd.Series([])
-    result = calculate_spikeness(data)
-    assert np.isnan(result), f"Expected NaN for empty series. Got: {result}"
+    with pytest.raises(ValueError, match="Input data is empty."):
+        calculate_spikeness(data)
 
 def test_calculate_spikeness_all_nan():
     """Test spikeness for a series with all NaN values."""
@@ -62,5 +61,5 @@ def test_calculate_spikeness_numpy_array():
 def test_calculate_spikeness_non_numeric():
     """Test spikeness for non-numeric data."""
     data = pd.Series(["a", "b", "c", "d"])
-    with pytest.raises(TypeError, match="Data must be numeric."):
+    with pytest.raises(TypeError, match="Data must contain only numeric values."):
         calculate_spikeness(data)

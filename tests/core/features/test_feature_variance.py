@@ -27,8 +27,8 @@ def test_calculate_variance_single_value():
 def test_calculate_variance_empty_series():
     """Test variance calculation for an empty series."""
     data = pd.Series([], dtype=float)
-    result = calculate_variance(data)
-    assert np.isnan(result), "Expected NaN for empty series."
+    with pytest.raises(ValueError, match="Input data is empty."):
+        calculate_variance(data)
 
 def test_calculate_variance_with_nan():
     """Test variance calculation for a series containing NaN values."""
@@ -53,7 +53,7 @@ def test_calculate_variance_small_numbers():
 def test_calculate_variance_non_numeric_data():
     """Test variance calculation for non-numeric data."""
     data = pd.Series(['a', 'b', 'c'])
-    with pytest.raises(TypeError, match="Data must be numeric."):
+    with pytest.raises(TypeError, match="Data must contain only numeric values."):
         calculate_variance(data)
 
 def test_calculate_variance_multidimensional_array():

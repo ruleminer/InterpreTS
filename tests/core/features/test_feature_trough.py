@@ -31,9 +31,8 @@ def test_calculate_trough_with_end_only():
 
 def test_calculate_trough_empty_series():
     data = pd.Series([])
-    result = calculate_trough(data)
-    assert np.isnan(result), "Trough calculation should return NaN for an empty series"
-
+    with pytest.raises(ValueError, match="Input data is empty."):
+        calculate_trough(data)
 
 def test_calculate_trough_single_value():
     data = pd.Series([42])

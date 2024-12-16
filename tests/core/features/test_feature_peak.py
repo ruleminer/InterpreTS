@@ -31,9 +31,8 @@ def test_calculate_peak_with_end_only():
 
 def test_calculate_peak_empty_series():
     data = pd.Series([])
-    result = calculate_peak(data)
-    assert np.isnan(result), "Peak calculation should return NaN for an empty series"
-
+    with pytest.raises(ValueError, match="Input data is empty."):
+        calculate_peak(data)
 
 def test_calculate_peak_single_value():
     data = pd.Series([42])

@@ -36,7 +36,7 @@ def test_calculate_entropy_with_nan():
 def test_calculate_entropy_non_numeric_data():
     """Test entropy calculation for non-numeric data."""
     data = pd.Series(["a", "b", "c", "a"])
-    with pytest.raises(TypeError, match="Data must be numeric."):
+    with pytest.raises(TypeError, match="Data must contain only numeric values."):
         calculate_entropy(data)
 
 def test_calculate_entropy_real_numbers():

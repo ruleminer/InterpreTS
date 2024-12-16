@@ -11,11 +11,9 @@ def test_calculate_length_basic():
     assert result == expected, f"Expected {expected}, but got {result}."
 
 def test_calculate_length_empty_series():
-    """Test length calculation for an empty series."""
-    data = pd.Series([], dtype=float)
-    expected = 0
-    result = calculate_length(data)
-    assert result == expected, f"Expected {expected}, but got {result}."
+    data = pd.Series([])
+    with pytest.raises(ValueError, match="Input data is empty."):
+        calculate_length(data)
 
 def test_calculate_length_large_series():
     """Test length calculation for a large series."""
