@@ -18,10 +18,10 @@ from .features.feature_above_9th_decile import calculate_above_9th_decile
 from .features.feature_below_1st_decile import calculate_below_1st_decile
 from .features.feature_binarize_mean import calculate_binarize_mean
 from .features.feature_crossing_points import calculate_crossing_points
+from .features.feature_flat_spots import calculate_flat_spots
+from .features.feature_outliers_iqr import calculate_outliers_iqr
+from .features.feature_outliers_std import calculate_outliers_std
 # from .features.feature_std_1st_der import calculate_std_1st_der
-# from .features.feature_flat_spots import calculate_flat_spots
-# from .features.feature_outliers_std import calculate_outliers_std
-# from .features.feature_outliers_iqr import calculate_outliers_iqr
 # from .features.feature_significant_changes import calculate_significant_changes
 
 class Features:
@@ -42,10 +42,10 @@ class Features:
     BELOW_1ST_DECILE = 'below_1st_decile'
     BINARIZE_MEAN = 'binarize_mean'
     CROSSING_POINTS = 'crossing_points'
-    # FLAT_SPOTS = 'flat_spots'
+    FLAT_SPOTS = 'flat_spots'
+    OUTLIERS_IQR = 'outliers_iqr'
+    OUTLIERS_STD = 'outliers_std'
     # STD_1ST_DER = 'std_1st_der'
-    # OUTLIERS_STD = 'outliers_std'
-    # OUTLIERS_IQR = 'outliers_iqr'
     # SIGNIFICANT_CHANGES = 'significant_changes'
 
 class FeatureExtractor:
@@ -107,10 +107,10 @@ class FeatureExtractor:
             Features.BELOW_1ST_DECILE: calculate_below_1st_decile,
             Features.BINARIZE_MEAN: calculate_binarize_mean,
             Features.CROSSING_POINTS: calculate_crossing_points,
-            # Features.FLAT_SPOTS: calculate_flat_spots,
+            Features.FLAT_SPOTS: calculate_flat_spots,
+            Features.OUTLIERS_IQR: calculate_outliers_iqr,
+            Features.OUTLIERS_STD: calculate_outliers_std,
             # Features.STD_1ST_DER: calculate_std_1st_der,
-            # Features.OUTLIERS_STD: calculate_outliers_std,
-            # Features.OUTLIERS_IQR: calculate_outliers_iqr,
             # Features.SIGNIFICANT_CHANGES: calculate_significant_changes,
         }
 
@@ -175,10 +175,22 @@ class FeatureExtractor:
                 'level': 'easy',
                 'description': 'Number of times the signal crosses its mean.'
             },
-            # Features.FLAT_SPOTS: {
-            #     'level': 'easy',
-            #     'description': 'Number of segments with constant values in the signal.'
-            # },
+            Features.FLAT_SPOTS: {
+                'level': 'easy',
+                'description': 'Number of segments with constant values in the signal.'
+            },
+            Features.HETEROGENEITY: {
+                'level': 'moderate',
+                'description': 'Coefficient of variation, representing the ratio of standard deviation to mean, indicating the relative variability in the time series.'
+            },
+            Features.OUTLIERS_IQR: {
+                'level': 'moderate',
+                'description': 'Percentage of values in the window that are classified as outliers based on the Interquartile Range (IQR) method.'
+            },
+            Features.OUTLIERS_STD: {
+                'level': 'moderate',
+                'description': 'Percentage of values in the window that are more than 3 standard deviations away from the mean, indicating extreme deviations.'
+            }
             # Features.STD_1ST_DER: {
             #     'level': 'moderate',
             #     'description': 'Standard deviation of the first derivative of the signal.'

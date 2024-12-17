@@ -27,14 +27,17 @@ def calculate_significant_changes(data):
     Example
     -------
     >>> data = pd.Series([1, 2, 1.5, 3, 2.5, 5, 4.5])
-    >>> calculate_significant_change(data)
+    >>> calculate_significant_changes(data)
     0.3333333333333333
-
     """
 
-    # Validate the time series data
-    validate_time_series_data(data, require_datetime_index=False)
+    # Validate the time series data with allow_nan=False
+    validate_time_series_data(data, require_datetime_index=False, allow_nan=False)
     
+    # Convert np.ndarray to pd.Series
+    if isinstance(data, np.ndarray):
+        data = pd.Series(data)
+
     # Ensure data contains enough points for calculation
     if len(data) < 2:
         return 0.0  # Not enough data to compute differences
@@ -42,11 +45,19 @@ def calculate_significant_changes(data):
     # Compute differences between consecutive values
     differences = np.diff(data)
     
+    # Check if all differences are zero
+    if np.all(differences == 0):
+        return 0.0
+    
     # Calculate Q1, Q3, and IQR for the differences
     Q1 = np.percentile(differences, 25)
     Q3 = np.percentile(differences, 75)
     IQR = Q3 - Q1
-    
+
+    # Avoid issues with very small IQR
+    if IQR == 0:
+        IQR = np.abs(Q1) * 0.1 if Q1 != 0 else 0.1  # Bezpieczny próg minimalny
+
     # Define bounds for significant changes
     lower_bound = Q1 - 1.5 * IQR
     upper_bound = Q3 + 1.5 * IQR
