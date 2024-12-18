@@ -28,6 +28,7 @@ from .features.trend_strength import calculate_trend_strength
 from .features.feature_significant_changes import calculate_significant_changes
 from .features.variability_in_sub_periods import calculate_variability_in_sub_periods
 from .features.variance_change import calculate_change_in_variance
+from .features.linearity import calculate_linearity
 
 class Features:
     LENGTH = 'length'
@@ -57,6 +58,7 @@ class Features:
     SIGNIFICANT_CHANGES = 'significant_changes'
     VARIABILITY_IN_SUB_PERIODS = 'variability_in_sub_periods'
     CHANGE_IN_VARIANCE = 'change_in_variance'
+    LINEARITY = 'linearity'
 
 class FeatureExtractor:
     DEFAULT_FEATURES = [
@@ -127,6 +129,7 @@ class FeatureExtractor:
             Features.SIGNIFICANT_CHANGES: calculate_significant_changes,
             Features.VARIABILITY_IN_SUB_PERIODS: calculate_variability_in_sub_periods,
             Features.CHANGE_IN_VARIANCE: calculate_change_in_variance,
+            Features.LINEARITY: calculate_linearity
         }
 
         self.feature_metadata = {
