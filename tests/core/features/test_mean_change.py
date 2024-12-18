@@ -1,71 +1,63 @@
-# import pytest
-# import pandas as pd
-# import numpy as np
-# from interpreTS.core.features.mean_change import calculate_mean_change  
+import pytest
+import pandas as pd
+import numpy as np
+from interpreTS.core.features.mean_change import calculate_mean_change
 
-# def test_calculate_mean_change_constant_data():
-#     """
-#     Test that calculate_mean_change returns zeros for constant data.
-#     """
-#     data = pd.Series([5] * 10)  # Constant series
-#     result = calculate_mean_change(data, window_size=3)
-#     assert result.dropna().eq(0).all(), "Change in mean should be zero for constant data"
+# Test for a valid time series input
+def test_mean_change_valid_series():
+    data = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    result = calculate_mean_change(data, window_size=3)
+    expected = pd.Series([np.nan, np.nan, np.nan, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0])
+    pd.testing.assert_series_equal(result, expected, check_names=False)
 
-# def test_calculate_mean_change_increasing_data():
-#     """
-#     Test that calculate_mean_change detects increasing means.
-#     """
-#     data = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])  # Increasing trend
-#     result = calculate_mean_change(data, window_size=3)
-#     assert result.dropna().iloc[-1] > 0, "Change in mean should increase for growing data"
+# Test for a valid NumPy array input
+def test_mean_change_valid_array():
+    data = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    result = calculate_mean_change(data, window_size=3)
+    expected = pd.Series([np.nan, np.nan, np.nan, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0])
+    pd.testing.assert_series_equal(result, expected, check_names=False)
 
-# def test_calculate_mean_change_decreasing_data():
-#     """
-#     Test that calculate_mean_change detects decreasing means.
-#     """
-#     data = pd.Series([10, 9, 8, 7, 6, 5, 4, 3, 2, 1])  # Decreasing trend
-#     result = calculate_mean_change(data, window_size=3)
-#     assert result.dropna().iloc[-1] < 0, "Change in mean should decrease for shrinking data"
+# Test for a time series that is too short for the rolling window
+def test_mean_change_insufficient_data():
+    data = pd.Series([1, 2])
+    with pytest.raises(ValueError, match="The time series is too short for the specified rolling window size."):
+        calculate_mean_change(data, window_size=3)
 
-# def test_calculate_mean_change_random_data():
-#     """
-#     Test that calculate_mean_change handles random data without errors.
-#     """
-#     np.random.seed(0)
-#     data = pd.Series(np.random.randn(100))  # Random normal data
-#     result = calculate_mean_change(data, window_size=5)
-#     assert not result.isnull().all(), "Change in mean should not be all NaN for valid random data"
+# Test for data containing NaN values
+def test_mean_change_with_nan():
+    data = pd.Series([1, 2, np.nan, 4, 5])
+    with pytest.raises(ValueError, match="Data contains NaN values."):
+        calculate_mean_change(data, window_size=3)
 
-# def test_calculate_mean_change_empty_series():
-#     """
-#     Test that calculate_mean_change raises an error for an empty series.
-#     """
-#     data = pd.Series([])
-#     with pytest.raises(ValueError, match="too short"):
-#         calculate_mean_change(data, window_size=3)
+# Test for empty data
+def test_mean_change_empty_data():
+    data = pd.Series([], dtype=float)
+    with pytest.raises(ValueError, match="Input data is empty."):
+        calculate_mean_change(data, window_size=3)
 
-# def test_calculate_mean_change_insufficient_data():
-#     """
-#     Test that calculate_mean_change raises an error for insufficient data.
-#     """
-#     data = pd.Series([1, 2])
-#     with pytest.raises(ValueError, match="too short"):
-#         calculate_mean_change(data, window_size=3)
+# Test for a time series with constant values
+def test_mean_change_constant_values():
+    data = pd.Series([5, 5, 5, 5, 5, 5, 5, 5, 5, 5])
+    result = calculate_mean_change(data, window_size=3)
+    expected = pd.Series([np.nan, np.nan, np.nan, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
+    pd.testing.assert_series_equal(result, expected, check_names=False)
 
-# def test_calculate_mean_change_window_size():
-#     """
-#     Test that calculate_mean_change respects the specified window size.
-#     """
-#     data = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-#     window_size = 4
-#     result = calculate_mean_change(data, window_size=window_size)
-#     assert len(result.dropna()) == len(data) - window_size, "Result should have the correct length based on window size"
+# Test for a very small rolling window size
+def test_mean_change_small_window():
+    data = pd.Series([1, 2, 3, 4, 5])
+    result = calculate_mean_change(data, window_size=1)
+    expected = pd.Series([np.nan, 1.0, 1.0, 1.0, 1.0])
+    pd.testing.assert_series_equal(result, expected, check_names=False)
 
-# def test_calculate_mean_change_numpy_array():
-#     """
-#     Test that calculate_mean_change works with a numpy array.
-#     """
-#     data = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-#     result = calculate_mean_change(data, window_size=3)
-#     assert isinstance(result, pd.Series), "Result should be a pandas Series for numpy input"
-#     assert len(result) == len(data), "Result should have the same length as the input data"
+# Test for a non-integer rolling window size
+def test_mean_change_invalid_window_size():
+    data = pd.Series([1, 2, 3, 4, 5])
+    with pytest.raises(ValueError, match="Window size must be a positive integer."):
+        calculate_mean_change(data, window_size=-3)
+
+# Test for a time series containing negative values
+def test_mean_change_with_negative_values():
+    data = pd.Series([-5, -4, -3, -2, -1, 0, 1, 2, 3, 4])
+    result = calculate_mean_change(data, window_size=3)
+    expected = pd.Series([np.nan, np.nan, np.nan, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0])
+    pd.testing.assert_series_equal(result, expected, check_names=False)

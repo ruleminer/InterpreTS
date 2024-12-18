@@ -49,6 +49,10 @@ def calculate_variability_in_sub_periods(data, window_size, step_size=None, ddof
     if len(data) < window_size:
         raise ValueError("Window size must be smaller than or equal to the length of the data.")
     
+    # Check for NaN values
+    if data.isnull().any():
+        raise ValueError("Data contains NaN values.")
+
     if step_size is None:
         step_size = window_size  # Default to non-overlapping windows
 

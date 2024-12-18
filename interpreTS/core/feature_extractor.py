@@ -10,20 +10,24 @@ from .features.seasonality_strength import calculate_seasonality_strength
 from .features.feature_variance import calculate_variance
 from .features.feature_peak import calculate_peak
 from .features.feature_trough import calculate_trough
-# from .features.feature_std_1st_der import calculate_std_1st_der
 from .features.feature_heterogeneity import heterogeneity
 from .features.feature_absolute_energy import absolute_energy
-# from .features.feature_flat_spots import calculate_flat_spots
 from .features.feature_missing_points import missing_points
-# from .features.feature_outliers_std import calculate_outliers_std
-# from .features.feature_binarize_mean import calculate_binarize_mean
-# from .features.feature_binarize_mean import calculate_binarize_mean
-# from .features.feature_outliers_iqr import calculate_outliers_iqr
-# from .features.feature_significant_changes import calculate_significant_changes
-# from .features.feature_above_9th_decile import calculate_above_9th_decile
-# from .features.feature_below_1st_decile import calculate_below_1st_decile
-# from .features.feature_binarize_mean import calculate_binarize_mean
-# from .features.feature_crossing_points import calculate_crossing_points
+from .features.distance_to_the_last_change_point import calculate_distance_to_last_trend_change
+from .features.feature_above_9th_decile import calculate_above_9th_decile
+from .features.feature_below_1st_decile import calculate_below_1st_decile
+from .features.feature_binarize_mean import calculate_binarize_mean
+from .features.feature_crossing_points import calculate_crossing_points
+from .features.feature_flat_spots import calculate_flat_spots
+from .features.feature_outliers_iqr import calculate_outliers_iqr
+from .features.feature_outliers_std import calculate_outliers_std
+from .features.feature_std_1st_der import calculate_std_1st_der
+from .features.histogram_dominant import calculate_dominant
+from .features.mean_change import calculate_mean_change
+from .features.trend_strength import calculate_trend_strength
+from .features.feature_significant_changes import calculate_significant_changes
+from .features.variability_in_sub_periods import calculate_variability_in_sub_periods
+from .features.variance_change import calculate_change_in_variance
 
 class Features:
     LENGTH = 'length'
@@ -31,27 +35,33 @@ class Features:
     VARIANCE = 'variance'
     SPIKENESS = 'spikeness'
     ENTROPY = 'entropy'
-    CALCULATE_SEASONALITY_STRENGTH = 'seasonality_strength'
+    SEASONALITY_STRENGTH = 'seasonality_strength'
     STABILITY = 'stability'
     PEAK = 'peak'
-    # STD_1ST_DER = 'std_1st_der'
     TROUGH = 'trough'
+    DISTANCE_TO_LAST_TREND_CHANGE = 'distance_to_last_trend_change'
     HETEROGENEITY = 'heterogeneity'
     ABSOLUTE_ENERGY = 'absolute_energy'
-    # FLAT_SPOTS = 'flat_spots'
-    # CROSSING_POINTS = 'crossing_points'
     MISSING_POINTS = 'missing_points'
-    # BINARIZE_MEAN = 'binarize_mean'
-    # OUTLIERS_STD = 'outliers_std'
-    # OUTLIERS_IQR = 'outliers_iqr'
-    # SIGNIFICANT_CHANGES = 'significant_changes'
-    # ABOVE_9TH_DECILE = 'above_9th_decile'
-    # BELOW_1ST_DECILE = 'below_1st_decile'
+    ABOVE_9TH_DECILE = 'above_9th_decile'
+    BELOW_1ST_DECILE = 'below_1st_decile'
+    BINARIZE_MEAN = 'binarize_mean'
+    CROSSING_POINTS = 'crossing_points'
+    FLAT_SPOTS = 'flat_spots'
+    OUTLIERS_IQR = 'outliers_iqr'
+    OUTLIERS_STD = 'outliers_std'
+    STD_1ST_DER = 'std_1st_der'
+    DOMINANT = 'dominant'
+    MEAN_CHANGE = 'mean_change'
+    TREND_STRENGTH = 'trend_strength'
+    SIGNIFICANT_CHANGES = 'significant_changes'
+    VARIABILITY_IN_SUB_PERIODS = 'variability_in_sub_periods'
+    CHANGE_IN_VARIANCE = 'change_in_variance'
 
 class FeatureExtractor:
     DEFAULT_FEATURES = [
         Features.LENGTH, Features.MEAN, Features.VARIANCE, Features.STABILITY,
-        Features.ENTROPY, Features.SPIKENESS, Features.CALCULATE_SEASONALITY_STRENGTH
+        Features.ENTROPY, Features.SPIKENESS, Features.SEASONALITY_STRENGTH
     ]
 
     def __init__(self, features=None, feature_params=None, window_size=np.nan, stride=1, id_column=None, sort_column=None, feature_column=None):
@@ -96,21 +106,27 @@ class FeatureExtractor:
             Features.SPIKENESS: calculate_spikeness,
             Features.ENTROPY: calculate_entropy,
             Features.STABILITY: calculate_stability,
-            Features.CALCULATE_SEASONALITY_STRENGTH: calculate_seasonality_strength,
+            Features.SEASONALITY_STRENGTH: calculate_seasonality_strength,
             Features.PEAK: calculate_peak,
-            # Features.STD_1ST_DER: calculate_std_1st_der,
             Features.TROUGH: calculate_trough,
+            Features.DISTANCE_TO_LAST_TREND_CHANGE: calculate_distance_to_last_trend_change,
             Features.HETEROGENEITY: heterogeneity,
             Features.ABSOLUTE_ENERGY: absolute_energy,
-            # Features.FLAT_SPOTS: calculate_flat_spots,
-            # Features.CROSSING_POINTS: calculate_crossing_points,
             Features.MISSING_POINTS: missing_points,
-            # Features.BINARIZE_MEAN: calculate_binarize_mean,
-            # Features.OUTLIERS_STD: calculate_outliers_std,
-            # Features.OUTLIERS_IQR: calculate_outliers_iqr,
-            # Features.SIGNIFICANT_CHANGES: calculate_significant_changes,
-            # Features.ABOVE_9TH_DECILE: calculate_above_9th_decile,
-            # Features.BELOW_1ST_DECILE: calculate_below_1st_decile
+            Features.ABOVE_9TH_DECILE: calculate_above_9th_decile,
+            Features.BELOW_1ST_DECILE: calculate_below_1st_decile,
+            Features.BINARIZE_MEAN: calculate_binarize_mean,
+            Features.CROSSING_POINTS: calculate_crossing_points,
+            Features.FLAT_SPOTS: calculate_flat_spots,
+            Features.OUTLIERS_IQR: calculate_outliers_iqr,
+            Features.OUTLIERS_STD: calculate_outliers_std,
+            Features.STD_1ST_DER: calculate_std_1st_der,
+            Features.DOMINANT: calculate_dominant,
+            Features.MEAN_CHANGE: calculate_mean_change,
+            Features.TREND_STRENGTH: calculate_trend_strength,
+            Features.SIGNIFICANT_CHANGES: calculate_significant_changes,
+            Features.VARIABILITY_IN_SUB_PERIODS: calculate_variability_in_sub_periods,
+            Features.CHANGE_IN_VARIANCE: calculate_change_in_variance,
         }
 
         self.feature_metadata = {
@@ -134,7 +150,7 @@ class FeatureExtractor:
                 'level': 'moderate',
                 'description': 'Measure of sudden jumps or spikes in the signal.'
             },
-            Features.CALCULATE_SEASONALITY_STRENGTH: {
+            Features.SEASONALITY_STRENGTH: {
                 'level': 'advanced',
                 'description': 'Strength of seasonal patterns within the signal.'
             },
@@ -142,38 +158,86 @@ class FeatureExtractor:
                 'level': 'moderate',
                 'description': 'Measure of consistency in the signal values.'
             },
-            # Features.FLAT_SPOTS: {
-            #     'level': 'easy',
-            #     'description': 'Number of segments with constant values in the signal.'
-            # },
-            # Features.CROSSING_POINTS: {
-            #     'level': 'easy',
-            #     'description': 'Number of times the signal crosses its mean.'
-            # },
             Features.PEAK: {
                  'level': 'easy',
                  'description': 'The maximum value in the window.'
             },
-             Features.TROUGH: {
+            Features.TROUGH: {
                  'level': 'easy',
                  'description': 'The minimum value in the window.'
             },
-             Features.ABSOLUTE_ENERGY: {
+            Features.DISTANCE_TO_LAST_TREND_CHANGE: {
+                'level': 'moderate',
+                'description': 'Distance (in terms of indices) to the last detected trend change in the window.'
+            },
+            Features.ABSOLUTE_ENERGY: {
                  'level': 'moderate',
                  'description': 'Total energy of the signal in the window.'
              },
-            # Features.STD_1ST_DER: {
-            #     'level': 'moderate',
-            #     'description': 'Standard deviation of the first derivative of the signal.'
-            # },
-            # Features.MISSING_POINTS: {
-            #     'level': 'easy',
-            #     'description': 'Proportion or count of missing data points in the window.'
-            # },
-            # Features.BINARIZE_MEAN: {
-            #     'level': 'moderate',
-            #     'description': 'Binary value indicating whether the signal mean exceeds a threshold.'
-            # },
+            Features.ABOVE_9TH_DECILE: {
+                'level': 'moderate',
+                'description': 'Fraction of values in the window above the 9th decile of the training data, representing the presence of extreme high values.'
+            },
+            Features.BELOW_1ST_DECILE: {
+                'level': 'moderate',
+                'description': 'Fraction of values in the window below the 1st decile of the training data, representing the presence of extreme low values.'
+            },
+            Features.BINARIZE_MEAN: {
+                'level': 'moderate',
+                'description': 'Binary value indicating whether the signal mean exceeds a threshold.'
+            },
+            Features.CROSSING_POINTS: {
+                'level': 'easy',
+                'description': 'Number of times the signal crosses its mean.'
+            },
+            Features.FLAT_SPOTS: {
+                'level': 'easy',
+                'description': 'Number of segments with constant values in the signal.'
+            },
+            Features.HETEROGENEITY: {
+                'level': 'moderate',
+                'description': 'Coefficient of variation, representing the ratio of standard deviation to mean, indicating the relative variability in the time series.'
+            },
+            Features.OUTLIERS_IQR: {
+                'level': 'moderate',
+                'description': 'Percentage of values in the window that are classified as outliers based on the Interquartile Range (IQR) method.'
+            },
+            Features.OUTLIERS_STD: {
+                'level': 'moderate',
+                'description': 'Percentage of values in the window that are more than 3 standard deviations away from the mean, indicating extreme deviations.'
+            },
+            Features.STD_1ST_DER: {
+                'level': 'moderate',
+                'description': 'Standard deviation of the first derivative of the signal.'
+            },
+            Features.DOMINANT: {
+                'level': 'moderate',
+                'description': 'The dominant value of the time series histogram, representing the most frequent range of values within the specified bins.'
+            },
+            Features.MEAN_CHANGE: {
+                'level': 'moderate',
+                'description': 'The rate of change in the rolling mean over time, capturing trends or shifts in the time series.'
+            },
+            Features.TREND_STRENGTH: {
+                'level': 'moderate',
+                'description': 'The R-squared value from a linear regression, representing the strength and consistency of the trend in the time series.'
+            },
+            Features.SIGNIFICANT_CHANGES: {
+                'level': 'moderate',
+                'description': 'Proportion of significant increases or decreases in the time series, based on deviations from the interquartile range (IQR) of differences between consecutive values.'
+            },
+            Features.MISSING_POINTS: {
+                'level': 'easy',
+                'description': 'Proportion or count of missing data points in the window.'
+            },
+            Features.VARIABILITY_IN_SUB_PERIODS: {
+                'level': 'moderate',
+                'description': 'Variance calculated within sub-periods of a time series, providing a measure of variability across fixed-size windows.'
+            },
+            Features.CHANGE_IN_VARIANCE: {
+                'level': 'moderate',
+                'description': 'Change in variance over time, calculated as the difference between rolling variances across consecutive windows.'
+            }
         }
 
     def head(self, features_df, n=5):

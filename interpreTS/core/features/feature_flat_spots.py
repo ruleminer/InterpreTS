@@ -32,7 +32,11 @@ def calculate_flat_spots(data, window_size=5):
     """
 
     # Validate the time series without requiring a DateTime index
-    validate_time_series_data(data, require_datetime_index=False)
+    validate_time_series_data(data, require_datetime_index=False, allow_nan=False)
+
+    # Check if data is empty
+    if len(data) == 0:
+        raise ValueError("Input data is empty.")
 
     run_lengths = [
         len(list(group))
