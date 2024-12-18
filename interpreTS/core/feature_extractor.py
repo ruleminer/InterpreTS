@@ -28,7 +28,7 @@ from .features.trend_strength import calculate_trend_strength
 from .features.feature_significant_changes import calculate_significant_changes
 from .features.variability_in_sub_periods import calculate_variability_in_sub_periods
 from .features.variance_change import calculate_change_in_variance
-from .features.linearity import calculate_linearity
+from .features.feature_linearity import calculate_linearity
 
 class Features:
     LENGTH = 'length'
@@ -240,6 +240,10 @@ class FeatureExtractor:
             Features.CHANGE_IN_VARIANCE: {
                 'level': 'moderate',
                 'description': 'Change in variance over time, calculated as the difference between rolling variances across consecutive windows.'
+            },
+            Features.LINEARITY:{
+                'level': 'moderate',
+                'description': 'Measure of how well the time series can be approximated by a linear trend, quantified using the R-squared value from linear regression.'
             }
         }
 

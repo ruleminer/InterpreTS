@@ -32,7 +32,7 @@ def test_calculate_linearity_with_nan():
 # Test linearity for an empty series
 def test_calculate_linearity_empty_series():
     data = pd.Series([])
-    with pytest.raises(ValueError, match="The time series is empty after removing NaN values."):
+    with pytest.raises(ValueError, match="Input data is empty."):
         calculate_linearity(data)
 
 # Test linearity for a series with all NaN values
