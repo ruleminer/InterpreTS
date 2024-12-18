@@ -21,8 +21,13 @@ from .features.feature_crossing_points import calculate_crossing_points
 from .features.feature_flat_spots import calculate_flat_spots
 from .features.feature_outliers_iqr import calculate_outliers_iqr
 from .features.feature_outliers_std import calculate_outliers_std
-# from .features.feature_std_1st_der import calculate_std_1st_der
-# from .features.feature_significant_changes import calculate_significant_changes
+from .features.feature_std_1st_der import calculate_std_1st_der
+from .features.histogram_dominant import calculate_dominant
+from .features.mean_change import calculate_mean_change
+from .features.trend_strength import calculate_trend_strength
+from .features.feature_significant_changes import calculate_significant_changes
+from .features.variability_in_sub_periods import calculate_variability_in_sub_periods
+from .features.variance_change import calculate_change_in_variance
 
 class Features:
     LENGTH = 'length'
@@ -45,8 +50,13 @@ class Features:
     FLAT_SPOTS = 'flat_spots'
     OUTLIERS_IQR = 'outliers_iqr'
     OUTLIERS_STD = 'outliers_std'
-    # STD_1ST_DER = 'std_1st_der'
-    # SIGNIFICANT_CHANGES = 'significant_changes'
+    STD_1ST_DER = 'std_1st_der'
+    DOMINANT = 'dominant'
+    MEAN_CHANGE = 'mean_change'
+    TREND_STRENGTH = 'trend_strength'
+    SIGNIFICANT_CHANGES = 'significant_changes'
+    VARIABILITY_IN_SUB_PERIODS = 'variability_in_sub_periods'
+    CHANGE_IN_VARIANCE = 'change_in_variance'
 
 class FeatureExtractor:
     DEFAULT_FEATURES = [
@@ -110,8 +120,13 @@ class FeatureExtractor:
             Features.FLAT_SPOTS: calculate_flat_spots,
             Features.OUTLIERS_IQR: calculate_outliers_iqr,
             Features.OUTLIERS_STD: calculate_outliers_std,
-            # Features.STD_1ST_DER: calculate_std_1st_der,
-            # Features.SIGNIFICANT_CHANGES: calculate_significant_changes,
+            Features.STD_1ST_DER: calculate_std_1st_der,
+            Features.DOMINANT: calculate_dominant,
+            Features.MEAN_CHANGE: calculate_mean_change,
+            Features.TREND_STRENGTH: calculate_trend_strength,
+            Features.SIGNIFICANT_CHANGES: calculate_significant_changes,
+            Features.VARIABILITY_IN_SUB_PERIODS: calculate_variability_in_sub_periods,
+            Features.CHANGE_IN_VARIANCE: calculate_change_in_variance,
         }
 
         self.feature_metadata = {
@@ -190,16 +205,39 @@ class FeatureExtractor:
             Features.OUTLIERS_STD: {
                 'level': 'moderate',
                 'description': 'Percentage of values in the window that are more than 3 standard deviations away from the mean, indicating extreme deviations.'
+            },
+            Features.STD_1ST_DER: {
+                'level': 'moderate',
+                'description': 'Standard deviation of the first derivative of the signal.'
+            },
+            Features.DOMINANT: {
+                'level': 'moderate',
+                'description': 'The dominant value of the time series histogram, representing the most frequent range of values within the specified bins.'
+            },
+            Features.MEAN_CHANGE: {
+                'level': 'moderate',
+                'description': 'The rate of change in the rolling mean over time, capturing trends or shifts in the time series.'
+            },
+            Features.TREND_STRENGTH: {
+                'level': 'moderate',
+                'description': 'The R-squared value from a linear regression, representing the strength and consistency of the trend in the time series.'
+            },
+            Features.SIGNIFICANT_CHANGES: {
+                'level': 'moderate',
+                'description': 'Proportion of significant increases or decreases in the time series, based on deviations from the interquartile range (IQR) of differences between consecutive values.'
+            },
+            Features.MISSING_POINTS: {
+                'level': 'easy',
+                'description': 'Proportion or count of missing data points in the window.'
+            },
+            Features.VARIABILITY_IN_SUB_PERIODS: {
+                'level': 'moderate',
+                'description': 'Variance calculated within sub-periods of a time series, providing a measure of variability across fixed-size windows.'
+            },
+            Features.CHANGE_IN_VARIANCE: {
+                'level': 'moderate',
+                'description': 'Change in variance over time, calculated as the difference between rolling variances across consecutive windows.'
             }
-            # Features.STD_1ST_DER: {
-            #     'level': 'moderate',
-            #     'description': 'Standard deviation of the first derivative of the signal.'
-            # },
-            # Features.MISSING_POINTS: {
-            #     'level': 'easy',
-            #     'description': 'Proportion or count of missing data points in the window.'
-            # },
-
         }
 
     def head(self, features_df, n=5):
