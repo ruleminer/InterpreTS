@@ -2,7 +2,7 @@ import pytest
 import pandas as pd
 import numpy as np
 from sklearn.metrics import r2_score
-from interpreTS.core.features.linearity import calculate_linearity
+from features.feature_linearity import calculate_linearity
 
 # Test linearity for a perfectly linear series
 def test_calculate_linearity_perfect_linear():
