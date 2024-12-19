@@ -301,14 +301,16 @@ class FeatureExtractor:
         if sort_column is not None and not isinstance(sort_column, str):
             raise ValueError("Sort column must be a string or None.")
 
-    def extract_features(self, data):
+    def extract_features(self, data, progress_callback=None):
         """
-        Extract features from a time series dataset.
+        Extract features from a time series dataset with progress tracking.
 
         Parameters
         ----------
         data : pd.DataFrame or pd.Series
             The time series data for which features are to be extracted.
+        progress_callback : function, optional
+            A function to report progress, which takes a single argument: progress percentage (0-100).
 
         Returns
         -------
@@ -325,13 +327,16 @@ class FeatureExtractor:
         if self.sort_column:
             data = data.sort_values(by=self.sort_column)
 
-        # Wyklucz kolumny ID i sort_column, jeśli feature_column=None
         feature_columns = (
             [self.feature_column] if self.feature_column else
             [col for col in data.columns if col not in {self.id_column, self.sort_column}]
         )
 
         grouped_data = data.groupby(self.id_column) if self.id_column else [(None, data)]
+
+        total_steps = sum(len(group) - (self.window_size if not np.isnan(self.window_size) else len(group)) + 1 
+                          for _, group in grouped_data if len(group) > 0)
+        completed_steps = 0
 
         results = []
         for _, group in grouped_data:
@@ -353,20 +358,9 @@ class FeatureExtractor:
                             try:
                                 feature_data = window[col].dropna()
 
-                                # Walidacja danych przed obliczeniami
                                 if feature_data.empty:
                                     extracted_features[f"{feature_name}_{col}"] = np.nan
                                     continue
-                                if feature_data.nunique() == 1:
-                                    # Stałe dane, np. wszystkie wartości są takie same
-                                    extracted_features[f"{feature_name}_{col}"] = np.nan
-                                    continue
-                                if len(feature_data) < 2:
-                                    # Za mało danych, aby wykonać obliczenia
-                                    extracted_features[f"{feature_name}_{col}"] = np.nan
-                                    continue
-
-                                # Wywołanie funkcji cechy
                                 extracted_features[f"{feature_name}_{col}"] = self.feature_functions[feature_name](
                                     feature_data, **params
                                 )
@@ -376,11 +370,20 @@ class FeatureExtractor:
 
                 results.append(extracted_features)
 
+                completed_steps += 1
+                if progress_callback and completed_steps % 10 == 0:
+                    progress = int((completed_steps / total_steps) * 100)
+                    progress_callback(progress)
+
         if not results:
             print("Warning: No features could be extracted. Returning an empty DataFrame.")
             return pd.DataFrame()
 
+        if progress_callback:
+            progress_callback(100)
+
         return pd.DataFrame(results)
+
     
     def group_features_by_interpretability(self):
         """
@@ -437,3 +440,24 @@ class FeatureExtractor:
             List of feature names.
         """
         return list(Features.__dict__.values())
+
+
+    def generate_feature_options(self):
+        """
+        Generate a dictionary mapping human-readable feature names to their corresponding constants.
+
+        Returns
+        -------
+        dict
+            A dictionary where keys are human-readable feature names (capitalized) 
+            and values are feature constants.
+        """
+        available_features = self.available_features()
+
+        feature_constants = {
+            name: value
+            for name, value in Features.__dict__.items()
+            if not name.startswith('__') and not callable(value)
+        }
+
+        return {name.capitalize(): constant for name, constant in feature_constants.items()}
