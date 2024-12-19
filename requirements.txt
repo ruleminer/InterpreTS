@@ -5,3 +5,4 @@ pytest
 langchain_community
 langchain 
 openai
+sklearn
