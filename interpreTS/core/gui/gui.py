@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import time
 from interpreTS.core.feature_extractor import FeatureExtractor, Features
 from interpreTS.core.time_series_data import TimeSeriesData
 
@@ -14,24 +15,21 @@ class InterpreTSApp:
             "Length": Features.LENGTH,
             "Mean": Features.MEAN,
             "Variance": Features.VARIANCE,
-            #"SeasonalityStrength": Features.CALCULATE_SEASONALITY_STRENGTH,
-            # "BinarizeMean": Features.BINARIZE_MEAN,
-            # "Peak": Features.PEAK,
-            # "Spikeness": Features.SPIKENESS,
-            # "Entropy": Features.ENTROPY,
-            # "Stability": Features.STABILITY,
-            # "AbsoluteEnergy": Features.ABSOLUTE_ENERGY,
-            # "FlatSpots": Features.FLAT_SPOTS,
-            # "CrossingPoints": Features.CROSSING_POINTS,
-            # "MissingPoints": Features.MISSING_POINTS,
-            # "Trough": Features.TROUGH,
-            # "Std1stDer": Features.STD_1ST_DER,
         }
 
+
+#TODO better display of format of sample data
     def configure_page(self):
         st.set_page_config(page_title="InterpreTS Feature Extraction", layout="wide")
         st.title("InterpreTS Feature Extraction GUI")
         st.write("This app allows you to upload a CSV file containing time series data and extract interpretable features using the InterpreTS library.")
+        st.write("""
+                The CSV file should have at least two columns: one for time and one for values.
+                Example:
+                time, value
+                2020-01-01, 100
+                2020-01-02, 110
+                """)
 
     def sidebar_upload(self):
         st.sidebar.header("Step 1: Upload CSV File")
@@ -54,11 +52,35 @@ class InterpreTSApp:
             return True
         return False
 
+    def windows_slider(self):
+        if self.data is not None:
+            window_size = st.slider(
+                'Select a window size',
+                min_value=1,
+                max_value=len(self.data),
+                value=3,
+                step=1
+            )
+            return window_size
+        return None
+    
+    def stride_slider(self):
+        if self.data is not None:
+            stride_size = st.slider(
+                'Select a stride',
+                min_value=1,
+                max_value=len(self.data),
+                value=3,
+                step=1
+            )
+            return stride_size
+        return None
+
     def select_time_value_columns(self):
         if self.data is not None:
             st.sidebar.header("Step 2: Select Columns")
-            self.time_column = st.sidebar.selectbox("Select Time Column", options=self.data.columns)
-            self.value_column = st.sidebar.selectbox("Select Value Column", options=self.data.columns)
+            self.time_column = st.sidebar.selectbox("Select Time Column", options=self.data.columns, index=0)
+            self.value_column = st.sidebar.selectbox("Select Value Column", options=self.data.columns, index=1)
 
             # Validate columns
             if self.time_column not in self.data.columns or self.value_column not in self.data.columns:
@@ -86,27 +108,41 @@ class InterpreTSApp:
             default=["Length", "Mean", "Variance"]
         )
 
-    def extract_features(self):
-        # Check if we have all prerequisites
+    #TODO progress bar now it is simulated
+    def extract_features(self, window_size=1, stride=1):
         if self.data is not None and self.time_column and self.value_column:
             if st.sidebar.button("Extract Features"):
                 if self.selected_features:
                     try:
-                        # Initialize extractor
-                        extractor = FeatureExtractor(features=[self.feature_options[feat] for feat in self.selected_features])
+                        progress_bar = st.progress(0)
+                        status_text = st.empty()
 
-                        # We need a DataFrame with a single 'value' column
-                        # Set the time column as index for clarity (TimeSeriesData expects this format)
-                        ts_data = self.data.set_index(self.time_column)[self.value_column]
-                        ts_data = ts_data.dropna()
-
-                        # Extract features
-                        # According to interpreTS, extractor expects a DataFrame with a single value column
+                        # For demonstration, we increment the progress bar in steps.
+                        # This is a simulation and doesn't reflect the actual extraction progress.
+                        # If you can break down the extraction into chunks or loops, you can update
+                        # the progress_bar and status_text accordingly inside that loop.
+                        
+                        status_text.text("Initializing feature extraction...")
+                        extractor = FeatureExtractor(
+                            features=[self.feature_options[feat] for feat in self.selected_features],
+                            window_size=window_size,
+                            stride=stride
+                        )
+                        progress_bar.progress(25)
+                        time.sleep(3)
+                        status_text.text("Preparing data...")
+                        ts_data = self.data.set_index(self.time_column)[self.value_column].dropna()
+                        progress_bar.progress(50)
+                        time.sleep(3)
+                        status_text.text("Calculating features...")
                         feature_df = extractor.extract_features(pd.DataFrame({'value': ts_data.values}))
-
+                        progress_bar.progress(100)
+                        
+                        st.success("Features extracted successfully!")
                         st.subheader("Extracted Features")
                         st.write("The following features were successfully extracted:")
                         st.dataframe(feature_df)
+
                     except Exception as e:
                         st.error(f"An error occurred while extracting features: {e}")
                 else:
@@ -118,9 +154,15 @@ class InterpreTSApp:
 
         if file_uploaded:
             if self.preprocess_data():
+                # Show and read the slider value here since data is available
+                window_size = self.windows_slider()
+                stride = self.stride_slider()
+                st.write(f"Selected window size: {window_size}")
+                st.write(f"Selected stride size: {stride}")
+
                 if self.select_time_value_columns():
                     self.select_features()
-                    self.extract_features()
+                    self.extract_features(window_size, stride)
         else:
             st.info("Please upload a CSV file to get started.")
 
@@ -128,8 +170,12 @@ class InterpreTSApp:
         st.sidebar.markdown("---")
         st.sidebar.write("Developed with ❤️ using Streamlit and InterpreTS.")
 
+#TODO
+# def start_gui():
+#     app = InterpreTSApp()
+#     app.run()
+#     return app
 
-# Entry point
 if __name__ == "__main__":
     app = InterpreTSApp()
     app.run()

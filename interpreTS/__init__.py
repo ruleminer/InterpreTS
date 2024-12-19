@@ -22,6 +22,8 @@ from .core.feature_extractor import Features
 # from .core.time_series_data import TimeSeriesData
 # from .utils.data_conversion import convert_to_time_series
 from .utils.data_validation import validate_time_series_data
+#TODO make gui work with simple one line code
+#from .core.gui.gui import start_gui
 
 __version__ = "0.3.0"
 
@@ -32,6 +34,7 @@ __all__ = [
     "TimeSeriesData",
     "convert_to_time_series",
     "validate_time_series_data",
+#   "start_gui",
 ]
 
 # Check required dependencies
@@ -41,6 +44,7 @@ required_libraries = {
     "statsmodels": "0.12.0",
     "statsmodels": None,
     "pytest": None,  
+    "streamlit": None,
 }
 
 for library, min_version in required_libraries.items():
