@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from interpreTS.utils.data_validation import validate_time_series_data
 
-def absolute_energy(data, start=None, end=None):
+def calculate_absolute_energy(data, start=None, end=None):
     """
     Calculate the absolute energy of a time series within an optional range.
 

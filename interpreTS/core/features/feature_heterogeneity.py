@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from interpreTS.utils.data_validation import validate_time_series_data
 
-def heterogeneity(data):
+def calculate_heterogeneity(data):
     """
     Calculate the heterogeneity (coefficient of variation) of a time series.
 

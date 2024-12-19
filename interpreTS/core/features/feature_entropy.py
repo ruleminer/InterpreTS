@@ -25,26 +25,29 @@ def calculate_entropy(data, bins=2):
     ValueError
         If the data contains NaN values, is too short, or bins < 2.
     """
-    # Validate data, disallowing NaN values
-    validate_time_series_data(data, allow_nan=False)
-
-    # Ensure data is numeric
-    if not np.issubdtype(data.dtype, np.number):
-        raise TypeError("Data must contain only numeric values.")
-
+    
+    print(f"Input data: {data}, bins: {bins}")
     if len(data) < 2:
-        raise ValueError("Input data is too short to calculate entropy.")
-    if bins < 2:
-        raise ValueError("Number of bins must be at least 2.")
-
-    # Check for constant values
+        print("Too few values for entropy calculation.")
+        return np.nan
     if np.ptp(data) == 0:
-        return 0.0  # No entropy for constant values
+        print("Constant values, entropy is 0.")
+        return 0.0
 
-    unique, counts = np.unique(data, return_counts=True)
+    unique_values = len(np.unique(data))
+    if bins > unique_values:
+        bins = unique_values
+        print(f"Adjusted bins: {bins}")
+
+    counts, _ = np.histogram(data, bins=bins, density=False)
     probabilities = counts / len(data)
-    shannon_entropy = -np.sum(probabilities * np.log2(probabilities))
-    max_entropy = np.log2(len(unique))
-    normalized_entropy = shannon_entropy / max_entropy if max_entropy > 0 else 0.0
+    print(f"Probabilities: {probabilities}")
 
+    if np.any(probabilities == 0):
+        probabilities = probabilities[probabilities > 0]
+
+    shannon_entropy = -np.sum(probabilities * np.log2(probabilities))
+    max_entropy = np.log2(len(probabilities))
+    normalized_entropy = shannon_entropy / max_entropy if max_entropy > 0 else 0.0
+    print(f"Entropy: {normalized_entropy}")
     return normalized_entropy

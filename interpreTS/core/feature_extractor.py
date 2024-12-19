@@ -10,9 +10,9 @@ from .features.seasonality_strength import calculate_seasonality_strength
 from .features.feature_variance import calculate_variance
 from .features.feature_peak import calculate_peak
 from .features.feature_trough import calculate_trough
-from .features.feature_heterogeneity import heterogeneity
-from .features.feature_absolute_energy import absolute_energy
-from .features.feature_missing_points import missing_points
+from .features.feature_heterogeneity import calculate_heterogeneity
+from .features.feature_absolute_energy import calculate_absolute_energy
+from .features.feature_missing_points import calculate_missing_points
 from .features.distance_to_the_last_change_point import calculate_distance_to_last_trend_change
 from .features.feature_above_9th_decile import calculate_above_9th_decile
 from .features.feature_below_1st_decile import calculate_below_1st_decile
@@ -32,32 +32,36 @@ from .features.variance_change import calculate_change_in_variance
 class Features:
     LENGTH = 'length'
     MEAN = 'mean'
-    VARIANCE = 'variance'
-    SPIKENESS = 'spikeness'
-    ENTROPY = 'entropy'
+    DOMINANT = 'dominant'
+    TREND_STRENGTH = 'trend_strength'
     SEASONALITY_STRENGTH = 'seasonality_strength'
-    STABILITY = 'stability'
     PEAK = 'peak'
     TROUGH = 'trough'
-    DISTANCE_TO_LAST_TREND_CHANGE = 'distance_to_last_trend_change'
+    SPIKENESS = 'spikeness'
+    VARIANCE = 'variance'
+    STABILITY = 'stability'
+    FLAT_SPOTS = 'flat_spots'
+    STD_1ST_DER = 'std_1st_der'
+    CROSSING_POINTS = 'crossing_points'
     HETEROGENEITY = 'heterogeneity'
-    ABSOLUTE_ENERGY = 'absolute_energy'
+    
+    ENTROPY = 'entropy'
+    VARIABILITY_IN_SUB_PERIODS = 'variability_in_sub_periods'
+    OUTLIERS_STD = 'outliers_std'
+    OUTLIERS_IQR = 'outliers_iqr'
+    CHANGE_IN_VARIANCE = 'change_in_variance'
+    MEAN_CHANGE = 'mean_change'
+    SIGNIFICANT_CHANGES = 'significant_changes'
     MISSING_POINTS = 'missing_points'
+    DISTANCE_TO_LAST_TREND_CHANGE = 'distance_to_last_trend_change'
     ABOVE_9TH_DECILE = 'above_9th_decile'
     BELOW_1ST_DECILE = 'below_1st_decile'
+    ABSOLUTE_ENERGY = 'absolute_energy'
+    
+    
     BINARIZE_MEAN = 'binarize_mean'
-    CROSSING_POINTS = 'crossing_points'
-    FLAT_SPOTS = 'flat_spots'
-    OUTLIERS_IQR = 'outliers_iqr'
-    OUTLIERS_STD = 'outliers_std'
-    STD_1ST_DER = 'std_1st_der'
-    DOMINANT = 'dominant'
-    MEAN_CHANGE = 'mean_change'
-    TREND_STRENGTH = 'trend_strength'
-    SIGNIFICANT_CHANGES = 'significant_changes'
-    VARIABILITY_IN_SUB_PERIODS = 'variability_in_sub_periods'
-    CHANGE_IN_VARIANCE = 'change_in_variance'
-
+    
+    
 class FeatureExtractor:
     DEFAULT_FEATURES = [
         Features.LENGTH, Features.MEAN, Features.VARIANCE, Features.STABILITY,
@@ -110,9 +114,9 @@ class FeatureExtractor:
             Features.PEAK: calculate_peak,
             Features.TROUGH: calculate_trough,
             Features.DISTANCE_TO_LAST_TREND_CHANGE: calculate_distance_to_last_trend_change,
-            Features.HETEROGENEITY: heterogeneity,
-            Features.ABSOLUTE_ENERGY: absolute_energy,
-            Features.MISSING_POINTS: missing_points,
+            Features.HETEROGENEITY: calculate_heterogeneity,
+            Features.ABSOLUTE_ENERGY: calculate_absolute_energy,
+            Features.MISSING_POINTS: calculate_missing_points,
             Features.ABOVE_9TH_DECILE: calculate_above_9th_decile,
             Features.BELOW_1ST_DECILE: calculate_below_1st_decile,
             Features.BINARIZE_MEAN: calculate_binarize_mean,
