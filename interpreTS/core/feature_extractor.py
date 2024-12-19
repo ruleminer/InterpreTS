@@ -28,6 +28,7 @@ from .features.trend_strength import calculate_trend_strength
 from .features.feature_significant_changes import calculate_significant_changes
 from .features.variability_in_sub_periods import calculate_variability_in_sub_periods
 from .features.variance_change import calculate_change_in_variance
+from .features.feature_linearity import calculate_linearity
 
 class Features:
     LENGTH = 'length'
@@ -44,7 +45,7 @@ class Features:
     STD_1ST_DER = 'std_1st_der'
     CROSSING_POINTS = 'crossing_points'
     HETEROGENEITY = 'heterogeneity'
-    
+    LINEARITY = 'linearity'
     ENTROPY = 'entropy'
     VARIABILITY_IN_SUB_PERIODS = 'variability_in_sub_periods'
     OUTLIERS_STD = 'outliers_std'
@@ -57,10 +58,7 @@ class Features:
     ABOVE_9TH_DECILE = 'above_9th_decile'
     BELOW_1ST_DECILE = 'below_1st_decile'
     ABSOLUTE_ENERGY = 'absolute_energy'
-    
-    
     BINARIZE_MEAN = 'binarize_mean'
-    
     
 class FeatureExtractor:
     DEFAULT_FEATURES = [
@@ -131,6 +129,7 @@ class FeatureExtractor:
             Features.SIGNIFICANT_CHANGES: calculate_significant_changes,
             Features.VARIABILITY_IN_SUB_PERIODS: calculate_variability_in_sub_periods,
             Features.CHANGE_IN_VARIANCE: calculate_change_in_variance,
+            Features.LINEARITY: calculate_linearity
         }
 
         self.feature_metadata = {
@@ -241,6 +240,10 @@ class FeatureExtractor:
             Features.CHANGE_IN_VARIANCE: {
                 'level': 'moderate',
                 'description': 'Change in variance over time, calculated as the difference between rolling variances across consecutive windows.'
+            },
+            Features.LINEARITY:{
+                'level': 'moderate',
+                'description': 'Measure of how well the time series can be approximated by a linear trend, quantified using the R-squared value from linear regression.'
             }
         }
 
