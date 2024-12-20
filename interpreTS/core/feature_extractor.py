@@ -30,6 +30,7 @@ from .features.feature_significant_changes import calculate_significant_changes
 from .features.variability_in_sub_periods import calculate_variability_in_sub_periods
 from .features.variance_change import calculate_change_in_variance
 from .features.feature_linearity import calculate_linearity
+from .features.feature_quantile import calculate_quantile
 
 class Features:
     LENGTH = 'length'
@@ -60,6 +61,7 @@ class Features:
     BELOW_1ST_DECILE = 'below_1st_decile'
     ABSOLUTE_ENERGY = 'absolute_energy'
     BINARIZE_MEAN = 'binarize_mean'
+    QUANTILE = 'quantile'
     
 class FeatureExtractor:
     DEFAULT_FEATURES = [
@@ -132,7 +134,8 @@ class FeatureExtractor:
             Features.SIGNIFICANT_CHANGES: calculate_significant_changes,
             Features.VARIABILITY_IN_SUB_PERIODS: calculate_variability_in_sub_periods,
             Features.CHANGE_IN_VARIANCE: calculate_change_in_variance,
-            Features.LINEARITY: calculate_linearity
+            Features.LINEARITY: calculate_linearity,
+            Features.QUANTILE: calculate_quantile
         }
 
         self.feature_metadata = {
@@ -247,6 +250,10 @@ class FeatureExtractor:
             Features.LINEARITY:{
                 'level': 'moderate',
                 'description': 'Measure of how well the time series can be approximated by a linear trend, quantified using the R-squared value from linear regression.'
+            },
+            Features.QUANTILE: {
+                'level': 'easy',
+                'description': 'Value representing the chosen quantile level of the time series distribution, indicating the point below which a specified proportion of the data falls.'
             }
         }
         
