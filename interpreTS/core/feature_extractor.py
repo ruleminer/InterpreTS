@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from joblib import Parallel, delayed
 
 from .features.feature_spikeness import calculate_spikeness
 from .features.feature_entropy import calculate_entropy
@@ -66,7 +67,7 @@ class FeatureExtractor:
         Features.ENTROPY, Features.SPIKENESS, Features.SEASONALITY_STRENGTH
     ]
 
-    def __init__(self, features=None, feature_params=None, window_size=np.nan, stride=1, id_column=None, sort_column=None, feature_column=None):
+    def __init__(self, features=None, feature_params=None, window_size=np.nan, stride=1, id_column=None, sort_column=None, feature_column=None, group_by=None):
         """
         Initialize the FeatureExtractor with a list of features to calculate and optional parameters for each feature.
 
@@ -86,13 +87,15 @@ class FeatureExtractor:
             The column to sort by before feature extraction (optional).
         feature_column : str or None, optional
             The column containing feature data. If None, features are calculated for all columns except ID and sort columns.
+        group_by : str or None, optional
+            Column name to group by. If None, no grouping is performed.
         Raises
         -------
         ValueError
             If any parameter is invalid.
         """
         self._validate_parameters(features, feature_params, window_size, stride, id_column, sort_column)
-
+        self.group_by = group_by
         self.features = features if features is not None else self.DEFAULT_FEATURES
         self.feature_params = feature_params if feature_params is not None else {}
         self.window_size = window_size
@@ -246,23 +249,51 @@ class FeatureExtractor:
                 'description': 'Measure of how well the time series can be approximated by a linear trend, quantified using the R-squared value from linear regression.'
             }
         }
+        
+    def _calculate_feature(self, feature_name, feature_data, params):
+        """
+        Calculate a specific feature.
+        """
+        if feature_name in self.feature_functions:
+            return self.feature_functions[feature_name](feature_data, **params)
+        else:
+            raise ValueError(f"Feature '{feature_name}' is not supported.")
+    
+    def group_data(self, data):
+        """
+        Group data based on the group_by column.
 
+        Parameters
+        ----------
+        data : pd.DataFrame
+            Input data.
+
+        Returns
+        -------
+        iterable
+            Grouped data.
+        """
+        if self.group_by:
+            return data.groupby(self.group_by)
+        return [(None, data)]
+    
     def head(self, features_df, n=5):
         """
-        Zwraca pierwsze n wierszy wynikowego DataFrame z funkcji extract_features.
+        Returns the first n rows of the resulting DataFrame from the extract_features function.
 
-        Parametry
+        Parameters
         ----------
         features_df : pd.DataFrame
-            DataFrame wynikowy z funkcji extract_features.
-        n : int, opcjonalne (domyślnie 5)
-            Liczba wierszy do zwrócenia. Jeśli n jest ujemne, zwraca wszystkie wiersze oprócz ostatnich |n| wierszy.
+            The resulting DataFrame from the extract_features function.
+        n : int, optional (default 5)
+            The number of rows to return. If n is negative, returns all rows except the last |n| rows.
 
-        Zwraca
+        Returns
         -------
         pd.DataFrame
-            Pierwsze n wierszy DataFrame.
+            The first n rows of the DataFrame.
         """
+        
         if not isinstance(features_df, pd.DataFrame):
             raise ValueError("Input must be a DataFrame.")
         if len(features_df) < n:
@@ -301,9 +332,9 @@ class FeatureExtractor:
         if sort_column is not None and not isinstance(sort_column, str):
             raise ValueError("Sort column must be a string or None.")
 
-    def extract_features(self, data, progress_callback=None):
+    def extract_features(self, data, progress_callback=None, mode='sequential', n_jobs=-1):
         """
-        Extract features from a time series dataset with progress tracking.
+        Extract features from a time series dataset.
 
         Parameters
         ----------
@@ -311,80 +342,130 @@ class FeatureExtractor:
             The time series data for which features are to be extracted.
         progress_callback : function, optional
             A function to report progress, which takes a single argument: progress percentage (0-100).
+        mode : str, optional
+            The mode of processing. Can be 'parallel' for multi-threaded processing
+            or 'sequential' for single-threaded processing with real-time progress reporting.
+        n_jobs : int, optional
+            The number of jobs (processes) to run in parallel. Default is -1 (use all available CPUs).
 
         Returns
         -------
         pd.DataFrame
             A DataFrame containing calculated features for each window.
         """
+        if mode not in ['parallel', 'sequential']:
+            raise ValueError(f"Invalid mode '{mode}'. Accepted values are: ['parallel', 'sequential']")
+
         if data.empty:
             print("Warning: Input data is empty. Returning an empty DataFrame.")
             return pd.DataFrame()
 
-        if isinstance(data, pd.Series):
-            data = data.to_frame(name=self.feature_column)
-
         if self.sort_column:
             data = data.sort_values(by=self.sort_column)
 
-        feature_columns = (
-            [self.feature_column] if self.feature_column else
-            [col for col in data.columns if col not in {self.id_column, self.sort_column}]
-        )
+        feature_columns = [self.feature_column] if self.feature_column else [col for col in data.columns if col not in {self.id_column, self.sort_column}]
+        grouped_data = self.group_data(data)
 
-        grouped_data = data.groupby(self.id_column) if self.id_column else [(None, data)]
+        # Generate tasks for feature extraction
+        tasks = self._generate_tasks(grouped_data, feature_columns)
+        total_steps = len(tasks)
 
-        total_steps = sum(len(group) - (self.window_size if not np.isnan(self.window_size) else len(group)) + 1 
-                          for _, group in grouped_data if len(group) > 0)
-        completed_steps = 0
+        # Execute in parallel or sequential mode
+        if mode == 'parallel':
+            results = self._execute_parallel(tasks, n_jobs, progress_callback, total_steps)
+        else:
+            results = self._execute_sequential(tasks, progress_callback, total_steps)
 
-        results = []
+        return pd.DataFrame(results)
+        
+    def _generate_tasks(self, grouped_data, feature_columns):
+        """
+        Generate feature extraction tasks for all groups and windows.
+        """
+        tasks = []
         for _, group in grouped_data:
             group_length = len(group)
-            window_size = group_length if np.isnan(self.window_size) else int(self.window_size)
+            window_size = group_length if pd.isna(self.window_size) else int(self.window_size)
 
             if window_size > group_length:
                 print(f"Warning: Window size ({window_size}) exceeds group length ({group_length}). Skipping group.")
                 continue
 
             for start in range(0, group_length - window_size + 1, self.stride):
-                window = group.iloc[start:start + window_size]
-                extracted_features = {self.id_column: group[self.id_column].iloc[0]} if self.id_column else {}
+                window = group.iloc[start : start + window_size]
+                tasks.append((window, feature_columns))
+        return tasks
+          
+    def _execute_parallel(self, tasks, n_jobs, progress_callback, total_steps):
+        """
+        Execute feature extraction in parallel mode.
+        """
+        results = []
+        completed_steps = 0
 
-                for feature_name in self.features:
-                    if feature_name in self.feature_functions:
-                        params = self.feature_params.get(feature_name, {})
-                        for col in feature_columns:
-                            try:
-                                feature_data = window[col].dropna()
+        def update_progress():
+            nonlocal completed_steps
+            completed_steps += 1
+            if progress_callback:
+                progress_callback(int((completed_steps / total_steps) * 100))
 
-                                if feature_data.empty:
-                                    extracted_features[f"{feature_name}_{col}"] = np.nan
-                                    continue
-                                extracted_features[f"{feature_name}_{col}"] = self.feature_functions[feature_name](
-                                    feature_data, **params
-                                )
-                            except Exception as e:
-                                print(f"Warning: Failed to calculate {feature_name} for column {col}: {e}")
-                                extracted_features[f"{feature_name}_{col}"] = np.nan
+        results = Parallel(n_jobs=n_jobs)(
+            delayed(self._process_window_with_progress)(task, update_progress) for task in tasks
+        )
+        return results
+        
+    def _execute_sequential(self, tasks, progress_callback, total_steps):
+        """
+        Execute feature extraction in sequential mode.
+        """
+        results = []
+        for completed_steps, (window, feature_columns) in enumerate(tasks, 1):
+            results.append(self._process_window(window, feature_columns))
+            if progress_callback:
+                progress = int((completed_steps / total_steps) * 100)
+                progress_callback(progress)
+        return results
+        
+    def _process_window_with_progress(self, task, progress_callback):
+        """
+        Process a single window and report progress.
+        """
+        window, feature_columns = task
+        result = self._process_window(window, feature_columns)
+        progress_callback()
+        return result
 
-                results.append(extracted_features)
+    def _process_window(self, window, feature_columns):
+        """
+        Process a single window to calculate features.
 
-                completed_steps += 1
-                if progress_callback and completed_steps % 10 == 0:
-                    progress = int((completed_steps / total_steps) * 100)
-                    progress_callback(progress)
+        Parameters
+        ----------
+        window : pd.DataFrame
+            The window of data to process.
+        feature_columns : list of str
+            The columns of the window to process.
 
-        if not results:
-            print("Warning: No features could be extracted. Returning an empty DataFrame.")
-            return pd.DataFrame()
+        Returns
+        -------
+        dict
+            A dictionary of calculated features.
+        """
+        extracted_features = {}
+        for feature_name in self.features:
+            params = self.feature_params.get(feature_name, {})
+            for col in feature_columns:
+                try:
+                    feature_data = window[col].dropna()
+                    if feature_data.empty:
+                        extracted_features[f"{feature_name}_{col}"] = pd.NA
+                    else:
+                        extracted_features[f"{feature_name}_{col}"] = self._calculate_feature(feature_name, feature_data, params)
+                except Exception as e:
+                    print(f"Warning: Failed to calculate {feature_name} for column {col}: {e}")
+                    extracted_features[f"{feature_name}_{col}"] = pd.NA
+        return extracted_features
 
-        if progress_callback:
-            progress_callback(100)
-
-        return pd.DataFrame(results)
-
-    
     def group_features_by_interpretability(self):
         """
         Group features by their interpretability levels.

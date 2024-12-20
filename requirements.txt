@@ -6,3 +6,5 @@ langchain_community
 langchain 
 openai
 scikit-learn
+joblib
+tqdm
