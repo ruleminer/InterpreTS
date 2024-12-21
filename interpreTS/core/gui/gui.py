@@ -192,6 +192,7 @@ class InterpreTSApp:
                 st.write(f"Selected window size: {window_size}")
                 st.write(f"Selected stride size: {stride}")
 
+
                 if self.select_time_value_columns():
                     self.select_features()
                     self.extract_features(window_size, stride)
