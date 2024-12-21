@@ -457,7 +457,8 @@ document.write(`
 <dl class="simple">
 <dt>TypeError</dt><dd><p>If data is not a pd.Series, pd.DataFrame, or np.ndarray.</p>
 </dd>
-<dt>ValueError</dt><dd><p>If the data contains NaN values and <cite>allow_nan</cite> is False, or if the index is not a DateTime index when required.</p>
+<dt>ValueError</dt><dd><p>If the data contains NaN values and <cite>allow_nan</cite> is False, if the index is not a DateTime index when required,
+or if the input data is empty.</p>
 </dd>
 </dl>
 </section>

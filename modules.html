@@ -406,17 +406,41 @@ document.write(`
 <li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.FeatureExtractor.available_features"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.available_features()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.FeatureExtractor.extract_features"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.extract_features()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.FeatureExtractor.generate_feature_descriptions"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.generate_feature_descriptions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.FeatureExtractor.generate_feature_options"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.generate_feature_options()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.FeatureExtractor.group_data"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.group_data()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.FeatureExtractor.group_features_by_interpretability"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.group_features_by_interpretability()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.FeatureExtractor.head"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.head()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="interpreTS.html#interpreTS.Features"><code class="docutils literal notranslate"><span class="pre">Features</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.CALCULATE_SEASONALITY_STRENGTH"><code class="docutils literal notranslate"><span class="pre">Features.CALCULATE_SEASONALITY_STRENGTH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.ABOVE_9TH_DECILE"><code class="docutils literal notranslate"><span class="pre">Features.ABOVE_9TH_DECILE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.ABSOLUTE_ENERGY"><code class="docutils literal notranslate"><span class="pre">Features.ABSOLUTE_ENERGY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.BELOW_1ST_DECILE"><code class="docutils literal notranslate"><span class="pre">Features.BELOW_1ST_DECILE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.BINARIZE_MEAN"><code class="docutils literal notranslate"><span class="pre">Features.BINARIZE_MEAN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.CHANGE_IN_VARIANCE"><code class="docutils literal notranslate"><span class="pre">Features.CHANGE_IN_VARIANCE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.CROSSING_POINTS"><code class="docutils literal notranslate"><span class="pre">Features.CROSSING_POINTS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.DISTANCE_TO_LAST_TREND_CHANGE"><code class="docutils literal notranslate"><span class="pre">Features.DISTANCE_TO_LAST_TREND_CHANGE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.DOMINANT"><code class="docutils literal notranslate"><span class="pre">Features.DOMINANT</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.ENTROPY"><code class="docutils literal notranslate"><span class="pre">Features.ENTROPY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.FLAT_SPOTS"><code class="docutils literal notranslate"><span class="pre">Features.FLAT_SPOTS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.HETEROGENEITY"><code class="docutils literal notranslate"><span class="pre">Features.HETEROGENEITY</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.LENGTH"><code class="docutils literal notranslate"><span class="pre">Features.LENGTH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.LINEARITY"><code class="docutils literal notranslate"><span class="pre">Features.LINEARITY</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.MEAN"><code class="docutils literal notranslate"><span class="pre">Features.MEAN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.MEAN_CHANGE"><code class="docutils literal notranslate"><span class="pre">Features.MEAN_CHANGE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.MISSING_POINTS"><code class="docutils literal notranslate"><span class="pre">Features.MISSING_POINTS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.OUTLIERS_IQR"><code class="docutils literal notranslate"><span class="pre">Features.OUTLIERS_IQR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.OUTLIERS_STD"><code class="docutils literal notranslate"><span class="pre">Features.OUTLIERS_STD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.PEAK"><code class="docutils literal notranslate"><span class="pre">Features.PEAK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.QUANTILE"><code class="docutils literal notranslate"><span class="pre">Features.QUANTILE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.SEASONALITY_STRENGTH"><code class="docutils literal notranslate"><span class="pre">Features.SEASONALITY_STRENGTH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.SIGNIFICANT_CHANGES"><code class="docutils literal notranslate"><span class="pre">Features.SIGNIFICANT_CHANGES</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.SPIKENESS"><code class="docutils literal notranslate"><span class="pre">Features.SPIKENESS</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.STABILITY"><code class="docutils literal notranslate"><span class="pre">Features.STABILITY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.STD_1ST_DER"><code class="docutils literal notranslate"><span class="pre">Features.STD_1ST_DER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.TREND_STRENGTH"><code class="docutils literal notranslate"><span class="pre">Features.TREND_STRENGTH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.TROUGH"><code class="docutils literal notranslate"><span class="pre">Features.TROUGH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.VARIABILITY_IN_SUB_PERIODS"><code class="docutils literal notranslate"><span class="pre">Features.VARIABILITY_IN_SUB_PERIODS</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="interpreTS.html#interpreTS.Features.VARIANCE"><code class="docutils literal notranslate"><span class="pre">Features.VARIANCE</span></code></a></li>
 </ul>
 </li>

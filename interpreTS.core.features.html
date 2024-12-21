@@ -581,7 +581,8 @@ If None, the series ends at the last value.</p>
 <section id="id14">
 <h3>Returns<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h3>
 <dl class="simple">
-<dt>float</dt><dd><p>The standard deviation of the first derivative of the provided time series.</p>
+<dt>float</dt><dd><p>The standard deviation of the first derivative of the provided time series.
+Returns np.nan if the input data is empty.</p>
 </dd>
 </dl>
 </section>
@@ -596,9 +597,8 @@ If None, the series ends at the last value.</p>
 </section>
 <section id="id16">
 <h3>Examples<a class="headerlink" href="#id16" title="Permalink to this heading">#</a></h3>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_std_1st_derivative</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_std_1st_der</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="go">0.0</span>
 </pre></div>
 </div>
@@ -637,7 +637,7 @@ If None, the series ends at the last value.</p>
 <dl class="simple">
 <dt>TypeError</dt><dd><p>If the data is not a valid time series type.</p>
 </dd>
-<dt>ValueError</dt><dd><p>If the data contains only NaN values or is invalid.</p>
+<dt>ValueError</dt><dd><p>If the data contains NaN values.</p>
 </dd>
 </dl>
 </section>
@@ -702,12 +702,15 @@ A ddof of 1 provides the sample variance, and a ddof of 0 provides the populatio
 </dd>
 <dt>bins<span class="classifier">int, optional</span></dt><dd><p>The number of bins to use for creating the histogram, by default 10.</p>
 </dd>
+<dt>return_bin_center<span class="classifier">bool, optional</span></dt><dd><p>If True, return the center of the bin with the maximum frequency. 
+Otherwise, return the lower bound of the bin (default is False).</p>
+</dd>
 </dl>
 </section>
 <section id="id25">
 <h3>Returns<a class="headerlink" href="#id25" title="Permalink to this heading">#</a></h3>
 <dl class="simple">
-<dt>float</dt><dd><p>The dominant value (mode) of the histogram.</p>
+<dt>float</dt><dd><p>The dominant value of the histogram (either the center or the lower bound of the bin).</p>
 </dd>
 </dl>
 </section>
@@ -720,15 +723,6 @@ A ddof of 1 provides the sample variance, and a ddof of 0 provides the populatio
 </dd>
 </dl>
 </section>
-<section id="id27">
-<h3>Examples<a class="headerlink" href="#id27" title="Permalink to this heading">#</a></h3>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_dominant</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="go">3.0</span>
-</pre></div>
-</div>
-</section>
 </dd></dl>
 
 </section>
@@ -738,8 +732,8 @@ A ddof of 1 provides the sample variance, and a ddof of 0 provides the populatio
 <dt class="sig sig-object py" id="interpreTS.core.features.seasonality_strength.calculate_seasonality_strength">
 <span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.seasonality_strength.</span></span><span class="sig-name descname"><span class="pre">calculate_seasonality_strength</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_lag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.core.features.seasonality_strength.calculate_seasonality_strength" title="Permalink to this definition">#</a></dt>
 <dd><p>Calculate the strength of the seasonality in a time series based on autocorrelation.</p>
-<section id="id28">
-<h3>Parameters<a class="headerlink" href="#id28" title="Permalink to this heading">#</a></h3>
+<section id="id27">
+<h3>Parameters<a class="headerlink" href="#id27" title="Permalink to this heading">#</a></h3>
 <dl class="simple">
 <dt>data<span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>The time series data for which the seasonality strength is to be calculated.</p>
 </dd>
@@ -749,16 +743,16 @@ A ddof of 1 provides the sample variance, and a ddof of 0 provides the populatio
 </dd>
 </dl>
 </section>
-<section id="id29">
-<h3>Returns<a class="headerlink" href="#id29" title="Permalink to this heading">#</a></h3>
+<section id="id28">
+<h3>Returns<a class="headerlink" href="#id28" title="Permalink to this heading">#</a></h3>
 <dl class="simple">
 <dt>float</dt><dd><p>The seasonality strength, ranging from 0 to 1, where 1 indicates strong seasonality.
 Returns np.nan if the data is insufficient or invalid.</p>
 </dd>
 </dl>
 </section>
-<section id="id30">
-<h3>Raises<a class="headerlink" href="#id30" title="Permalink to this heading">#</a></h3>
+<section id="id29">
+<h3>Raises<a class="headerlink" href="#id29" title="Permalink to this heading">#</a></h3>
 <dl class="simple">
 <dt>TypeError</dt><dd><p>If the data is not a valid time series type.</p>
 </dd>
@@ -766,8 +760,8 @@ Returns np.nan if the data is insufficient or invalid.</p>
 </dd>
 </dl>
 </section>
-<section id="id31">
-<h3>Examples<a class="headerlink" href="#id31" title="Permalink to this heading">#</a></h3>
+<section id="id30">
+<h3>Examples<a class="headerlink" href="#id30" title="Permalink to this heading">#</a></h3>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;M&quot;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_seasonality_strength</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
@@ -784,31 +778,31 @@ Returns np.nan if the data is insufficient or invalid.</p>
 <dt class="sig sig-object py" id="interpreTS.core.features.trend_strength.calculate_trend_strength">
 <span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.trend_strength.</span></span><span class="sig-name descname"><span class="pre">calculate_trend_strength</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.core.features.trend_strength.calculate_trend_strength" title="Permalink to this definition">#</a></dt>
 <dd><p>Calculate the strength of the trend in a time series using linear regression.</p>
-<section id="id32">
-<h3>Parameters<a class="headerlink" href="#id32" title="Permalink to this heading">#</a></h3>
+<section id="id31">
+<h3>Parameters<a class="headerlink" href="#id31" title="Permalink to this heading">#</a></h3>
 <dl class="simple">
 <dt>data<span class="classifier">pd.Series or np.ndarray</span></dt><dd><p>The time series data for which the trend strength is to be calculated.</p>
 </dd>
 </dl>
 </section>
-<section id="id33">
-<h3>Returns<a class="headerlink" href="#id33" title="Permalink to this heading">#</a></h3>
+<section id="id32">
+<h3>Returns<a class="headerlink" href="#id32" title="Permalink to this heading">#</a></h3>
 <dl class="simple">
 <dt>float</dt><dd><p>The R-squared value representing the strength of the trend (0 to 1).</p>
 </dd>
 </dl>
 </section>
-<section id="id34">
-<h3>Raises<a class="headerlink" href="#id34" title="Permalink to this heading">#</a></h3>
+<section id="id33">
+<h3>Raises<a class="headerlink" href="#id33" title="Permalink to this heading">#</a></h3>
 <dl class="simple">
 <dt>TypeError</dt><dd><p>If the data is not a valid time series type.</p>
 </dd>
-<dt>ValueError</dt><dd><p>If the data contains NaN values.</p>
+<dt>ValueError</dt><dd><p>If the data contains NaN values or is empty.</p>
 </dd>
 </dl>
 </section>
-<section id="id35">
-<h3>Examples<a class="headerlink" href="#id35" title="Permalink to this heading">#</a></h3>
+<section id="id34">
+<h3>Examples<a class="headerlink" href="#id34" title="Permalink to this heading">#</a></h3>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_trend_strength</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>

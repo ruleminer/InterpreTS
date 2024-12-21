@@ -444,7 +444,7 @@ document.write(`
 <span id="interprets-core-feature-extractor-module"></span><h2>interpreTS.core.feature_extractor module<a class="headerlink" href="#module-interpreTS.core.feature_extractor" title="Permalink to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interpreTS.core.feature_extractor.</span></span><span class="sig-name descname"><span class="pre">FeatureExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interpreTS.core.feature_extractor.</span></span><span class="sig-name descname"><span class="pre">FeatureExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor.DEFAULT_FEATURES">
@@ -466,12 +466,19 @@ document.write(`
 
 <dl class="py method">
 <dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor.extract_features">
-<span class="sig-name descname"><span class="pre">extract_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.extract_features" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">extract_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progress_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sequential'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.extract_features" title="Permalink to this definition">#</a></dt>
 <dd><p>Extract features from a time series dataset.</p>
 <section id="parameters">
 <h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading">#</a></h3>
 <dl class="simple">
 <dt>data<span class="classifier">pd.DataFrame or pd.Series</span></dt><dd><p>The time series data for which features are to be extracted.</p>
+</dd>
+<dt>progress_callback<span class="classifier">function, optional</span></dt><dd><p>A function to report progress, which takes a single argument: progress percentage (0-100).</p>
+</dd>
+<dt>mode<span class="classifier">str, optional</span></dt><dd><p>The mode of processing. Can be ‘parallel’ for multi-threaded processing
+or ‘sequential’ for single-threaded processing with real-time progress reporting.</p>
+</dd>
+<dt>n_jobs<span class="classifier">int, optional</span></dt><dd><p>The number of jobs (processes) to run in parallel. Default is -1 (use all available CPUs).</p>
 </dd>
 </dl>
 </section>
@@ -505,11 +512,45 @@ document.write(`
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor.generate_feature_options">
+<span class="sig-name descname"><span class="pre">generate_feature_options</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.generate_feature_options" title="Permalink to this definition">#</a></dt>
+<dd><p>Generate a dictionary mapping human-readable feature names to their corresponding constants.</p>
+<section id="id4">
+<h3>Returns<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<dl class="simple">
+<dt>dict</dt><dd><p>A dictionary where keys are human-readable feature names (capitalized) 
+and values are feature constants.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor.group_data">
+<span class="sig-name descname"><span class="pre">group_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.group_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Group data based on the group_by column.</p>
+<section id="id5">
+<h3>Parameters<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<dl class="simple">
+<dt>data<span class="classifier">pd.DataFrame</span></dt><dd><p>Input data.</p>
+</dd>
+</dl>
+</section>
+<section id="id6">
+<h3>Returns<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<dl class="simple">
+<dt>iterable</dt><dd><p>Grouped data.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor.group_features_by_interpretability">
 <span class="sig-name descname"><span class="pre">group_features_by_interpretability</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.group_features_by_interpretability" title="Permalink to this definition">#</a></dt>
 <dd><p>Group features by their interpretability levels.</p>
-<section id="id4">
-<h3>Returns<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<section id="id7">
+<h3>Returns<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
 <dl class="simple">
 <dt>dict</dt><dd><p>A dictionary where keys are interpretability levels (‘easy’, ‘moderate’, ‘advanced’),
 and values are lists of feature names.</p>
@@ -521,20 +562,20 @@ and values are lists of feature names.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor.head">
 <span class="sig-name descname"><span class="pre">head</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.head" title="Permalink to this definition">#</a></dt>
-<dd><p>Zwraca pierwsze n wierszy wynikowego DataFrame z funkcji extract_features.</p>
-<section id="parametry">
-<h3>Parametry<a class="headerlink" href="#parametry" title="Permalink to this heading">#</a></h3>
+<dd><p>Returns the first n rows of the resulting DataFrame from the extract_features function.</p>
+<section id="id8">
+<h3>Parameters<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
 <dl class="simple">
-<dt>features_df<span class="classifier">pd.DataFrame</span></dt><dd><p>DataFrame wynikowy z funkcji extract_features.</p>
+<dt>features_df<span class="classifier">pd.DataFrame</span></dt><dd><p>The resulting DataFrame from the extract_features function.</p>
 </dd>
-<dt>n<span class="classifier">int, opcjonalne (domyślnie 5)</span></dt><dd><p>Liczba wierszy do zwrócenia. Jeśli n jest ujemne, zwraca wszystkie wiersze oprócz ostatnich <a href="#id10"><span class="problematic" id="id11">|n|</span></a> wierszy.</p>
+<dt>n<span class="classifier">int, optional (default 5)</span></dt><dd><p>The number of rows to return. If n is negative, returns all rows except the last <a href="#id15"><span class="problematic" id="id16">|n|</span></a> rows.</p>
 </dd>
 </dl>
 </section>
-<section id="zwraca">
-<h3>Zwraca<a class="headerlink" href="#zwraca" title="Permalink to this heading">#</a></h3>
+<section id="id9">
+<h3>Returns<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
 <dl class="simple">
-<dt>pd.DataFrame</dt><dd><p>Pierwsze n wierszy DataFrame.</p>
+<dt>pd.DataFrame</dt><dd><p>The first n rows of the DataFrame.</p>
 </dd>
 </dl>
 </section>
@@ -547,8 +588,43 @@ and values are lists of feature names.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interpreTS.core.feature_extractor.</span></span><span class="sig-name descname"><span class="pre">Features</span></span><a class="headerlink" href="#interpreTS.core.feature_extractor.Features" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.CALCULATE_SEASONALITY_STRENGTH">
-<span class="sig-name descname"><span class="pre">CALCULATE_SEASONALITY_STRENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'seasonality_strength'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.CALCULATE_SEASONALITY_STRENGTH" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.ABOVE_9TH_DECILE">
+<span class="sig-name descname"><span class="pre">ABOVE_9TH_DECILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'above_9th_decile'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.ABOVE_9TH_DECILE" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.ABSOLUTE_ENERGY">
+<span class="sig-name descname"><span class="pre">ABSOLUTE_ENERGY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'absolute_energy'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.ABSOLUTE_ENERGY" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.BELOW_1ST_DECILE">
+<span class="sig-name descname"><span class="pre">BELOW_1ST_DECILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'below_1st_decile'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.BELOW_1ST_DECILE" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.BINARIZE_MEAN">
+<span class="sig-name descname"><span class="pre">BINARIZE_MEAN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'binarize_mean'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.BINARIZE_MEAN" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.CHANGE_IN_VARIANCE">
+<span class="sig-name descname"><span class="pre">CHANGE_IN_VARIANCE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'change_in_variance'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.CHANGE_IN_VARIANCE" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.CROSSING_POINTS">
+<span class="sig-name descname"><span class="pre">CROSSING_POINTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'crossing_points'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.CROSSING_POINTS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.DISTANCE_TO_LAST_TREND_CHANGE">
+<span class="sig-name descname"><span class="pre">DISTANCE_TO_LAST_TREND_CHANGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'distance_to_last_trend_change'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.DISTANCE_TO_LAST_TREND_CHANGE" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.DOMINANT">
+<span class="sig-name descname"><span class="pre">DOMINANT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'dominant'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.DOMINANT" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -557,13 +633,68 @@ and values are lists of feature names.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.FLAT_SPOTS">
+<span class="sig-name descname"><span class="pre">FLAT_SPOTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'flat_spots'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.FLAT_SPOTS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.HETEROGENEITY">
+<span class="sig-name descname"><span class="pre">HETEROGENEITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'heterogeneity'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.HETEROGENEITY" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.LENGTH">
 <span class="sig-name descname"><span class="pre">LENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'length'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.LENGTH" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.LINEARITY">
+<span class="sig-name descname"><span class="pre">LINEARITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'linearity'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.LINEARITY" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.MEAN">
 <span class="sig-name descname"><span class="pre">MEAN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mean'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.MEAN" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.MEAN_CHANGE">
+<span class="sig-name descname"><span class="pre">MEAN_CHANGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mean_change'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.MEAN_CHANGE" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.MISSING_POINTS">
+<span class="sig-name descname"><span class="pre">MISSING_POINTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'missing_points'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.MISSING_POINTS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.OUTLIERS_IQR">
+<span class="sig-name descname"><span class="pre">OUTLIERS_IQR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'outliers_iqr'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.OUTLIERS_IQR" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.OUTLIERS_STD">
+<span class="sig-name descname"><span class="pre">OUTLIERS_STD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'outliers_std'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.OUTLIERS_STD" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.PEAK">
+<span class="sig-name descname"><span class="pre">PEAK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'peak'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.PEAK" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.QUANTILE">
+<span class="sig-name descname"><span class="pre">QUANTILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'quantile'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.QUANTILE" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.SEASONALITY_STRENGTH">
+<span class="sig-name descname"><span class="pre">SEASONALITY_STRENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'seasonality_strength'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.SEASONALITY_STRENGTH" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.SIGNIFICANT_CHANGES">
+<span class="sig-name descname"><span class="pre">SIGNIFICANT_CHANGES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'significant_changes'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.SIGNIFICANT_CHANGES" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -574,6 +705,26 @@ and values are lists of feature names.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.STABILITY">
 <span class="sig-name descname"><span class="pre">STABILITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'stability'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.STABILITY" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.STD_1ST_DER">
+<span class="sig-name descname"><span class="pre">STD_1ST_DER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'std_1st_der'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.STD_1ST_DER" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.TREND_STRENGTH">
+<span class="sig-name descname"><span class="pre">TREND_STRENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'trend_strength'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.TREND_STRENGTH" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.TROUGH">
+<span class="sig-name descname"><span class="pre">TROUGH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'trough'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.TROUGH" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.Features.VARIABILITY_IN_SUB_PERIODS">
+<span class="sig-name descname"><span class="pre">VARIABILITY_IN_SUB_PERIODS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'variability_in_sub_periods'</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.Features.VARIABILITY_IN_SUB_PERIODS" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -595,15 +746,15 @@ and values are lists of feature names.</p>
 <dt class="sig sig-object py" id="interpreTS.core.time_series_data.TimeSeriesData.resample">
 <span class="sig-name descname"><span class="pre">resample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.core.time_series_data.TimeSeriesData.resample" title="Permalink to this definition">#</a></dt>
 <dd><p>Resample the time series data to a specified interval.</p>
-<section id="id5">
-<h3>Parameters<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<section id="id10">
+<h3>Parameters<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
 <dl class="simple">
 <dt>interval<span class="classifier">str</span></dt><dd><p>The interval to resample the data, e.g., ‘D’ for daily, ‘H’ for hourly.</p>
 </dd>
 </dl>
 </section>
-<section id="id6">
-<h3>Returns<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<section id="id11">
+<h3>Returns<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h3>
 <dl class="simple">
 <dt>TimeSeriesData</dt><dd><p>A new TimeSeriesData object with resampled data.</p>
 </dd>
@@ -623,22 +774,22 @@ and values are lists of feature names.</p>
 <dt class="sig sig-object py" id="interpreTS.core.time_series_data.TimeSeriesData.split">
 <span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.7</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interpreTS.core.time_series_data.TimeSeriesData.split" title="Permalink to this definition">#</a></dt>
 <dd><p>Split the time series data into training and test sets.</p>
-<section id="id7">
-<h3>Parameters<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
+<section id="id12">
+<h3>Parameters<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h3>
 <dl class="simple">
 <dt>train_size<span class="classifier">float, optional</span></dt><dd><p>The proportion of the data to use for training, by default 0.7.</p>
 </dd>
 </dl>
 </section>
-<section id="id8">
-<h3>Returns<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
+<section id="id13">
+<h3>Returns<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h3>
 <dl class="simple">
 <dt>tuple of TimeSeriesData</dt><dd><p>A tuple containing the training and test sets as TimeSeriesData objects.</p>
 </dd>
 </dl>
 </section>
-<section id="id9">
-<h3>Examples<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
+<section id="id14">
+<h3>Examples<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h3>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ts_data</span> <span class="o">=</span> <span class="n">TimeSeriesData</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">ts_data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="mf">0.6</span><span class="p">)</span>
@@ -707,17 +858,41 @@ and values are lists of feature names.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.FeatureExtractor.available_features"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.available_features()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.FeatureExtractor.extract_features"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.extract_features()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.FeatureExtractor.generate_feature_descriptions"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.generate_feature_descriptions()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.FeatureExtractor.generate_feature_options"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.generate_feature_options()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.FeatureExtractor.group_data"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.group_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.FeatureExtractor.group_features_by_interpretability"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.group_features_by_interpretability()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.FeatureExtractor.head"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.head()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features"><code class="docutils literal notranslate"><span class="pre">Features</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.CALCULATE_SEASONALITY_STRENGTH"><code class="docutils literal notranslate"><span class="pre">Features.CALCULATE_SEASONALITY_STRENGTH</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.ABOVE_9TH_DECILE"><code class="docutils literal notranslate"><span class="pre">Features.ABOVE_9TH_DECILE</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.ABSOLUTE_ENERGY"><code class="docutils literal notranslate"><span class="pre">Features.ABSOLUTE_ENERGY</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.BELOW_1ST_DECILE"><code class="docutils literal notranslate"><span class="pre">Features.BELOW_1ST_DECILE</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.BINARIZE_MEAN"><code class="docutils literal notranslate"><span class="pre">Features.BINARIZE_MEAN</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.CHANGE_IN_VARIANCE"><code class="docutils literal notranslate"><span class="pre">Features.CHANGE_IN_VARIANCE</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.CROSSING_POINTS"><code class="docutils literal notranslate"><span class="pre">Features.CROSSING_POINTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.DISTANCE_TO_LAST_TREND_CHANGE"><code class="docutils literal notranslate"><span class="pre">Features.DISTANCE_TO_LAST_TREND_CHANGE</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.DOMINANT"><code class="docutils literal notranslate"><span class="pre">Features.DOMINANT</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.ENTROPY"><code class="docutils literal notranslate"><span class="pre">Features.ENTROPY</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.FLAT_SPOTS"><code class="docutils literal notranslate"><span class="pre">Features.FLAT_SPOTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.HETEROGENEITY"><code class="docutils literal notranslate"><span class="pre">Features.HETEROGENEITY</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.LENGTH"><code class="docutils literal notranslate"><span class="pre">Features.LENGTH</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.LINEARITY"><code class="docutils literal notranslate"><span class="pre">Features.LINEARITY</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.MEAN"><code class="docutils literal notranslate"><span class="pre">Features.MEAN</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.MEAN_CHANGE"><code class="docutils literal notranslate"><span class="pre">Features.MEAN_CHANGE</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.MISSING_POINTS"><code class="docutils literal notranslate"><span class="pre">Features.MISSING_POINTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.OUTLIERS_IQR"><code class="docutils literal notranslate"><span class="pre">Features.OUTLIERS_IQR</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.OUTLIERS_STD"><code class="docutils literal notranslate"><span class="pre">Features.OUTLIERS_STD</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.PEAK"><code class="docutils literal notranslate"><span class="pre">Features.PEAK</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.QUANTILE"><code class="docutils literal notranslate"><span class="pre">Features.QUANTILE</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.SEASONALITY_STRENGTH"><code class="docutils literal notranslate"><span class="pre">Features.SEASONALITY_STRENGTH</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.SIGNIFICANT_CHANGES"><code class="docutils literal notranslate"><span class="pre">Features.SIGNIFICANT_CHANGES</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.SPIKENESS"><code class="docutils literal notranslate"><span class="pre">Features.SPIKENESS</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.STABILITY"><code class="docutils literal notranslate"><span class="pre">Features.STABILITY</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.STD_1ST_DER"><code class="docutils literal notranslate"><span class="pre">Features.STD_1ST_DER</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.TREND_STRENGTH"><code class="docutils literal notranslate"><span class="pre">Features.TREND_STRENGTH</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.TROUGH"><code class="docutils literal notranslate"><span class="pre">Features.TROUGH</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.VARIABILITY_IN_SUB_PERIODS"><code class="docutils literal notranslate"><span class="pre">Features.VARIABILITY_IN_SUB_PERIODS</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.Features.VARIANCE"><code class="docutils literal notranslate"><span class="pre">Features.VARIANCE</span></code></a></li>
 </ul>
 </li>
