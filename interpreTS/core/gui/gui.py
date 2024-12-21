@@ -106,7 +106,6 @@ class InterpreTSApp:
             default=["Length", "Mean", "Variance"]
         )
 
-    #TODO progress bar now it is simulated
     def extract_features(self, window_size=1, stride=1):
         if self.data is not None and self.time_column and self.value_column:
             if st.sidebar.button("Extract Features"):
@@ -115,27 +114,28 @@ class InterpreTSApp:
                         progress_bar = st.progress(0)
                         status_text = st.empty()
 
-                        # For demonstration, we increment the progress bar in steps.
-                        # This is a simulation and doesn't reflect the actual extraction progress.
-                        # If you can break down the extraction into chunks or loops, you can update
-                        # the progress_bar and status_text accordingly inside that loop.
-                        
-                        status_text.text("Initializing feature extraction...")
+                        def update_progress(progress):
+                            progress_bar.progress(progress)
+                            status_text.text(f"Progress: {progress}%")
+
                         extractor = FeatureExtractor(
                             features=[self.feature_options[feat] for feat in self.selected_features],
                             window_size=window_size,
                             stride=stride
                         )
-                        progress_bar.progress(25)
-                        time.sleep(3)
+
                         status_text.text("Preparing data...")
                         ts_data = self.data.set_index(self.time_column)[self.value_column].dropna()
-                        progress_bar.progress(50)
-                        time.sleep(3)
+
+                        # Extract features with progress updates
                         status_text.text("Calculating features...")
-                        feature_df = extractor.extract_features(pd.DataFrame({'value': ts_data.values}))
+                        feature_df = extractor.extract_features(
+                            pd.DataFrame({'value': ts_data.values}),
+                            progress_callback=update_progress,
+                            mode='sequential'  
+                        )
+
                         progress_bar.progress(100)
-                        
                         st.success("Features extracted successfully!")
                         st.subheader("Extracted Features")
                         st.write("The following features were successfully extracted:")
@@ -145,6 +145,8 @@ class InterpreTSApp:
                         st.error(f"An error occurred while extracting features: {e}")
                 else:
                     st.sidebar.error("Please select at least one feature to extract.")
+
+
 
     def run(self):
         self.configure_page()
