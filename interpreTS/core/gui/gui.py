@@ -10,27 +10,27 @@ class InterpreTSApp:
         extractor = FeatureExtractor()
         self.data = None
         self.time_column = None
-        self.value_column = None
+        self.value_columns = []  # Allow for multiple value columns
         self.selected_features = []
         self.feature_options = extractor.generate_feature_options()
-
 
     def configure_page(self):
         st.set_page_config(page_title="InterpreTS Feature Extraction", layout="wide")
         st.title("InterpreTS Feature Extraction GUI")
         st.write("This app allows you to upload a CSV file containing time series data and extract interpretable features using the InterpreTS library.")
         st.write("""
-                The CSV file should have two columns: one for time and one for values. (the order doesn't matter beacuse they can be switched). Example format:
+                The CSV file should have at least two columns: one for time and one (or more) for values. (the order doesn't matter because they can be switched). Example format:
                 """)
         
-        # Create a sample DataFrame for better visualisation
+        # Create a sample DataFrame for better visualization
         sample_data = pd.DataFrame({
             'time': ['2020-01-01', '2020-01-02', '2020-01-03'],
-            'value': [100, 110, 105]
+            'value_1': [100, 110, 105],
+            'value_2': [5, 10, 15],
+            'value_<n>': [8, 16, 24]
         })
         # Display the DataFrame as a table
         st.table(sample_data)
-
 
     def sidebar_upload(self):
         st.sidebar.header("Step 1: Upload CSV File")
@@ -43,7 +43,6 @@ class InterpreTSApp:
                 st.error(f"Error reading the file: {e}")
         return False
 
-
     def preprocess_data(self):
         if self.data is not None:
             st.write("Data Preview:")
@@ -53,7 +52,6 @@ class InterpreTSApp:
             st.write("Normalized Columns:", ", ".join(self.data.columns))
             return True
         return False
-
 
     def windows_slider(self):
         if self.data is not None:
@@ -78,7 +76,6 @@ class InterpreTSApp:
             return window_size
         return None
 
-
     def stride_slider(self):
         if self.data is not None:
             if len(self.data) > 1000:
@@ -102,16 +99,19 @@ class InterpreTSApp:
             return stride_size
         return None
 
-
     def select_time_value_columns(self):
         if self.data is not None:
             st.sidebar.header("Step 2: Select Columns")
             self.time_column = st.sidebar.selectbox("Select Time Column", options=self.data.columns, index=0)
-            self.value_column = st.sidebar.selectbox("Select Value Column", options=self.data.columns, index=1)
+            self.value_columns = st.sidebar.multiselect(
+                "Select Value Columns",
+                options=[col for col in self.data.columns if col != self.time_column],
+                default=[self.data.columns[1]]
+            )
 
             # Validate columns
-            if self.time_column not in self.data.columns or self.value_column not in self.data.columns:
-                st.error(f"Invalid columns selected: {self.time_column}, {self.value_column}")
+            if self.time_column not in self.data.columns or not self.value_columns:
+                st.error(f"Invalid columns selected: Time: {self.time_column}, Value(s): {self.value_columns}")
                 return False
 
             # Convert time column to datetime
@@ -127,7 +127,6 @@ class InterpreTSApp:
                 return False
         return False
 
-
     def select_features(self):
         st.sidebar.header("Step 3: Select Features")
         self.selected_features = st.sidebar.multiselect(
@@ -136,9 +135,8 @@ class InterpreTSApp:
             default=["Length", "Mean", "Variance"]
         )
 
-
     def extract_features(self, window_size=1, stride=1):
-        if self.data is not None and self.time_column and self.value_column:
+        if self.data is not None and self.time_column and self.value_columns:
             if st.sidebar.button("Extract Features"):
                 if self.selected_features:
                     try:
@@ -149,27 +147,33 @@ class InterpreTSApp:
                             progress_bar.progress(progress)
                             status_text.text(f"Progress: {progress}%")
 
-                        extractor = FeatureExtractor(
-                            features=[self.feature_options[feat] for feat in self.selected_features],
-                            window_size=window_size,
-                            stride=stride
-                        )
+                        feature_results = {}
+                        for column in self.value_columns:
+                            extractor = FeatureExtractor(
+                                features=[self.feature_options[feat] for feat in self.selected_features],
+                                window_size=window_size,
+                                stride=stride
+                            )
 
-                        status_text.text("Preparing data...")
-                        ts_data = self.data.set_index(self.time_column)[self.value_column].dropna()
+                            status_text.text(f"Preparing data for column: {column}...")
+                            ts_data = self.data.set_index(self.time_column)[column].dropna()
 
-                        status_text.text("Calculating features...")
-                        feature_df = extractor.extract_features(
-                            pd.DataFrame({'value': ts_data.values}),
-                            progress_callback=update_progress,
-                            mode='sequential'  
-                        )
+                            status_text.text(f"Calculating features for column: {column}...")
+                            feature_df = extractor.extract_features(
+                                pd.DataFrame({'value': ts_data.values}),
+                                progress_callback=update_progress,
+                                mode='sequential'
+                            )
+
+                            feature_results[column] = feature_df
 
                         progress_bar.progress(100)
                         st.success("Features extracted successfully!")
-                        st.subheader("Extracted Features")
-                        st.write("The following features were successfully extracted:")
-                        st.dataframe(feature_df)
+
+                        # Display each column's features in a separate table
+                        for column, feature_df in feature_results.items():
+                            st.subheader(f"Extracted Features for Column: {column}")
+                            st.dataframe(feature_df)
 
                     except Exception as e:
                         st.error(f"An error occurred while extracting features: {e}")
@@ -197,12 +201,6 @@ class InterpreTSApp:
         # Footer
         st.sidebar.markdown("---")
         st.sidebar.write("Developed with ❤️ using Streamlit and InterpreTS.")
-
-#TODO
-# def start_gui():
-#     app = InterpreTSApp()
-#     app.run()
-#     return app
 
 if __name__ == "__main__":
     app = InterpreTSApp()
