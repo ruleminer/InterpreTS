@@ -21,13 +21,20 @@ class InterpreTSApp:
         st.set_page_config(page_title="InterpreTS Feature Extraction", layout="wide")
         st.title("InterpreTS Feature Extraction GUI")
         st.write("This app allows you to upload a CSV file containing time series data and extract interpretable features using the InterpreTS library.")
+        
         st.write("""
-                The CSV file should have at least two columns: one for time and one for values.
-                Example:
-                time, value
-                2020-01-01, 100
-                2020-01-02, 110
+                The CSV file should have two columns: one for time and one for values. (the order doesn't matter beacuse they can be switched). Example format:
                 """)
+        
+        # Create a sample DataFrame for better visualisation
+        sample_data = pd.DataFrame({
+            'time': ['2020-01-01', '2020-01-02', '2020-01-03'],
+            'value': [100, 110, 105]
+        })
+        
+        # Display the DataFrame as a table
+        st.table(sample_data)
+
 
     def sidebar_upload(self):
         st.sidebar.header("Step 1: Upload CSV File")
