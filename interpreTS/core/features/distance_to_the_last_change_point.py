@@ -15,7 +15,7 @@ def calculate_distance_to_last_trend_change(data, window_size=5):
 
     Returns
     -------
-    int
+    int or None
         The distance (in terms of indices) to the last trend change point.
         If no change is detected, returns None.
 
@@ -24,30 +24,35 @@ def calculate_distance_to_last_trend_change(data, window_size=5):
     TypeError
         If the data is not a valid time series type.
     ValueError
-        If the data contains NaN values or is too short to calculate mean.
+        If the data contains NaN values or `window_size` is invalid.
 
     Examples
     --------
-    >>> import pandas as pd
-    >>> data = pd.Series([1, 2, 3, 4, 5, 6, 7, 6, 5, 4, 3, 2, 1])
-    >>> calculate_distance_to_last_trend_change(data, window_size=3)
-    4
+    >>> data = pd.Series([1, 2, 3, 2, 1, 2, 3, 2, 1])
+    >>> calculate_distance_to_last_trend_change(data, window_size=2)
+    2
     """
     # Validate the time series data
     validate_time_series_data(data, require_datetime_index=False)
 
-    # Handle empty or insufficient data
+    # Handle invalid or insufficient data
     if len(data) < window_size + 1:
         raise ValueError("The time series is too short for the specified rolling window size.")
-    
+    if window_size <= 0:
+        raise ValueError("Window size must be a positive integer.")
+
     # Convert data to a pandas Series if it's an ndarray
     if isinstance(data, np.ndarray):
         data = pd.Series(data)
-    
+
+    # Check for NaN values
+    if data.isnull().any():
+        raise ValueError("Data contains NaN values.")
+
     # Check for monotonic data
     if data.is_monotonic_increasing or data.is_monotonic_decreasing:
         return None  # No trend change can occur in monotonic data
-    
+
     # Calculate rolling mean
     rolling_mean = data.rolling(window=window_size).mean()
 
@@ -55,15 +60,18 @@ def calculate_distance_to_last_trend_change(data, window_size=5):
     change_in_mean = rolling_mean.diff()
 
     # Detect trend change points: where the direction of the change in mean flips
-    trend_changes = (change_in_mean > 0) != (change_in_mean.shift(1) > 0)
+    trend_changes = ((change_in_mean > 0) != (change_in_mean.shift(1) > 0)) & ~change_in_mean.isna()
 
-    # Find the last trend change point
-    last_change_point = trend_changes.idxmax() if trend_changes.any() else None
-    
-    if last_change_point is None:
+    # Get indices of trend change points
+    trend_change_indices = trend_changes[trend_changes].index
+
+    if trend_change_indices.empty:
         return None  # No trend change detected
 
-    # Calculate the distance to the last trend change point
-    distance_to_last_change = len(data) - last_change_point
+    # Find the last trend change point index
+    last_change_index = trend_change_indices[-1]
+
+    # Calculate the distance from the last trend change point to the end of the series
+    distance_to_last_change = len(data) - last_change_index - 1
 
     return distance_to_last_change

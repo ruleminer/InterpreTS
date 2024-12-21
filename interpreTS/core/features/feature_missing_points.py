@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-def missing_points(data, percentage=True):
+def calculate_missing_points(data, percentage=True):
     """
     Calculate the percentage or count of missing (NaN or None) values in a time series.
 

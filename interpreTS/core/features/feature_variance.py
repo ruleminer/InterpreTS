@@ -31,7 +31,7 @@ def calculate_variance(data, ddof=1):
     
     # Check for numeric data
     if not np.issubdtype(data.dtype, np.number):
-        raise TypeError("Data must be numeric.")
+        raise TypeError("Data must contain only numeric values.")
     
     # Check for one-dimensional data
     if isinstance(data, np.ndarray) and data.ndim != 1:

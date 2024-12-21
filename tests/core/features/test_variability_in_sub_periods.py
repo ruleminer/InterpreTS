@@ -1,86 +1,71 @@
-# import pytest
-# import pandas as pd
-# import numpy as np
-# from interpreTS.core.features.variability_in_sub_periods import calculate_variability_in_sub_periods
+import pytest
+import pandas as pd
+import numpy as np
+from interpreTS.core.features.variability_in_sub_periods import calculate_variability_in_sub_periods
 
-# def test_calculate_variability_in_sub_periods_strong_variability():
-#     """
-#     Test that calculate_variability_in_sub_periods identifies strong variability
-#     in a time series with large fluctuations.
-#     """
-#     data = pd.Series([1, 10, 1, 10, 1, 10, 1, 10])
-#     result = calculate_variability_in_sub_periods(data, window_size=4)
-#     assert all(val > 10 for val in result), "The variability should be high for data with strong fluctuations"
+# Test for evenly spaced data with a basic setup
+def test_variability_basic_case():
+    data = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    result = calculate_variability_in_sub_periods(data, window_size=5, step_size=5, ddof=1)
+    expected = pd.Series([2.5, 2.5])  # Two non-overlapping windows
+    pd.testing.assert_series_equal(result, expected)
 
-# def test_calculate_variability_in_sub_periods_weak_variability():
-#     """
-#     Test that calculate_variability_in_sub_periods identifies weak variability
-#     in a time series with small fluctuations.
-#     """
-#     data = pd.Series([1, 1.1, 1.2, 1.1, 1, 1.05, 1.1, 1.15])
-#     result = calculate_variability_in_sub_periods(data, window_size=4)
-#     assert all(val < 0.1 for val in result), "The variability should be low for data with weak fluctuations"
+# Test for overlapping windows using a custom step size
+def test_variability_with_step_size():
+    data = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    result = calculate_variability_in_sub_periods(data, window_size=5, step_size=3, ddof=1)
+    expected = pd.Series([2.5, 2.5])  # Overlapping windows
+    pd.testing.assert_series_equal(result, expected)
 
-# def test_calculate_variability_in_sub_periods_no_variability():
-#     """
-#     Test that calculate_variability_in_sub_periods identifies no variability
-#     in a time series with constant values.
-#     """
-#     data = pd.Series([5, 5, 5, 5, 5, 5, 5, 5])
-#     result = calculate_variability_in_sub_periods(data, window_size=4)
-#     assert all(val == 0 for val in result), "The variability should be zero for constant data"
+# Test for non-overlapping windows
+def test_variability_non_overlapping_windows():
+    data = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    result = calculate_variability_in_sub_periods(data, window_size=2, step_size=2)
+    expected = pd.Series([0.25, 0.25, 0.25, 0.25, 0.25])  # Five non-overlapping windows
+    pd.testing.assert_series_equal(result, expected)
 
-# def test_calculate_variability_in_sub_periods_empty_series():
-#     """
-#     Test that calculate_variability_in_sub_periods returns an empty list for an empty series.
-#     """
-#     data = pd.Series([])
-#     with pytest.raises(ValueError, match="Window size must be smaller than or equal to the length of the data"):
-#         calculate_variability_in_sub_periods(data, window_size=4)
+# Test for the degrees of freedom parameter (ddof)
+def test_variability_with_ddof():
+    data = pd.Series([1, 2, 3, 4, 5])
+    result = calculate_variability_in_sub_periods(data, window_size=5, ddof=1)
+    expected = pd.Series([2.5])  # Variability of the entire series
+    pd.testing.assert_series_equal(result, expected)
 
-# def test_calculate_variability_in_sub_periods_insufficient_data():
-#     """
-#     Test that calculate_variability_in_sub_periods returns an empty result when data
-#     is insufficient for the specified window size.
-#     """
-#     data = pd.Series([5, 6])
-#     with pytest.raises(ValueError, match="Window size must be smaller than or equal to the length of the data"):
-#         calculate_variability_in_sub_periods(data, window_size=4)
+# Test for data containing NaN values
+def test_variability_with_nan():
+    data = pd.Series([1, 2, np.nan, 4, 5])
+    with pytest.raises(ValueError, match="Data contains NaN values."):
+        calculate_variability_in_sub_periods(data, window_size=3)
 
-# def test_calculate_variability_in_sub_periods_with_numpy_array():
-#     """
-#     Test that calculate_variability_in_sub_periods works correctly with a numpy array.
-#     """
-#     data = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-#     result = calculate_variability_in_sub_periods(data, window_size=5)
-#     assert len(result) == 2, "The result should have two values for a numpy array with a window size of 5"
-#     assert all(isinstance(val, float) for val in result), "Each result should be a float (variance value)"
+# Test when the window size is greater than the data length
+def test_variability_insufficient_data():
+    data = pd.Series([1, 2, 3])
+    with pytest.raises(ValueError, match="Window size must be smaller than or equal to the length of the data."):
+        calculate_variability_in_sub_periods(data, window_size=5)
 
-# def test_calculate_variability_in_sub_periods_with_overlap():
-#     """
-#     Test that calculate_variability_in_sub_periods handles overlapping sub-periods correctly.
-#     """
-#     data = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-#     result = calculate_variability_in_sub_periods(data, window_size=5, step_size=2)
-#     expected_length = (len(data) - 5) // 2 + 1  # Expected number of overlapping windows
-#     assert len(result) == expected_length, "Overlap calculation failed"
-#     assert all(isinstance(v, float) for v in result), "Each result should be a float (variance value)"
+# Test for empty input data
+def test_variability_empty_data():
+    data = pd.Series([], dtype=float)
+    with pytest.raises(ValueError, match="Input data is empty."):
+        calculate_variability_in_sub_periods(data, window_size=3)
 
-# def test_calculate_variability_in_sub_periods_high_variance():
-#     """
-#     Test that calculate_variability_in_sub_periods identifies high variance in sub-periods
-#     with data that fluctuates greatly within each window.
-#     """
-#     data = pd.Series([1, 100, 1, 100, 1, 100, 1, 100, 1, 100])
-#     result = calculate_variability_in_sub_periods(data, window_size=3)
-#     assert all(val > 1000 for val in result), "The variability should be high for high-fluctuation data"
+# Test for data with a single repeated value
+def test_variability_single_value():
+    data = pd.Series([5, 5, 5, 5, 5])
+    result = calculate_variability_in_sub_periods(data, window_size=3, step_size=1)
+    expected = pd.Series([0.0, 0.0, 0.0])  # Variability of overlapping windows
+    pd.testing.assert_series_equal(result, expected)
 
-# def test_calculate_variability_in_sub_periods_with_small_window_size():
-#     """
-#     Test that calculate_variability_in_sub_periods correctly calculates variability with a small window size.
-#     """
-#     data = pd.Series([1, 2, 3, 4, 5])
-#     result = calculate_variability_in_sub_periods(data, window_size=2, step_size=1)  # Set step_size to 1 for overlapping windows
-#     expected_length = len(data) - 1
-#     assert len(result) == expected_length, f"The number of results should be {expected_length} with a window size of 2 and step size of 1"
-#     assert np.isclose(result.iloc[0], 0.25, atol=1e-2), "The variance of the first window should be approximately 0.25"
+# Test functionality with numpy array input
+def test_variability_numpy_input():
+    data = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    result = calculate_variability_in_sub_periods(data, window_size=5, ddof=0)
+    expected = pd.Series([2.0, 2.0])  # Using ddof=0
+    pd.testing.assert_series_equal(result, expected)
+
+# Test with a step size larger than the window size
+def test_variability_custom_step_size_large():
+    data = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    result = calculate_variability_in_sub_periods(data, window_size=3, step_size=4)
+    expected = pd.Series([0.6666666666666666, 0.6666666666666666])  # Non-overlapping large step
+    pd.testing.assert_series_equal(result, expected)

@@ -17,34 +17,17 @@ def calculate_entropy(data, bins=2):
     -------
     float
         The normalized entropy, ranging from 0 to 1.
-
-    Raises
-    ------
-    TypeError
-        If the data is not numeric or not a valid time series type.
-    ValueError
-        If the data contains NaN values, is too short, or bins < 2.
     """
-    # Validate data, disallowing NaN values
-    validate_time_series_data(data, allow_nan=False)
+    if len(data) < 2 or np.ptp(data) == 0:
+        return 0.0
 
-    # Ensure data is numeric
-    if not np.issubdtype(data.dtype, np.number):
-        raise TypeError("Data must be numeric.")
+    # Binning data
+    counts, _ = np.histogram(data, bins=bins, density=False)
+    probabilities = counts / counts.sum()
 
-    if len(data) < 2:
-        raise ValueError("Input data is too short to calculate entropy.")
-    if bins < 2:
-        raise ValueError("Number of bins must be at least 2.")
+    # Avoid log2(0) by filtering probabilities
+    probabilities = probabilities[probabilities > 0]
 
-    # Check for constant values
-    if np.ptp(data) == 0:
-        return 0.0  # No entropy for constant values
-
-    unique, counts = np.unique(data, return_counts=True)
-    probabilities = counts / len(data)
-    shannon_entropy = -np.sum(probabilities * np.log2(probabilities))
-    max_entropy = np.log2(len(unique))
-    normalized_entropy = shannon_entropy / max_entropy if max_entropy > 0 else 0.0
-
-    return normalized_entropy
+    shannon_entropy = -np.dot(probabilities, np.log2(probabilities))
+    max_entropy = np.log2(len(probabilities))
+    return shannon_entropy / max_entropy if max_entropy > 0 else 0.0
