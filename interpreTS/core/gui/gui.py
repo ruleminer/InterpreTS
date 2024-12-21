@@ -15,13 +15,10 @@ class InterpreTSApp:
         self.feature_options = extractor.generate_feature_options()
 
 
-
-#TODO better display of format of sample data
     def configure_page(self):
         st.set_page_config(page_title="InterpreTS Feature Extraction", layout="wide")
         st.title("InterpreTS Feature Extraction GUI")
         st.write("This app allows you to upload a CSV file containing time series data and extract interpretable features using the InterpreTS library.")
-        
         st.write("""
                 The CSV file should have two columns: one for time and one for values. (the order doesn't matter beacuse they can be switched). Example format:
                 """)
@@ -31,7 +28,6 @@ class InterpreTSApp:
             'time': ['2020-01-01', '2020-01-02', '2020-01-03'],
             'value': [100, 110, 105]
         })
-        
         # Display the DataFrame as a table
         st.table(sample_data)
 
@@ -47,6 +43,7 @@ class InterpreTSApp:
                 st.error(f"Error reading the file: {e}")
         return False
 
+
     def preprocess_data(self):
         if self.data is not None:
             st.write("Data Preview:")
@@ -56,6 +53,7 @@ class InterpreTSApp:
             st.write("Normalized Columns:", ", ".join(self.data.columns))
             return True
         return False
+
 
     def windows_slider(self):
         if self.data is not None:
@@ -79,6 +77,7 @@ class InterpreTSApp:
                 )
             return window_size
         return None
+
 
     def stride_slider(self):
         if self.data is not None:
@@ -128,6 +127,7 @@ class InterpreTSApp:
                 return False
         return False
 
+
     def select_features(self):
         st.sidebar.header("Step 3: Select Features")
         self.selected_features = st.sidebar.multiselect(
@@ -135,6 +135,7 @@ class InterpreTSApp:
             options=self.feature_options.keys(), 
             default=["Length", "Mean", "Variance"]
         )
+
 
     def extract_features(self, window_size=1, stride=1):
         if self.data is not None and self.time_column and self.value_column:
@@ -157,7 +158,6 @@ class InterpreTSApp:
                         status_text.text("Preparing data...")
                         ts_data = self.data.set_index(self.time_column)[self.value_column].dropna()
 
-                        # Extract features with progress updates
                         status_text.text("Calculating features...")
                         feature_df = extractor.extract_features(
                             pd.DataFrame({'value': ts_data.values}),
@@ -177,14 +177,12 @@ class InterpreTSApp:
                     st.sidebar.error("Please select at least one feature to extract.")
 
 
-
     def run(self):
         self.configure_page()
         file_uploaded = self.sidebar_upload()
 
         if file_uploaded:
             if self.preprocess_data():
-                # Show and read the slider value here since data is available
                 window_size = self.windows_slider()
                 stride = self.stride_slider()
                 st.write(f"Selected window size: {window_size}")
