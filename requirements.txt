@@ -5,4 +5,10 @@ pytest
 langchain_community
 langchain 
 openai
+<<<<<<< HEAD
 streamlit
+=======
+scikit-learn
+joblib
+tqdm
+>>>>>>> main
