@@ -52,27 +52,50 @@ class InterpreTSApp:
 
     def windows_slider(self):
         if self.data is not None:
-            window_size = st.slider(
-                'Select a window size',
-                min_value=1,
-                max_value=len(self.data),
-                value=3,
-                step=1
-            )
+            if len(self.data) > 1000:
+                # Use text input for large datasets
+                window_size = st.number_input(
+                    'Enter a window size',
+                    min_value=1,
+                    max_value=len(self.data),
+                    value=3,
+                    step=1
+                )
+            else:
+                # Use slider for smaller datasets
+                window_size = st.slider(
+                    'Select a window size',
+                    min_value=1,
+                    max_value=len(self.data),
+                    value=3,
+                    step=1
+                )
             return window_size
         return None
-    
+
     def stride_slider(self):
         if self.data is not None:
-            stride_size = st.slider(
-                'Select a stride',
-                min_value=1,
-                max_value=len(self.data),
-                value=3,
-                step=1
-            )
+            if len(self.data) > 1000:
+                # Use text input for large datasets
+                stride_size = st.number_input(
+                    'Enter a stride',
+                    min_value=1,
+                    max_value=len(self.data),
+                    value=3,
+                    step=1
+                )
+            else:
+                # Use slider for smaller datasets
+                stride_size = st.slider(
+                    'Select a stride',
+                    min_value=1,
+                    max_value=len(self.data),
+                    value=3,
+                    step=1
+                )
             return stride_size
         return None
+
 
     def select_time_value_columns(self):
         if self.data is not None:
