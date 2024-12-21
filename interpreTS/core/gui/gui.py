@@ -7,15 +7,13 @@ from interpreTS.core.time_series_data import TimeSeriesData
 
 class InterpreTSApp:
     def __init__(self):
+        extractor = FeatureExtractor()
         self.data = None
         self.time_column = None
         self.value_column = None
         self.selected_features = []
-        self.feature_options = {
-            "Length": Features.LENGTH,
-            "Mean": Features.MEAN,
-            "Variance": Features.VARIANCE,
-        }
+        self.feature_options = extractor.generate_feature_options()
+
 
 
 #TODO better display of format of sample data
