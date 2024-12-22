@@ -31,7 +31,7 @@ def calculate_stability(data, max_lag=None):
     if data.empty:
         return np.nan
     if not np.issubdtype(data.dtype, np.number):
-        raise TypeError("Data must be numeric.")
+        raise TypeError("Data must contain only numeric values.")
 
     # Dynamically determine max_lag if not provided
     if max_lag is None:

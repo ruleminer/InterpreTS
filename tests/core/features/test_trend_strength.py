@@ -1,54 +1,71 @@
-# import pytest
-# import pandas as pd
-# import numpy as np
-# from interpreTS.core.features.trend_strength import calculate_trend_strength
+import pytest
+import pandas as pd
+import numpy as np
+from interpreTS.core.features.trend_strength import calculate_trend_strength
 
-# def test_calculate_trend_strength_increasing():
-#     """
-#     Test that calculate_trend_strength identifies a strong positive trend.
-#     """
-#     data = pd.Series([1, 2, 3, 4, 5])
-#     assert calculate_trend_strength(data) == pytest.approx(1.0), "The trend strength should be close to 1.0 for a perfect increasing trend"
+# Test for a perfect increasing trend
+def test_trend_strength_increasing_data():
+    data = pd.Series([1, 2, 3, 4, 5])
+    result = calculate_trend_strength(data)
+    expected = 1.0  # Perfect trend
+    assert result == pytest.approx(expected, abs=1e-6), f"Expected {expected}, got {result}"
 
-# def test_calculate_trend_strength_decreasing():
-#     """
-#     Test that calculate_trend_strength identifies a strong negative trend.
-#     """
-#     data = pd.Series([5, 4, 3, 2, 1])
-#     assert calculate_trend_strength(data) == pytest.approx(1.0), "The trend strength should be close to 1.0 for a perfect decreasing trend"
+# Test for a perfect decreasing trend
+def test_trend_strength_decreasing_data():
+    data = pd.Series([5, 4, 3, 2, 1])
+    result = calculate_trend_strength(data)
+    expected = 1.0  # Perfect trend
+    assert result == pytest.approx(expected, abs=1e-6), f"Expected {expected}, got {result}"
 
-# def test_calculate_trend_strength_no_trend():
-#     """
-#     Test that calculate_trend_strength returns a low value for a series with no trend.
-#     """
-#     data = pd.Series([1, 1, 1, 1, 1])
-#     assert calculate_trend_strength(data) == pytest.approx(0.0), "The trend strength should be 0.0 for no trend"
+# Test for a series with no trend
+def test_trend_strength_no_trend():
+    data = pd.Series([1, 1, 1, 1, 1])
+    result = calculate_trend_strength(data)
+    expected = 0.0  # No trend
+    assert result == pytest.approx(expected, abs=1e-6), f"Expected {expected}, got {result}"
 
-# def test_calculate_trend_strength_random_data():
-#     """
-#     Test that calculate_trend_strength returns a low value for random data.
-#     """
-#     np.random.seed(0)
-#     data = pd.Series(np.random.randn(100))
-#     assert calculate_trend_strength(data) < 0.2, "The trend strength should be low for random data"
+# Test for data with noise
+def test_trend_strength_with_noise():
+    data = pd.Series([1, 2, 3, 2, 4, 5])
+    result = calculate_trend_strength(data)
+    assert 0.0 < result < 1.0, f"Expected trend strength between 0 and 1, got {result}"
 
-# def test_calculate_trend_strength_empty_series():
-#     """
-#     Test that calculate_trend_strength returns NaN for an empty series.
-#     """
-#     data = pd.Series([])
-#     assert pd.isna(calculate_trend_strength(data)), "The trend strength of an empty series should be NaN"
+# Test for a single value in data
+def test_trend_strength_single_value():
+    data = pd.Series([10])
+    result = calculate_trend_strength(data)
+    expected = np.nan  # Insufficient data for a trend
+    assert np.isnan(result), f"Expected NaN, got {result}"
 
-# def test_calculate_trend_strength_insufficient_data():
-#     """
-#     Test that calculate_trend_strength returns NaN for a single data point.
-#     """
-#     data = pd.Series([5])
-#     assert pd.isna(calculate_trend_strength(data)), "The trend strength should be NaN for insufficient data"
+# Test for exactly two values
+def test_trend_strength_two_values():
+    data = pd.Series([1, 2])
+    result = calculate_trend_strength(data)
+    expected = 1.0  # Perfect trend with two points
+    assert result == pytest.approx(expected, abs=1e-6), f"Expected {expected}, got {result}"
 
-# def test_calculate_trend_strength_numpy_array():
-#     """
-#     Test that calculate_trend_strength works with a numpy array.
-#     """
-#     data = np.array([1, 2, 3, 4, 5])
-#     assert calculate_trend_strength(data) == pytest.approx(1.0), "The trend strength should be close to 1.0 for a perfect trend"
+# Test for data containing NaN values
+def test_trend_strength_with_nan_values():
+    data = pd.Series([1, 2, np.nan, 4, 5])
+    with pytest.raises(ValueError, match="Data contains NaN values."):
+        calculate_trend_strength(data)
+
+# Test for empty data
+def test_trend_strength_empty_data():
+    data = pd.Series([], dtype=float)
+    with pytest.raises(ValueError, match="Input data is empty."):
+        calculate_trend_strength(data)
+
+# Test for numpy array input
+def test_trend_strength_numpy_array():
+    data = np.array([1, 2, 3, 4, 5])
+    result = calculate_trend_strength(data)
+    expected = 1.0  # Perfect trend
+    assert result == pytest.approx(expected, abs=1e-6), f"Expected {expected}, got {result}"
+
+# Test for random data with no apparent trend
+def test_trend_strength_with_random_data():
+    rng = np.random.default_rng(42)
+    data = pd.Series(rng.normal(size=100))
+    result = calculate_trend_strength(data)
+    assert 0.0 <= result <= 1.0, f"Expected trend strength between 0 and 1, got {result}"
