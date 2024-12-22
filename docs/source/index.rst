@@ -12,7 +12,6 @@ Contents:
 
    Introduction
    Feature_Extractors
-   Validation
    Tutorials
    API_Documentation
 
