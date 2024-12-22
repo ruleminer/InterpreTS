@@ -384,6 +384,59 @@ class FeatureExtractor:
 
         return pd.DataFrame(results)
         
+    def extract_features_stream(self, data_stream, progress_callback=None):
+        """
+        Extract features from a stream of time series data.
+
+        Parameters
+        ----------
+        data_stream : iterable
+            An iterable that yields incoming data points as dictionaries with keys corresponding to column names.
+        progress_callback : function, optional
+            A function to report progress, which takes a single argument: the total number of processed points.
+
+        Yields
+        ------
+        dict
+            A dictionary containing the calculated features for the current window.
+        """
+        if not self.feature_column or not self.id_column:
+            raise ValueError("Feature column and ID column must be specified for streaming mode.")
+
+        # Initialize buffers for each time series ID
+        buffers = {}
+        total_points = 0
+
+        for new_point in data_stream:
+            total_points += 1
+            series_id = new_point[self.id_column]
+
+            # Initialize buffer if necessary
+            if series_id not in buffers:
+                buffers[series_id] = []
+
+            # Add new point to the buffer
+            buffers[series_id].append(new_point)
+
+            # Keep only the most recent points within the window size
+            if len(buffers[series_id]) > self.window_size:
+                buffers[series_id].pop(0)
+
+            # Calculate features if the buffer is full
+            if len(buffers[series_id]) == self.window_size:
+                buffer_df = pd.DataFrame(buffers[series_id])
+                feature_columns = [self.feature_column]
+
+                # Process the buffer and yield the result
+                features = self._process_window(buffer_df, feature_columns)
+                features[self.id_column] = series_id
+                yield features
+
+            # Report progress if a callback is provided
+            if progress_callback:
+                progress_callback(total_points)
+            
+
     def _execute_dask(self, grouped_data, feature_columns, progress_callback):
         """
         Execute feature extraction using Dask.
