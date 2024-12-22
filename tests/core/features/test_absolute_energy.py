@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 import numpy as np
-from interpreTS.core.features.feature_absolute_energy import calculate_absolute_energy  # Zmień ścieżkę do modułu, jeśli to konieczne
+from interpreTS.core.features.feature_absolute_energy import calculate_absolute_energy 
 
 # Test absolute energy for the entire series
 def test_absolute_energy_full_series():

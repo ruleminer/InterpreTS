@@ -34,13 +34,6 @@ def calculate_dominant(data, bins=10, return_bin_center=False):
     if isinstance(data, np.ndarray) and data.size == 0:
         return np.nan
 
-    # Validate the time series data
-    validate_time_series_data(data, require_datetime_index=False)
-
-    # Check for NaN values explicitly
-    if np.isnan(data).any():
-        raise ValueError("Data contains NaN values.")
-
     # Calculate histogram
     counts, bin_edges = np.histogram(data, bins=bins)
     max_bin_index = np.argmax(counts)

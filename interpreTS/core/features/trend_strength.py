@@ -31,12 +31,6 @@ def calculate_trend_strength(data):
     >>> calculate_trend_strength(data)
     1.0
     """
-    # Validate the time series data
-    validate_time_series_data(data, require_datetime_index=False)
-    
-    # Check for NaN values
-    if pd.isna(data).any():
-        raise ValueError("Data contains NaN values.")
     
     # Handle empty or insufficient data by returning NaN
     if len(data) < 2:
