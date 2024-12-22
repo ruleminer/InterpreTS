@@ -623,6 +623,46 @@ class FeatureExtractor:
                 )
         return descriptions
 
+    def add_custom_feature(self, name, function, metadata=None):
+        """
+        Add a custom feature to the FeatureExtractor.
+
+        Parameters
+        ----------
+        name : str
+            The name of the custom feature.
+        function : callable
+            A function that computes the feature. It should accept a Pandas Series and optional parameters as input.
+        metadata : dict, optional
+            A dictionary containing metadata about the feature (e.g., level of interpretability and description).
+            Example:
+            {
+                'level': 'easy' | 'moderate' | 'advanced',
+                'description': 'Description of the feature.'
+            }
+
+        Raises
+        ------
+        ValueError
+            If the feature name already exists or the function is not callable.
+        """
+        if name in self.feature_functions:
+            raise ValueError(f"Feature '{name}' already exists.")
+        if not callable(function):
+            raise ValueError("The provided function is not callable.")
+        
+        # Add the feature function
+        self.feature_functions[name] = function
+        self.features.append(name)
+        # Add metadata if provided
+        if metadata:
+            if 'level' not in metadata or 'description' not in metadata:
+                raise ValueError("Metadata must include 'level' and 'description'.")
+            self.feature_metadata[name] = metadata
+
+        print(f"Custom feature '{name}' added successfully.")
+
+
     @staticmethod
     def available_features():
         """
@@ -633,6 +673,7 @@ class FeatureExtractor:
         list
             List of feature names.
         """
+        
         return list(Features.__dict__.values())
 
 

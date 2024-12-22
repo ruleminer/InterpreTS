@@ -121,3 +121,24 @@ def test_feature_extraction_with_multiple_columns(sample_data):
     features = extractor.extract_features(sample_data)
     assert not features.empty, "Features should be extracted for multiple columns."
     assert any("value2" in col for col in features.columns), "Features for value2 should be included."
+
+def test_custom_feature_extraction(sample_data):
+    """
+    Test feature extraction with a custom feature function.
+    """
+    def calculate_custom_feature(series, threshold=0):
+        """Example custom feature: Count values above a threshold."""
+        return (series > threshold).sum()
+
+    extractor = FeatureExtractor(id_column="id", sort_column="time")
+    extractor.add_custom_feature(
+        name="custom_above_threshold",
+        function=calculate_custom_feature,
+        metadata={
+            "level": "easy",
+            "description": "Counts the number of values above a given threshold."
+        }
+    )
+    features = extractor.extract_features(sample_data)
+    assert not features.empty, "Features should be extracted with a custom feature function."
+    assert "custom_above_threshold_value" in features.columns, "Custom feature should be included in the output."
