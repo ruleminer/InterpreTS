@@ -3,5 +3,9 @@ Tutorials
 
 Get started with these tutorials:
 
-- `Feature Extraction Tutorial </notebooks/feature_extraction.ipynb>`_
-- `Use Feature Peak Tutorial </notebooks/feature_peak.ipynb>`_
+.. toctree::
+   :maxdepth: 1
+   :titlesonly:
+
+   Feature Extraction Notebook <notebooks/feature_extraction.ipynb>
+   Feature Peak Notebook <notebooks/feature_peak.ipynb>
