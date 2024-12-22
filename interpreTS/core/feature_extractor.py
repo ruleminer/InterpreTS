@@ -1,6 +1,9 @@
 import pandas as pd
 import numpy as np
 from joblib import Parallel, delayed
+import dask.dataframe as dd
+from dask.diagnostics import ProgressBar
+from joblib import Parallel, delayed
 
 from .features.feature_spikeness import calculate_spikeness
 from .features.feature_entropy import calculate_entropy
@@ -353,7 +356,7 @@ class FeatureExtractor:
         pd.DataFrame
             A DataFrame containing calculated features for each window.
         """
-        if mode not in ['parallel', 'sequential']:
+        if mode not in ['parallel', 'sequential', 'dask']:
             raise ValueError(f"Invalid mode '{mode}'. Accepted values are: ['parallel', 'sequential']")
 
         if data.empty:
@@ -365,6 +368,9 @@ class FeatureExtractor:
 
         feature_columns = [self.feature_column] if self.feature_column else [col for col in data.columns if col not in {self.id_column, self.sort_column}]
         grouped_data = self.group_data(data)
+
+        if mode == 'dask':
+            return self._execute_dask(grouped_data, feature_columns, progress_callback)
 
         # Generate tasks for feature extraction
         tasks = self._generate_tasks(grouped_data, feature_columns)
@@ -378,6 +384,60 @@ class FeatureExtractor:
 
         return pd.DataFrame(results)
         
+    def _execute_dask(self, grouped_data, feature_columns, progress_callback):
+        """
+        Execute feature extraction using Dask.
+        """
+        dask_tasks = []
+
+        for _, group in grouped_data:
+            group_ddf = dd.from_pandas(group, npartitions=4)
+            window_size = self.window_size if not pd.isna(self.window_size) else len(group)
+
+            if window_size > len(group):
+                print(f"Warning: Window size ({window_size}) exceeds group length ({len(group)}). Skipping group.")
+                continue
+
+            meta = pd.DataFrame(columns=[f"{feature}_{col}" for feature in self.features for col in feature_columns])
+
+            dask_tasks.append(group_ddf.map_partitions(
+                lambda partition: self._process_partition(partition, feature_columns, window_size),
+                meta=meta
+            ))
+
+        # Combine results
+        with ProgressBar():
+            dask_result = dd.concat(dask_tasks).compute()
+
+        return dask_result
+
+    def _process_partition(self, partition, feature_columns, window_size):
+        """
+        Process a single partition of data to calculate features.
+
+        Parameters
+        ----------
+        partition : pd.DataFrame
+            The partition of data to process.
+        feature_columns : list of str
+            The columns of the partition to process.
+        window_size : int
+            The size of the window for feature extraction.
+
+        Returns
+        -------
+        pd.DataFrame
+            A DataFrame with calculated features for each partition.
+        """
+        results = []
+
+        for start in range(0, len(partition) - window_size + 1, self.stride):
+            window = partition.iloc[start : start + window_size]
+            results.append(self._process_window(window, feature_columns))
+
+        # Ensure the result is always a DataFrame
+        return pd.DataFrame(results)
+    
     def _generate_tasks(self, grouped_data, feature_columns):
         """
         Generate feature extraction tasks for all groups and windows.
