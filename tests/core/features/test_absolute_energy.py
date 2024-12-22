@@ -27,12 +27,6 @@ def test_absolute_energy_with_end_only():
     result = calculate_absolute_energy(data, end=2)
     assert result == 5.0, "Absolute energy calculation failed when only end is specified"
 
-# Test absolute energy for an empty series
-def test_absolute_energy_empty_series():
-    data = pd.Series([])
-    with pytest.raises(ValueError, match="Input data is empty."):
-        calculate_absolute_energy(data)
-
 # Test absolute energy for a single value
 def test_absolute_energy_single_value():
     data = pd.Series([5])

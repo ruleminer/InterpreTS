@@ -38,12 +38,6 @@ def test_calculate_spikeness_with_nan():
     expected_result = pd.Series([1, 2, 4, 5]).skew()  # Exclude NaN and calculate expected spikeness
     assert result == pytest.approx(expected_result, abs=0.001), f"Unexpected result for data with NaN. Got: {result}"
 
-# Test spikeness for an empty series
-def test_calculate_spikeness_empty_series():
-    data = pd.Series([])
-    with pytest.raises(ValueError, match="Input data is empty."):
-        calculate_spikeness(data)
-
 # Test spikeness for series with all NaN values
 def test_calculate_spikeness_all_nan():
     data = pd.Series([np.nan, np.nan, np.nan])

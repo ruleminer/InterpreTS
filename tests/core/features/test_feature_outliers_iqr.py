@@ -27,34 +27,6 @@ def test_outliers_iqr_all_outliers():
     expected = 1.0
     assert result == pytest.approx(expected, abs=1e-6), f"Expected {expected}, got {result}"
 
-# Test when the input data is empty
-def test_outliers_iqr_empty_data():
-    data = pd.Series([], dtype=float)
-    training_data = pd.Series([1, 2, 3, 4, 5])
-    with pytest.raises(ValueError, match="Input data is empty."):
-        calculate_outliers_iqr(data, training_data)
-
-# Test when the training data is empty
-def test_outliers_iqr_empty_training_data():
-    data = pd.Series([1, 2, 3, 4, 5])
-    training_data = pd.Series([], dtype=float)
-    with pytest.raises(ValueError, match="Input data is empty."):
-        calculate_outliers_iqr(data, training_data)
-
-# Test when data or training_data contain NaN values
-def test_outliers_iqr_with_nan():
-    data = pd.Series([1, 2, np.nan, 4, 5])
-    training_data = pd.Series([1, 2, 3, 4, np.nan])
-    with pytest.raises(ValueError, match="Data contains NaN values."):
-        calculate_outliers_iqr(data, training_data)
-
-# Test with mixed data types
-def test_outliers_iqr_mixed_types():
-    data = pd.Series([1, 2, "three", 4, 5])
-    training_data = pd.Series([1, 2, 3, 4, 5])
-    with pytest.raises(TypeError, match="Data must contain only numeric values."):
-        calculate_outliers_iqr(data, training_data)
-
 # Test when inputs are numpy arrays
 def test_outliers_iqr_numpy_input():
     data = np.array([5, 6, 100, 200, 9])

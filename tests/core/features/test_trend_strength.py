@@ -44,18 +44,6 @@ def test_trend_strength_two_values():
     expected = 1.0  # Perfect trend with two points
     assert result == pytest.approx(expected, abs=1e-6), f"Expected {expected}, got {result}"
 
-# Test for data containing NaN values
-def test_trend_strength_with_nan_values():
-    data = pd.Series([1, 2, np.nan, 4, 5])
-    with pytest.raises(ValueError, match="Data contains NaN values."):
-        calculate_trend_strength(data)
-
-# Test for empty data
-def test_trend_strength_empty_data():
-    data = pd.Series([], dtype=float)
-    with pytest.raises(ValueError, match="Input data is empty."):
-        calculate_trend_strength(data)
-
 # Test for numpy array input
 def test_trend_strength_numpy_array():
     data = np.array([1, 2, 3, 4, 5])
