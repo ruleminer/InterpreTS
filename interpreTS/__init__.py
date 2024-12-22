@@ -16,22 +16,23 @@ Dependencies:
 - pytest
 """
 
-# from .core.streaming_feature_extractor import StreamingFeatureExtractor
 from .core.feature_extractor import FeatureExtractor
-from .core.feature_extractor import Features
+from .utils.feature_loader import FeatureLoader, Features
 # from .core.time_series_data import TimeSeriesData
 # from .utils.data_conversion import convert_to_time_series
 from .utils.data_validation import validate_time_series_data
+from .utils.data_manager import generate_feature_descriptions
 
 __version__ = "0.3.0"
 
 __all__ = [
     "FeatureExtractor",
-    "StreamingFeatureExtractor",
     "Features",
+    "FeatureLoader",
     "TimeSeriesData",
     "convert_to_time_series",
     "validate_time_series_data",
+    "generate_feature_descriptions",
 ]
 
 # Check required dependencies

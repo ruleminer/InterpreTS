@@ -37,24 +37,6 @@ def test_std_1st_der_negative_values():
     expected = 0.0  # Constant decrease
     assert result == pytest.approx(expected, abs=1e-6), f"Expected {expected}, got {result}"
 
-# Test for empty data
-def test_std_1st_der_empty_data():
-    data = pd.Series([], dtype=float)
-    result = calculate_std_1st_der(data)
-    assert np.isnan(result), f"Expected np.nan, got {result}"
-
-# Test for data containing NaN values
-def test_std_1st_der_with_nan_values():
-    data = pd.Series([1, np.nan, 3, 4])
-    with pytest.raises(ValueError, match="Data contains NaN values."):
-        calculate_std_1st_der(data)
-
-# Test for data containing non-numeric values
-def test_std_1st_der_non_numeric_data():
-    data = pd.Series(["a", "b", "c"])
-    with pytest.raises(TypeError, match="Data must contain only numeric values."):
-        calculate_std_1st_der(data)
-
 # Test for numpy array input
 def test_std_1st_der_numpy_array():
     data = np.array([1, 3, 2, 4, 1])

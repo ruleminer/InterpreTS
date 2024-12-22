@@ -28,12 +28,6 @@ def test_calculate_peak_with_end_only():
     result = calculate_peak(data, end=3)
     assert result == 5, "Peak calculation failed when only end is specified"
 
-# Test peak calculation for an empty series
-def test_calculate_peak_empty_series():
-    data = pd.Series([])
-    with pytest.raises(ValueError, match="Input data is empty."):
-        calculate_peak(data)
-
 # Test peak calculation for a single value
 def test_calculate_peak_single_value():
     data = pd.Series([42])

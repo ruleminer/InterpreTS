@@ -8,3 +8,4 @@ openai
 scikit-learn
 joblib
 tqdm
+dask

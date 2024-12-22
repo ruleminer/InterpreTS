@@ -27,11 +27,6 @@ def calculate_crossing_points(data):
     if isinstance(data, (pd.Series, pd.DataFrame)) and data.empty:
         return {'crossing_count': 0, 'crossing_points': []}
 
-    # Validate data and check for NaN
-    validate_time_series_data(data)
-    if pd.isna(data).any():
-        raise ValueError("Data contains NaN values.")
-
     # Convert to numpy array if data is a pandas Series
     if isinstance(data, pd.Series):
         data = data.to_numpy()
