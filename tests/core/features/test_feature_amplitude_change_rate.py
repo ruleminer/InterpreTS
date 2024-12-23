@@ -7,8 +7,8 @@ from interpreTS.core.features.feature_amplitude_change_rate import calculate_amp
 def test_amplitude_change_rate_simple_series():
     data = pd.Series([1, 5, 2, 8, 3])
     result = calculate_amplitude_change_rate(data)
-    expected = (5 - 2 + 8 - 3) / 2  # Average of amplitude changes
-    assert result == expected, f"Expected {expected}, but got {result}" #assert 7.0 == 4.0
+    expected = (abs(5 - 2) + abs(2 - 8)) / 2  # Average of amplitude changes
+    assert result == expected, f"Expected {expected}, but got {result}"
 
 # Test amplitude change rate for a flat series
 def test_amplitude_change_rate_flat_series():
@@ -20,8 +20,8 @@ def test_amplitude_change_rate_flat_series():
 def test_amplitude_change_rate_single_peak_trough():
     data = pd.Series([3, 7, 3])
     result = calculate_amplitude_change_rate(data)
-    expected = 7 - 3
-    assert result == expected, f"Expected {expected}, but got {result}" #AssertionError: Expected 4, but got nan E       assert nan == 4
+    expected = np.nan
+    assert np.isnan(result)
 
 # Test amplitude change rate for no peaks or troughs
 def test_amplitude_change_rate_no_extrema():

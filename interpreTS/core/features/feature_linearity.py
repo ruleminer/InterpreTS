@@ -40,30 +40,25 @@ def calculate_linearity(data, normalize=True, use_derivative=True):
     >>> calculate_linearity(data)
     0.0
     """
-    # Convert numpy array to pandas Series
     if isinstance(data, np.ndarray):
         data = pd.Series(data)
 
-    # Normalize the data if required
     if normalize:
         data = (data - data.mean()) / data.std()
 
-    # Calculate the first derivative if required
     if use_derivative:
         derivative_data = data.diff().dropna()
-        if len(np.unique(derivative_data)) <= 1:  # If derivative is constant
-            return 1.0 if len(np.unique(data)) > 1 else 0.0  # Use original data for perfect linearity
+        if len(np.unique(derivative_data)) <= 1:  
+            return 1.0 if len(np.unique(data)) > 1 else 0.0 
         data = derivative_data
 
-    # Ensure sufficient unique points for regression
     if len(data) < 2 or len(np.unique(data)) < 2:
         return 0.0
 
-    # Prepare data for linear regression
     x = np.arange(len(data)).reshape(-1, 1)
     y = data.values
 
-    # Perform linear regression
+
     model = LinearRegression()
     model.fit(x, y)
     r_squared = model.score(x, y)
