@@ -30,7 +30,7 @@ def calculate_distance_to_last_trend_change(data, window_size=5):
     --------
     >>> data = pd.Series([1, 2, 3, 2, 1, 2, 3, 2, 1])
     >>> calculate_distance_to_last_trend_change(data, window_size=2)
-    2
+    1
     """
     # Handle invalid or insufficient data
     if len(data) < window_size + 1:

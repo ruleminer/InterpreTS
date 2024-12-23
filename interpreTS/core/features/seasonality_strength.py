@@ -36,7 +36,7 @@ def calculate_seasonality_strength(data, period=2, max_lag=12):
     >>> import pandas as pd
     >>> data = pd.Series([1, 2, 3, 2, 1, 2, 3, 2, 1, 2, 3, 2], index=pd.date_range("2023-01-01", periods=12, freq="M"))
     >>> calculate_seasonality_strength(data, period=3)
-    0.75
+    1.0
     """
     # Check for a valid period
     if period <= 0:

@@ -17,6 +17,17 @@ def calculate_entropy(data, bins=2):
     -------
     float
         The normalized entropy, ranging from 0 to 1.
+
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> data = pd.Series([1, 2, 3, 1, 2, 3, 1, 2, 3])
+    >>> calculate_entropy(data, bins=3)
+    1.0
+
+    >>> data = pd.Series([1, 1, 1, 1])
+    >>> calculate_entropy(data, bins=2)
+    0.0
     """
     if len(data) < 2 or np.ptp(data) == 0:
         return 0.0

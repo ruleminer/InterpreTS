@@ -22,6 +22,17 @@ def calculate_crossing_points(data):
     ------
     ValueError
         If the input data is empty or contains NaN values.
+
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> data = pd.Series([1, 3, 2, 4, 1, 5, 2, 6])
+    >>> calculate_crossing_points(data)
+    {'crossing_count': 7, 'crossing_points': [0, 1, 2, 3, 4, 5, 6]}
+
+    >>> data = pd.Series([2, 2, 2, 2])
+    >>> calculate_crossing_points(data)
+    {'crossing_count': 0, 'crossing_points': []}
     """
     # Return immediately if data is empty
     if isinstance(data, (pd.Series, pd.DataFrame)) and data.empty:
