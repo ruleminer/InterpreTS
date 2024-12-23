@@ -1,44 +1,50 @@
-import pandas as pd
 import numpy as np
-from interpreTS.utils.data_validation import validate_time_series_data
+from scipy.stats import gaussian_kde
 
-def calculate_entropy(data, bins=2):
+def calculate_entropy(data):
     """
-    Calculate the entropy of a time series based on its value distribution.
+    Calculate normalized entropy of a data.
 
-    Parameters
-    ----------
-    data : pd.Series or np.ndarray
-        The time series data for which the entropy is to be calculated.
-    bins : int, optional
-        The number of bins to use for discretizing the data. Default is 2.
+    This function estimates the probability density of data using KDE 
+    and calculates the Shannon entropy based on the estimated probabilities.
 
-    Returns
-    -------
-    float
-        The normalized entropy, ranging from 0 to 1.
+    Parameters:
+    - data (array-like): A 1D array or list of numerical data points.
 
-    Examples
-    --------
-    >>> import pandas as pd
-    >>> data = pd.Series([1, 2, 3, 1, 2, 3, 1, 2, 3])
-    >>> calculate_entropy(data, bins=3)
-    1.0
+    Returns:
+    - float: The normalized Shannon entropy of the dataset. If the dataset consists of
+      identical values (i.e., no variability), the entropy is 0. If the KDE results in
+      zero probability for any point, NaN is returned to indicate that the entropy could
+      not be calculated properly.
 
-    >>> data = pd.Series([1, 1, 1, 1])
-    >>> calculate_entropy(data, bins=2)
-    0.0
+    Notes:
+    - The function checks if the range (peak-to-peak value) of the data is zero (i.e., all 
+      values are identical). In this case, the entropy is directly returned as 0.
+    - The dataset is divided into 100 evenly spaced points between the minimum and maximum 
+      values of the data for KDE estimation.
+    - The Shannon entropy is normalized by dividing by `np.log2(len(x))` to scale the value 
+      between 0 and 1, where `len(x)` is the number of points used for KDE evaluation.
+    - If any probability in the KDE is zero, indicating a problematic or poorly estimated 
+      probability distribution, the function returns NaN.
+
+    Example:
+    >>> data = [1, 1, 1, 1, 2, 2, 2]
+    >>> calculate_entropy(data)
+    0.9182958340544894  # Example output, depending on the data distribution.
     """
-    if len(data) < 2 or np.ptp(data) == 0:
+    
+    if len(data) == 0: 
+        return np.nan
+    
+    if np.ptp(data) == 0:
         return 0.0
-
-    # Binning data
-    counts, _ = np.histogram(data, bins=bins, density=False)
-    probabilities = counts / counts.sum()
-
-    # Avoid log2(0) by filtering probabilities
-    probabilities = probabilities[probabilities > 0]
-
-    shannon_entropy = -np.dot(probabilities, np.log2(probabilities))
-    max_entropy = np.log2(len(probabilities))
-    return shannon_entropy / max_entropy if max_entropy > 0 else 0.0
+    
+    x = np.linspace(min(data), max(data), 100)
+    
+    probabilities = gaussian_kde(data)(x)
+    probabilities /= probabilities.sum()
+    if np.any(probabilities == 0):
+        return np.nan
+    
+    shannon_entropy = -np.sum(probabilities * np.log2(probabilities))
+    return shannon_entropy / np.log2(len(x))
