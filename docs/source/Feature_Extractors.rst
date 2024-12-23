@@ -19,7 +19,7 @@ Available Features
 Below is a list of the available features in the library. Each feature is automatically documented from the code, with a brief description.
 
 Length
-==================
+-------------
 Extracts the total length of a time series.
 
 .. automodule:: interpreTS.core.features.feature_length
@@ -28,7 +28,7 @@ Extracts the total length of a time series.
    :show-inheritance:
 
 Mean
-==================
+-------------
 Calculates the mean value of a time series.
 
 .. automodule:: interpreTS.core.features.feature_mean
@@ -37,7 +37,7 @@ Calculates the mean value of a time series.
    :show-inheritance:
 
 Peak
-==================
+-------------
 Identifies the maximum peak value.
 
 .. automodule:: interpreTS.core.features.feature_peak
@@ -46,7 +46,7 @@ Identifies the maximum peak value.
    :show-inheritance:
 
 Spikeness
-==================
+-------------
 Measures the level of spikeness in the time series.
 
 .. automodule:: interpreTS.core.features.feature_spikeness
@@ -55,7 +55,7 @@ Measures the level of spikeness in the time series.
    :show-inheritance:
 
 Standard Deviation of the First Derivative (Std_1st_der)
-==================
+-------------
 Calculates the standard deviation of the first derivative of the series.
 
 .. automodule:: interpreTS.core.features.feature_std_1st_der
@@ -64,7 +64,7 @@ Calculates the standard deviation of the first derivative of the series.
    :show-inheritance:
 
 Trough
-==================
+-------------
 Identifies the lowest point in the time series.
 
 .. automodule:: interpreTS.core.features.feature_trough
@@ -73,7 +73,7 @@ Identifies the lowest point in the time series.
    :show-inheritance:
 
 Variance
-==================
+-------------
 Computes the variance of the series.
 
 .. automodule:: interpreTS.core.features.feature_variance
@@ -82,7 +82,7 @@ Computes the variance of the series.
    :show-inheritance:
 
 Dominant
-==================
+-------------
 Finds the most dominant value in a histogram representation.
 
 .. automodule:: interpreTS.core.features.histogram_dominant
@@ -91,7 +91,7 @@ Finds the most dominant value in a histogram representation.
    :show-inheritance:
 
 Seasonality Strength
-==================
+-------------
 Assesses the strength of seasonality patterns in the data.
 
 .. automodule:: interpreTS.core.features.seasonality_strength
@@ -100,7 +100,7 @@ Assesses the strength of seasonality patterns in the data.
    :show-inheritance:
 
 Trend Strength
-==================
+-------------
 Measures the strength of the overall trend in the series.
 
 .. automodule:: interpreTS.core.features.trend_strength
@@ -109,7 +109,7 @@ Measures the strength of the overall trend in the series.
    :show-inheritance:
 
 Above 9th Decile
-==================
+-------------
 
 This feature calculates whether the values in the time series are above the 9th decile.
 
@@ -119,7 +119,7 @@ This feature calculates whether the values in the time series are above the 9th 
    :show-inheritance:
 
 Distance to the Last Change Point
-==================
+-------------
 
 This feature measures the distance to the last change point in the time series.
 
@@ -129,7 +129,7 @@ This feature measures the distance to the last change point in the time series.
    :show-inheritance:
 
 Absolute Energy
-==================
+-------------
 
 This feature calculates the absolute energy of the time series.
 
@@ -139,7 +139,7 @@ This feature calculates the absolute energy of the time series.
    :show-inheritance:
 
 Below 1st Decile
-==================
+-------------
 
 This feature calculates whether the values in the time series are below the 1st decile.
 
@@ -149,7 +149,7 @@ This feature calculates whether the values in the time series are below the 1st 
    :show-inheritance:
 
 Binarize Mean
-==================
+-------------
 
 This feature binarizes the mean value of the time series.
 
@@ -159,7 +159,7 @@ This feature binarizes the mean value of the time series.
    :show-inheritance:
 
 Crossing Points
-==================
+-------------
 
 This feature counts the crossing points in the time series.
 
@@ -169,7 +169,7 @@ This feature counts the crossing points in the time series.
    :show-inheritance:
 
 Entropy
-==================
+-------------
 
 This feature calculates the entropy of the time series.
 
@@ -179,7 +179,7 @@ This feature calculates the entropy of the time series.
    :show-inheritance:
 
 Flat Spots
-==================
+-------------
 
 This feature identifies flat spots within the time series.
 
@@ -189,7 +189,7 @@ This feature identifies flat spots within the time series.
    :show-inheritance:
 
 Heterogeneity
-==================
+-------------
 
 This feature measures the heterogeneity of the time series.
 
@@ -199,7 +199,7 @@ This feature measures the heterogeneity of the time series.
    :show-inheritance:
 
 Linearity
-==================
+-------------
 
 This feature calculates the linearity of the time series.
 
@@ -209,7 +209,7 @@ This feature calculates the linearity of the time series.
    :show-inheritance:
 
 Missing Points
-==================
+-------------
 
 This feature identifies missing points within the time series.
 
@@ -219,7 +219,7 @@ This feature identifies missing points within the time series.
    :show-inheritance:
 
 Outliers IQR
-==================
+-------------
 
 This feature identifies outliers based on the interquartile range (IQR).
 
@@ -229,7 +229,7 @@ This feature identifies outliers based on the interquartile range (IQR).
    :show-inheritance:
 
 Outliers STD
-==================
+-------------
 
 This feature identifies outliers based on standard deviation (STD).
 
@@ -239,7 +239,7 @@ This feature identifies outliers based on standard deviation (STD).
    :show-inheritance:
 
 Significant Changes
-==================
+-------------
 
 This feature detects significant changes in the time series.
 
@@ -249,7 +249,7 @@ This feature detects significant changes in the time series.
    :show-inheritance:
 
 Stability
-==================
+-------------
 
 This feature measures the stability of the time series.
 
@@ -259,7 +259,7 @@ This feature measures the stability of the time series.
    :show-inheritance:
 
 Variance Change
-==================
+-------------
 
 This feature calculates the variance change over time.
 
@@ -269,7 +269,7 @@ This feature calculates the variance change over time.
    :show-inheritance:
 
 Variability in Sub-Periods
-==================
+-------------
 
 This feature measures variability within sub-periods of the time series.
 
@@ -279,7 +279,7 @@ This feature measures variability within sub-periods of the time series.
    :show-inheritance:
 
 Amplitude Change Rate
-==================
+-------------
 
 This feature calculates the rate of amplitude change in the time series.
 
@@ -290,6 +290,6 @@ This feature calculates the rate of amplitude change in the time series.
 
 
 Notes
-==================
+-------------
 
 Each feature is designed to provide specific insights into time-series data. For detailed usage, refer to the module documentation linked above.

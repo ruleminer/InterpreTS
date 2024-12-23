@@ -10,3 +10,5 @@ joblib
 tqdm
 dask
 nbsphinx
+myst-parser
+scipy

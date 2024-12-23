@@ -1,7 +1,7 @@
 Tutorials
 =========
 
-Get started with these tutorials:
+Get started with these tutorials. In the next pages you can check the case study of this library for time series interpretation.
 
 .. toctree::
    :maxdepth: 1
