@@ -25,6 +25,22 @@ def calculate_variance(data, ddof=1):
         If the data is not numeric.
     ValueError
         If the data contains NaN values or is not one-dimensional.
+
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> import numpy as np
+    >>> data = pd.Series([10, 12, 14, 16, 18])
+    >>> calculate_variance(data)
+    10.0
+
+    >>> data = np.array([2, 4, 6, 8, 10])
+    >>> calculate_variance(data, ddof=0)
+    8.0
+
+    >>> data = pd.Series([5])
+    >>> calculate_variance(data)
+    0.0
     """
     # Handle the case where the series has only one value
     if len(data) == 1:

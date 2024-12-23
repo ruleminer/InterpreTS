@@ -18,6 +18,15 @@ def calculate_outliers_std(data, training_data):
     -------
     float
         Percentage of observations in the window that deviate by more than 3 standard deviations.
+
+    Examples
+    --------
+    >>> import numpy as np
+    >>> import pandas as pd
+    >>> training_data = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9])
+    >>> data = pd.Series([0, 10, 2, 3, 15])
+    >>> calculate_outliers_std(data, training_data)
+    0.2
     """
     # Convert to numpy arrays for consistency
     if isinstance(data, pd.Series):
