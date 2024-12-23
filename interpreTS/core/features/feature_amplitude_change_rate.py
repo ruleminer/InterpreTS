@@ -24,6 +24,17 @@ def calculate_amplitude_change_rate(data):
         If the data is not numeric or not a valid type.
     ValueError
         If the data contains NaN values or is not one-dimensional.
+
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> data = pd.Series([1, 3, 2, 4, 1, 5, 2, 6, 3])
+    >>> calculate_amplitude_change_rate(data)
+    2.0
+
+    >>> data = pd.Series([1, 1, 1, 1])
+    >>> calculate_amplitude_change_rate(data)
+    nan
     """
     # Validate input type
     if not isinstance(data, (pd.Series, np.ndarray)):
@@ -65,10 +76,10 @@ def calculate_amplitude_change_rate(data):
     # Calculate absolute amplitude changes between consecutive extrema
     amplitude_changes = np.abs(np.diff(data[extrema]))
 
-    print("Peaks:", peaks)
-    print("Troughs:", troughs)
-    print("Extrema:", extrema)
-    print("Amplitude changes:", amplitude_changes)
+    #print("Peaks:", peaks)
+    #print("Troughs:", troughs)
+    #print("Extrema:", extrema)
+    #print("Amplitude changes:", amplitude_changes)
 
     # Return the mean of amplitude changes
     return np.mean(amplitude_changes) if len(amplitude_changes) > 0 else np.nan

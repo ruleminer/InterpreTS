@@ -33,7 +33,7 @@ def calculate_linearity(data, normalize=True, use_derivative=True):
     Examples
     --------
     >>> import pandas as pd
-    >>> data = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    >>> data = pd.Series([1, 2, 3, 4, 5])
     >>> calculate_linearity(data)
     1.0
     >>> data = pd.Series([1, 2, 1, 2, 1, 2, 1, 2, 1, 2])
