@@ -273,6 +273,8 @@ Variability in Sub-Periods
 
 This feature measures variability within sub-periods of the time series.
 
+.. autofunction:: interpreTS.core.features.variability_in_sub_periods.calculate_variability_in_sub_periods
+
 .. automodule:: interpreTS.core.variability_in_sub_periods
    :members:
    :undoc-members:
@@ -282,6 +284,8 @@ Amplitude Change Rate
 -------------
 
 This feature calculates the rate of amplitude change in the time series.
+
+.. autofunction:: interpreTS.core.features.feature_amplitude_change_rate.calculate_amplitude_change_rate
 
 .. automodule:: interpreTS.core.feature_amplitude_change_rate
    :members:
