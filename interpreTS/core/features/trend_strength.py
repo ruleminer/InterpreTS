@@ -22,7 +22,7 @@ def calculate_trend_strength(data):
     TypeError
         If the data is not a valid time series type.
     ValueError
-        If the data contains NaN values.
+        If the data contains NaN values or is empty.
         
     Examples
     --------
@@ -31,8 +31,6 @@ def calculate_trend_strength(data):
     >>> calculate_trend_strength(data)
     1.0
     """
-    # Validate the time series data
-    validate_time_series_data(data, require_datetime_index=False)
     
     # Handle empty or insufficient data by returning NaN
     if len(data) < 2:

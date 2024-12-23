@@ -5,3 +5,10 @@ pytest
 langchain_community
 langchain 
 openai
+scikit-learn
+joblib
+tqdm
+dask
+nbsphinx
+myst-parser
+scipy

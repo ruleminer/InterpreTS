@@ -30,9 +30,6 @@ def calculate_spikeness(data):
     >>> calculate_spikeness(data)
     0.0
     """
-    # Validate the time series without requiring a DateTime index
-    validate_time_series_data(data, require_datetime_index=False)
-
     # Ensure data is a pandas Series for compatibility with .skew()
     if isinstance(data, np.ndarray):
         data = pd.Series(data)
@@ -47,7 +44,7 @@ def calculate_spikeness(data):
 
     # Check if data is numeric
     if not np.issubdtype(data.dtype, np.number):
-        raise TypeError("Data must be numeric.")
+        raise TypeError("Data must contain only numeric values.")
 
     # Calculate and return spikeness (skewness)
     spikeness = data.skew()

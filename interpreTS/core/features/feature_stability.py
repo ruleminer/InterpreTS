@@ -19,10 +19,19 @@ def calculate_stability(data, max_lag=None):
     -------
     float
         The stability strength, ranging from 0 to 1, where 1 indicates high stability.
-    """
-    # Validate the time series data
-    validate_time_series_data(data, require_datetime_index=False, allow_nan=False)
 
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> data = pd.Series([10, 12, 11, 13, 12, 14, 11, 13, 12, 14, 13])
+    >>> calculate_stability(data)
+    0.8410385081084804
+
+    >>> # Example with less stable data
+    >>> data = pd.Series([5, 20, 3, 18, 1, 25, 2, 22, 0, 19])
+    >>> calculate_stability(data)
+    0.6144144729613819
+    """
     # Convert to pandas Series if it's a numpy array
     if isinstance(data, np.ndarray):
         data = pd.Series(data)
@@ -31,7 +40,7 @@ def calculate_stability(data, max_lag=None):
     if data.empty:
         return np.nan
     if not np.issubdtype(data.dtype, np.number):
-        raise TypeError("Data must be numeric.")
+        raise TypeError("Data must contain only numeric values.")
 
     # Dynamically determine max_lag if not provided
     if max_lag is None:

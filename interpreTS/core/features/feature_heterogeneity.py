@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from interpreTS.utils.data_validation import validate_time_series_data
 
-def heterogeneity(data):
+def calculate_heterogeneity(data):
     """
     Calculate the heterogeneity (coefficient of variation) of a time series.
 
@@ -30,9 +30,6 @@ def heterogeneity(data):
     >>> calculate_heterogeneity(data)
     0.5270462766947299
     """
-    # Validate the time series without requiring a DateTime index
-    validate_time_series_data(data, require_datetime_index=False)
-    
     # Ensure data is a pandas Series for compatibility
     if isinstance(data, np.ndarray):
         data = pd.Series(data)

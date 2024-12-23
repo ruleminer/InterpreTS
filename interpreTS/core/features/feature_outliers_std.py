@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from interpreTS.utils.data_validation import validate_time_series_data
 
 def calculate_outliers_std(data, training_data):
     """
@@ -17,15 +18,30 @@ def calculate_outliers_std(data, training_data):
     -------
     float
         Percentage of observations in the window that deviate by more than 3 standard deviations.
+
+    Examples
+    --------
+    >>> import numpy as np
+    >>> import pandas as pd
+    >>> training_data = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9])
+    >>> data = pd.Series([0, 10, 2, 3, 15])
+    >>> calculate_outliers_std(data, training_data)
+    0.2
     """
-    if isinstance(training_data, pd.Series):
-        training_data = training_data.values
+    # Convert to numpy arrays for consistency
     if isinstance(data, pd.Series):
         data = data.values
+    if isinstance(training_data, pd.Series):
+        training_data = training_data.values
 
     # Calculate mean and standard deviation from training data
     mean_value = np.mean(training_data)
     std_dev = np.std(training_data)
+
+    # Handle case where std_dev is 0
+    if std_dev == 0:
+        outliers = np.sum(data != mean_value)  # Count values not equal to the mean
+        return outliers / len(data)
 
     # Define bounds for outliers (3 standard deviations from the mean)
     lower_bound = mean_value - 3 * std_dev

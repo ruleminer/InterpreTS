@@ -37,10 +37,6 @@ def calculate_trough(data, start=None, end=None):
     >>> calculate_trough(data, start=1, end=3)
     2.0
     """
-
-    # Validate the time series without requiring a DateTime index
-    validate_time_series_data(data, require_datetime_index=False)
-
     # Slice the data based on start and end, if provided
     if end is None:
         end = len(data)

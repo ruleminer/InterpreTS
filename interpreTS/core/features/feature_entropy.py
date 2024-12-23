@@ -31,8 +31,8 @@ def calculate_entropy(data):
     >>> data = [1, 1, 1, 1, 2, 2, 2]
     >>> calculate_entropy(data)
     0.9182958340544894  # Example output, depending on the data distribution.
-
     """
+    
     if len(data) == 0: 
         return np.nan
     

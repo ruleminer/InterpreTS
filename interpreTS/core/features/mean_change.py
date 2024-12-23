@@ -23,7 +23,8 @@ def calculate_mean_change(data, window_size=5):
     TypeError
         If the data is not a valid time series type.
     ValueError
-        If the data contains NaN values or is too short to calculate mean.
+        If the data contains NaN values, is too short for the rolling window, 
+        or if the window size is not a positive integer.
 
     Examples
     --------
@@ -42,13 +43,6 @@ def calculate_mean_change(data, window_size=5):
     9     1.00
     dtype: float64
     """
-    # Validate the time series data
-    validate_time_series_data(data, require_datetime_index=False)
-    
-    # Handle empty or insufficient data
-    if len(data) < window_size + 1:
-        raise ValueError("The time series is too short for the specified rolling window size.")
-    
     # Convert data to a pandas Series if it's an ndarray
     if isinstance(data, np.ndarray):
         data = pd.Series(data)

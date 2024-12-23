@@ -1,60 +1,17 @@
 import pandas as pd
 import numpy as np
 
-from .features.feature_spikeness import calculate_spikeness
-from .features.feature_entropy import calculate_entropy
-from .features.feature_stability import calculate_stability
-from .features.feature_length import calculate_length
-from .features.feature_mean import calculate_mean
-from .features.seasonality_strength import calculate_seasonality_strength
-from .features.feature_variance import calculate_variance
-from .features.feature_peak import calculate_peak
-from .features.feature_trough import calculate_trough
-# from .features.feature_std_1st_der import calculate_std_1st_der
-from .features.feature_heterogeneity import heterogeneity
-from .features.feature_absolute_energy import absolute_energy
-# from .features.feature_flat_spots import calculate_flat_spots
-from .features.feature_missing_points import missing_points
-# from .features.feature_outliers_std import calculate_outliers_std
-# from .features.feature_binarize_mean import calculate_binarize_mean
-# from .features.feature_binarize_mean import calculate_binarize_mean
-# from .features.feature_outliers_iqr import calculate_outliers_iqr
-# from .features.feature_significant_changes import calculate_significant_changes
-# from .features.feature_above_9th_decile import calculate_above_9th_decile
-# from .features.feature_below_1st_decile import calculate_below_1st_decile
-# from .features.feature_binarize_mean import calculate_binarize_mean
-# from .features.feature_crossing_points import calculate_crossing_points
-
-class Features:
-    LENGTH = 'length'
-    MEAN = 'mean'
-    VARIANCE = 'variance'
-    SPIKENESS = 'spikeness'
-    ENTROPY = 'entropy'
-    CALCULATE_SEASONALITY_STRENGTH = 'seasonality_strength'
-    STABILITY = 'stability'
-    PEAK = 'peak'
-    # STD_1ST_DER = 'std_1st_der'
-    TROUGH = 'trough'
-    HETEROGENEITY = 'heterogeneity'
-    ABSOLUTE_ENERGY = 'absolute_energy'
-    # FLAT_SPOTS = 'flat_spots'
-    # CROSSING_POINTS = 'crossing_points'
-    MISSING_POINTS = 'missing_points'
-    # BINARIZE_MEAN = 'binarize_mean'
-    # OUTLIERS_STD = 'outliers_std'
-    # OUTLIERS_IQR = 'outliers_iqr'
-    # SIGNIFICANT_CHANGES = 'significant_changes'
-    # ABOVE_9TH_DECILE = 'above_9th_decile'
-    # BELOW_1ST_DECILE = 'below_1st_decile'
+from ..utils.feature_loader import Features
+from ..utils.data_manager import load_metadata, load_feature_functions, load_validation_requirements
+from ..utils.task_manager import TaskManager
 
 class FeatureExtractor:
     DEFAULT_FEATURES = [
         Features.LENGTH, Features.MEAN, Features.VARIANCE, Features.STABILITY,
-        Features.ENTROPY, Features.SPIKENESS, Features.CALCULATE_SEASONALITY_STRENGTH
+        Features.ENTROPY, Features.SPIKENESS, Features.SEASONALITY_STRENGTH
     ]
 
-    def __init__(self, features=None, feature_params=None, window_size=np.nan, stride=1, id_column=None, sort_column=None, feature_column=None):
+    def __init__(self, features=None, feature_params=None, window_size=np.nan, stride=1, id_column=None, sort_column=None, feature_column=None, group_by=None):
         """
         Initialize the FeatureExtractor with a list of features to calculate and optional parameters for each feature.
 
@@ -74,13 +31,14 @@ class FeatureExtractor:
             The column to sort by before feature extraction (optional).
         feature_column : str or None, optional
             The column containing feature data. If None, features are calculated for all columns except ID and sort columns.
+        group_by : str or None, optional
+            Column name to group by. If None, no grouping is performed.
         Raises
         -------
         ValueError
             If any parameter is invalid.
-        """
-        self._validate_parameters(features, feature_params, window_size, stride, id_column, sort_column)
-
+        """        
+        self.group_by = group_by
         self.features = features if features is not None else self.DEFAULT_FEATURES
         self.feature_params = feature_params if feature_params is not None else {}
         self.window_size = window_size
@@ -89,148 +47,37 @@ class FeatureExtractor:
         self.sort_column = sort_column
         self.feature_column = feature_column
 
-        self.feature_functions = {
-            Features.LENGTH: calculate_length,
-            Features.MEAN: calculate_mean,
-            Features.VARIANCE: calculate_variance,
-            Features.SPIKENESS: calculate_spikeness,
-            Features.ENTROPY: calculate_entropy,
-            Features.STABILITY: calculate_stability,
-            Features.CALCULATE_SEASONALITY_STRENGTH: calculate_seasonality_strength,
-            Features.PEAK: calculate_peak,
-            # Features.STD_1ST_DER: calculate_std_1st_der,
-            Features.TROUGH: calculate_trough,
-            Features.HETEROGENEITY: heterogeneity,
-            Features.ABSOLUTE_ENERGY: absolute_energy,
-            # Features.FLAT_SPOTS: calculate_flat_spots,
-            # Features.CROSSING_POINTS: calculate_crossing_points,
-            Features.MISSING_POINTS: missing_points,
-            # Features.BINARIZE_MEAN: calculate_binarize_mean,
-            # Features.OUTLIERS_STD: calculate_outliers_std,
-            # Features.OUTLIERS_IQR: calculate_outliers_iqr,
-            # Features.SIGNIFICANT_CHANGES: calculate_significant_changes,
-            # Features.ABOVE_9TH_DECILE: calculate_above_9th_decile,
-            # Features.BELOW_1ST_DECILE: calculate_below_1st_decile
-        }
-
-        self.feature_metadata = {
-            Features.LENGTH: {
-                'level': 'easy',
-                'description': 'Number of points in the window.'
-            },
-            Features.MEAN: {
-                'level': 'easy',
-                'description': 'Mean value within the window.'
-            },
-            Features.VARIANCE: {
-                'level': 'moderate',
-                'description': 'Variance of the signal within the window.'
-            },
-            Features.ENTROPY: {
-                'level': 'advanced',
-                'description': 'Degree of randomness or disorder in the window.'
-            },
-            Features.SPIKENESS: {
-                'level': 'moderate',
-                'description': 'Measure of sudden jumps or spikes in the signal.'
-            },
-            Features.CALCULATE_SEASONALITY_STRENGTH: {
-                'level': 'advanced',
-                'description': 'Strength of seasonal patterns within the signal.'
-            },
-            Features.STABILITY: {
-                'level': 'moderate',
-                'description': 'Measure of consistency in the signal values.'
-            },
-            # Features.FLAT_SPOTS: {
-            #     'level': 'easy',
-            #     'description': 'Number of segments with constant values in the signal.'
-            # },
-            # Features.CROSSING_POINTS: {
-            #     'level': 'easy',
-            #     'description': 'Number of times the signal crosses its mean.'
-            # },
-            Features.PEAK: {
-                 'level': 'easy',
-                 'description': 'The maximum value in the window.'
-            },
-             Features.TROUGH: {
-                 'level': 'easy',
-                 'description': 'The minimum value in the window.'
-            },
-             Features.ABSOLUTE_ENERGY: {
-                 'level': 'moderate',
-                 'description': 'Total energy of the signal in the window.'
-             },
-            # Features.STD_1ST_DER: {
-            #     'level': 'moderate',
-            #     'description': 'Standard deviation of the first derivative of the signal.'
-            # },
-            # Features.MISSING_POINTS: {
-            #     'level': 'easy',
-            #     'description': 'Proportion or count of missing data points in the window.'
-            # },
-            # Features.BINARIZE_MEAN: {
-            #     'level': 'moderate',
-            #     'description': 'Binary value indicating whether the signal mean exceeds a threshold.'
-            # },
-        }
-
+        self.feature_functions = load_feature_functions()
+        self.validation_requirements = load_validation_requirements()
+        
+        self.task_manager = TaskManager(self.feature_functions, self.window_size, self.features, self.stride, self.feature_params, self.validation_requirements)
+        self.task_manager._validate_parameters(features, feature_params, window_size, stride, id_column, sort_column)
+        self.feature_metadata = load_metadata()
+    
     def head(self, features_df, n=5):
         """
-        Zwraca pierwsze n wierszy wynikowego DataFrame z funkcji extract_features.
+        Returns the first n rows of the resulting DataFrame from the extract_features function.
 
-        Parametry
+        Parameters
         ----------
         features_df : pd.DataFrame
-            DataFrame wynikowy z funkcji extract_features.
-        n : int, opcjonalne (domyślnie 5)
-            Liczba wierszy do zwrócenia. Jeśli n jest ujemne, zwraca wszystkie wiersze oprócz ostatnich |n| wierszy.
+            The resulting DataFrame from the extract_features function.
+        n : int, optional (default 5)
+            The number of rows to return. If n is negative, returns all rows except the last |n| rows.
 
-        Zwraca
+        Returns
         -------
         pd.DataFrame
-            Pierwsze n wierszy DataFrame.
+            The first n rows of the DataFrame.
         """
+        
         if not isinstance(features_df, pd.DataFrame):
             raise ValueError("Input must be a DataFrame.")
         if len(features_df) < n:
             print(f"Warning: Only {len(features_df)} rows available in DataFrame.")
         return features_df.head(n)
 
-    @staticmethod
-    def _validate_parameters(features, feature_params, window_size, stride, id_column, sort_column):
-        """
-        Validate input parameters to ensure they are valid.
-
-        Raises
-        ------
-        ValueError
-            If any parameter is invalid.
-        """
-        available_features = FeatureExtractor.available_features()
-
-        if features is not None:
-            if not isinstance(features, list):
-                raise ValueError("Features must be a list or None.")
-            invalid_features = [feature for feature in features if feature not in available_features]
-            if invalid_features:
-                raise ValueError(
-                    f"The following features are invalid or not implemented: {invalid_features}. "
-                    f"Available features are: {available_features}."
-                )
-        if feature_params is not None and not isinstance(feature_params, dict):
-            raise ValueError("Feature parameters must be a dictionary or None.")
-        if not (np.isnan(window_size) or (isinstance(window_size, (int, float)) and window_size > 0)):
-            raise ValueError("Window size must be a positive number or NaN.")
-        if not isinstance(stride, int) or stride <= 0:
-            raise ValueError("Stride must be a positive integer.")
-        if id_column is not None and not isinstance(id_column, str):
-            raise ValueError("ID column must be a string or None.")
-        if sort_column is not None and not isinstance(sort_column, str):
-            raise ValueError("Sort column must be a string or None.")
-
-    def extract_features(self, data):
+    def extract_features(self, data, progress_callback=None, mode='sequential', n_jobs=-1):
         """
         Extract features from a time series dataset.
 
@@ -238,79 +85,108 @@ class FeatureExtractor:
         ----------
         data : pd.DataFrame or pd.Series
             The time series data for which features are to be extracted.
+        progress_callback : function, optional
+            A function to report progress, which takes a single argument: progress percentage (0-100).
+        mode : str, optional
+            The mode of processing. Can be 'parallel' for multi-threaded processing
+            or 'sequential' for single-threaded processing with real-time progress reporting.
+        n_jobs : int, optional
+            The number of jobs (processes) to run in parallel. Default is -1 (use all available CPUs).
 
         Returns
         -------
         pd.DataFrame
             A DataFrame containing calculated features for each window.
         """
+        if mode not in ['parallel', 'sequential', 'dask']:
+            raise ValueError(f"Invalid mode '{mode}'. Accepted values are: ['parallel', 'sequential']")
+
         if data.empty:
             print("Warning: Input data is empty. Returning an empty DataFrame.")
             return pd.DataFrame()
 
-        if isinstance(data, pd.Series):
-            data = data.to_frame(name=self.feature_column)
-
         if self.sort_column:
             data = data.sort_values(by=self.sort_column)
 
-        # Wyklucz kolumny ID i sort_column, jeśli feature_column=None
-        feature_columns = (
-            [self.feature_column] if self.feature_column else
-            [col for col in data.columns if col not in {self.id_column, self.sort_column}]
-        )
+        feature_columns = [self.feature_column] if self.feature_column else [col for col in data.columns if col not in {self.id_column, self.sort_column}]
+        grouped_data = self.group_data(data)
 
-        grouped_data = data.groupby(self.id_column) if self.id_column else [(None, data)]
+        if mode == 'dask':
+            return self.task_manager._execute_dask(grouped_data, feature_columns, progress_callback)
 
-        results = []
-        for _, group in grouped_data:
-            group_length = len(group)
-            window_size = group_length if np.isnan(self.window_size) else int(self.window_size)
+        tasks = self.task_manager._generate_tasks(grouped_data, feature_columns)
+        total_steps = len(tasks)
 
-            if window_size > group_length:
-                print(f"Warning: Window size ({window_size}) exceeds group length ({group_length}). Skipping group.")
-                continue
-
-            for start in range(0, group_length - window_size + 1, self.stride):
-                window = group.iloc[start:start + window_size]
-                extracted_features = {self.id_column: group[self.id_column].iloc[0]} if self.id_column else {}
-
-                for feature_name in self.features:
-                    if feature_name in self.feature_functions:
-                        params = self.feature_params.get(feature_name, {})
-                        for col in feature_columns:
-                            try:
-                                feature_data = window[col].dropna()
-
-                                # Walidacja danych przed obliczeniami
-                                if feature_data.empty:
-                                    extracted_features[f"{feature_name}_{col}"] = np.nan
-                                    continue
-                                if feature_data.nunique() == 1:
-                                    # Stałe dane, np. wszystkie wartości są takie same
-                                    extracted_features[f"{feature_name}_{col}"] = np.nan
-                                    continue
-                                if len(feature_data) < 2:
-                                    # Za mało danych, aby wykonać obliczenia
-                                    extracted_features[f"{feature_name}_{col}"] = np.nan
-                                    continue
-
-                                # Wywołanie funkcji cechy
-                                extracted_features[f"{feature_name}_{col}"] = self.feature_functions[feature_name](
-                                    feature_data, **params
-                                )
-                            except Exception as e:
-                                print(f"Warning: Failed to calculate {feature_name} for column {col}: {e}")
-                                extracted_features[f"{feature_name}_{col}"] = np.nan
-
-                results.append(extracted_features)
-
-        if not results:
-            print("Warning: No features could be extracted. Returning an empty DataFrame.")
-            return pd.DataFrame()
+        if mode == 'parallel':
+            results = self.task_manager._execute_parallel(tasks, n_jobs, progress_callback, total_steps)
+        else:
+            results = self.task_manager._execute_sequential(tasks, progress_callback, total_steps)
 
         return pd.DataFrame(results)
     
+    def group_data(self, data):
+        """
+        Group data based on the group_by column.
+
+        Parameters
+        ----------
+        data : pd.DataFrame
+            Input data.
+
+        Returns
+        -------
+        iterable
+            Grouped data.
+        """
+        if self.group_by:
+            return data.groupby(self.group_by)
+        return [(None, data)]
+    
+    def extract_features_stream(self, data_stream, progress_callback=None):
+        """
+        Extract features from a stream of time series data.
+
+        Parameters
+        ----------
+        data_stream : iterable
+            An iterable that yields incoming data points as dictionaries with keys corresponding to column names.
+        progress_callback : function, optional
+            A function to report progress, which takes a single argument: the total number of processed points.
+
+        Yields
+        ------
+        dict
+            A dictionary containing the calculated features for the current window.
+        """
+        if not self.feature_column or not self.id_column:
+            raise ValueError("Feature column and ID column must be specified for streaming mode.")
+
+        buffers = {}
+        total_points = 0
+
+        for new_point in data_stream:
+            total_points += 1
+            series_id = new_point[self.id_column]
+
+            if series_id not in buffers:
+                buffers[series_id] = []
+
+            buffers[series_id].append(new_point)
+
+            if len(buffers[series_id]) > self.window_size:
+                buffers[series_id].pop(0)
+
+            if len(buffers[series_id]) == self.window_size:
+                buffer_df = pd.DataFrame(buffers[series_id])
+                feature_columns = [self.feature_column]
+
+                features = self.task_manager._process_window(buffer_df, feature_columns)
+                features[self.id_column] = series_id
+                yield features
+
+            if progress_callback:
+                progress_callback(total_points)
+            
     def group_features_by_interpretability(self):
         """
         Group features by their interpretability levels.
@@ -326,43 +202,41 @@ class FeatureExtractor:
             level = metadata['level']
             groups[level].append(feature_name)
         return groups
-    
-    def generate_feature_descriptions(self, extracted_features):
+
+    def add_custom_feature(self, name, function, metadata=None):
         """
-        Generate textual descriptions for extracted features.
+        Add a custom feature to the FeatureExtractor.
 
         Parameters
         ----------
-        extracted_features : dict
-            A dictionary where keys are feature names and values are their calculated values.
+        name : str
+            The name of the custom feature.
+        function : callable
+            A function that computes the feature. It should accept a Pandas Series and optional parameters as input.
+        metadata : dict, optional
+            A dictionary containing metadata about the feature (e.g., level of interpretability and description).
+            Example:
+            {
+                'level': 'easy' | 'moderate' | 'advanced',
+                'description': 'Description of the feature.'
+            }
 
-        Returns
-        -------
-        dict
-            A dictionary where keys are feature names and values are textual descriptions.
+        Raises
+        ------
+        ValueError
+            If the feature name already exists or the function is not callable.
         """
-        descriptions = {}
-        for feature_name, feature_value in extracted_features.items():
-            if feature_name in self.feature_metadata:
-                metadata = self.feature_metadata[feature_name]
-                description = metadata['description']
-                descriptions[feature_name] = (
-                    f"Feature '{feature_name}': {description} Value: {feature_value}."
-                )
-            else:
-                descriptions[feature_name] = (
-                    f"Unknown feature: '{feature_name}'. Value: {feature_value}."
-                )
-        return descriptions
+        if name in self.feature_functions:
+            raise ValueError(f"Feature '{name}' already exists.")
+        if not callable(function):
+            raise ValueError("The provided function is not callable.")
+        
+        self.feature_functions[name] = function
+        self.features.append(name)
 
-    @staticmethod
-    def available_features():
-        """
-        Returns a list of all available features.
+        if metadata:
+            if 'level' not in metadata or 'description' not in metadata:
+                raise ValueError("Metadata must include 'level' and 'description'.")
+            self.feature_metadata[name] = metadata
 
-        Returns
-        -------
-        list
-            List of feature names.
-        """
-        return list(Features.__dict__.values())
+        print(f"Custom feature '{name}' added successfully.")
