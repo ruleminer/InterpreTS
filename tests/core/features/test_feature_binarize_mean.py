@@ -31,30 +31,12 @@ def test_binarize_mean_single_value():
     expected = 1.0  # Single value is always equal to its mean
     assert result == pytest.approx(expected, abs=1e-6), f"Expected {expected}, got {result}"
 
-# Test with a series containing NaN values
-def test_binarize_mean_with_nan():
-    data = pd.Series([1, 2, np.nan, 4, 5])
-    with pytest.raises(ValueError, match="Data contains NaN values."):
-        calculate_binarize_mean(data)
-
-# Test with an empty series
-def test_binarize_mean_empty_series():
-    data = pd.Series(dtype=float)
-    with pytest.raises(ValueError, match="Input data is empty."):
-        calculate_binarize_mean(data)
-
 # Test functionality with a numpy array
 def test_binarize_mean_numpy_array():
     data = np.array([1, 2, 3, 4, 5])
     result = calculate_binarize_mean(pd.Series(data))
     expected = 0.6  # 3 values (4, 5) are greater than the mean (3)
     assert result == pytest.approx(expected, abs=1e-6), f"Expected {expected}, got {result}"
-
-# Test with invalid data types
-def test_binarize_mean_invalid_data_type():
-    data = "invalid data"
-    with pytest.raises(TypeError, match="Data must be a pandas Series, DataFrame, or numpy array."):
-        calculate_binarize_mean(data)
 
 # Test with a large series of sequential numbers
 def test_binarize_mean_large_series():

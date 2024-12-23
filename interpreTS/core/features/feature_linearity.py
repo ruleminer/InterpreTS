@@ -40,17 +40,9 @@ def calculate_linearity(data, normalize=True, use_derivative=True):
     >>> calculate_linearity(data)
     0.0
     """
-    # Validate the input data
-    validate_time_series_data(data, require_datetime_index=False)
-
     # Convert numpy array to pandas Series
     if isinstance(data, np.ndarray):
         data = pd.Series(data)
-
-    # Drop NaN values and ensure non-empty series
-    data = data.dropna()
-    if len(data) == 0:
-        raise ValueError("The time series is empty after removing NaN values.")
 
     # Normalize the data if required
     if normalize:

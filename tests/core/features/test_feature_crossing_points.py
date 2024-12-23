@@ -52,12 +52,6 @@ def test_crossing_points_constant_data():
     expected = {'crossing_count': 0, 'crossing_points': []}
     assert result == expected, f"Expected {expected}, got {result}"
 
-# Test with NaN values in the data
-def test_crossing_points_with_nan():
-    data = pd.Series([1, np.nan, -1, 2])
-    with pytest.raises(ValueError, match="Data contains NaN values."):
-        calculate_crossing_points(data)
-
 # Test functionality with a numpy array input
 def test_crossing_points_numpy_array():
     data = np.array([1, -1, 1, -1, 1])

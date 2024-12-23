@@ -19,10 +19,6 @@ def calculate_outliers_std(data, training_data):
     float
         Percentage of observations in the window that deviate by more than 3 standard deviations.
     """
-    # Validate input data
-    validate_time_series_data(data, require_datetime_index=False, allow_nan=False)
-    validate_time_series_data(training_data, require_datetime_index=False, allow_nan=False)
-
     # Convert to numpy arrays for consistency
     if isinstance(data, pd.Series):
         data = data.values

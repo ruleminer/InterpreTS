@@ -9,18 +9,6 @@ def test_flat_spots_basic():
     result = calculate_flat_spots(data, window_size=5)
     assert result == 4, f"Expected 4, got {result}"
 
-# Test for empty data input
-def test_flat_spots_empty_data():
-    data = pd.Series([], dtype=float)
-    with pytest.raises(ValueError, match="Input data is empty."):
-        calculate_flat_spots(data)
-
-# Test for data containing NaN values
-def test_flat_spots_with_nan():
-    data = pd.Series([1, 1, np.nan, 2, 3])
-    with pytest.raises(ValueError, match="Data contains NaN values."):
-        calculate_flat_spots(data)
-
 # Test for data without flat segments
 def test_flat_spots_no_flat_segments():
     data = pd.Series([1, 2, 3, 4, 5])

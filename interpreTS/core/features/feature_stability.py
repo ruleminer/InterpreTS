@@ -20,9 +20,6 @@ def calculate_stability(data, max_lag=None):
     float
         The stability strength, ranging from 0 to 1, where 1 indicates high stability.
     """
-    # Validate the time series data
-    validate_time_series_data(data, require_datetime_index=False, allow_nan=False)
-
     # Convert to pandas Series if it's a numpy array
     if isinstance(data, np.ndarray):
         data = pd.Series(data)

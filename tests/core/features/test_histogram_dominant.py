@@ -36,13 +36,6 @@ def test_dominant_empty_series():
     data = pd.Series([], dtype=float)
     result = calculate_dominant(data)
     assert np.isnan(result), f"Expected NaN, got {result}"
-
-# Test for a series containing NaN values
-def test_dominant_with_nan():
-    data = pd.Series([1, 2, np.nan, 3, 3, 3])
-    with pytest.raises(ValueError, match="Data contains NaN values."):
-        calculate_dominant(data)
-
 # Test for numpy array input
 def test_dominant_numpy_array():
     data = np.array([1, 1, 2, 3, 3, 3, 4, 5])

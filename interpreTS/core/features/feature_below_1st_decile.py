@@ -33,18 +33,6 @@ def calculate_below_1st_decile(data, training_data):
     >>> calculate_below_1st_decile(data, training_data)
     0.2
     """
-    # Validate the time series data
-    validate_time_series_data(data, require_datetime_index=False)
-    validate_time_series_data(training_data, require_datetime_index=False)
-    
-    # Ensure data is not empty
-    if len(data) == 0 or len(training_data) == 0:
-        raise ValueError("Data and training data must not be empty.")
-    
-    # Ensure no NaN values in the input
-    if np.any(pd.isna(data)) or np.any(pd.isna(training_data)):
-        raise ValueError("Data and training data must not contain NaN values.")
-    
     # Convert to NumPy arrays for consistency
     data = np.asarray(data)
     training_data = np.asarray(training_data)
