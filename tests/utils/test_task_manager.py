@@ -58,7 +58,7 @@ def test_validate_parameters_valid(mock_feature_loader):
 
 # Test validation of invalid feature names in input parameters
 def test_validate_parameters_invalid_feature(mock_feature_loader):
-    with pytest.raises(ValueError, match="The following features are invalid or not implemented: \['invalid_feature'\]."):
+    with pytest.raises(ValueError, match=r"The following features are invalid or not implemented: \['invalid_feature'\]."):
         TaskManager._validate_parameters(
             features=["invalid_feature"],
             feature_params={},
