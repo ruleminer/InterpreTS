@@ -86,7 +86,7 @@ from .utils.feature_loader import FeatureLoader, Features
 from .utils.data_validation import validate_time_series_data
 from .utils.data_manager import generate_feature_descriptions
 
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 
 __all__ = [
     "FeatureExtractor",
