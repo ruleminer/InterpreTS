@@ -13,6 +13,7 @@ project = 'InterpreTS'
 copyright = '2024, Łukasz Wróbel, Sławomir Put, Martyna Żur, Martyna Kramarz, Jarosław Strzelczyk, Weronika Wołowczyk, Piotr Krupiński'
 author = 'Łukasz Wróbel, Sławomir Put, Martyna Żur, Martyna Kramarz, Jarosław Strzelczyk, Weronika Wołowczyk, Piotr Krupiński'
 release = '0.4.1'
+html_logo = None
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

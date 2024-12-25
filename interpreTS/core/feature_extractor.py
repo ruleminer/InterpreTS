@@ -21,20 +21,21 @@ class FeatureExtractor:
             A list of features to calculate. Default is None, which calculates all available features.
         feature_params : dict, optional
             Parameters for specific features, where keys are feature names and values are dicts of parameters.
-        window_size : int or float (NaN), optional
-            The size of the window for feature extraction. If NaN (default), the entire series is used as a single window.
+        window_size : int or float, optional
+            The size of the window for feature extraction. Default is NaN, which means the entire series is used as a single window.
         stride : int, optional
-            The step size for moving the window (default is 1).
+            The step size for moving the window. Default is 1.
         id_column : str, optional
-            The name of the column used to identify different time series (optional).
+            The name of the column used to identify different time series.
         sort_column : str, optional
-            The column to sort by before feature extraction (optional).
+            The column to sort by before feature extraction.
         feature_column : str or None, optional
             The column containing feature data. If None, features are calculated for all columns except ID and sort columns.
         group_by : str or None, optional
             Column name to group by. If None, no grouping is performed.
+
         Raises
-        -------
+        ------
         ValueError
             If any parameter is invalid.
         """        
@@ -62,8 +63,9 @@ class FeatureExtractor:
         ----------
         features_df : pd.DataFrame
             The resulting DataFrame from the extract_features function.
-        n : int, optional (default 5)
-            The number of rows to return. If n is negative, returns all rows except the last |n| rows.
+        n : int, optional
+            The number of rows to return (default is 5). If n is negative, 
+            returns all rows except the last abs(n) rows.
 
         Returns
         -------
@@ -97,6 +99,11 @@ class FeatureExtractor:
         -------
         pd.DataFrame
             A DataFrame containing calculated features for each window.
+
+        Raises
+        ------
+        ValueError
+            If the mode is not one of ['parallel', 'sequential', 'dask'].
         """
         if mode not in ['parallel', 'sequential', 'dask']:
             raise ValueError(f"Invalid mode '{mode}'. Accepted values are: ['parallel', 'sequential']")
@@ -214,12 +221,9 @@ class FeatureExtractor:
         function : callable
             A function that computes the feature. It should accept a Pandas Series and optional parameters as input.
         metadata : dict, optional
-            A dictionary containing metadata about the feature (e.g., level of interpretability and description).
-            Example:
-            {
-                'level': 'easy' | 'moderate' | 'advanced',
-                'description': 'Description of the feature.'
-            }
+            A dictionary containing metadata about the feature, such as its interpretability level and description.
+            - level (str): Interpretability level ('easy', 'moderate', 'advanced').
+            - description (str): Description of the feature.
 
         Raises
         ------

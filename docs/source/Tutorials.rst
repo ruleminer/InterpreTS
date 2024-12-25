@@ -11,3 +11,4 @@ Get started with these tutorials. In the next pages you can check the case study
    Feature Peak Notebook <notebooks/feature_peak.ipynb>
    Classification Notebook <notebooks/classification.ipynb>
    Regression Notebook <notebooks/regression.ipynb>
+   Example of Features Notebook <notebooks/test_examples_of_features.ipynb>
