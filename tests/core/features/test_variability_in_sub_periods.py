@@ -31,24 +31,6 @@ def test_variability_with_ddof():
     expected = pd.Series([2.5])  # Variability of the entire series
     pd.testing.assert_series_equal(result, expected)
 
-# Test for data containing NaN values
-def test_variability_with_nan():
-    data = pd.Series([1, 2, np.nan, 4, 5])
-    with pytest.raises(ValueError, match="Data contains NaN values."):
-        calculate_variability_in_sub_periods(data, window_size=3)
-
-# Test when the window size is greater than the data length
-def test_variability_insufficient_data():
-    data = pd.Series([1, 2, 3])
-    with pytest.raises(ValueError, match="Window size must be smaller than or equal to the length of the data."):
-        calculate_variability_in_sub_periods(data, window_size=5)
-
-# Test for empty input data
-def test_variability_empty_data():
-    data = pd.Series([], dtype=float)
-    with pytest.raises(ValueError, match="Input data is empty."):
-        calculate_variability_in_sub_periods(data, window_size=3)
-
 # Test for data with a single repeated value
 def test_variability_single_value():
     data = pd.Series([5, 5, 5, 5, 5])

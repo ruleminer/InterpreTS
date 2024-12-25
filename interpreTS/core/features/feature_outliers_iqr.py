@@ -21,11 +21,15 @@ def calculate_outliers_iqr(data, training_data, epsilon=1e-6):
     -------
     float
         The percentage of observations in the window that are considered outliers.
-    """
-    # Validate input data
-    validate_time_series_data(data, allow_nan=False)
-    validate_time_series_data(training_data, allow_nan=False)
 
+    Examples
+    --------
+    >>> import numpy as np
+    >>> training_data = np.array([10, 12, 14, 15, 16, 18, 19])
+    >>> data = np.array([9, 15, 20, 25])
+    >>> calculate_outliers_iqr(data, training_data)
+    0.25
+    """
     if isinstance(training_data, pd.Series):
         training_data = training_data.values
     if isinstance(data, pd.Series):

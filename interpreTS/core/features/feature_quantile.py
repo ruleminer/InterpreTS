@@ -5,7 +5,7 @@ from interpreTS.utils.data_validation import validate_time_series_data
 def calculate_quantile(data, quantile=0.5):
     """
     Calculates the value for a specified quantile level in the distribution of a time series.
-    
+
     Parameters
     ----------
     data : pd.Series or np.ndarray
@@ -24,25 +24,39 @@ def calculate_quantile(data, quantile=0.5):
         If the data is not numeric.
     ValueError
         If the data contains NaNs, is not one-dimensional, or the quantile is outside the range [0, 1].
+
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> data = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9])
+    >>> calculate_quantile(data, quantile=0.25)
+    3.0
+    >>> calculate_quantile(data, quantile=0.5)
+    5.0
+    >>> calculate_quantile(data, quantile=0.75)
+    7.0
+    >>> calculate_quantile(data, quantile=1)
+    9.0
+    >>> calculate_quantile(data, quantile=0)
+    1.0
     """
-    # Validate the time series
-    validate_time_series_data(data, require_datetime_index=False, allow_nan=False)
     
-    # Check if the data is numeric
+
     if not np.issubdtype(data.dtype, np.number):
         raise TypeError("Data must contain only numeric values.")
     
-    # Check if the data is one-dimensional
     if isinstance(data, np.ndarray) and data.ndim != 1:
         raise ValueError("Data must be one-dimensional.")
     if isinstance(data, pd.DataFrame) and data.shape[1] != 1:
         raise ValueError("Data must be one-dimensional.")
-    
-    # Validate the quantile level
+        
+    if np.isnan(data).any():
+        raise ValueError("Input data contains NaN values.")
+
     if not (0 <= quantile <= 1):
         raise ValueError("Quantile level must be in the range [0, 1].")
     
-    # Compute the quantile
+
     if len(data) > 0:
         return np.nanquantile(data, quantile)
     else:

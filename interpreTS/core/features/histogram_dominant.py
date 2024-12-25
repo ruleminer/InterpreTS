@@ -27,19 +27,27 @@ def calculate_dominant(data, bins=10, return_bin_center=False):
         If the data is not a valid time series type.
     ValueError
         If the data contains NaN values.
+
+    Examples
+    --------
+    >>> import numpy as np
+    >>> data = np.array([1, 2, 2, 3, 3, 3, 4, 4, 5])
+    >>> calculate_dominant(data, bins=5)
+    2.6
+
+    >>> data = np.array([10, 20, 20, 30, 30, 30, 40, 40, 50])
+    >>> calculate_dominant(data, bins=5, return_bin_center=True)
+    30.0
+
+    >>> data = np.array([1, 1, 1, 1, 1])
+    >>> calculate_dominant(data, bins=3)
+    0.8333333333333333
     """
     # Handle empty data early
     if isinstance(data, (pd.Series, pd.DataFrame)) and data.empty:
         return np.nan
     if isinstance(data, np.ndarray) and data.size == 0:
         return np.nan
-
-    # Validate the time series data
-    validate_time_series_data(data, require_datetime_index=False)
-
-    # Check for NaN values explicitly
-    if np.isnan(data).any():
-        raise ValueError("Data contains NaN values.")
 
     # Calculate histogram
     counts, bin_edges = np.histogram(data, bins=bins)

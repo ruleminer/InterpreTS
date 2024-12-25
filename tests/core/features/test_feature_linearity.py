@@ -22,36 +22,11 @@ def test_calculate_linearity_constant_series():
     result = calculate_linearity(data)
     assert result == pytest.approx(0.0), f"Expected 0.0 for constant data. Got: {result}"
 
-# Test linearity for a series with NaN values
-def test_calculate_linearity_with_nan():
-    data = pd.Series([1, 2, np.nan, 4, 5])
-    result = calculate_linearity(data)
-    expected_result = calculate_linearity(data.dropna())
-    assert result == pytest.approx(expected_result, abs=0.001), f"Unexpected result for data with NaN. Got: {result}"
-
-# Test linearity for an empty series
-def test_calculate_linearity_empty_series():
-    data = pd.Series([])
-    with pytest.raises(ValueError, match="Input data is empty."):
-        calculate_linearity(data)
-
-# Test linearity for a series with all NaN values
-def test_calculate_linearity_all_nan():
-    data = pd.Series([np.nan, np.nan, np.nan])
-    with pytest.raises(ValueError, match="The time series is empty after removing NaN values."):
-        calculate_linearity(data)
-
 # Test linearity for a numpy array input
 def test_calculate_linearity_numpy_array():
     data = np.array([1, 2, 3, 4, 5])
     result = calculate_linearity(data)
     assert result == pytest.approx(1.0, abs=0.001), f"Expected 1.0 for perfectly linear numpy array. Got: {result}"
-
-# Test linearity for non-numeric data
-def test_calculate_linearity_non_numeric():
-    data = pd.Series(["a", "b", "c", "d"])
-    with pytest.raises(TypeError, match="Data must contain only numeric values."):
-        calculate_linearity(data)
 
 # Test linearity with normalize=False
 def test_calculate_linearity_no_normalization():

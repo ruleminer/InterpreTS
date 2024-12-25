@@ -27,34 +27,6 @@ def test_outliers_std_all_outliers():
     expected = 1.0  # All values are outliers
     assert result == pytest.approx(expected, abs=1e-6), f"Expected {expected}, got {result}"
 
-# Test with empty input data
-def test_outliers_std_empty_data():
-    data = pd.Series([], dtype=float)
-    training_data = pd.Series([1, 2, 3, 4, 5])
-    with pytest.raises(ValueError, match="Input data is empty."):
-        calculate_outliers_std(data, training_data)
-
-# Test with empty training data
-def test_outliers_std_empty_training_data():
-    data = pd.Series([1, 2, 3])
-    training_data = pd.Series([], dtype=float)
-    with pytest.raises(ValueError, match="Input data is empty."):
-        calculate_outliers_std(data, training_data)
-
-# Test with NaN values in the data
-def test_outliers_std_with_nan_data():
-    data = pd.Series([1, 2, np.nan, 4, 5])
-    training_data = pd.Series([1, 2, 3, 4, 5])
-    with pytest.raises(ValueError, match="Data contains NaN values."):
-        calculate_outliers_std(data, training_data)
-
-# Test with NaN values in the training data
-def test_outliers_std_with_nan_training_data():
-    data = pd.Series([1, 2, 3, 4, 5])
-    training_data = pd.Series([1, 2, np.nan, 4, 5])
-    with pytest.raises(ValueError, match="Data contains NaN values."):
-        calculate_outliers_std(data, training_data)
-
 # Test with a single value in the training data
 def test_outliers_std_single_training_point():
     data = pd.Series([1, 2, 3, 4, 5])

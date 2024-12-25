@@ -30,14 +30,6 @@ def calculate_std_1st_der(data):
     >>> calculate_std_1st_der(data)
     0.0
     """
-    try:
-        # Validate the time series without requiring a DateTime index
-        validate_time_series_data(data, require_datetime_index=False, allow_nan=False)
-    except ValueError as e:
-        # Return np.nan for empty data
-        if "Input data is empty." in str(e):
-            return np.nan
-        raise
 
     # If there is only one value, return 0.0
     if len(data) == 1:

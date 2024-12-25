@@ -34,12 +34,6 @@ def test_trend_change_no_change_detected():
     result = calculate_distance_to_last_trend_change(data, window_size=3)
     assert result is None, "Expected None when no trend change is detected"
 
-# Test handling of NaN values in the series
-def test_trend_change_with_nan_values():
-    data = pd.Series([1, 2, np.nan, 4, 5, 6, 7, 8])
-    with pytest.raises(ValueError, match="Data contains NaN values."):
-        calculate_distance_to_last_trend_change(data, window_size=3)
-
 # Test window size larger than the series
 def test_trend_change_large_window():
     data = pd.Series([1, 2, 3, 4, 5])

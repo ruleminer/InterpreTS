@@ -30,14 +30,5 @@ def calculate_length(data):
     >>> calculate_length(data)
     5
     """
-    # Validate the time series without requiring a DateTime index
-    validate_time_series_data(data, require_datetime_index=False)
-    
-    # Check if the data is one-dimensional
-    if isinstance(data, np.ndarray) and data.ndim != 1:
-        raise ValueError("Data must be one-dimensional.")
-    if isinstance(data, pd.Series) and len(data.shape) != 1:
-        raise ValueError("Data must be one-dimensional.")
-
     # Return the length of the data
     return len(data)
