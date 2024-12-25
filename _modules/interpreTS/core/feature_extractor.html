@@ -354,7 +354,7 @@ document.write(`
 <span class="kn">from</span> <span class="nn">..utils.data_manager</span> <span class="kn">import</span> <span class="n">load_metadata</span><span class="p">,</span> <span class="n">load_feature_functions</span><span class="p">,</span> <span class="n">load_validation_requirements</span>
 <span class="kn">from</span> <span class="nn">..utils.task_manager</span> <span class="kn">import</span> <span class="n">TaskManager</span>
 
-<div class="viewcode-block" id="FeatureExtractor"><a class="viewcode-back" href="../../../interpreTS.core.html#interpreTS.FeatureExtractor">[docs]</a><span class="k">class</span> <span class="nc">FeatureExtractor</span><span class="p">:</span>
+<div class="viewcode-block" id="FeatureExtractor"><a class="viewcode-back" href="../../../interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor">[docs]</a><span class="k">class</span> <span class="nc">FeatureExtractor</span><span class="p">:</span>
     <span class="n">DEFAULT_FEATURES</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">Features</span><span class="o">.</span><span class="n">LENGTH</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">MEAN</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">VARIANCE</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">STABILITY</span><span class="p">,</span>
         <span class="n">Features</span><span class="o">.</span><span class="n">ENTROPY</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">SPIKENESS</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">SEASONALITY_STRENGTH</span>
@@ -404,7 +404,7 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">task_manager</span><span class="o">.</span><span class="n">_validate_parameters</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">feature_params</span><span class="p">,</span> <span class="n">window_size</span><span class="p">,</span> <span class="n">stride</span><span class="p">,</span> <span class="n">id_column</span><span class="p">,</span> <span class="n">sort_column</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">feature_metadata</span> <span class="o">=</span> <span class="n">load_metadata</span><span class="p">()</span>
     
-<div class="viewcode-block" id="FeatureExtractor.head"><a class="viewcode-back" href="../../../interpreTS.core.html#interpreTS.FeatureExtractor.head">[docs]</a>    <span class="k">def</span> <span class="nf">head</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features_df</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+<div class="viewcode-block" id="FeatureExtractor.head"><a class="viewcode-back" href="../../../interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.head">[docs]</a>    <span class="k">def</span> <span class="nf">head</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features_df</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the first n rows of the resulting DataFrame from the extract_features function.</span>
 
@@ -428,7 +428,7 @@ document.write(`
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: Only </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">features_df</span><span class="p">)</span><span class="si">}</span><span class="s2"> rows available in DataFrame.&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">features_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FeatureExtractor.extract_features"><a class="viewcode-back" href="../../../interpreTS.core.html#interpreTS.FeatureExtractor.extract_features">[docs]</a>    <span class="k">def</span> <span class="nf">extract_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">progress_callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;sequential&#39;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="FeatureExtractor.extract_features"><a class="viewcode-back" href="../../../interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.extract_features">[docs]</a>    <span class="k">def</span> <span class="nf">extract_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">progress_callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;sequential&#39;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract features from a time series dataset.</span>
 
@@ -480,7 +480,7 @@ document.write(`
 
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span></div>
     
-<div class="viewcode-block" id="FeatureExtractor.group_data"><a class="viewcode-back" href="../../../interpreTS.core.html#interpreTS.FeatureExtractor.group_data">[docs]</a>    <span class="k">def</span> <span class="nf">group_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<div class="viewcode-block" id="FeatureExtractor.group_data"><a class="viewcode-back" href="../../../interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.group_data">[docs]</a>    <span class="k">def</span> <span class="nf">group_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Group data based on the group_by column.</span>
 
@@ -498,7 +498,7 @@ document.write(`
             <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_by</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">[(</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="p">)]</span></div>
     
-<div class="viewcode-block" id="FeatureExtractor.extract_features_stream"><a class="viewcode-back" href="../../../interpreTS.core.html#interpreTS.FeatureExtractor.extract_features_stream">[docs]</a>    <span class="k">def</span> <span class="nf">extract_features_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_stream</span><span class="p">,</span> <span class="n">progress_callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="FeatureExtractor.extract_features_stream"><a class="viewcode-back" href="../../../interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.extract_features_stream">[docs]</a>    <span class="k">def</span> <span class="nf">extract_features_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_stream</span><span class="p">,</span> <span class="n">progress_callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract features from a stream of time series data.</span>
 
@@ -543,7 +543,7 @@ document.write(`
             <span class="k">if</span> <span class="n">progress_callback</span><span class="p">:</span>
                 <span class="n">progress_callback</span><span class="p">(</span><span class="n">total_points</span><span class="p">)</span></div>
             
-<div class="viewcode-block" id="FeatureExtractor.group_features_by_interpretability"><a class="viewcode-back" href="../../../interpreTS.core.html#interpreTS.FeatureExtractor.group_features_by_interpretability">[docs]</a>    <span class="k">def</span> <span class="nf">group_features_by_interpretability</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="FeatureExtractor.group_features_by_interpretability"><a class="viewcode-back" href="../../../interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.group_features_by_interpretability">[docs]</a>    <span class="k">def</span> <span class="nf">group_features_by_interpretability</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Group features by their interpretability levels.</span>
 
@@ -559,7 +559,7 @@ document.write(`
             <span class="n">groups</span><span class="p">[</span><span class="n">level</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feature_name</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">groups</span></div>
 
-<div class="viewcode-block" id="FeatureExtractor.add_custom_feature"><a class="viewcode-back" href="../../../interpreTS.core.html#interpreTS.FeatureExtractor.add_custom_feature">[docs]</a>    <span class="k">def</span> <span class="nf">add_custom_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="FeatureExtractor.add_custom_feature"><a class="viewcode-back" href="../../../interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.add_custom_feature">[docs]</a>    <span class="k">def</span> <span class="nf">add_custom_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a custom feature to the FeatureExtractor.</span>
 
