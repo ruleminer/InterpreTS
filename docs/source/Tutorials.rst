@@ -9,3 +9,5 @@ Get started with these tutorials. In the next pages you can check the case study
 
    Feature Extraction Notebook <notebooks/feature_extraction.ipynb>
    Feature Peak Notebook <notebooks/feature_peak.ipynb>
+   Classification Notebook <notebooks/classification.ipynb>
+   Regression Notebook <notebooks/regression.ipynb>
