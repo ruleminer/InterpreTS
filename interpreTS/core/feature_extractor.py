@@ -49,7 +49,7 @@ class FeatureExtractor:
 
         self.feature_functions = load_feature_functions()
         self.validation_requirements = load_validation_requirements()
-        
+
         self.task_manager = TaskManager(self.feature_functions, self.window_size, self.features, self.stride, self.feature_params, self.validation_requirements)
         self.task_manager._validate_parameters(features, feature_params, window_size, stride, id_column, sort_column)
         self.feature_metadata = load_metadata()
@@ -240,3 +240,4 @@ class FeatureExtractor:
             self.feature_metadata[name] = metadata
 
         print(f"Custom feature '{name}' added successfully.")
+

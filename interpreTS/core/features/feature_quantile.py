@@ -45,13 +45,11 @@ def calculate_quantile(data, quantile=0.5):
     if not np.issubdtype(data.dtype, np.number):
         raise TypeError("Data must contain only numeric values.")
     
-
     if isinstance(data, np.ndarray) and data.ndim != 1:
         raise ValueError("Data must be one-dimensional.")
     if isinstance(data, pd.DataFrame) and data.shape[1] != 1:
         raise ValueError("Data must be one-dimensional.")
-    
-
+        
     if np.isnan(data).any():
         raise ValueError("Input data contains NaN values.")
 

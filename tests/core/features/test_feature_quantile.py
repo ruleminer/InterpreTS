@@ -24,7 +24,6 @@ def test_calculate_quantile_single_value():
     result = calculate_quantile(data)
     assert result == expected, f"Expected {expected}, but got {result}."
 
-
 # Test quantile calculation for a series containing NaN values
 def test_calculate_quantile_with_nan():
     data = pd.Series([1, np.nan, 3, 4])
