@@ -1,80 +1,122 @@
-# InterpreTS
+# InterpreTS - Overview 
 
-InterpreTS is a Python library designed for extracting meaningful and interpretable features from time series data to support the creation of interpretable and explainable predictive models.
-
-## Overview
-With the growing importance of interpretability in machine learning and AI, InterpreTS focuses on creating feature representations that facilitate the development of interpretable and explainable predictive models.
+ **interpreTS** is a Python library designed for extracting meaningful and interpretable features from time series data to support the creation of interpretable and explainable predictive models.
 
 ## Key Features
-- **Statistical Features**: Extract basic statistics like mean, standard deviation, minimum, and maximum values.
-- **Frequency Features**: Calculate features in the frequency domain, such as Fourier Transform coefficients.
-- **Relational Features**: Generate features describing relationships between different time series, such as correlation.
-- **Parallel Computing Support**: Efficiently compute features with parallel processing.
-- **Data Format Flexibility**: Easily convert and process data in `pandas.DataFrame` or `numpy.array` formats.
+ - **Feature Extraction**: Extract features such as mean, variance, spikeness, entropy, trend strength, and more.
+ - **Interpretable Models**: Generate explainable predictive models by leveraging extracted features.
+ - **Streaming Data Support**: Process and extract features in real-time from streaming data sources.
+ - **Scalability**: Supports parallel and distributed computation with `joblib` and `dask`.
+ - **Custom Features**: Extend the library with user-defined features.
+ - **Validation**: Ensures input data meets the required format and quality using built-in validators.
 
 ## Requirements
-- Python 3.8 or above
-- `pandas`
-- `numpy`
-- `statsmodels`
+ - Python 3.8 or above
+ - `pandas>=1.1.0`
+ - `numpy>=1.18.0`
+ - `statsmodels`
+ - `langchain_community`
+ - `langchain`
+ - `openai`
+ - `scikit-learn`
+ - `joblib`
+ - `tqdm`
+ - `dask`
+ - `nbsphinx`
+ - `myst-parser`
+ - `scipy`
 
 ## Installation Guide
-Follow these steps to install InterpreTS and its dependencies:
+ Follow these steps to install InterpreTS and its dependencies:
 
-1. **Clone the Repository**  
-   Clone the InterpreTS repository to your local machine:
+### From PyPI
    
-```bash
-git clone https://github.com/ruleminer/InterpreTS.git
-cd InterpreTS
-```
+ ```bash
+pip install interpreTS
+ ```
+
+### From Source
+1. Clone the repository:
+ ```bash
+git clone https://github.com/yourusername/interpreTS.git
+cd interpreTS
+ ```
 
 2. Install dependencies: Install the required packages listed in the `requirements.txt` file:
 
- ```python
- pip install -r requirements.txt
+ ```bash
+pip install -r requirements.txt
  ```
 
 3. Install InterpreTS: Run the following command to install InterpreTS:
 
- ```python
- pip install interpreTS
+ ```bash
+pip install .
  ```
 
-## Verifying Installation
-Once installed, you can verify the installation by running a simple feature extraction example:
+## Verifying Installation - Example: Basic Feature Extraction
+ Once installed, you can verify the installation by running a simple feature extraction example:
 
  ```python
- from interpreTS.core.feature_extractor import FeatureExtractor, Features
- import pandas as pd
 
- # Sample time series data
- data = pd.DataFrame({'value': [1, 2, 3, 4, 5]})
- extractor = FeatureExtractor(features=[Features.LENGTH, Features.MEAN, Features.VARIANCE])
- features = extractor.extract_features(data)
- print("Extracted Features:\n", features)
+import pandas as pd
+from interpreTS import FeatureExtractor, Features
+
+# Sample time series data
+data = pd.DataFrame({
+"time": pd.date_range("2023-01-01", periods=10, freq="D"),
+"value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+})
+
+# Initialize the FeatureExtractor
+extractor = FeatureExtractor(features=[Features.MEAN, Features.VARIANCE], feature_column="value")
+
+# Extract features
+features_df = extractor.extract_features(data)
+print(features_df)
+
  ```
 
 ## Additional Usage Example with Time Series Data
-You can also use InterpreTS with time-indexed data:
 
  ```python
+import pandas as pd
+import numpy as np
+import time
+from interpreTS import FeatureExtractor, Features
 
- from interpreTS.core.time_series_data import TimeSeriesData
- from interpreTS.core.feature_extractor import FeatureExtractor, Features
- import pandas as pd
+def report_progress(progress):
+    print(f"Progress: {progress}%", flush=True)
 
- # Time-indexed data
- data_with_date = pd.Series(
-     [5, 3, 6, 2, 7, 4, 8, 3, 9, 1],
-     index=pd.date_range("2023-01-01", periods=10, freq="D")
- )
- ts_data = TimeSeriesData(data_with_date)
+# Generate synthetic time series data
+data = pd.DataFrame({
+'id': np.repeat(range(100), 100),  
+'time': np.tile(range(100), 100),  
+'value': np.random.randn(10000)  
+})
 
- # Feature extraction
- extractor = FeatureExtractor(features=[Features.LENGTH, Features.MEAN, Features.VARIANCE])
- features = extractor.extract_features(ts_data.data)
- print("\nExtracted Features from Time Series Data:\n", features)
+# Initialize the FeatureExtractor
+feature_extractor = FeatureExtractor(
+features=[Features.ENTROPY],
+feature_params={Features.ENTROPY: {'bins': 2}},  # Specify parameters for entropy
+feature_column="value",
+id_column="id",
+window_size=5,  # Rolling window size
+stride=2        # Step size for moving the window
+)
+
+# Measure execution time
+start_time = time.time()
+
+# Extract features
+features_df = feature_extractor.extract_features(data, progress_callback=report_progress, mode='sequential')
+
+end_time = time.time()
+
+# Display results and execution time
+print(features_df.head())  # Display the first few rows of the resulting DataFrame
+print(f"Execution time: {end_time - start_time:.2f} seconds")
+
  ```
 
 ## Documentation
