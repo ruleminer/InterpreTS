@@ -1,0 +1,13 @@
+pandas>=1.1.0
+numpy>=1.18.0
+statsmodels>=0.12.0
+langchain_community
+langchain
+openai
+scikit-learn
+joblib
+tqdm
+dask
+nbsphinx
+myst-parser
+scipy

@@ -1,0 +1,939 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>interpreTS package &#8212; InterpreTS 0.4.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="_static/documentation_options.js?v=c87aa342"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'interpreTS';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">InterpreTS 0.4.1 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="Introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="Feature_Extractors.html">
+    Feature Extractors
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="Tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="API_Documentation.html">
+    API Documentation
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="Introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="Feature_Extractors.html">
+    Feature Extractors
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="Tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="API_Documentation.html">
+    API Documentation
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">interpreTS package</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="interprets-package">
+<h1>interpreTS package<a class="headerlink" href="#interprets-package" title="Link to this heading">#</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">#</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="interpreTS.core.html">interpreTS.core package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="interpreTS.core.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="interpreTS.core.features.html">interpreTS.core.features package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.features.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.features.html#module-interpreTS.core.features.feature_length">interpreTS.core.features.feature_length module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.features.html#module-interpreTS.core.features.feature_mean">interpreTS.core.features.feature_mean module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.features.html#module-interpreTS.core.features.feature_peak">interpreTS.core.features.feature_peak module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.features.html#module-interpreTS.core.features.feature_spikeness">interpreTS.core.features.feature_spikeness module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.features.html#module-interpreTS.core.features.feature_std_1st_der">interpreTS.core.features.feature_std_1st_der module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.features.html#module-interpreTS.core.features.feature_trough">interpreTS.core.features.feature_trough module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.features.html#module-interpreTS.core.features.feature_variance">interpreTS.core.features.feature_variance module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.features.html#module-interpreTS.core.features.histogram_dominant">interpreTS.core.features.histogram_dominant module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.features.html#module-interpreTS.core.features.seasonality_strength">interpreTS.core.features.seasonality_strength module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.features.html#module-interpreTS.core.features.trend_strength">interpreTS.core.features.trend_strength module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.features.html#module-interpreTS.core.features">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="interpreTS.core.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpreTS.core.html#module-interpreTS.core.feature_extractor">interpreTS.core.feature_extractor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.DEFAULT_FEATURES"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.DEFAULT_FEATURES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.add_custom_feature"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.add_custom_feature()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.extract_features"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.extract_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.extract_features_stream"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.extract_features_stream()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.group_data"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.group_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.group_features_by_interpretability"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.group_features_by_interpretability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.head"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.head()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="interpreTS.core.html#module-interpreTS.core.time_series_data">interpreTS.core.time_series_data module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.time_series_data.TimeSeriesData"><code class="docutils literal notranslate"><span class="pre">TimeSeriesData</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.time_series_data.TimeSeriesData.resample"><code class="docutils literal notranslate"><span class="pre">TimeSeriesData.resample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="interpreTS.core.html#interpreTS.core.time_series_data.TimeSeriesData.split"><code class="docutils literal notranslate"><span class="pre">TimeSeriesData.split()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="interpreTS.core.html#module-interpreTS.core">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="interpreTS.utils.html">interpreTS.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="interpreTS.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpreTS.utils.html#module-interpreTS.utils.data_conversion">interpreTS.utils.data_conversion module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="interpreTS.utils.html#interpreTS.utils.data_conversion.convert_to_time_series"><code class="docutils literal notranslate"><span class="pre">convert_to_time_series()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="interpreTS.utils.html#module-interpreTS.utils.data_validation">interpreTS.utils.data_validation module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="interpreTS.utils.html#interpreTS.utils.data_validation.validate_time_series_data"><code class="docutils literal notranslate"><span class="pre">validate_time_series_data()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="interpreTS.utils.html#module-interpreTS.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="module-interpreTS">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-interpreTS" title="Link to this heading">#</a></h2>
+<p>interpreTS: Python library designed for extracting meaningful and interpretable features from time series data to support the creation of interpretable and explainable predictive models.</p>
+<dl class="simple">
+<dt>Available imports:</dt><dd><dl class="simple">
+<dt>FeatureExtractor (from interpreTS.core.feature_extractor):</dt><dd><p>A class responsible for extracting specified features from time series data.</p>
+</dd>
+<dt>Features (from interpreTS.utils.feature_loader):</dt><dd><p>An enumeration or collection that defines available feature types for extraction.</p>
+</dd>
+<dt>FeatureLoader (from interpreTS.utils.feature_loader):</dt><dd><p>A utility class for loading and managing feature definitions.</p>
+</dd>
+<dt>validate_time_series_data (from interpreTS.utils.data_validation):</dt><dd><p>A function to ensure that input time series data meets the required format and standards for processing.</p>
+</dd>
+<dt>generate_feature_descriptions (from interpreTS.utils.data_manager):</dt><dd><p>A function that generates human-readable descriptions for extracted features, aiding interpretability.</p>
+</dd>
+</dl>
+</dd>
+<dt>Dependencies:</dt><dd><ul class="simple">
+<li><p>pandas&gt;=1.1.0</p></li>
+<li><p>numpy&gt;=1.18.0</p></li>
+<li><p>statsmodels&gt;=0.12.0</p></li>
+<li><p>langchain_community</p></li>
+<li><p>langchain</p></li>
+<li><p>openai</p></li>
+<li><p>scikit-learn</p></li>
+<li><p>joblib</p></li>
+<li><p>tqdm</p></li>
+<li><p>dask</p></li>
+<li><p>nbsphinx</p></li>
+<li><p>myst-parser</p></li>
+<li><p>scipy</p></li>
+</ul>
+</dd>
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Sławomir Put,</p></li>
+<li><p>Martyna Żur,</p></li>
+<li><p>Weronika Wołowczyk</p></li>
+<li><p>Jarosław Strzelczyk,</p></li>
+<li><p>Piotr Krupiński</p></li>
+<li><p>Martyna Kramarz</p></li>
+<li><p>Łukasz Wróbel</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="interpreTS.FeatureExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interpreTS.</span></span><span class="sig-name descname"><span class="pre">FeatureExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/feature_extractor.html#FeatureExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.FeatureExtractor" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.FeatureExtractor.DEFAULT_FEATURES">
+<span class="sig-name descname"><span class="pre">DEFAULT_FEATURES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['length',</span> <span class="pre">'mean',</span> <span class="pre">'variance',</span> <span class="pre">'stability',</span> <span class="pre">'entropy',</span> <span class="pre">'spikeness',</span> <span class="pre">'seasonality_strength']</span></em><a class="headerlink" href="#interpreTS.FeatureExtractor.DEFAULT_FEATURES" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interpreTS.FeatureExtractor.add_custom_feature">
+<span class="sig-name descname"><span class="pre">add_custom_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/feature_extractor.html#FeatureExtractor.add_custom_feature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.FeatureExtractor.add_custom_feature" title="Link to this definition">#</a></dt>
+<dd><p>Add a custom feature to the FeatureExtractor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the custom feature.</p></li>
+<li><p><strong>function</strong> (<em>callable</em>) – A function that computes the feature. It should accept a Pandas Series and optional parameters as input.</p></li>
+<li><p><strong>metadata</strong> (<em>dict</em><em>, </em><em>optional</em>) – A dictionary containing metadata about the feature, such as its interpretability level and description.
+- level (str): Interpretability level (‘easy’, ‘moderate’, ‘advanced’).
+- description (str): Description of the feature.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the feature name already exists or the function is not callable.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interpreTS.FeatureExtractor.extract_features">
+<span class="sig-name descname"><span class="pre">extract_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progress_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sequential'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/feature_extractor.html#FeatureExtractor.extract_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.FeatureExtractor.extract_features" title="Link to this definition">#</a></dt>
+<dd><p>Extract features from a time series dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>pd.DataFrame</em><em> or </em><em>pd.Series</em>) – The time series data for which features are to be extracted.</p></li>
+<li><p><strong>progress_callback</strong> (<em>function</em><em>, </em><em>optional</em>) – A function to report progress, which takes a single argument: progress percentage (0-100).</p></li>
+<li><p><strong>mode</strong> (<em>str</em><em>, </em><em>optional</em>) – The mode of processing. Can be ‘parallel’ for multi-threaded processing
+or ‘sequential’ for single-threaded processing with real-time progress reporting.</p></li>
+<li><p><strong>n_jobs</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of jobs (processes) to run in parallel. Default is -1 (use all available CPUs).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame containing calculated features for each window.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the mode is not one of [‘parallel’, ‘sequential’, ‘dask’].</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interpreTS.FeatureExtractor.extract_features_stream">
+<span class="sig-name descname"><span class="pre">extract_features_stream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_stream</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progress_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/feature_extractor.html#FeatureExtractor.extract_features_stream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.FeatureExtractor.extract_features_stream" title="Link to this definition">#</a></dt>
+<dd><p>Extract features from a stream of time series data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_stream</strong> (<em>iterable</em>) – An iterable that yields incoming data points as dictionaries with keys corresponding to column names.</p></li>
+<li><p><strong>progress_callback</strong> (<em>function</em><em>, </em><em>optional</em>) – A function to report progress, which takes a single argument: the total number of processed points.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Yields<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>dict</em> – A dictionary containing the calculated features for the current window.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interpreTS.FeatureExtractor.group_data">
+<span class="sig-name descname"><span class="pre">group_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/feature_extractor.html#FeatureExtractor.group_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.FeatureExtractor.group_data" title="Link to this definition">#</a></dt>
+<dd><p>Group data based on the group_by column.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>pd.DataFrame</em>) – Input data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Grouped data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interpreTS.FeatureExtractor.group_features_by_interpretability">
+<span class="sig-name descname"><span class="pre">group_features_by_interpretability</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/feature_extractor.html#FeatureExtractor.group_features_by_interpretability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.FeatureExtractor.group_features_by_interpretability" title="Link to this definition">#</a></dt>
+<dd><p>Group features by their interpretability levels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary where keys are interpretability levels (‘easy’, ‘moderate’, ‘advanced’),
+and values are lists of feature names.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interpreTS.FeatureExtractor.head">
+<span class="sig-name descname"><span class="pre">head</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/feature_extractor.html#FeatureExtractor.head"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.FeatureExtractor.head" title="Link to this definition">#</a></dt>
+<dd><p>Returns the first n rows of the resulting DataFrame from the extract_features function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>features_df</strong> (<em>pd.DataFrame</em>) – The resulting DataFrame from the extract_features function.</p></li>
+<li><p><strong>n</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of rows to return (default is 5). If n is negative,
+returns all rows except the last abs(n) rows.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The first n rows of the DataFrame.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="interpreTS.FeatureLoader">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interpreTS.</span></span><span class="sig-name descname"><span class="pre">FeatureLoader</span></span><a class="reference internal" href="_modules/interpreTS/utils/feature_loader.html#FeatureLoader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.FeatureLoader" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="interpreTS.FeatureLoader.available_features">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">available_features</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/utils/feature_loader.html#FeatureLoader.available_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.FeatureLoader.available_features" title="Link to this definition">#</a></dt>
+<dd><p>Returns a list of all available features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of feature names.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interpreTS.FeatureLoader.generate_feature_options">
+<span class="sig-name descname"><span class="pre">generate_feature_options</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/utils/feature_loader.html#FeatureLoader.generate_feature_options"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.FeatureLoader.generate_feature_options" title="Link to this definition">#</a></dt>
+<dd><p>Generate a dictionary mapping human-readable feature names to their corresponding constants.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary where keys are human-readable feature names (capitalized)
+and values are feature constants.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="interpreTS.Features">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interpreTS.</span></span><span class="sig-name descname"><span class="pre">Features</span></span><a class="reference internal" href="_modules/interpreTS/utils/feature_loader.html#Features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.Features" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.ABOVE_9TH_DECILE">
+<span class="sig-name descname"><span class="pre">ABOVE_9TH_DECILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'above_9th_decile'</span></em><a class="headerlink" href="#interpreTS.Features.ABOVE_9TH_DECILE" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.ABSOLUTE_ENERGY">
+<span class="sig-name descname"><span class="pre">ABSOLUTE_ENERGY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'absolute_energy'</span></em><a class="headerlink" href="#interpreTS.Features.ABSOLUTE_ENERGY" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.BELOW_1ST_DECILE">
+<span class="sig-name descname"><span class="pre">BELOW_1ST_DECILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'below_1st_decile'</span></em><a class="headerlink" href="#interpreTS.Features.BELOW_1ST_DECILE" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.BINARIZE_MEAN">
+<span class="sig-name descname"><span class="pre">BINARIZE_MEAN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'binarize_mean'</span></em><a class="headerlink" href="#interpreTS.Features.BINARIZE_MEAN" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.CHANGE_IN_VARIANCE">
+<span class="sig-name descname"><span class="pre">CHANGE_IN_VARIANCE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'change_in_variance'</span></em><a class="headerlink" href="#interpreTS.Features.CHANGE_IN_VARIANCE" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.CROSSING_POINTS">
+<span class="sig-name descname"><span class="pre">CROSSING_POINTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'crossing_points'</span></em><a class="headerlink" href="#interpreTS.Features.CROSSING_POINTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.DISTANCE_TO_LAST_TREND_CHANGE">
+<span class="sig-name descname"><span class="pre">DISTANCE_TO_LAST_TREND_CHANGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'distance_to_last_trend_change'</span></em><a class="headerlink" href="#interpreTS.Features.DISTANCE_TO_LAST_TREND_CHANGE" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.DOMINANT">
+<span class="sig-name descname"><span class="pre">DOMINANT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'dominant'</span></em><a class="headerlink" href="#interpreTS.Features.DOMINANT" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.ENTROPY">
+<span class="sig-name descname"><span class="pre">ENTROPY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'entropy'</span></em><a class="headerlink" href="#interpreTS.Features.ENTROPY" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.FLAT_SPOTS">
+<span class="sig-name descname"><span class="pre">FLAT_SPOTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'flat_spots'</span></em><a class="headerlink" href="#interpreTS.Features.FLAT_SPOTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.HETEROGENEITY">
+<span class="sig-name descname"><span class="pre">HETEROGENEITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'heterogeneity'</span></em><a class="headerlink" href="#interpreTS.Features.HETEROGENEITY" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.LENGTH">
+<span class="sig-name descname"><span class="pre">LENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'length'</span></em><a class="headerlink" href="#interpreTS.Features.LENGTH" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.LINEARITY">
+<span class="sig-name descname"><span class="pre">LINEARITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'linearity'</span></em><a class="headerlink" href="#interpreTS.Features.LINEARITY" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.MEAN">
+<span class="sig-name descname"><span class="pre">MEAN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mean'</span></em><a class="headerlink" href="#interpreTS.Features.MEAN" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.MEAN_CHANGE">
+<span class="sig-name descname"><span class="pre">MEAN_CHANGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mean_change'</span></em><a class="headerlink" href="#interpreTS.Features.MEAN_CHANGE" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.MISSING_POINTS">
+<span class="sig-name descname"><span class="pre">MISSING_POINTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'missing_points'</span></em><a class="headerlink" href="#interpreTS.Features.MISSING_POINTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.OUTLIERS_IQR">
+<span class="sig-name descname"><span class="pre">OUTLIERS_IQR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'outliers_iqr'</span></em><a class="headerlink" href="#interpreTS.Features.OUTLIERS_IQR" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.OUTLIERS_STD">
+<span class="sig-name descname"><span class="pre">OUTLIERS_STD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'outliers_std'</span></em><a class="headerlink" href="#interpreTS.Features.OUTLIERS_STD" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.PEAK">
+<span class="sig-name descname"><span class="pre">PEAK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'peak'</span></em><a class="headerlink" href="#interpreTS.Features.PEAK" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.SEASONALITY_STRENGTH">
+<span class="sig-name descname"><span class="pre">SEASONALITY_STRENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'seasonality_strength'</span></em><a class="headerlink" href="#interpreTS.Features.SEASONALITY_STRENGTH" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.SIGNIFICANT_CHANGES">
+<span class="sig-name descname"><span class="pre">SIGNIFICANT_CHANGES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'significant_changes'</span></em><a class="headerlink" href="#interpreTS.Features.SIGNIFICANT_CHANGES" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.SPIKENESS">
+<span class="sig-name descname"><span class="pre">SPIKENESS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spikeness'</span></em><a class="headerlink" href="#interpreTS.Features.SPIKENESS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.STABILITY">
+<span class="sig-name descname"><span class="pre">STABILITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'stability'</span></em><a class="headerlink" href="#interpreTS.Features.STABILITY" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.STD_1ST_DER">
+<span class="sig-name descname"><span class="pre">STD_1ST_DER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'std_1st_der'</span></em><a class="headerlink" href="#interpreTS.Features.STD_1ST_DER" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.TREND_STRENGTH">
+<span class="sig-name descname"><span class="pre">TREND_STRENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'trend_strength'</span></em><a class="headerlink" href="#interpreTS.Features.TREND_STRENGTH" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.TROUGH">
+<span class="sig-name descname"><span class="pre">TROUGH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'trough'</span></em><a class="headerlink" href="#interpreTS.Features.TROUGH" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.VARIABILITY_IN_SUB_PERIODS">
+<span class="sig-name descname"><span class="pre">VARIABILITY_IN_SUB_PERIODS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'variability_in_sub_periods'</span></em><a class="headerlink" href="#interpreTS.Features.VARIABILITY_IN_SUB_PERIODS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.Features.VARIANCE">
+<span class="sig-name descname"><span class="pre">VARIANCE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'variance'</span></em><a class="headerlink" href="#interpreTS.Features.VARIANCE" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="interpreTS.generate_feature_descriptions">
+<span class="sig-prename descclassname"><span class="pre">interpreTS.</span></span><span class="sig-name descname"><span class="pre">generate_feature_descriptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extracted_features</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/utils/data_manager.html#generate_feature_descriptions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.generate_feature_descriptions" title="Link to this definition">#</a></dt>
+<dd><p>Generate textual descriptions for extracted features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>extracted_features</strong> (<em>dict</em>) – A dictionary where keys are feature names and values are their calculated values.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary where keys are feature names and values are textual descriptions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="interpreTS.validate_time_series_data">
+<span class="sig-prename descclassname"><span class="pre">interpreTS.</span></span><span class="sig-name descname"><span class="pre">validate_time_series_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validation_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/utils/data_validation.html#validate_time_series_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.validate_time_series_data" title="Link to this definition">#</a></dt>
+<dd><p>Validate the input time series data against dynamically provided requirements.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>pd.Series</em><em>, </em><em>pd.DataFrame</em><em>, or </em><em>np.ndarray</em>) – The time series data to be validated.</p></li>
+<li><p><strong>feature_name</strong> (<em>str</em><em>, </em><em>optional</em>) – The name of the feature to validate.</p></li>
+<li><p><strong>validation_requirements</strong> (<em>dict</em><em>, </em><em>optional</em>) – A dictionary specifying the validation requirements for each feature.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional validation parameters (overrides validation_requirements).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the data is valid; raises an error otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If data is not a pd.Series, pd.DataFrame, or np.ndarray.</p></li>
+<li><p><strong>ValueError</strong> – If any validation requirement is not met.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-interpreTS">Module contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.FeatureExtractor"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.FeatureExtractor.DEFAULT_FEATURES"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.DEFAULT_FEATURES</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.FeatureExtractor.add_custom_feature"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.add_custom_feature()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.FeatureExtractor.extract_features"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.extract_features()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.FeatureExtractor.extract_features_stream"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.extract_features_stream()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.FeatureExtractor.group_data"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.group_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.FeatureExtractor.group_features_by_interpretability"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.group_features_by_interpretability()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.FeatureExtractor.head"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.head()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.FeatureLoader"><code class="docutils literal notranslate"><span class="pre">FeatureLoader</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.FeatureLoader.available_features"><code class="docutils literal notranslate"><span class="pre">FeatureLoader.available_features()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.FeatureLoader.generate_feature_options"><code class="docutils literal notranslate"><span class="pre">FeatureLoader.generate_feature_options()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features"><code class="docutils literal notranslate"><span class="pre">Features</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.ABOVE_9TH_DECILE"><code class="docutils literal notranslate"><span class="pre">Features.ABOVE_9TH_DECILE</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.ABSOLUTE_ENERGY"><code class="docutils literal notranslate"><span class="pre">Features.ABSOLUTE_ENERGY</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.BELOW_1ST_DECILE"><code class="docutils literal notranslate"><span class="pre">Features.BELOW_1ST_DECILE</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.BINARIZE_MEAN"><code class="docutils literal notranslate"><span class="pre">Features.BINARIZE_MEAN</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.CHANGE_IN_VARIANCE"><code class="docutils literal notranslate"><span class="pre">Features.CHANGE_IN_VARIANCE</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.CROSSING_POINTS"><code class="docutils literal notranslate"><span class="pre">Features.CROSSING_POINTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.DISTANCE_TO_LAST_TREND_CHANGE"><code class="docutils literal notranslate"><span class="pre">Features.DISTANCE_TO_LAST_TREND_CHANGE</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.DOMINANT"><code class="docutils literal notranslate"><span class="pre">Features.DOMINANT</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.ENTROPY"><code class="docutils literal notranslate"><span class="pre">Features.ENTROPY</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.FLAT_SPOTS"><code class="docutils literal notranslate"><span class="pre">Features.FLAT_SPOTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.HETEROGENEITY"><code class="docutils literal notranslate"><span class="pre">Features.HETEROGENEITY</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.LENGTH"><code class="docutils literal notranslate"><span class="pre">Features.LENGTH</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.LINEARITY"><code class="docutils literal notranslate"><span class="pre">Features.LINEARITY</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.MEAN"><code class="docutils literal notranslate"><span class="pre">Features.MEAN</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.MEAN_CHANGE"><code class="docutils literal notranslate"><span class="pre">Features.MEAN_CHANGE</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.MISSING_POINTS"><code class="docutils literal notranslate"><span class="pre">Features.MISSING_POINTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.OUTLIERS_IQR"><code class="docutils literal notranslate"><span class="pre">Features.OUTLIERS_IQR</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.OUTLIERS_STD"><code class="docutils literal notranslate"><span class="pre">Features.OUTLIERS_STD</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.PEAK"><code class="docutils literal notranslate"><span class="pre">Features.PEAK</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.SEASONALITY_STRENGTH"><code class="docutils literal notranslate"><span class="pre">Features.SEASONALITY_STRENGTH</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.SIGNIFICANT_CHANGES"><code class="docutils literal notranslate"><span class="pre">Features.SIGNIFICANT_CHANGES</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.SPIKENESS"><code class="docutils literal notranslate"><span class="pre">Features.SPIKENESS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.STABILITY"><code class="docutils literal notranslate"><span class="pre">Features.STABILITY</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.STD_1ST_DER"><code class="docutils literal notranslate"><span class="pre">Features.STD_1ST_DER</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.TREND_STRENGTH"><code class="docutils literal notranslate"><span class="pre">Features.TREND_STRENGTH</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.TROUGH"><code class="docutils literal notranslate"><span class="pre">Features.TROUGH</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.VARIABILITY_IN_SUB_PERIODS"><code class="docutils literal notranslate"><span class="pre">Features.VARIABILITY_IN_SUB_PERIODS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.Features.VARIANCE"><code class="docutils literal notranslate"><span class="pre">Features.VARIANCE</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.generate_feature_descriptions"><code class="docutils literal notranslate"><span class="pre">generate_feature_descriptions()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.validate_time_series_data"><code class="docutils literal notranslate"><span class="pre">validate_time_series_data()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/interpreTS.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Łukasz Wróbel, Sławomir Put, Martyna Żur, Martyna Kramarz, Jarosław Strzelczyk, Weronika Wołowczyk, Piotr Krupiński.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
