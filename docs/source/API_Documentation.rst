@@ -9,7 +9,6 @@ Convert to Data Series Functions
 This module provides utilities for converting various data formats into time-series compatible structures. These utilities ensure the data is properly formatted and ready for analysis.
 
 .. automodule:: interpreTS.utils.data_conversion
-   :no-index:
    :members:
    :undoc-members:
    :show-inheritance:
