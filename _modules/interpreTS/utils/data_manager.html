@@ -1,0 +1,824 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>interpreTS.utils.data_manager &#8212; InterpreTS 0.4.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=ea00750a"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/interpreTS/utils/data_manager';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">InterpreTS 0.4.1 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../Introduction.html">
+                        Introduction
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../Feature_Extractors.html">
+                        Feature Extractors
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../Tutorials.html">
+                        Tutorials
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../API_Documentation.html">
+                        API Documentation
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item">
+<nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../Introduction.html">
+                        Introduction
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../Feature_Extractors.html">
+                        Feature Extractors
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../Tutorials.html">
+                        Tutorials
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../API_Documentation.html">
+                        API Documentation
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">interpreTS.u...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <h1>Source code for interpreTS.utils.data_manager</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">.feature_loader</span> <span class="kn">import</span> <span class="n">Features</span>
+<span class="kn">from</span> <span class="nn">..core.features.feature_spikeness</span> <span class="kn">import</span> <span class="n">calculate_spikeness</span>
+<span class="kn">from</span> <span class="nn">..core.features.feature_entropy</span> <span class="kn">import</span> <span class="n">calculate_entropy</span>
+<span class="kn">from</span> <span class="nn">..core.features.feature_stability</span> <span class="kn">import</span> <span class="n">calculate_stability</span>
+<span class="kn">from</span> <span class="nn">..core.features.feature_length</span> <span class="kn">import</span> <span class="n">calculate_length</span>
+<span class="kn">from</span> <span class="nn">..core.features.feature_mean</span> <span class="kn">import</span> <span class="n">calculate_mean</span>
+<span class="kn">from</span> <span class="nn">..core.features.seasonality_strength</span> <span class="kn">import</span> <span class="n">calculate_seasonality_strength</span>
+<span class="kn">from</span> <span class="nn">..core.features.feature_variance</span> <span class="kn">import</span> <span class="n">calculate_variance</span>
+<span class="kn">from</span> <span class="nn">..core.features.feature_peak</span> <span class="kn">import</span> <span class="n">calculate_peak</span>
+<span class="kn">from</span> <span class="nn">..core.features.feature_trough</span> <span class="kn">import</span> <span class="n">calculate_trough</span>
+<span class="kn">from</span> <span class="nn">..core.features.feature_heterogeneity</span> <span class="kn">import</span> <span class="n">calculate_heterogeneity</span>
+<span class="kn">from</span> <span class="nn">..core.features.feature_absolute_energy</span> <span class="kn">import</span> <span class="n">calculate_absolute_energy</span>
+<span class="kn">from</span> <span class="nn">..core.features.feature_missing_points</span> <span class="kn">import</span> <span class="n">calculate_missing_points</span>
+<span class="kn">from</span> <span class="nn">..core.features.distance_to_the_last_change_point</span> <span class="kn">import</span> <span class="n">calculate_distance_to_last_trend_change</span>
+<span class="kn">from</span> <span class="nn">..core.features.feature_above_9th_decile</span> <span class="kn">import</span> <span class="n">calculate_above_9th_decile</span>
+<span class="kn">from</span> <span class="nn">..core.features.feature_below_1st_decile</span> <span class="kn">import</span> <span class="n">calculate_below_1st_decile</span>
+<span class="kn">from</span> <span class="nn">..core.features.feature_binarize_mean</span> <span class="kn">import</span> <span class="n">calculate_binarize_mean</span>
+<span class="kn">from</span> <span class="nn">..core.features.feature_crossing_points</span> <span class="kn">import</span> <span class="n">calculate_crossing_points</span>
+<span class="kn">from</span> <span class="nn">..core.features.feature_flat_spots</span> <span class="kn">import</span> <span class="n">calculate_flat_spots</span>
+<span class="kn">from</span> <span class="nn">..core.features.feature_outliers_iqr</span> <span class="kn">import</span> <span class="n">calculate_outliers_iqr</span>
+<span class="kn">from</span> <span class="nn">..core.features.feature_outliers_std</span> <span class="kn">import</span> <span class="n">calculate_outliers_std</span>
+<span class="kn">from</span> <span class="nn">..core.features.feature_std_1st_der</span> <span class="kn">import</span> <span class="n">calculate_std_1st_der</span>
+<span class="kn">from</span> <span class="nn">..core.features.histogram_dominant</span> <span class="kn">import</span> <span class="n">calculate_dominant</span>
+<span class="kn">from</span> <span class="nn">..core.features.mean_change</span> <span class="kn">import</span> <span class="n">calculate_mean_change</span>
+<span class="kn">from</span> <span class="nn">..core.features.trend_strength</span> <span class="kn">import</span> <span class="n">calculate_trend_strength</span>
+<span class="kn">from</span> <span class="nn">..core.features.feature_significant_changes</span> <span class="kn">import</span> <span class="n">calculate_significant_changes</span>
+<span class="kn">from</span> <span class="nn">..core.features.variability_in_sub_periods</span> <span class="kn">import</span> <span class="n">calculate_variability_in_sub_periods</span>
+<span class="kn">from</span> <span class="nn">..core.features.variance_change</span> <span class="kn">import</span> <span class="n">calculate_change_in_variance</span>
+<span class="kn">from</span> <span class="nn">..core.features.feature_linearity</span> <span class="kn">import</span> <span class="n">calculate_linearity</span>
+
+<div class="viewcode-block" id="load_metadata"><a class="viewcode-back" href="../../../API_Documentation.html#interpreTS.utils.data_manager.load_metadata">[docs]</a><span class="k">def</span> <span class="nf">load_metadata</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">LENGTH</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;easy&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Number of points in the window.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">MEAN</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;easy&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Mean value within the window.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">VARIANCE</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;moderate&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Variance of the signal within the window.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">ENTROPY</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;advanced&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Degree of randomness or disorder in the window.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">SPIKENESS</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;moderate&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Measure of sudden jumps or spikes in the signal.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">SEASONALITY_STRENGTH</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;advanced&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Strength of seasonal patterns within the signal.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">STABILITY</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;moderate&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Measure of consistency in the signal values.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">PEAK</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;easy&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;The maximum value in the window.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">TROUGH</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;easy&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;The minimum value in the window.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">DISTANCE_TO_LAST_TREND_CHANGE</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;moderate&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Distance (in terms of indices) to the last detected trend change in the window.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">ABSOLUTE_ENERGY</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;moderate&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Total energy of the signal in the window.&#39;</span>
+            <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">ABOVE_9TH_DECILE</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;moderate&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Fraction of values in the window above the 9th decile of the training data, representing the presence of extreme high values.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">BELOW_1ST_DECILE</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;moderate&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Fraction of values in the window below the 1st decile of the training data, representing the presence of extreme low values.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">BINARIZE_MEAN</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;moderate&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Binary value indicating whether the signal mean exceeds a threshold.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">CROSSING_POINTS</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;easy&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Number of times the signal crosses its mean.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">FLAT_SPOTS</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;easy&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Number of segments with constant values in the signal.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">HETEROGENEITY</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;moderate&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Coefficient of variation, representing the ratio of standard deviation to mean, indicating the relative variability in the time series.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">OUTLIERS_IQR</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;moderate&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Percentage of values in the window that are classified as outliers based on the Interquartile Range (IQR) method.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">OUTLIERS_STD</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;moderate&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Percentage of values in the window that are more than 3 standard deviations away from the mean, indicating extreme deviations.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">STD_1ST_DER</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;moderate&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Standard deviation of the first derivative of the signal.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">DOMINANT</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;moderate&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;The dominant value of the time series histogram, representing the most frequent range of values within the specified bins.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">MEAN_CHANGE</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;moderate&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;The rate of change in the rolling mean over time, capturing trends or shifts in the time series.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">TREND_STRENGTH</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;moderate&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;The R-squared value from a linear regression, representing the strength and consistency of the trend in the time series.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">SIGNIFICANT_CHANGES</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;moderate&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Proportion of significant increases or decreases in the time series, based on deviations from the interquartile range (IQR) of differences between consecutive values.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">MISSING_POINTS</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;easy&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Proportion or count of missing data points in the window.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">VARIABILITY_IN_SUB_PERIODS</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;moderate&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Variance calculated within sub-periods of a time series, providing a measure of variability across fixed-size windows.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">CHANGE_IN_VARIANCE</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;moderate&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Change in variance over time, calculated as the difference between rolling variances across consecutive windows.&#39;</span>
+        <span class="p">},</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">LINEARITY</span><span class="p">:{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;moderate&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Measure of how well the time series can be approximated by a linear trend, quantified using the R-squared value from linear regression.&#39;</span>
+        <span class="p">}</span>
+    <span class="p">}</span> </div>
+
+<div class="viewcode-block" id="generate_feature_descriptions"><a class="viewcode-back" href="../../../interpreTS.html#interpreTS.utils.data_manager.generate_feature_descriptions">[docs]</a><span class="k">def</span> <span class="nf">generate_feature_descriptions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extracted_features</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate textual descriptions for extracted features.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    extracted_features : dict</span>
+<span class="sd">        A dictionary where keys are feature names and values are their calculated values.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        A dictionary where keys are feature names and values are textual descriptions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">descriptions</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">feature_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_metadata</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">feature_name</span><span class="p">,</span> <span class="n">feature_value</span> <span class="ow">in</span> <span class="n">extracted_features</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">feature_name</span> <span class="ow">in</span> <span class="n">feature_metadata</span><span class="p">:</span>
+            <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_metadata</span><span class="p">[</span><span class="n">feature_name</span><span class="p">]</span>
+            <span class="n">description</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span>
+            <span class="n">descriptions</span><span class="p">[</span><span class="n">feature_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Feature &#39;</span><span class="si">{</span><span class="n">feature_name</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="s2"> Value: </span><span class="si">{</span><span class="n">feature_value</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">descriptions</span><span class="p">[</span><span class="n">feature_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unknown feature: &#39;</span><span class="si">{</span><span class="n">feature_name</span><span class="si">}</span><span class="s2">&#39;. Value: </span><span class="si">{</span><span class="n">feature_value</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span>
+    <span class="k">return</span> <span class="n">descriptions</span></div>
+
+<div class="viewcode-block" id="load_feature_functions"><a class="viewcode-back" href="../../../API_Documentation.html#interpreTS.utils.data_manager.load_feature_functions">[docs]</a><span class="k">def</span> <span class="nf">load_feature_functions</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">LENGTH</span><span class="p">:</span> <span class="n">calculate_length</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">MEAN</span><span class="p">:</span> <span class="n">calculate_mean</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">VARIANCE</span><span class="p">:</span> <span class="n">calculate_variance</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">SPIKENESS</span><span class="p">:</span> <span class="n">calculate_spikeness</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">ENTROPY</span><span class="p">:</span> <span class="n">calculate_entropy</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">STABILITY</span><span class="p">:</span> <span class="n">calculate_stability</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">SEASONALITY_STRENGTH</span><span class="p">:</span> <span class="n">calculate_seasonality_strength</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">PEAK</span><span class="p">:</span> <span class="n">calculate_peak</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">TROUGH</span><span class="p">:</span> <span class="n">calculate_trough</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">DISTANCE_TO_LAST_TREND_CHANGE</span><span class="p">:</span> <span class="n">calculate_distance_to_last_trend_change</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">HETEROGENEITY</span><span class="p">:</span> <span class="n">calculate_heterogeneity</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">ABSOLUTE_ENERGY</span><span class="p">:</span> <span class="n">calculate_absolute_energy</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">MISSING_POINTS</span><span class="p">:</span> <span class="n">calculate_missing_points</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">ABOVE_9TH_DECILE</span><span class="p">:</span> <span class="n">calculate_above_9th_decile</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">BELOW_1ST_DECILE</span><span class="p">:</span> <span class="n">calculate_below_1st_decile</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">BINARIZE_MEAN</span><span class="p">:</span> <span class="n">calculate_binarize_mean</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">CROSSING_POINTS</span><span class="p">:</span> <span class="n">calculate_crossing_points</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">FLAT_SPOTS</span><span class="p">:</span> <span class="n">calculate_flat_spots</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">OUTLIERS_IQR</span><span class="p">:</span> <span class="n">calculate_outliers_iqr</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">OUTLIERS_STD</span><span class="p">:</span> <span class="n">calculate_outliers_std</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">STD_1ST_DER</span><span class="p">:</span> <span class="n">calculate_std_1st_der</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">DOMINANT</span><span class="p">:</span> <span class="n">calculate_dominant</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">MEAN_CHANGE</span><span class="p">:</span> <span class="n">calculate_mean_change</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">TREND_STRENGTH</span><span class="p">:</span> <span class="n">calculate_trend_strength</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">SIGNIFICANT_CHANGES</span><span class="p">:</span> <span class="n">calculate_significant_changes</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">VARIABILITY_IN_SUB_PERIODS</span><span class="p">:</span> <span class="n">calculate_variability_in_sub_periods</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">CHANGE_IN_VARIANCE</span><span class="p">:</span> <span class="n">calculate_change_in_variance</span><span class="p">,</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">LINEARITY</span><span class="p">:</span> <span class="n">calculate_linearity</span>
+        <span class="p">}</span></div>
+    
+<div class="viewcode-block" id="load_validation_requirements"><a class="viewcode-back" href="../../../API_Documentation.html#interpreTS.utils.data_manager.load_validation_requirements">[docs]</a><span class="k">def</span> <span class="nf">load_validation_requirements</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">LINEARITY</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">MEAN</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> 
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">VARIANCE</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">SPIKENESS</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">ENTROPY</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="mi">2</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">STABILITY</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="mi">2</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">SEASONALITY_STRENGTH</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s2">&quot;validate_positive_parameters&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;period&quot;</span><span class="p">:</span> <span class="s2">&quot;Period must be a positive integer.&quot;</span><span class="p">}</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">PEAK</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="mi">1</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">TROUGH</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="mi">1</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">DISTANCE_TO_LAST_TREND_CHANGE</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="s2">&quot;window_size + 1&quot;</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">HETEROGENEITY</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;check_nonzero_mean&quot;</span><span class="p">:</span> <span class="kc">True</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">ABSOLUTE_ENERGY</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="mi">1</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">MISSING_POINTS</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="mi">1</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">ABOVE_9TH_DECILE</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;additional_requirements&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;training_data&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                        <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                        <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                        <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="mi">1</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">BELOW_1ST_DECILE</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;additional_requirements&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;training_data&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                        <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                        <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                        <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="mi">1</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">BINARIZE_MEAN</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="mi">1</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">CROSSING_POINTS</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="mi">1</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">FLAT_SPOTS</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="mi">1</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">OUTLIERS_IQR</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;additional_requirements&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;training_data_not_empty&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                    <span class="s2">&quot;training_data_no_nan&quot;</span><span class="p">:</span> <span class="kc">True</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">OUTLIERS_STD</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;additional_requirements&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;training_data_not_empty&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                    <span class="s2">&quot;training_data_no_nan&quot;</span><span class="p">:</span> <span class="kc">True</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">STD_1ST_DER</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="mi">1</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">DOMINANT</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="mi">1</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">MEAN_CHANGE</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s2">&quot;positive_integer_parameters&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;window_size&quot;</span><span class="p">]</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">TREND_STRENGTH</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="mi">2</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">SIGNIFICANT_CHANGES</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="mi">2</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">VARIABILITY_IN_SUB_PERIODS</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="s2">&quot;window_size&quot;</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">CHANGE_IN_VARIANCE</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="s2">&quot;window_size&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;positive_integer_params&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;window_size&quot;</span><span class="p">]</span>
+            <span class="p">},</span>
+            <span class="n">Features</span><span class="o">.</span><span class="n">LINEARITY</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;require_datetime_index&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;allow_nan&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;check_one_dimensional&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;min_length&quot;</span><span class="p">:</span> <span class="mi">2</span>
+            <span class="p">}</span>
+        <span class="p">}</span></div>
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Łukasz Wróbel, Sławomir Put, Martyna Żur, Martyna Kramarz, Jarosław Strzelczyk, Weronika Wołowczyk, Piotr Krupiński.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.4.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

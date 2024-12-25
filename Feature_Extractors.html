@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>InterpreTS Documentation &#8212; InterpreTS 0.4.1 documentation</title>
+    <title>Feature Extractors &#8212; InterpreTS 0.4.1 documentation</title>
   
   
   
@@ -39,10 +39,11 @@
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=4825356b"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Feature_Extractors';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Introduction" href="Introduction.html" />
+    <link rel="next" title="Tutorials" href="Tutorials.html" />
+    <link rel="prev" title="Introduction" href="Introduction.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -109,7 +110,7 @@
 
   
 
-<a class="navbar-brand logo" href="#">
+<a class="navbar-brand logo" href="index.html">
   
   
   
@@ -143,8 +144,8 @@
                     </li>
                 
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="Feature_Extractors.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
                         Feature Extractors
                       </a>
                     </li>
@@ -255,8 +256,8 @@ document.write(`
                     </li>
                 
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="Feature_Extractors.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
                         Feature Extractors
                       </a>
                     </li>
@@ -315,7 +316,33 @@ document.write(`
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article"></div>
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Feature Extractors</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
               
               
               
@@ -323,77 +350,129 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="interprets-documentation">
-<h1>InterpreTS Documentation<a class="headerlink" href="#interprets-documentation" title="Permalink to this heading">#</a></h1>
-<p>InterpreTS is a Python library designed for time series analysis, feature extraction, and interpretation.</p>
-<section id="contents">
-<h2>Contents:<a class="headerlink" href="#contents" title="Permalink to this heading">#</a></h2>
-<div class="toctree-wrapper compound">
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Sections:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Introduction.html#main-features">Main Features:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Introduction.html#supported-use-cases">Supported Use Cases:</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Feature_Extractors.html">Feature Extractors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Feature_Extractors.html#available-features">Available Features</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#length">Length</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#mean">Mean</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#peak">Peak</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#spikeness">Spikeness</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#standard-deviation-of-the-first-derivative-std-1st-der">Standard Deviation of the First Derivative (Std_1st_der)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#trough">Trough</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#variance">Variance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#dominant">Dominant</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#seasonality-strength">Seasonality Strength</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#trend-strength">Trend Strength</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#above-9th-decile">Above 9th Decile</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#distance-to-the-last-change-point">Distance to the Last Change Point</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#absolute-energy">Absolute Energy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#below-1st-decile">Below 1st Decile</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#binarize-mean">Binarize Mean</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#crossing-points">Crossing Points</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#entropy">Entropy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#flat-spots">Flat Spots</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#heterogeneity">Heterogeneity</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#linearity">Linearity</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#missing-points">Missing Points</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#outliers-iqr">Outliers IQR</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#outliers-std">Outliers STD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#significant-changes">Significant Changes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#stability">Stability</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#variance-change">Variance Change</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#variability-in-sub-periods">Variability in Sub-Periods</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#amplitude-change-rate">Amplitude Change Rate</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Feature_Extractors.html#notes">Notes</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Tutorials.html">Tutorials</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/feature_extraction.html">Feature Extraction Notebook</a></li>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/feature_peak.html">Feature Peak Notebook</a></li>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/classification.html">Classification Notebook</a></li>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/regression.html">Regression Notebook</a></li>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/test_examples_of_features.html">Example of Features Notebook</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="API_Documentation.html">API Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="API_Documentation.html#functions">Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="API_Documentation.html#convert-to-data-series-functions">Convert to Data Series Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="API_Documentation.html#data-manager">Data Manager</a></li>
-<li class="toctree-l2"><a class="reference internal" href="API_Documentation.html#data-validation">Data Validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="API_Documentation.html#features-loader">Features Loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="API_Documentation.html#task-manager">Task Manager</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<p><strong>Quickstart</strong>:
-To install the library, run:
-.. code-block:: bash</p>
-<blockquote>
-<div><p>pip install interpreTS</p>
-</div></blockquote>
+  <section id="feature-extractors">
+<h1>Feature Extractors<a class="headerlink" href="#feature-extractors" title="Permalink to this heading">#</a></h1>
+<p>This section provides an overview of the feature extractor and the features available in the library.</p>
+<p>The <cite>Feature Extractor</cite> is the core component that extracts meaningful metrics and features from time-series data.</p>
+</section>
+<section id="available-features">
+<h1>Available Features<a class="headerlink" href="#available-features" title="Permalink to this heading">#</a></h1>
+<p>Below is a list of the available features in the library. Each feature is automatically documented from the code, with a brief description.</p>
+<section id="length">
+<h2>Length<a class="headerlink" href="#length" title="Permalink to this heading">#</a></h2>
+<p>Extracts the total length of a time series.</p>
+</section>
+<section id="mean">
+<h2>Mean<a class="headerlink" href="#mean" title="Permalink to this heading">#</a></h2>
+<p>Calculates the mean value of a time series.</p>
+</section>
+<section id="peak">
+<h2>Peak<a class="headerlink" href="#peak" title="Permalink to this heading">#</a></h2>
+<p>Identifies the maximum peak value.</p>
+</section>
+<section id="spikeness">
+<h2>Spikeness<a class="headerlink" href="#spikeness" title="Permalink to this heading">#</a></h2>
+<p>Measures the level of spikeness in the time series.</p>
+</section>
+<section id="standard-deviation-of-the-first-derivative-std-1st-der">
+<h2>Standard Deviation of the First Derivative (Std_1st_der)<a class="headerlink" href="#standard-deviation-of-the-first-derivative-std-1st-der" title="Permalink to this heading">#</a></h2>
+<p>Calculates the standard deviation of the first derivative of the series.</p>
+</section>
+<section id="trough">
+<h2>Trough<a class="headerlink" href="#trough" title="Permalink to this heading">#</a></h2>
+<p>Identifies the lowest point in the time series.</p>
+</section>
+<section id="variance">
+<h2>Variance<a class="headerlink" href="#variance" title="Permalink to this heading">#</a></h2>
+<p>Computes the variance of the series.</p>
+</section>
+<section id="dominant">
+<h2>Dominant<a class="headerlink" href="#dominant" title="Permalink to this heading">#</a></h2>
+<p>Finds the most dominant value in a histogram representation.</p>
+</section>
+<section id="seasonality-strength">
+<h2>Seasonality Strength<a class="headerlink" href="#seasonality-strength" title="Permalink to this heading">#</a></h2>
+<p>Assesses the strength of seasonality patterns in the data.</p>
+</section>
+<section id="trend-strength">
+<h2>Trend Strength<a class="headerlink" href="#trend-strength" title="Permalink to this heading">#</a></h2>
+<p>Measures the strength of the overall trend in the series.</p>
+</section>
+<section id="above-9th-decile">
+<h2>Above 9th Decile<a class="headerlink" href="#above-9th-decile" title="Permalink to this heading">#</a></h2>
+<p>Calculates whether the values in the time series are above the 9th decile.</p>
+</section>
+<section id="distance-to-the-last-change-point">
+<h2>Distance to the Last Change Point<a class="headerlink" href="#distance-to-the-last-change-point" title="Permalink to this heading">#</a></h2>
+<p>Measures the distance to the last change point in the time series.</p>
+</section>
+<section id="absolute-energy">
+<h2>Absolute Energy<a class="headerlink" href="#absolute-energy" title="Permalink to this heading">#</a></h2>
+<p>Calculates the absolute energy of the time series.</p>
+</section>
+<section id="below-1st-decile">
+<h2>Below 1st Decile<a class="headerlink" href="#below-1st-decile" title="Permalink to this heading">#</a></h2>
+<p>Calculates whether the values in the time series are below the 1st decile.</p>
+</section>
+<section id="binarize-mean">
+<h2>Binarize Mean<a class="headerlink" href="#binarize-mean" title="Permalink to this heading">#</a></h2>
+<p>Binarizes the mean value of the time series.</p>
+</section>
+<section id="crossing-points">
+<h2>Crossing Points<a class="headerlink" href="#crossing-points" title="Permalink to this heading">#</a></h2>
+<p>Counts the crossing points in the time series.</p>
+</section>
+<section id="entropy">
+<h2>Entropy<a class="headerlink" href="#entropy" title="Permalink to this heading">#</a></h2>
+<p>Calculates the entropy of the time series.</p>
+</section>
+<section id="flat-spots">
+<h2>Flat Spots<a class="headerlink" href="#flat-spots" title="Permalink to this heading">#</a></h2>
+<p>Identifies flat spots within the time series.</p>
+</section>
+<section id="heterogeneity">
+<h2>Heterogeneity<a class="headerlink" href="#heterogeneity" title="Permalink to this heading">#</a></h2>
+<p>Measures the heterogeneity of the time series.</p>
+</section>
+<section id="linearity">
+<h2>Linearity<a class="headerlink" href="#linearity" title="Permalink to this heading">#</a></h2>
+<p>Calculates the linearity of the time series.</p>
+</section>
+<section id="missing-points">
+<h2>Missing Points<a class="headerlink" href="#missing-points" title="Permalink to this heading">#</a></h2>
+<p>Identifies missing points within the time series.</p>
+</section>
+<section id="outliers-iqr">
+<h2>Outliers IQR<a class="headerlink" href="#outliers-iqr" title="Permalink to this heading">#</a></h2>
+<p>Identifies outliers based on the interquartile range (IQR).</p>
+</section>
+<section id="outliers-std">
+<h2>Outliers STD<a class="headerlink" href="#outliers-std" title="Permalink to this heading">#</a></h2>
+<p>Identifies outliers based on standard deviation (STD).</p>
+</section>
+<section id="significant-changes">
+<h2>Significant Changes<a class="headerlink" href="#significant-changes" title="Permalink to this heading">#</a></h2>
+<p>Detects significant changes in the time series.</p>
+</section>
+<section id="stability">
+<h2>Stability<a class="headerlink" href="#stability" title="Permalink to this heading">#</a></h2>
+<p>Measures the stability of the time series.</p>
+</section>
+<section id="variance-change">
+<h2>Variance Change<a class="headerlink" href="#variance-change" title="Permalink to this heading">#</a></h2>
+<p>Calculates the variance change over time.</p>
+</section>
+<section id="variability-in-sub-periods">
+<h2>Variability in Sub-Periods<a class="headerlink" href="#variability-in-sub-periods" title="Permalink to this heading">#</a></h2>
+<p>Measures variability within sub-periods of the time series.</p>
+</section>
+<section id="amplitude-change-rate">
+<h2>Amplitude Change Rate<a class="headerlink" href="#amplitude-change-rate" title="Permalink to this heading">#</a></h2>
+<p>Calculates the rate of amplitude change in the time series.</p>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this heading">#</a></h2>
+<p>Each feature is designed to provide specific insights into time-series data. For detailed usage, refer to the module documentation linked above.</p>
 </section>
 </section>
 
@@ -407,12 +486,21 @@ To install the library, run:
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
-    <a class="right-next"
+    <a class="left-prev"
        href="Introduction.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Tutorials.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Introduction</p>
+        <p class="prev-next-title">Tutorials</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -432,14 +520,47 @@ To install the library, run:
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contents">Contents:</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Feature Extractors</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#available-features">Available Features</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#length">Length</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mean">Mean</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#peak">Peak</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spikeness">Spikeness</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-deviation-of-the-first-derivative-std-1st-der">Standard Deviation of the First Derivative (Std_1st_der)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trough">Trough</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variance">Variance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dominant">Dominant</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#seasonality-strength">Seasonality Strength</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trend-strength">Trend Strength</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#above-9th-decile">Above 9th Decile</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distance-to-the-last-change-point">Distance to the Last Change Point</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#absolute-energy">Absolute Energy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#below-1st-decile">Below 1st Decile</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#binarize-mean">Binarize Mean</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crossing-points">Crossing Points</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entropy">Entropy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flat-spots">Flat Spots</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heterogeneity">Heterogeneity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linearity">Linearity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-points">Missing Points</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#outliers-iqr">Outliers IQR</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#outliers-std">Outliers STD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#significant-changes">Significant Changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stability">Stability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variance-change">Variance Change</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variability-in-sub-periods">Variability in Sub-Periods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#amplitude-change-rate">Amplitude Change Rate</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notes">Notes</a></li>
 </ul>
+</li>
+</ul>
+
   </nav></div>
 
   <div class="sidebar-secondary-item">
 
   <div class="tocsection sourcelink">
-    <a href="_sources/index.rst.txt">
+    <a href="_sources/Feature_Extractors.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>
