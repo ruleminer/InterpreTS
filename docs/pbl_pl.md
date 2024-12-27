@@ -10,12 +10,13 @@ Projekt opierał się na stworzeniu biblioteki w Python do zadań związanych z 
 - Sławomir Put
 - Weronika Wołowczyk
 - Martyna Kramarz
-- Jarosław Stzrelczyk
+- Jarosław Strzelczyk
 - Piotr Krupiński
 
 ## Opiekunowie projektu
-- Opiekun głółwny: dr Łukasz Wróbel
-- Opiekun pomocniczy:dr Michał Kozielski
+- Opiekun główny: dr Łukasz Wróbel
+- Opiekun pomocniczy: dr Michał Kozielski
+- Opiekun pomocniczy: prof. Marek Sikora
 
 ## Przyjęte założenia
 Projekt koncentrował się na rozwijającym się obszarze sztucznej inteligencji, jakim jest interpretowalność i wyjaśnialność modeli (XAI – Explainable Artificial Intelligence). Tworzenie interpretowalnych modeli na danych złożonych, takich jak szeregi czasowe, jest wyjątkowo trudne.  
