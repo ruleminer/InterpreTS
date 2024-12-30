@@ -38,7 +38,7 @@ class FeatureExtractor:
         ValueError
             If any parameter is invalid.
         """        
-        self.group_by = group_by
+        self.group_by = group_by if group_by is not None else (id_column if id_column is not None else None)
         self.features = features if features is not None else self.DEFAULT_FEATURES
         self.feature_params = feature_params if feature_params is not None else {}
         self.window_size = window_size

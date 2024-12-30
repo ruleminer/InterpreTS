@@ -5,9 +5,9 @@ setup(
     version="0.4.0",
     packages=find_packages(),
     install_requires=[
-        "pandas>=1.1.0",
-        "numpy>=1.18.0",
-        "statsmodels>=0.12.0",
+        "pandas",
+        "numpy",
+        "statsmodels",
         "langchain_community",
         "langchain",
         "openai",

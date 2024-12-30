@@ -1,6 +1,6 @@
-﻿pandas>=1.1.0
-numpy>=1.18.0
-statsmodels>=0.12.0
+﻿pandas
+numpy
+statsmodels
 pytest
 langchain_community
 langchain 

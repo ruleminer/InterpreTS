@@ -57,9 +57,9 @@ if sys.version_info < (3, 8):
 
 # Check required dependencies
 required_libraries = {
-    "pandas": "1.1.0",
-    "numpy": "1.18.0",
-    "statsmodels": "0.12.0",
+    "pandas": None,
+    "numpy": None,
+    "statsmodels": None,
     "streamlit": None,
     "langchain_community" : None,
     "langchain" : None,
