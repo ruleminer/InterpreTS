@@ -21,25 +21,24 @@ class FeatureExtractor:
             A list of features to calculate. Default is None, which calculates all available features.
         feature_params : dict, optional
             Parameters for specific features, where keys are feature names and values are dicts of parameters.
-        window_size : int or float, optional
-            The size of the window for feature extraction. Default is NaN, which means the entire series is used as a single window.
+        window_size : int or float (NaN), optional
+            The size of the window for feature extraction. If NaN (default), the entire series is used as a single window.
         stride : int, optional
-            The step size for moving the window. Default is 1.
+            The step size for moving the window (default is 1).
         id_column : str, optional
-            The name of the column used to identify different time series.
+            The name of the column used to identify different time series (optional).
         sort_column : str, optional
-            The column to sort by before feature extraction.
+            The column to sort by before feature extraction (optional).
         feature_column : str or None, optional
             The column containing feature data. If None, features are calculated for all columns except ID and sort columns.
         group_by : str or None, optional
             Column name to group by. If None, no grouping is performed.
-
         Raises
-        ------
+        -------
         ValueError
             If any parameter is invalid.
         """        
-        self.group_by = group_by if group_by is not None else (id_column if id_column is not None else None)
+        self.group_by = group_by
         self.features = features if features is not None else self.DEFAULT_FEATURES
         self.feature_params = feature_params if feature_params is not None else {}
         self.window_size = window_size
@@ -63,9 +62,8 @@ class FeatureExtractor:
         ----------
         features_df : pd.DataFrame
             The resulting DataFrame from the extract_features function.
-        n : int, optional
-            The number of rows to return (default is 5). If n is negative, 
-            returns all rows except the last abs(n) rows.
+        n : int, optional (default 5)
+            The number of rows to return. If n is negative, returns all rows except the last |n| rows.
 
         Returns
         -------
@@ -99,11 +97,6 @@ class FeatureExtractor:
         -------
         pd.DataFrame
             A DataFrame containing calculated features for each window.
-
-        Raises
-        ------
-        ValueError
-            If the mode is not one of ['parallel', 'sequential', 'dask'].
         """
         if mode not in ['parallel', 'sequential', 'dask']:
             raise ValueError(f"Invalid mode '{mode}'. Accepted values are: ['parallel', 'sequential']")
@@ -116,8 +109,8 @@ class FeatureExtractor:
             data = data.sort_values(by=self.sort_column)
 
         feature_columns = [self.feature_column] if self.feature_column else [col for col in data.columns if col not in {self.id_column, self.sort_column}]
-        grouped_data = self.group_data(data)
-
+        grouped_data = data.groupby(self.id_column) if self.id_column else [(None, data)]
+            
         if mode == 'dask':
             return self.task_manager._execute_dask(grouped_data, feature_columns, progress_callback)
 
@@ -221,9 +214,12 @@ class FeatureExtractor:
         function : callable
             A function that computes the feature. It should accept a Pandas Series and optional parameters as input.
         metadata : dict, optional
-            A dictionary containing metadata about the feature, such as its interpretability level and description.
-            - level (str): Interpretability level ('easy', 'moderate', 'advanced').
-            - description (str): Description of the feature.
+            A dictionary containing metadata about the feature (e.g., level of interpretability and description).
+            Example:
+            {
+                'level': 'easy' | 'moderate' | 'advanced',
+                'description': 'Description of the feature.'
+            }
 
         Raises
         ------
