@@ -15,10 +15,14 @@ def calculate_significant_changes(data):
     -------
     float
         The proportion of significant changes in the window, in the range [0, 1].
+
+    Examples
+    --------
+    >>> import numpy as np
+    >>> data = np.array([1, 2, 1, 3, 10, 2, 1])
+    >>> calculate_significant_changes(data)
+    0.0
     """
-    # Validate the time series data with allow_nan=False
-    validate_time_series_data(data, require_datetime_index=False, allow_nan=False)
-    
     # Convert np.ndarray to pd.Series
     if isinstance(data, np.ndarray):
         data = pd.Series(data)

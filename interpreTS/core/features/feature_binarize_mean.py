@@ -30,13 +30,6 @@ def calculate_binarize_mean(data):
     >>> calculate_binarize_mean(data)
     0.6
     """
-    # Validate the time series without requiring DateTime index
-    validate_time_series_data(data, require_datetime_index=False)
-
-    # Explicitly check for NaN values
-    if data.isnull().any():
-        raise ValueError("Data contains NaN values.")
-
     # Handle single-value case
     if len(data) == 1:
         return 1.0  # Single value is always equal to its mean

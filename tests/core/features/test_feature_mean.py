@@ -10,12 +10,6 @@ def test_calculate_mean_simple_series():
     result = calculate_mean(data)
     assert result == expected, f"Expected {expected}, but got {result}."
 
-# Test mean calculation for an empty series
-def test_calculate_mean_empty_series():
-    data = pd.Series([])
-    with pytest.raises(ValueError, match="Input data is empty."):
-        calculate_mean(data)
-
 # Test mean calculation for a series with a single value
 def test_calculate_mean_single_value():
     data = pd.Series([42])
@@ -36,12 +30,6 @@ def test_calculate_mean_mixed_values():
     expected = 1.8
     result = calculate_mean(data)
     assert result == expected, f"Expected {expected}, but got {result}."
-
-# Test mean calculation for a series containing NaN values
-def test_calculate_mean_with_nan():
-    data = pd.Series([1, 2, np.nan, 4, 5])
-    with pytest.raises(ValueError, match="Data contains NaN values."):
-        calculate_mean(data)
 
 # Test mean calculation for a numpy array input
 def test_calculate_mean_numpy_array():

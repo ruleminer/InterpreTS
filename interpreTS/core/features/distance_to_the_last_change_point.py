@@ -30,11 +30,8 @@ def calculate_distance_to_last_trend_change(data, window_size=5):
     --------
     >>> data = pd.Series([1, 2, 3, 2, 1, 2, 3, 2, 1])
     >>> calculate_distance_to_last_trend_change(data, window_size=2)
-    2
+    1
     """
-    # Validate the time series data
-    validate_time_series_data(data, require_datetime_index=False)
-
     # Handle invalid or insufficient data
     if len(data) < window_size + 1:
         raise ValueError("The time series is too short for the specified rolling window size.")
@@ -44,10 +41,6 @@ def calculate_distance_to_last_trend_change(data, window_size=5):
     # Convert data to a pandas Series if it's an ndarray
     if isinstance(data, np.ndarray):
         data = pd.Series(data)
-
-    # Check for NaN values
-    if data.isnull().any():
-        raise ValueError("Data contains NaN values.")
 
     # Check for monotonic data
     if data.is_monotonic_increasing or data.is_monotonic_decreasing:

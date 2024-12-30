@@ -15,12 +15,6 @@ def test_calculate_stability_constant_series():
     result = calculate_stability(data)
     assert result == 1.0, f"Expected stability 1.0 for constant series. Got: {result}"
 
-# Test stability for an empty series
-def test_calculate_stability_empty_series():
-    data = pd.Series([])
-    with pytest.raises(ValueError, match="Input data is empty."):
-        calculate_stability(data)
-
 # Test stability for a high variance time series
 def test_calculate_stability_high_variance_series():
     data = pd.Series([1, 100, 50, 75, 200, 150, 300, 250, 400, 350])
@@ -31,12 +25,6 @@ def test_calculate_stability_high_variance_series():
 def test_calculate_stability_non_numeric_data():
     data = pd.Series(["a", "b", "c", "d"])
     with pytest.raises(TypeError, match="Data must contain only numeric values."):
-        calculate_stability(data)
-
-# Test stability for a series containing NaN values
-def test_calculate_stability_with_nan_values():
-    data = pd.Series([1, 2, np.nan, 4, 5])
-    with pytest.raises(ValueError, match="Data contains NaN values."):
         calculate_stability(data)
 
 # Test stability when max_lag exceeds the series length

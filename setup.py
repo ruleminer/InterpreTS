@@ -2,17 +2,27 @@ from setuptools import setup, find_packages
 
 setup(
     name="InterpreTS",
-    version="0.3.0",
+    version="0.4.0",
     packages=find_packages(),
     install_requires=[
-        "pandas>=1.0.0",
-        "numpy",
-        "statsmodels",
+        "pandas>=1.1.0",
+        "numpy>=1.18.0",
+        "statsmodels>=0.12.0",
+        "langchain_community",
+        "langchain",
+        "openai",
+        "scikit-learn",
+        "joblib",
+        "tqdm",
+        "dask",
+        "nbsphinx",
+        "myst-parser",
+        "scipy"
     ],
     description="Feature extraction from time series to support the creation of interpretable and explainable predictive models.",
     long_description=open("docs/README.md").read(),
     long_description_content_type="text/markdown",
-    author=["Łukasz Wróbel", "Sławomir Put", "Martyna Żur", "Martyna Kramarz", "Jarosław Strzelczyk", "Weronika Wołowczyk", "Piotr Krupiński"],
+    author=["Sławomir Put", "Martyna Żur", "Weronika Wołowczyk", "Jarosław Strzelczyk", "Piotr Krupiński", "Martyna Kramarz", "Łukasz Wróbel"],
     url="https://github.com/ruleminer/InterpreTS",
     classifiers=[
         "Development Status :: 4 - Beta",

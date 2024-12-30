@@ -30,9 +30,6 @@ def calculate_heterogeneity(data):
     >>> calculate_heterogeneity(data)
     0.5270462766947299
     """
-    # Validate the time series without requiring a DateTime index
-    validate_time_series_data(data, require_datetime_index=False)
-    
     # Ensure data is a pandas Series for compatibility
     if isinstance(data, np.ndarray):
         data = pd.Series(data)

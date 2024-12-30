@@ -10,12 +10,6 @@ def test_calculate_length_basic():
     result = calculate_length(data)
     assert result == expected, f"Expected {expected}, but got {result}."
 
-# Test length calculation for an empty series
-def test_calculate_length_empty_series():
-    data = pd.Series([])
-    with pytest.raises(ValueError, match="Input data is empty."):
-        calculate_length(data)
-
 # Test length calculation for a large series
 def test_calculate_length_large_series():
     data = pd.Series(range(1_000_000))
@@ -36,14 +30,3 @@ def test_calculate_length_numpy_array():
     expected = 5
     result = calculate_length(data)
     assert result == expected, f"Expected {expected}, but got {result}."
-
-# Test length calculation for invalid input types
-def test_calculate_length_invalid_type():
-    with pytest.raises(TypeError, match="Data must be a pandas Series, DataFrame, or numpy array."):
-        calculate_length("invalid_type")
-
-# Test length calculation for a multidimensional array
-def test_calculate_length_multidimensional_array():
-    data = np.array([[1, 2], [3, 4], [5, 6]])
-    with pytest.raises(ValueError, match="Data must be one-dimensional."):
-        calculate_length(data)

@@ -24,12 +24,6 @@ def test_significant_changes_constant_values():
     expected = 0.0  # No differences, hence no significant changes
     assert result == pytest.approx(expected, abs=1e-6), f"Expected {expected}, got {result}"
 
-# Test for a series containing NaN values
-def test_significant_changes_with_nan():
-    data = pd.Series([1, 2, np.nan, 4, 5])
-    with pytest.raises(ValueError, match="Data contains NaN values."):
-        calculate_significant_changes(data)
-
 # Test for a series with two points
 def test_significant_changes_two_points():
     data = pd.Series([1, 2])
@@ -42,12 +36,6 @@ def test_significant_changes_negative_values():
     data = pd.Series([-5, -10, -5, -15, -5, -20])
     result = calculate_significant_changes(data)
     assert result >= 0.0, f"Expected a positive proportion, got {result}"
-
-# Test for an empty series
-def test_significant_changes_empty_data():
-    data = pd.Series([], dtype=float)
-    with pytest.raises(ValueError, match="Input data is empty."):
-        calculate_significant_changes(data)
 
 # Test for numpy array input
 def test_significant_changes_numpy_array():

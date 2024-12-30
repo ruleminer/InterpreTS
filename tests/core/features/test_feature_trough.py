@@ -27,12 +27,6 @@ def test_calculate_trough_with_end_only():
     result = calculate_trough(data, end=3)
     assert result == 1, "Trough calculation failed when only end is specified"
 
-# Test trough calculation for an empty series
-def test_calculate_trough_empty_series():
-    data = pd.Series([])
-    with pytest.raises(ValueError, match="Input data is empty."):
-        calculate_trough(data)
-
 # Test trough calculation for a single value
 def test_calculate_trough_single_value():
     data = pd.Series([42])

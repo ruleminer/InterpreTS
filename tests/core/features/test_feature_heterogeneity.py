@@ -27,12 +27,6 @@ def test_heterogeneity_with_zeros():
     result = calculate_heterogeneity(data)
     assert result > 0, "Heterogeneity should handle zero values correctly"
 
-# Test heterogeneity for empty series input
-def test_heterogeneity_empty_series():
-    data = pd.Series([])
-    with pytest.raises(ValueError, match="Input data is empty."):
-        calculate_heterogeneity(data)
-
 # Test heterogeneity for time series with mean zero
 def test_heterogeneity_mean_zero():
     data = pd.Series([-1, 1, -1, 1])

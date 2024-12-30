@@ -9,3 +9,7 @@ streamlit
 scikit-learn
 joblib
 tqdm
+dask
+nbsphinx
+myst-parser
+scipy
