@@ -32,39 +32,33 @@ def calculate_distance_to_last_trend_change(data, window_size=5):
     >>> calculate_distance_to_last_trend_change(data, window_size=2)
     1
     """
-    # Handle invalid or insufficient data
+    if isinstance(data.index, pd.MultiIndex):
+        data = data.reset_index(drop=True)
+
     if len(data) < window_size + 1:
-        raise ValueError("The time series is too short for the specified rolling window size.")
+        return None  
+    if data.isnull().any():
+        raise ValueError("Input data contains NaN values. Please clean your data before processing.")
     if window_size <= 0:
         raise ValueError("Window size must be a positive integer.")
 
-    # Convert data to a pandas Series if it's an ndarray
     if isinstance(data, np.ndarray):
         data = pd.Series(data)
 
-    # Check for monotonic data
     if data.is_monotonic_increasing or data.is_monotonic_decreasing:
-        return None  # No trend change can occur in monotonic data
+        return None  
 
-    # Calculate rolling mean
     rolling_mean = data.rolling(window=window_size).mean()
 
-    # Calculate the change in mean as the first difference of rolling means
     change_in_mean = rolling_mean.diff()
-
-    # Detect trend change points: where the direction of the change in mean flips
     trend_changes = ((change_in_mean > 0) != (change_in_mean.shift(1) > 0)) & ~change_in_mean.isna()
 
-    # Get indices of trend change points
     trend_change_indices = trend_changes[trend_changes].index
 
     if trend_change_indices.empty:
-        return None  # No trend change detected
+        return None  # Brak zmiany trendu
 
-    # Find the last trend change point index
     last_change_index = trend_change_indices[-1]
-
-    # Calculate the distance from the last trend change point to the end of the series
     distance_to_last_change = len(data) - last_change_index - 1
 
     return distance_to_last_change

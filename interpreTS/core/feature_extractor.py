@@ -101,6 +101,14 @@ class FeatureExtractor:
         if mode not in ['parallel', 'sequential', 'dask']:
             raise ValueError(f"Invalid mode '{mode}'. Accepted values are: ['parallel', 'sequential']")
 
+        if isinstance(data, pd.Series):
+            data = data.to_frame(name='value')
+            if self.feature_column is None:
+                self.feature_column = 'value'
+
+        if isinstance(data.index, pd.MultiIndex):
+            data = data.reset_index()
+
         if data.empty:
             print("Warning: Input data is empty. Returning an empty DataFrame.")
             return pd.DataFrame()
