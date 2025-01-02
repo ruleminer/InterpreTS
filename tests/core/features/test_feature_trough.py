@@ -1,54 +1,58 @@
 import pytest
 import pandas as pd
 import numpy as np
-from interpreTS.core.features.feature_trough import calculate_trough
+from interpreTS.core.features.feature_trough import calculate_trough  
 
-def test_calculate_trough():
-    """
-    Test that calculate_trough correctly calculates the trough (minimum) value of a time series.
-    """
-    data = pd.Series([1, 2, 3, 4, 5])
-    assert calculate_trough(data) == 1.0, "The trough value should be 1.0"
+# Test trough calculation for the full series
+def test_calculate_trough_full_series():
+    data = pd.Series([1, 3, 5, 2, -2])
+    result = calculate_trough(data)
+    assert result == -2, "Trough calculation failed for the full series"
 
-def test_calculate_trough_empty_series():
-    """
-    Test that calculate_trough returns NaN for an empty time series.
-    """
-    data = pd.Series([])
-    assert pd.isna(calculate_trough(data)), "The trough of an empty series should be NaN"
-
-def test_calculate_trough_numpy_array():
-    """
-    Test that calculate_trough correctly calculates the trough (minimum) value of a numpy array.
-    """
-    data = np.array([1, 2, 3, 4, 5])
-    assert calculate_trough(data) == 1.0, "The trough value should be 1.0 for numpy array"
-
-def test_calculate_trough_with_negative_values():
-    """
-    Test that calculate_trough correctly calculates the trough (minimum) for a series with negative values.
-    """
-    data = pd.Series([-1, -2, -3, -4, -5])
-    assert calculate_trough(data) == -5.0, "The trough value should be -5.0"
-
+# Test trough calculation within a specified range
 def test_calculate_trough_with_start_and_end():
-    """
-    Test that calculate_trough correctly calculates the trough within a specified start and end range.
-    """
-    data = pd.Series([1, 2, 5, 4, 3])
-    assert calculate_trough(data, start=1, end=4) == 2.0, "The trough value within index range 1 to 4 should be 2.0"
+    data = pd.Series([1, 3, 5, 2, -2])
+    result = calculate_trough(data, start=1, end=4)
+    assert result == 2, "Trough calculation failed for specified range"
 
-def test_calculate_trough_with_out_of_range_indices():
-    """
-    Test that calculate_trough handles out-of-range start and end indices gracefully.
-    """
-    data = pd.Series([1, 2, 3, 4, 5])
-    assert np.isnan(calculate_trough(data, start=10)), "The trough with out-of-range start index should be NaN"
-    assert np.isnan(calculate_trough(data, end=-10)), "The trough with out-of-range end index should be NaN"
+# Test trough calculation with only the start index specified
+def test_calculate_trough_with_start_only():
+    data = pd.Series([1, 3, 5, 2, 7])
+    result = calculate_trough(data, start=2)
+    assert result == 2, "Trough calculation failed when only start is specified"
 
-def test_calculate_trough_with_start_greater_than_end():
-    """
-    Test that calculate_trough returns NaN if start index is greater than end index.
-    """
+# Test trough calculation with only the end index specified
+def test_calculate_trough_with_end_only():
+    data = pd.Series([1, 3, 5, 2, 7])
+    result = calculate_trough(data, end=3)
+    assert result == 1, "Trough calculation failed when only end is specified"
+
+# Test trough calculation for a single value
+def test_calculate_trough_single_value():
+    data = pd.Series([42])
+    result = calculate_trough(data)
+    assert result == 42, "Trough calculation failed for a single value"
+
+# Test trough calculation for out-of-bounds start and end indices
+def test_calculate_trough_start_end_out_of_bounds():
     data = pd.Series([1, 2, 3, 4, 5])
-    assert pd.isna(calculate_trough(data, start=4, end=2)), "The trough should be NaN if start index is greater than end index"
+    result = calculate_trough(data, start=10, end=15)
+    assert np.isnan(result), "Trough calculation should return NaN for out-of-bounds range"
+
+# Test trough calculation when start index is greater than end index
+def test_calculate_trough_start_greater_than_end():
+    data = pd.Series([1, 2, 3, 4, 5])
+    result = calculate_trough(data, start=4, end=2)
+    assert np.isnan(result), "Trough calculation should return NaN when start > end"
+
+# Test trough calculation for a numpy array input
+def test_calculate_trough_numpy_array():
+    data = np.array([1, 3, 5, 2, 7])
+    result = calculate_trough(data)
+    assert result == 1, "Trough calculation failed for numpy array"
+
+# Test trough calculation for a large dataset
+def test_calculate_trough_large_dataset():
+    data = pd.Series(range(1000000, 0, -1))
+    result = calculate_trough(data)
+    assert result == 1, "Trough calculation failed for a large dataset"

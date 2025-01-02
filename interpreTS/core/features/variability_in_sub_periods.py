@@ -38,16 +38,9 @@ def calculate_variability_in_sub_periods(data, window_size, step_size=None, ddof
     1    2.5
     dtype: float64
     """
-    # Validate the time series data without requiring a DateTime index
-    validate_time_series_data(data, require_datetime_index=False)
-    
     # Convert numpy array to pandas Series if necessary
     if isinstance(data, np.ndarray):
         data = pd.Series(data)
-    
-    # Handle edge cases
-    if len(data) < window_size:
-        raise ValueError("Window size must be smaller than or equal to the length of the data.")
     
     if step_size is None:
         step_size = window_size  # Default to non-overlapping windows

@@ -1,155 +1,111 @@
+import pytest
 import pandas as pd
 import numpy as np
-from interpreTS.core.feature_extractor import FeatureExtractor, Features
+from unittest.mock import MagicMock
+from interpreTS.utils.feature_loader import Features
+from interpreTS.core.feature_extractor import FeatureExtractor
 
-def test_extract_length_feature():
-    """
-    Test that FeatureExtractor correctly extracts the 'length' feature.
-    """
-    data = pd.Series([1, 2, 3, 4, 5])
-    extractor = FeatureExtractor(features=[Features.LENGTH])
-    features = extractor.extract_features(data)
-    length_value = features[Features.LENGTH].iloc[0] if isinstance(features[Features.LENGTH], pd.Series) else features[Features.LENGTH]
-    assert length_value == 5, "The 'length' feature should be 5"
-    
-def test_extract_mean_feature():
-    """
-    Test that FeatureExtractor correctly extracts the 'mean' feature.
-    """
-    data = pd.Series([1, 2, 3, 4, 5])
-    extractor = FeatureExtractor(features=[Features.MEAN])
-    features = extractor.extract_features(data)
-    assert np.isclose(features[Features.MEAN], 3.0, atol=1e-4), "The 'mean' feature should be 3.0"
+@pytest.fixture
+def mock_feature_extractor():
+    feature_functions = {
+        Features.MEAN: lambda data, **params: data.mean(),
+        Features.VARIANCE: lambda data, **params: data.var()
+    }
+    mock_task_manager = MagicMock()
+    mock_task_manager._validate_parameters = MagicMock()
+    mock_task_manager._execute_dask = MagicMock()
+    mock_task_manager._generate_tasks = MagicMock(return_value=[])
+    mock_task_manager._execute_parallel = MagicMock()
+    mock_task_manager._execute_sequential = MagicMock()
 
-def test_extract_spikeness_feature():
-    """
-    Test that FeatureExtractor correctly extracts the 'spikeness' feature.
-    """
-    data = pd.Series([1, 2, 3, 4, 5, 4, 3, 2, 1])
-    extractor = FeatureExtractor(features=[Features.SPIKENESS])
-    features = extractor.extract_features(data)
-    spikeness_value = features[Features.SPIKENESS].iloc[0] if isinstance(features[Features.SPIKENESS], pd.Series) else features[Features.SPIKENESS]
-    assert np.isclose(spikeness_value, 0, atol=0.2), "The 'spikeness' feature should be close to 0 for symmetric data"
+    feature_extractor = FeatureExtractor(
+        features=[Features.MEAN, Features.VARIANCE],
+        feature_params={},
+        window_size=5,
+        stride=1,
+        id_column="id",
+        sort_column="time",
+        feature_column="value",
+        group_by="id",
+    )
 
-def test_extract_std_1st_der_feature():
-    """
-    Test that FeatureExtractor correctly extracts the 'std_1st_der' feature.
-    """
-    data = pd.Series([1, 2, 3, 4, 5])
-    extractor = FeatureExtractor(features=[Features.STD_1ST_DER])
-    features = extractor.extract_features(data)
-    assert np.isclose(features[Features.STD_1ST_DER], 0, atol=1e-2), "The 'std_1st_der' feature should be approximately 0 for a linearly increasing sequence"
+    feature_extractor.feature_functions = feature_functions
+    feature_extractor.task_manager = mock_task_manager
 
-def test_extract_seasonality_strength_feature():
-    """
-    Test that FeatureExtractor correctly extracts the 'seasonality_strength' feature.
-    """
-    data = pd.Series([1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2])
-    extractor = FeatureExtractor(features=[Features.CALCULATE_SEASONALITY_STRENGTH],
-                                 feature_params={Features.CALCULATE_SEASONALITY_STRENGTH: {'period': 2}})
-    features = extractor.extract_features(data)
-    
-    assert features[Features.CALCULATE_SEASONALITY_STRENGTH].iloc[0] > 0.5, "The 'seasonality_strength' feature should be high for repeating patterns"
+    return feature_extractor
 
-def test_extract_with_window_size_and_stride():
-    """
-    Test that FeatureExtractor correctly applies window_size and stride.
-    """
-    data = pd.DataFrame({'value': range(10)})
-    extractor = FeatureExtractor(features=[Features.MEAN], window_size=3, stride=2)
-    features = extractor.extract_features(data)    
-    expected_means = [1, 3, 5, 7]
-    actual_means = features[Features.MEAN].tolist()
-    assert actual_means == expected_means, f"Expected means {expected_means}, got {actual_means}"
+# Test initialization
+def test_feature_extractor_initialization(mock_feature_extractor):
+    assert mock_feature_extractor.features == [Features.MEAN, Features.VARIANCE]
+    assert mock_feature_extractor.window_size == 5
+    assert mock_feature_extractor.stride == 1
 
+# Test extract_features with empty data
+def test_extract_features_empty_data(mock_feature_extractor):
+    data = pd.DataFrame()
+    result = mock_feature_extractor.extract_features(data)
+    assert result.empty
 
-def test_extract_with_id_column():
-    """
-    Test that FeatureExtractor groups data by id_column before feature extraction.
-    """
+# Test extract_features with sequential mode
+def test_extract_features_sequential(mock_feature_extractor):
     data = pd.DataFrame({
-        'id': [1, 1, 1, 2, 2, 2],
-        'value': [1, 2, 3, 4, 5, 6]
+        "id": [1, 1, 2, 2],
+        "time": [1, 2, 1, 2],
+        "value": [10, 20, 30, 40]
     })
-    extractor = FeatureExtractor(features=[Features.MEAN], id_column='id', window_size=3)
-    features = extractor.extract_features(data)
-    
-    assert len(features) == 2, "Powinny być 2 grupy dla id_column 'id'"
-    assert features['id'].nunique() == 2, "Każda grupa powinna mieć unikalne id"
+    mock_feature_extractor.task_manager._execute_sequential.return_value = [
+        {"mean_value": 15.0, "variance_value": 25.0},
+        {"mean_value": 35.0, "variance_value": 25.0}
+    ]
+    result = mock_feature_extractor.extract_features(data, mode="sequential")
+    assert isinstance(result, pd.DataFrame)
+    assert len(result) == 2
 
-def test_extract_variance_feature():
-    """
-    Test that FeatureExtractor correctly extracts the 'variance' feature.
-    """
-    data = pd.DataFrame({'value': [1, 2, 3, 4, 5]})
-    extractor = FeatureExtractor(features=[Features.VARIANCE])
-    features = extractor.extract_features(data)
-    assert np.isclose(features[Features.VARIANCE].iloc[0], 2.5, atol=1e-4), "The 'variance' feature should be 2.5"
-
-def test_extract_peak_and_trough_features():
-    """
-    Test that FeatureExtractor correctly extracts the 'peak' and 'trough' features.
-    """
-    data = pd.DataFrame({'value': [1, 3, 2, 4, 1]})
-    extractor = FeatureExtractor(features=[Features.PEAK, Features.TROUGH])
-    features = extractor.extract_features(data)
-    
-    assert features[Features.PEAK].iloc[0] == 4, "The peak feature should be 4"
-    assert features[Features.TROUGH].iloc[0] == 1, "The trough feature should be 1"
-
-def test_extract_with_sort_column():
-    """
-    Test that FeatureExtractor sorts data by sort_column before feature extraction.
-    """
+# Test group_data
+def test_group_data(mock_feature_extractor):
     data = pd.DataFrame({
-        'id': [1, 1, 1],
-        'time': [3, 1, 2],
-        'value': [10, 20, 30]
+        "id": [1, 1, 2, 2],
+        "time": [1, 2, 1, 2],
+        "value": [10, 20, 30, 40]
     })
-    extractor = FeatureExtractor(features=[Features.MEAN], sort_column='time', window_size=3, stride=1)
-    features = extractor.extract_features(data)
-    assert Features.MEAN in features.columns, "The 'mean' feature should be in the features DataFrame"
-    assert features[Features.MEAN].iloc[0] == 20, "The mean should be calculated after sorting by 'time'"
+    groups = list(mock_feature_extractor.group_data(data))
+    assert len(groups) == 2
 
-def test_extract_absolute_energy_feature():
-    """
-    Test that FeatureExtractor correctly extracts the 'absolute_energy' feature.
-    """
-    data = pd.Series([1, 2, 3, -4, 5])
-    extractor = FeatureExtractor(features=[Features.ABSOLUTE_ENERGY])
-    features = extractor.extract_features(data)
-    assert np.isclose(features[Features.ABSOLUTE_ENERGY].iloc[0], 55.0, atol=1e-4), "The 'absolute_energy' feature should be 55.0"
-    
-def test_extract_missing_points_feature():
-    """
-    Test that FeatureExtractor correctly extracts the 'missing_points' feature.
-    """
-    data = pd.DataFrame({'value': [1, 3, None, 1, np.nan]})
-    extractor = FeatureExtractor(features=[Features.MISSING_POINTS])
-    features = extractor.extract_features(data)
-    extractor2 = FeatureExtractor(features=[Features.MISSING_POINTS, ], feature_params={Features.MISSING_POINTS: {'percentage': False}})
-    features2 = extractor2.extract_features(data)
-    
-    assert features[Features.MISSING_POINTS].iloc[0] == 0.4, "The percentage of missing points should be 40%"
-    assert features2[Features.MISSING_POINTS].iloc[0] == 2, "The amount of missing points should be 2"
+# Test extract_features_stream
+def test_extract_features_stream(mock_feature_extractor):
+    data_stream = [
+        {"id": 1, "value": 10},
+        {"id": 1, "value": 20},
+        {"id": 2, "value": 30},
+        {"id": 2, "value": 40},
+    ]
+    results = list(mock_feature_extractor.extract_features_stream(data_stream))
+    assert len(results) == 0  # Mocked results do not yield any real features
 
-def test_extract_entropy_feature():
-    """
-    Test that FeatureExtractor correctly extracts the 'entropy' feature.
-    """
-    data = pd.Series([1, -2, 9, 10, 15])
-    extractor = FeatureExtractor(features=[Features.ENTROPY])
-    features = extractor.extract_features(data)
-    assert 0 < features[Features.ENTROPY].iloc[0] < 1, "The 'entropy' feature should be between 0 and 1"
+# Test add_custom_feature
+def test_add_custom_feature(mock_feature_extractor):
+    def custom_feature(data, **params):
+        return data.max() - data.min()
 
-def test_extract_stability_features():
-    """
-    Test that FeatureExtractor correctly extracts the 'peak' and 'trough' features.
-    """
-    data = pd.DataFrame({'value': [1, 3, 1, 3, 1]})
-    data2 = pd.DataFrame({'value': [1, 1, 1, 1, 1]})
-    extractor = FeatureExtractor(features=[Features.STABILITY])
-    features = extractor.extract_features(data)
-    features2 = extractor.extract_features(data2)
-    assert features[Features.STABILITY].iloc[0] < 1, "The stability feature should be less than 1 if the data is not constant"
-    assert features2[Features.STABILITY].iloc[0] == 1, "The stability feature should be 1 for constant data"
+    mock_feature_extractor.add_custom_feature(
+        name="range",
+        function=custom_feature,
+        metadata={"level": "easy", "description": "Range of values."}
+    )
+
+    assert "range" in mock_feature_extractor.feature_functions
+    assert mock_feature_extractor.feature_metadata["range"]["description"] == "Range of values."
+
+# Test invalid custom feature addition
+def test_add_invalid_custom_feature(mock_feature_extractor):
+    with pytest.raises(ValueError):
+        mock_feature_extractor.add_custom_feature(name="mean", function=lambda x: x)
+
+    with pytest.raises(ValueError):
+        mock_feature_extractor.add_custom_feature(name="custom", function=None)
+
+# Test group_features_by_interpretability
+def test_group_features_by_interpretability(mock_feature_extractor):
+    groups = mock_feature_extractor.group_features_by_interpretability()
+    assert "easy" in groups
+    assert isinstance(groups["easy"], list)

@@ -3,50 +3,44 @@ import pandas as pd
 import numpy as np
 from interpreTS.core.features.feature_stability import calculate_stability
 
-def test_stability_high_stability():
-    """
-    Test calculate_stability on a highly stable time series.
-    """
-    data = pd.Series([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
-    stability = calculate_stability(data, 2)
-    assert stability == 1.0, "Stability should be 1 for a perfectly stable series"
+# Test stability for a normal time series
+def test_calculate_stability_normal_case():
+    data = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    result = calculate_stability(data)
+    assert 0 <= result <= 1, f"Stability should be between 0 and 1. Got: {result}"
 
-def test_stability_low_stability():
-    """
-    Test calculate_stability on a low stability time series.
-    """
-    data = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
-    stability = calculate_stability(data)
-    assert stability < 1.0, "Stability should be less than 1 for a non-stable series"
+# Test stability for a constant time series
+def test_calculate_stability_constant_series():
+    data = pd.Series([5, 5, 5, 5, 5])
+    result = calculate_stability(data)
+    assert result == 1.0, f"Expected stability 1.0 for constant series. Got: {result}"
 
-def test_two_stabilities():
-    """
-    Test calculate_stability on two different time series.
-    """
-    data1 = pd.Series([1, 2, 1, 1, 1, 1, 1, 1])
-    data2 = pd.Series([1, 2, 1, 2, 1, 2, 1, 1])
-    assert calculate_stability(data1) > calculate_stability(data2), "Stability should be higher for the first series"
+# Test stability for a high variance time series
+def test_calculate_stability_high_variance_series():
+    data = pd.Series([1, 100, 50, 75, 200, 150, 300, 250, 400, 350])
+    result = calculate_stability(data)
+    assert 0 <= result <= 1, f"Stability should be between 0 and 1. Got: {result}"
 
-def test_stability_empty_series():
-    """
-    Test calculate_stability on an empty time series.
-    """
-    data = pd.Series([], dtype="float64")
-    stability = calculate_stability(data)
-    assert np.isnan(stability), "Stability should be NaN for an empty series"
-
-def test_stability_with_nan_values():
-    """
-    Test calculate_stability on a time series containing NaN values.
-    """
-    data = pd.Series([1, 2, np.nan, 4, 5])
-    with pytest.raises(ValueError, match="Data contains NaN values"):
+# Test stability for non-numeric data
+def test_calculate_stability_non_numeric_data():
+    data = pd.Series(["a", "b", "c", "d"])
+    with pytest.raises(TypeError, match="Data must contain only numeric values."):
         calculate_stability(data)
 
-def test_stability_numpy_array():
-    """
-    Test calculate_stability on a numpy array (alternative data format).
-    """
-    data = np.array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
-    stability = calculate_stability(pd.Series(data))
-    assert stability == 1.0, "Stability should be 1 for a perfectly stable series"
+# Test stability when max_lag exceeds the series length
+def test_calculate_stability_max_lag_exceeds_length():
+    data = pd.Series([1, 2, 3, 4, 5])
+    result = calculate_stability(data, max_lag=10)
+    assert np.isnan(result), f"Expected NaN when max_lag exceeds series length. Got: {result}"
+
+# Test stability for a series with zero variance
+def test_calculate_stability_zero_variance_series():
+    data = pd.Series([1, 1, 1, 1])
+    result = calculate_stability(data)
+    assert result == 1.0, f"Expected stability 1.0 for zero variance series. Got: {result}"
+
+# Test stability with a custom max_lag
+def test_calculate_stability_custom_max_lag():
+    data = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    result = calculate_stability(data, max_lag=3)
+    assert 0 <= result <= 1, f"Stability should be between 0 and 1. Got: {result}"

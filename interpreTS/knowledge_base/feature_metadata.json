@@ -1,0 +1,122 @@
+{
+    "length": {
+        "description": "Calculates the length of the time series window.",
+        "interpretation": "Represents the number of data points in the current time window. A fixed length ensures consistent feature extraction for machine learning models.",
+        "parameters": [],
+        "examples": "Used to ensure consistent window sizes across series for further analysis.",
+        "complexity": "easy",
+        "related_features": []
+    },
+    "mean": {
+        "description": "Calculates the average value of the time series window.",
+        "interpretation": "Higher values indicate an upward trend in the series within the window, while lower values suggest a downward trend.",
+        "parameters": [],
+        "examples": "Can be used to detect general trends, such as identifying periods of growth or decline in financial data.",
+        "complexity": "easy",
+        "related_features": ["variance", "peak"]
+    },
+    "peak": {
+        "description": "Finds the maximum value in the time series window.",
+        "interpretation": "A higher peak suggests the presence of significant outliers or short-term spikes in the data.",
+        "parameters": [],
+        "examples": "Useful in applications like anomaly detection (e.g., finding sudden increases in network traffic or temperature spikes).",
+        "complexity": "easy",
+        "related_features": ["trough", "range"]
+    },
+    "trough": {
+        "description": "Finds the minimum value in the time series window.",
+        "interpretation": "Lower trough values indicate significant dips, which may correspond to anomalies or key events.",
+        "parameters": [],
+        "examples": "Can be used for identifying low periods, such as demand dips in sales data.",
+        "complexity": "easy",
+        "related_features": ["peak", "range"]
+    },
+    "variance": {
+        "description": "Calculates the variance of values in the time series window.",
+        "interpretation": "Indicates the spread of values. A higher variance suggests greater instability, while lower variance suggests consistency in the data.",
+        "parameters": [],
+        "examples": "Useful in assessing risk or variability in financial time series or system stability.",
+        "complexity": "moderate",
+        "related_features": ["mean", "std_1st_der"]
+    },
+    "spikeness": {
+        "description": "Measures the degree of spikes in the time series window.",
+        "interpretation": "Quantifies the presence of sudden, sharp increases or decreases in the data, which may correspond to anomalies or rapid changes.",
+        "parameters": ["threshold"],
+        "examples": "Can detect unusual patterns like sudden traffic surges or sharp voltage fluctuations.",
+        "complexity": "moderate",
+        "related_features": ["peak", "variance"]
+    },
+    "entropy": {
+        "description": "Calculates the Shannon entropy of the time series window.",
+        "interpretation": "Higher entropy indicates more randomness or disorder, while lower entropy suggests regular patterns.",
+        "parameters": [],
+        "examples": "Useful in applications like stock market analysis (detecting chaotic behavior) or identifying data quality issues.",
+        "complexity": "advanced",
+        "related_features": []
+    },
+    "seasonality_strength": {
+        "description": "Measures the strength of seasonal patterns in the time series.",
+        "interpretation": "Quantifies how strongly the data exhibits periodic behavior (e.g., daily, weekly, or yearly trends).",
+        "parameters": [],
+        "examples": "Commonly used in retail to identify seasonal demand changes or in climate data analysis.",
+        "complexity": "advanced",
+        "related_features": []
+    },
+    "absolute_energy": {
+        "description": "Computes the absolute energy of the time series window.",
+        "interpretation": "Indicates the overall magnitude of the signal. Higher values suggest periods of strong activity.",
+        "parameters": [],
+        "examples": "Useful in vibration analysis for machinery health or monitoring power usage.",
+        "complexity": "advanced",
+        "related_features": ["variance", "mean"]
+    },
+    "stability": {
+        "description": "Measures the stability of the time series within the window.",
+        "interpretation": "Lower stability suggests increasing variability or emerging trends, while higher stability reflects consistent behavior.",
+        "parameters": [],
+        "examples": "Used to detect transitions or phases in industrial process monitoring.",
+        "complexity": "moderate",
+        "related_features": ["variance", "entropy"]
+    },
+    "flat_spots": {
+        "description": "Counts the number of flat regions in the time series window.",
+        "interpretation": "Flat spots indicate areas where the signal remains constant over time, often highlighting periods of inactivity.",
+        "parameters": ["threshold"],
+        "examples": "Can identify idle times in machine operation or plateaus in sensor readings.",
+        "complexity": "easy",
+        "related_features": ["stability", "length"]
+    },
+    "crossing_points": {
+        "description": "Counts the number of times the time series crosses its mean.",
+        "interpretation": "Higher crossing points suggest oscillatory or cyclic patterns, while lower values suggest a trend or plateau.",
+        "parameters": [],
+        "examples": "Useful in analyzing rhythmic patterns in biomedical signals or detecting market oscillations.",
+        "complexity": "easy",
+        "related_features": ["mean", "variance"]
+    },
+    "missing_points": {
+        "description": "Counts the number of missing values in the time series window.",
+        "interpretation": "Indicates the extent of missing data, which can impact model performance or indicate data quality issues.",
+        "parameters": [],
+        "examples": "Commonly used in preprocessing for data cleaning or imputing missing values.",
+        "complexity": "easy",
+        "related_features": []
+    },
+    "binarize_mean": {
+        "description": "Binarizes the time series based on whether values are above or below the mean.",
+        "interpretation": "Converts the series into binary form for simplified analysis, often used for symbolic or pattern analysis.",
+        "parameters": [],
+        "examples": "Useful in threshold-based event detection, such as binary classification of high or low activity.",
+        "complexity": "moderate",
+        "related_features": ["mean", "crossing_points"]
+    },
+    "std_1st_der": {
+        "description": "Calculates the standard deviation of the first derivative of the time series.",
+        "interpretation": "Measures the variability in the rate of change of the time series. A higher value indicates rapid or inconsistent changes, while a lower value suggests smoother trends.",
+        "parameters": [],
+        "examples": "Useful for detecting volatility in financial data, abrupt changes in sensor readings, or irregular behavior in systems.",
+        "complexity": "moderate",
+        "related_features": ["variance", "spikeness", "stability"]
+    }
+}

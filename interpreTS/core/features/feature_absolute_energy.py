@@ -1,8 +1,7 @@
-import pandas as pd
 import numpy as np
 from interpreTS.utils.data_validation import validate_time_series_data
 
-def absolute_energy(data, start=None, end=None):
+def calculate_absolute_energy(data, start=None, end=None):
     """
     Calculate the absolute energy of a time series within an optional range.
 
@@ -40,13 +39,12 @@ def absolute_energy(data, start=None, end=None):
     >>> calculate_absolute_energy(data, start=1, end=3)
     13.0
     """
-
-    # Validate the time series without requiring a DateTime index
-    validate_time_series_data(data, require_datetime_index=False)
-
     # Slice the data based on start and end, if provided
-    if start is not None or end is not None:
-        data = data[start:end]
+    if end is None:
+        end = len(data)
+    if start is None:
+        start = 0
+    data = data[start:end]
 
     # Calculate and return the absolute energy, handling empty series by returning NaN
     return np.sum(np.square(data)) if len(data) > 0 else np.nan

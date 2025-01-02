@@ -35,20 +35,8 @@ def calculate_change_in_variance(data, window_size=5):
     2     NaN
     3     0.00
     4     0.00
-    5     0.00
-    6     0.00
-    7     0.00
-    8     0.00
-    9     0.00
     dtype: float64
     """
-    # Validate the time series data
-    validate_time_series_data(data, require_datetime_index=False)
-    
-    # Handle empty or insufficient data
-    if len(data) < window_size + 1:
-        raise ValueError("The time series is too short for the specified rolling window size.")
-    
     # Convert data to a pandas Series if it's an ndarray
     if isinstance(data, np.ndarray):
         data = pd.Series(data)

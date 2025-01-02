@@ -1,4 +1,6 @@
 from interpreTS.utils.data_validation import validate_time_series_data
+import numpy as np
+import pandas as pd
 
 def calculate_length(data):
     """
@@ -19,7 +21,7 @@ def calculate_length(data):
     TypeError
         If the data is not a valid time series type.
     ValueError
-        If the data contains NaN values.
+        If the data contains NaN values or is not one-dimensional.
         
     Examples
     --------
@@ -28,8 +30,5 @@ def calculate_length(data):
     >>> calculate_length(data)
     5
     """
-    # Validate the time series without requiring a DateTime index
-    validate_time_series_data(data, require_datetime_index=False)
-    
     # Return the length of the data
     return len(data)

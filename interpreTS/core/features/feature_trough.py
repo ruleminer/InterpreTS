@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 from interpreTS.utils.data_validation import validate_time_series_data
 
-
 def calculate_trough(data, start=None, end=None):
     """
     Calculate the local minimum of a time series within an optional range.
@@ -32,23 +31,18 @@ def calculate_trough(data, start=None, end=None):
 
     Examples
     --------
-    >>> import pandas as pd
     >>> data = pd.Series([1, 2, 5, 4, 3])
     >>> calculate_trough(data)
     1.0
     >>> calculate_trough(data, start=1, end=3)
     2.0
     """
-
-    # Validate the time series without requiring a DateTime index
-    validate_time_series_data(data, require_datetime_index=False)
-
     # Slice the data based on start and end, if provided
     if end is None:
         end = len(data)
     if start is None:
         start = 0
     data = data[start:end]
-    
+
     # Calculate and return the minimum, handling empty series by returning NaN
     return data.min() if len(data) > 0 else np.nan

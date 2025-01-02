@@ -22,22 +22,26 @@ def calculate_variance(data, ddof=1):
     Raises
     ------
     TypeError
-        If the data is not a valid time series type.
+        If the data is not numeric.
     ValueError
-        If the data contains NaN values.
-        
+        If the data contains NaN values or is not one-dimensional.
+
     Examples
     --------
     >>> import pandas as pd
-    >>> data = pd.Series([1, 2, 3, 4, 5])
+    >>> import numpy as np
+    >>> data = pd.Series([10, 12, 14, 16, 18])
     >>> calculate_variance(data)
-    2.5
-    >>> calculate_variance(data, ddof=0)  # Population variance
-    2.0
+    10.0
+
+    >>> data = np.array([2, 4, 6, 8, 10])
+    >>> calculate_variance(data, ddof=0)
+    8.0
+
+    >>> data = pd.Series([5])
+    >>> calculate_variance(data)
+    0.0
     """
-    # Validate the time series without requiring a DateTime index
-    validate_time_series_data(data, require_datetime_index=False)
-    
     # Handle the case where the series has only one value
     if len(data) == 1:
         return 0.0

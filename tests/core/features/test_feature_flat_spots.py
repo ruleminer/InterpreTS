@@ -3,27 +3,38 @@ import pandas as pd
 import numpy as np
 from interpreTS.core.features.feature_flat_spots import calculate_flat_spots
 
-def test_calculate_flat_spots_with_flat_spots():
+# Test basic functionality of flat spots detection
+def test_flat_spots_basic():
     data = pd.Series([1, 1, 1, 2, 3, 3, 4, 4, 4, 4, 4, 5, 1, 1])
-    result = calculate_flat_spots(data)
-    assert result == 4, "Expected 4 flat spots"
+    result = calculate_flat_spots(data, window_size=5)
+    assert result == 4, f"Expected 4, got {result}"
 
-def test_calculate_flat_spots_without_flat_spots():
-    data = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-    result = calculate_flat_spots(data)
-    assert result == 1, "Expected 1 flat spot"
-
-def test_calculate_flat_spots_empty_series():
-    data = pd.Series([])
-    result = calculate_flat_spots(data)
-    assert result == 0, "Expected 0 flat spots for empty series"
-
-def test_calculate_flat_spots_constant_values():
-    data = pd.Series([5, 5, 5, 5, 5])
-    result = calculate_flat_spots(data)
-    assert result == 5, "Expected 10 flat spots for constant values"
-
-def test_calculate_flat_spots_different_window_size():
-    data = pd.Series([1, 1, 1, 2, 3, 3, 4, 4, 4, 4, 4, 5, 1, 1])
+# Test for data without flat segments
+def test_flat_spots_no_flat_segments():
+    data = pd.Series([1, 2, 3, 4, 5])
     result = calculate_flat_spots(data, window_size=3)
-    assert result == 3, "Expected 3 flat spots with window size 3"
+    assert result == 1, f"Expected 1, got {result}"
+
+# Test for series where all values are equal
+def test_flat_spots_all_values_equal():
+    data = pd.Series([7, 7, 7, 7, 7])
+    result = calculate_flat_spots(data, window_size=5)
+    assert result == 5, f"Expected 5, got {result}"
+
+# Test for varying window size impact
+def test_flat_spots_varying_window_size():
+    data = pd.Series([1, 1, 2, 2, 2, 3, 3, 3, 3])
+    result = calculate_flat_spots(data, window_size=3)
+    assert result == 3, f"Expected 3, got {result}"
+
+# Test for input data as numpy array
+def test_flat_spots_numpy_input():
+    data = np.array([1, 1, 1, 2, 2, 3, 3, 3, 3])
+    result = calculate_flat_spots(data, window_size=4)
+    assert result == 3, f"Expected 3, got {result}"
+
+# Test for data shorter than the window size
+def test_flat_spots_short_data():
+    data = pd.Series([1, 1, 1])
+    result = calculate_flat_spots(data, window_size=5)
+    assert result == 3, f"Expected 3, got {result}"

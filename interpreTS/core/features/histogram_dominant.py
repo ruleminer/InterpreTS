@@ -12,41 +12,48 @@ def calculate_dominant(data, bins=10, return_bin_center=False):
         The time series data for which the dominant value is to be calculated.
     bins : int, optional
         The number of bins to use for creating the histogram, by default 10.
+    return_bin_center : bool, optional
+        If True, return the center of the bin with the maximum frequency. 
+        Otherwise, return the lower bound of the bin (default is False).
 
     Returns
     -------
     float
-        The dominant value (mode) of the histogram.
-        
+        The dominant value of the histogram (either the center or the lower bound of the bin).
+
     Raises
     ------
     TypeError
         If the data is not a valid time series type.
     ValueError
         If the data contains NaN values.
-        
+
     Examples
     --------
-    >>> import pandas as pd
-    >>> data = pd.Series([1, 1, 2, 3, 3, 3, 4, 5])
-    >>> calculate_dominant(data)
-    3.0
-    """
-    # Validate the time series data
-    validate_time_series_data(data, require_datetime_index=False)
-    
-    if len(data) == 0:
-        return np.nan
-    
-    # Get unique values and use them as bin edges
-    unique_values = np.unique(data)
-    bins = np.append(unique_values, unique_values[-1] + 1)  # Add an extra edge to cover the last bin
+    >>> import numpy as np
+    >>> data = np.array([1, 2, 2, 3, 3, 3, 4, 4, 5])
+    >>> calculate_dominant(data, bins=5)
+    2.6
 
-    # Calculate histogram with specific bin edges
+    >>> data = np.array([10, 20, 20, 30, 30, 30, 40, 40, 50])
+    >>> calculate_dominant(data, bins=5, return_bin_center=True)
+    30.0
+
+    >>> data = np.array([1, 1, 1, 1, 1])
+    >>> calculate_dominant(data, bins=3)
+    0.8333333333333333
+    """
+    # Handle empty data early
+    if isinstance(data, (pd.Series, pd.DataFrame)) and data.empty:
+        return np.nan
+    if isinstance(data, np.ndarray) and data.size == 0:
+        return np.nan
+
+    # Calculate histogram
     counts, bin_edges = np.histogram(data, bins=bins)
     max_bin_index = np.argmax(counts)
 
-    # Calculate the center or lower bound of the bin with the highest frequency
+    # Return the lower bound or center of the dominant bin
     if return_bin_center:
         dominant_value = (bin_edges[max_bin_index] + bin_edges[max_bin_index + 1]) / 2
     else:

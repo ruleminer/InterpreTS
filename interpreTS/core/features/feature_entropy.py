@@ -1,70 +1,55 @@
-import pandas as pd
 import numpy as np
-from interpreTS.utils.data_validation import validate_time_series_data
+from scipy.stats import gaussian_kde
 
-def calculate_entropy(data, bins=None):
+def calculate_entropy(data):
     """
-    Calculate the entropy of a time series based on its value distribution.
+    Calculate the normalized Shannon entropy of a dataset.
+
+    This function estimates the probability density of the data using Kernel Density Estimation (KDE)
+    and calculates the Shannon entropy based on the estimated probabilities.
 
     Parameters
     ----------
-    data : pd.Series or np.ndarray
-        The time series data for which the entropy is to be calculated.
-    bins : int, optional
-        The number of bins to use for discretizing the data. 
-        Default is 10.
+    data : array-like
+        A 1D array or list of numerical data points.
 
     Returns
     -------
     float
-        The normalized entropy, ranging from 0 to 1, where 0 indicates 
-        no entropy (completely predictable) and 1 indicates maximum entropy 
-        (completely random).
+        The normalized Shannon entropy of the dataset. If the dataset consists of identical values 
+        (i.e., no variability), the entropy is 0. If the KDE results in zero probability for any 
+        point, NaN is returned to indicate that the entropy could not be calculated properly.
 
-    Raises
-    ------
-    TypeError
-        If the data is not a valid time series type.
-    ValueError
-        If the data contains NaN values or is too short to calculate entropy.
+    Notes
+    -----
+    - If the range (peak-to-peak value) of the data is zero (i.e., all values are identical), the
+      entropy is directly returned as 0.
+    - The dataset is evaluated at 100 evenly spaced points between the minimum and maximum values
+      of the data for KDE estimation.
+    - The Shannon entropy is normalized by dividing by `np.log2(len(x))`, where `len(x)` is the
+      number of points used for KDE evaluation, to scale the entropy between 0 and 1.
+    - If any probability in the KDE is zero, the function returns NaN, indicating a problematic
+      or poorly estimated probability distribution.
+
+    Examples
+    --------
+    >>> data = [1, 1, 1, 1, 2, 2, 2]
+    >>> calculate_entropy(data)
+    0.9182958340544894  # Example output, depending on the data distribution.
     """
-    # Validate the time series data
-    validate_time_series_data(data, require_datetime_index=False)
     
-    # Convert data to numpy array if it's a pandas Series
-    if isinstance(data, pd.Series):
-        data = data.values
-        
-    # Handle empty or insufficient data
-    if len(data) == 0:
-        raise ValueError("The input data is empty.")
-    if len(data) < 2:
-        raise ValueError("The input data is too short to calculate entropy.")
+    if len(data) == 0: 
+        return np.nan
     
-    if bins is None:
-        bins = len(data)
+    if np.ptp(data) == 0:
+        return 0.0
     
-    # Check for constant values
-    if np.all(data == data[0]):
-        return 0.0  # No entropy for constant values
+    x = np.linspace(min(data), max(data), 100)
     
-    # Discretize the data into bins and get the histogram
-    hist, _ = np.histogram(data, bins=bins, density=True)
+    probabilities = gaussian_kde(data)(x)
+    probabilities /= probabilities.sum()
+    if np.any(probabilities == 0):
+        return np.nan
     
-    # Normalize histogram to get a probability distribution
-    probabilities = hist / np.sum(hist)
-    
-    # Filter out zero probabilities to avoid log(0)
-    probabilities = probabilities[probabilities > 0]
-    
-    # Calculate Shannon entropy manually
     shannon_entropy = -np.sum(probabilities * np.log2(probabilities))
-    
-    # Normalize the entropy to range [0, 1]
-    max_entropy = np.log2(len(probabilities))
-    normalized_entropy = shannon_entropy / max_entropy if max_entropy > 0 else 0.0
-    
-    # Ensure the result is within [0, 1]
-    normalized_entropy = max(0.0, min(normalized_entropy, 1.0))
-    
-    return normalized_entropy
+    return shannon_entropy / np.log2(len(x))
