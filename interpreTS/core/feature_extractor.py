@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+import re
+from pandas.tseries.frequencies import to_offset
 
 from ..utils.feature_loader import Features
 from ..utils.data_manager import load_metadata, load_feature_functions, load_validation_requirements
@@ -42,8 +44,8 @@ class FeatureExtractor:
         self.group_by = group_by
         self.features = features if features is not None else self.DEFAULT_FEATURES
         self.feature_params = feature_params if feature_params is not None else {}
-        self.window_size = window_size
-        self.stride = stride
+        self.window_size = self._convert_window_to_observations(window_size)
+        self.stride = self._convert_window_to_observations(stride)
         self.id_column = id_column
         self.sort_column = sort_column
         self.feature_column = feature_column
@@ -54,30 +56,67 @@ class FeatureExtractor:
         self.task_manager = TaskManager(self.feature_functions, self.window_size, self.features, self.stride, self.feature_params, self.validation_requirements)
         self.task_manager._validate_parameters(features, feature_params, window_size, stride, id_column, sort_column)
         self.feature_metadata = load_metadata()
-    
-    def head(self, features_df, n=5):
+
+    def _convert_window_to_observations(self, value):
         """
-        Returns the first n rows of the resulting DataFrame from the extract_features function.
+        Converts a symbolic time value into a number of observations, based on the data frequency.
 
         Parameters
         ----------
-        features_df : pd.DataFrame
-            The resulting DataFrame from the extract_features function.
-        n : int, optional
-            The number of rows to return (default is 5). If n is negative, 
-            returns all rows except the last abs(n) rows.
+        value : int, float, or str
+            Symbolic time (e.g., '1s', '0.5h') or number of observations.
 
         Returns
         -------
-        pd.DataFrame
-            The first n rows of the DataFrame.
+        int
+            The number of observations corresponding to the given time window.
         """
+        if isinstance(value, (int, float)):
+            return value 
+
+        if isinstance(value, str):
+            try:
+                offset = to_offset(value)
+                return offset.nanos // self._detect_data_frequency()
+            except Exception as e:
+                raise ValueError(f"Invalid window or stride value: {value}. Error: {e}")
+            
+        if isinstance(value, (np.float64, np.int64)):
+            if np.isnan(value):
+                return value
+            else:
+                return int(value)
         
-        if not isinstance(features_df, pd.DataFrame):
-            raise ValueError("Input must be a DataFrame.")
-        if len(features_df) < n:
-            print(f"Warning: Only {len(features_df)} rows available in DataFrame.")
-        return features_df.head(n)
+        else:
+            raise ValueError("Unsupported type for window/stride. Provide a number or symbolic time (e.g., '1s', '1h').")
+
+    def _detect_data_frequency(self):
+        """
+        Detects the frequency of the data in nanoseconds.
+
+        Returns
+        -------
+        int
+            Data frequency in nanoseconds.
+        """
+        if not hasattr(self, 'data_frequency') or self.data_frequency is None:
+            raise ValueError("Data frequency not detected. Ensure the data index is a `DatetimeIndex` with a defined frequency.")
+
+        return pd.to_timedelta(self.data_frequency).value
+
+    def set_data_frequency(self, data):
+        """
+        Sets the data frequency based on the time series index.
+
+        Parameters
+        ----------
+        data : pd.DataFrame or pd.Series
+            Time series data.
+        """
+        if isinstance(data.index, pd.DatetimeIndex):
+            self.data_frequency = data.index.freqstr or pd.infer_freq(data.index)
+        else:
+            raise ValueError("Data index is not a `DatetimeIndex`. Cannot set data frequency.")
 
     def extract_features(self, data, progress_callback=None, mode='sequential', n_jobs=-1):
         """
@@ -130,6 +169,30 @@ class FeatureExtractor:
             results = self.task_manager._execute_sequential(tasks, progress_callback, total_steps)
 
         return pd.DataFrame(results)
+    
+    def head(self, features_df, n=5):
+        """
+        Returns the first n rows of the resulting DataFrame from the extract_features function.
+
+        Parameters
+        ----------
+        features_df : pd.DataFrame
+            The resulting DataFrame from the extract_features function.
+        n : int, optional
+            The number of rows to return (default is 5). If n is negative, 
+            returns all rows except the last abs(n) rows.
+
+        Returns
+        -------
+        pd.DataFrame
+            The first n rows of the DataFrame.
+        """
+        
+        if not isinstance(features_df, pd.DataFrame):
+            raise ValueError("Input must be a DataFrame.")
+        if len(features_df) < n:
+            print(f"Warning: Only {len(features_df)} rows available in DataFrame.")
+        return features_df.head(n)
     
     def group_data(self, data):
         """
