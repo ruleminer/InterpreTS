@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-import re
 from pandas.tseries.frequencies import to_offset
 
 from ..utils.feature_loader import Features
@@ -44,8 +43,8 @@ class FeatureExtractor:
         self.group_by = group_by
         self.features = features if features is not None else self.DEFAULT_FEATURES
         self.feature_params = feature_params if feature_params is not None else {}
-        self.window_size = self._convert_window_to_observations(window_size)
-        self.stride = self._convert_window_to_observations(stride)
+        self.window_size = window_size
+        self.stride = stride
         self.id_column = id_column
         self.sort_column = sort_column
         self.feature_column = feature_column
@@ -53,71 +52,64 @@ class FeatureExtractor:
         self.feature_functions = load_feature_functions()
         self.validation_requirements = load_validation_requirements()
 
-        self.task_manager = TaskManager(self.feature_functions, self.window_size, self.features, self.stride, self.feature_params, self.validation_requirements)
+        self.task_manager = TaskManager(
+            self.feature_functions, self.window_size, self.features, self.stride, 
+            self.feature_params, self.validation_requirements
+        )
         self.task_manager._validate_parameters(features, feature_params, window_size, stride, id_column, sort_column)
         self.feature_metadata = load_metadata()
 
-    def _convert_window_to_observations(self, value):
+    def validate_data_frequency(self, data):
         """
-        Converts a symbolic time value into a number of observations, based on the data frequency.
+        Validate that data has a consistent and defined frequency if window_size or stride are time-based.
 
         Parameters
         ----------
-        value : int, float, or str
-            Symbolic time (e.g., '1s', '0.5h') or number of observations.
+        data : pd.DataFrame
+            The time series data to validate.
+
+        Raises
+        ------
+        ValueError
+            If data frequency is not defined or inconsistent.
+        """
+        if isinstance(self.window_size, str) or isinstance(self.stride, str):
+            if not isinstance(data.index, pd.DatetimeIndex):
+                raise ValueError(
+                    "Time-based window_size and stride require a time-indexed DataFrame with regular frequency."
+                )
+            if data.index.freq is None:
+                inferred_freq = pd.infer_freq(data.index)
+                if inferred_freq is None:
+                    raise ValueError(
+                        "Data index does not have a defined frequency. Use `.resample()` to align your data."
+                    )
+                data.index.freq = inferred_freq
+    
+    def head(self, features_df, n=5):
+        """
+        Returns the first n rows of the resulting DataFrame from the extract_features function.
+
+        Parameters
+        ----------
+        features_df : pd.DataFrame
+            The resulting DataFrame from the extract_features function.
+        n : int, optional
+            The number of rows to return (default is 5). If n is negative, 
+            returns all rows except the last abs(n) rows.
 
         Returns
         -------
-        int
-            The number of observations corresponding to the given time window.
+        pd.DataFrame
+            The first n rows of the DataFrame.
         """
-        if isinstance(value, (int, float)):
-            return value 
-
-        if isinstance(value, str):
-            try:
-                offset = to_offset(value)
-                return offset.nanos // self._detect_data_frequency()
-            except Exception as e:
-                raise ValueError(f"Invalid window or stride value: {value}. Error: {e}")
-            
-        if isinstance(value, (np.float64, np.int64)):
-            if np.isnan(value):
-                return value
-            else:
-                return int(value)
         
-        else:
-            raise ValueError("Unsupported type for window/stride. Provide a number or symbolic time (e.g., '1s', '1h').")
-
-    def _detect_data_frequency(self):
-        """
-        Detects the frequency of the data in nanoseconds.
-
-        Returns
-        -------
-        int
-            Data frequency in nanoseconds.
-        """
-        if not hasattr(self, 'data_frequency') or self.data_frequency is None:
-            raise ValueError("Data frequency not detected. Ensure the data index is a `DatetimeIndex` with a defined frequency.")
-
-        return pd.to_timedelta(self.data_frequency).value
-
-    def set_data_frequency(self, data):
-        """
-        Sets the data frequency based on the time series index.
-
-        Parameters
-        ----------
-        data : pd.DataFrame or pd.Series
-            Time series data.
-        """
-        if isinstance(data.index, pd.DatetimeIndex):
-            self.data_frequency = data.index.freqstr or pd.infer_freq(data.index)
-        else:
-            raise ValueError("Data index is not a `DatetimeIndex`. Cannot set data frequency.")
-
+        if not isinstance(features_df, pd.DataFrame):
+            raise ValueError("Input must be a DataFrame.")
+        if len(features_df) < n:
+            print(f"Warning: Only {len(features_df)} rows available in DataFrame.")
+        return features_df.head(n)
+            
     def extract_features(self, data, progress_callback=None, mode='sequential', n_jobs=-1):
         """
         Extract features from a time series dataset.
@@ -150,6 +142,8 @@ class FeatureExtractor:
         if data.empty:
             print("Warning: Input data is empty. Returning an empty DataFrame.")
             return pd.DataFrame()
+        
+        self.validate_data_frequency(data)
 
         if self.sort_column:
             data = data.sort_values(by=self.sort_column)
@@ -169,30 +163,6 @@ class FeatureExtractor:
             results = self.task_manager._execute_sequential(tasks, progress_callback, total_steps)
 
         return pd.DataFrame(results)
-    
-    def head(self, features_df, n=5):
-        """
-        Returns the first n rows of the resulting DataFrame from the extract_features function.
-
-        Parameters
-        ----------
-        features_df : pd.DataFrame
-            The resulting DataFrame from the extract_features function.
-        n : int, optional
-            The number of rows to return (default is 5). If n is negative, 
-            returns all rows except the last abs(n) rows.
-
-        Returns
-        -------
-        pd.DataFrame
-            The first n rows of the DataFrame.
-        """
-        
-        if not isinstance(features_df, pd.DataFrame):
-            raise ValueError("Input must be a DataFrame.")
-        if len(features_df) < n:
-            print(f"Warning: Only {len(features_df)} rows available in DataFrame.")
-        return features_df.head(n)
     
     def group_data(self, data):
         """
@@ -234,6 +204,13 @@ class FeatureExtractor:
         buffers = {}
         total_points = 0
 
+        time_based_window = isinstance(self.window_size, str)
+        if time_based_window:
+            try:
+                window_offset = to_offset(self.window_size)
+            except ValueError:
+                raise ValueError(f"Invalid time-based window_size format: {self.window_size}")
+
         for new_point in data_stream:
             total_points += 1
             series_id = new_point[self.id_column]
@@ -243,16 +220,33 @@ class FeatureExtractor:
 
             buffers[series_id].append(new_point)
 
-            if len(buffers[series_id]) > self.window_size:
-                buffers[series_id].pop(0)
-
-            if len(buffers[series_id]) == self.window_size:
+            # Handle time-based windows
+            if time_based_window:
+                # Convert buffer to a DataFrame and check time range
                 buffer_df = pd.DataFrame(buffers[series_id])
-                feature_columns = [self.feature_column]
+                if len(buffer_df) > 1:  # Ensure at least two points to calculate a range
+                    start_time = pd.to_datetime(buffer_df[self.sort_column].iloc[0])
+                    end_time = pd.to_datetime(buffer_df[self.sort_column].iloc[-1])
+                    if (end_time - start_time) >= window_offset:
+                        # Extract features for the current buffer
+                        feature_columns = [self.feature_column]
+                        features = self.task_manager._process_window(buffer_df, feature_columns)
+                        features[self.id_column] = series_id
+                        yield features
+                        buffers[series_id] = buffers[series_id][1:]  # Remove oldest point
 
-                features = self.task_manager._process_window(buffer_df, feature_columns)
-                features[self.id_column] = series_id
-                yield features
+            # Handle numeric windows
+            else:
+                if len(buffers[series_id]) > self.window_size:
+                    buffers[series_id].pop(0)
+
+                if len(buffers[series_id]) == self.window_size:
+                    buffer_df = pd.DataFrame(buffers[series_id])
+                    feature_columns = [self.feature_column]
+
+                    features = self.task_manager._process_window(buffer_df, feature_columns)
+                    features[self.id_column] = series_id
+                    yield features
 
             if progress_callback:
                 progress_callback(total_points)
@@ -307,4 +301,3 @@ class FeatureExtractor:
             self.feature_metadata[name] = metadata
 
         print(f"Custom feature '{name}' added successfully.")
-
