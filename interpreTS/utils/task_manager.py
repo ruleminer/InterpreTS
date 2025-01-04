@@ -50,26 +50,31 @@ class TaskManager:
         if feature_params is not None and not isinstance(feature_params, dict):
             raise ValueError("Feature parameters must be a dictionary or None.")
         if not (
+            isinstance(window_size, int) and window_size > 0 or
             isinstance(window_size, str) or
-            (isinstance(window_size, (int, float)) and window_size > 0) or
-            np.isnan(window_size) 
+            np.isnan(window_size)
         ):
-            raise ValueError("Window size must be a positive number, a time-based string (e.g., '1s') or np.nan.")
+            raise ValueError("Window size must  be one of the following: "
+                "a positive integer (number of samples), a time-based string (e.g., '1s', '5min', '1h'), or np.nan."
+            )
         if isinstance(window_size, str):
             try:
                 to_offset(window_size)
             except ValueError:
                 raise ValueError(f"Invalid window size format: {window_size}. Accepted formats are for example: '1s', '5min', '0.5h', '1d', '1w'.")
         if not (
-            isinstance(stride, str) or
-            (isinstance(stride, int) and stride > 0)
-            ):
-            raise ValueError("Stride must be a positive integer or a time-based string (e.g., '1s').")
+            isinstance(stride, int) and stride > 0 or
+            isinstance(stride, str)
+        ):
+            raise ValueError(
+                "Stride must be one of the following: "
+                "a positive integer (number of samples) or a time-based string (e.g., '1s', '5min', '1h')."
+            )
         if isinstance(stride, str):
             try:
                 to_offset(stride)
             except ValueError:
-                raise ValueError(f"Invalid stride format: {stride}. Accepted formats are for example: '1s', '5min', '1h', '1d', '1w'.")
+                raise ValueError(f"Invalid stride format: {stride}. Accepted formats are for example: '1s', '5min', '0.5h', '1d', '1w'.")
         if id_column is not None and not isinstance(id_column, str):
             raise ValueError("ID column must be a string or None.")
         if sort_column is not None and not isinstance(sort_column, str):
@@ -232,7 +237,7 @@ class TaskManager:
         """
         Converts a symbolic time value into a number of observations, based on the data frequency.
         """
-        if isinstance(value, (int, float)):
+        if isinstance(value, (int)):
             return value  # Return numeric values directly
 
         if isinstance(value, str):
@@ -241,4 +246,4 @@ class TaskManager:
             freq_in_nanos = pd.to_timedelta(data.index.freq).value
             return max(1, offset.nanos // freq_in_nanos)
 
-        raise ValueError(f"Invalid window size value: {value}")
+        raise ValueError(f"Invalid window size or stride value: {value}")

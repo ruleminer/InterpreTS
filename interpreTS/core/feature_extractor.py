@@ -22,10 +22,17 @@ class FeatureExtractor:
             A list of features to calculate. Default is None, which calculates all available features.
         feature_params : dict, optional
             Parameters for specific features, where keys are feature names and values are dicts of parameters.
-        window_size : int or float, optional
-            The size of the window for feature extraction. Default is NaN, which means the entire series is used as a single window.
-        stride : int, optional
-            The step size for moving the window. Default is 1.
+        window_size : int or str, optional
+            The size of the window for feature extraction. 
+            - np.nan (entire series is used as a single window),
+            - int (number of samples in the window),
+            - str (time-based format, e.g., '1s', '5min')
+            Default is np.nan.
+        stride : int or str, optional
+            The step size for moving the window. Can be:
+            - int (number of samples to shift),
+            - str (time-based format, e.g., '1s', '5min').
+            Default is 1.
         id_column : str, optional
             The name of the column used to identify different time series.
         sort_column : str, optional
@@ -223,7 +230,7 @@ class FeatureExtractor:
             try:
                 window_offset = to_offset(self.window_size)
             except ValueError:
-                raise ValueError(f"Invalid time-based window_size format: {self.window_size}")
+                raise ValueError(f"Invalid time-based window_size format: {self.window_size}. Supported formats are for example: '1s', '5min', '1h'.")
 
         for new_point in data_stream:
             total_points += 1
