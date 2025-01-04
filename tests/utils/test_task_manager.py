@@ -84,7 +84,7 @@ def test_execute_dask(task_manager):
 # Test processing a single partition for feature extraction
 def test_process_partition(task_manager):
     data = pd.DataFrame({"value": [1, 2, 3, 4, 5]})
-    result = task_manager._process_partition(data, ["value"], 3)
+    result = task_manager._process_partition(data, ["value"], 3, 1)
     assert isinstance(result, pd.DataFrame)
 
 # Test generation of tasks for feature extraction based on input data
