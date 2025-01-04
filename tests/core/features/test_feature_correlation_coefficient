@@ -1,0 +1,79 @@
+import pytest
+import pandas as pd
+import numpy as np
+from scipy.stats import pearsonr
+from interpreTS.core.features.feature_correlation_coeffcient import calculate_correlation_coefficient  
+# Test correlation for two perfectly negatively correlated series
+def test_correlation_perfect_negative():
+    series1 = pd.Series([1, 2, 3, 4, 5])
+    series2 = pd.Series([5, 4, 3, 2, 1])
+    result = calculate_correlation_coefficient(series1, series2)
+    assert result == -1.0, f"Expected -1.0, but got {result}"
+
+# Test correlation for two perfectly positively correlated series
+def test_correlation_perfect_positive():
+    series1 = pd.Series([1, 2, 3, 4, 5])
+    series2 = pd.Series([1, 2, 3, 4, 5])
+    result = calculate_correlation_coefficient(series1, series2)
+    assert result == 1.0, f"Expected 1.0, but got {result}"
+
+# Test correlation with NaN values using "drop" strategy
+def test_correlation_with_nan_drop():
+    series1 = pd.Series([1, 2, np.nan, 4, 5])
+    series2 = pd.Series([5, 4, 3, np.nan, 1])
+    result = calculate_correlation_coefficient(series1, series2, handle_na="drop")
+    expected = pearsonr([1, 2, 5], [5, 4, 1])[0]
+    assert result == expected, f"Expected {expected}, but got {result}"
+
+# Test correlation with NaN values using "fill_zero" strategy
+def test_correlation_with_nan_fill_zero():
+    series1 = pd.Series([1, 2, np.nan, 4, 5])
+    series2 = pd.Series([5, 4, 3, np.nan, 1])
+    result = calculate_correlation_coefficient(series1, series2, handle_na="fill_zero")
+    expected = pearsonr([1, 2, 0, 4, 5], [5, 4, 3, 0, 1])[0]
+    assert result == expected, f"Expected {expected}, but got {result}"
+
+# Test correlation with NaN values using "fill_mean" strategy
+def test_correlation_with_nan_fill_mean():
+    series1 = pd.Series([1, 2, np.nan, 4, 5])
+    series2 = pd.Series([5, 4, 3, np.nan, 1])
+    series1_filled = series1.fillna(series1.mean())
+    series2_filled = series2.fillna(series2.mean())
+    result = calculate_correlation_coefficient(series1, series2, handle_na="fill_mean")
+    expected = pearsonr(series1_filled, series2_filled)[0]
+    assert result == expected, f"Expected {expected}, but got {result}"
+
+# Test correlation with empty series
+def test_correlation_empty_series():
+    series1 = pd.Series([])
+    series2 = pd.Series([])
+    with pytest.raises(ValueError, match="One or both of the time series are empty after preprocessing."):
+        calculate_correlation_coefficient(series1, series2)
+
+# Test correlation with unequal length series
+def test_correlation_unequal_length():
+    series1 = pd.Series([1, 2, 3])
+    series2 = pd.Series([1, 2])
+    with pytest.raises(ValueError, match="The two time series must have the same length."):
+        calculate_correlation_coefficient(series1, series2)
+
+# Test correlation with invalid input types
+def test_correlation_invalid_input():
+    series1 = "invalid"
+    series2 = [1, 2, 3]
+    with pytest.raises(TypeError, match="Inputs must be pandas Series or numpy arrays."):
+        calculate_correlation_coefficient(series1, series2)
+
+# Test correlation with valid numpy array inputs
+def test_correlation_numpy_arrays():
+    series1 = np.array([1, 2, 3, 4, 5])
+    series2 = np.array([5, 4, 3, 2, 1])
+    result = calculate_correlation_coefficient(series1, series2)
+    assert result == -1.0, f"Expected -1.0, but got {result}"
+
+# Test correlation with mixed input types
+def test_correlation_mixed_inputs():
+    series1 = pd.Series([1, 2, 3, 4, 5])
+    series2 = np.array([5, 4, 3, 2, 1])
+    result = calculate_correlation_coefficient(series1, series2)
+    assert result == -1.0, f"Expected -1.0, but got {result}"
