@@ -205,7 +205,21 @@ class FeatureExtractor:
         total_points = 0
 
         time_based_window = isinstance(self.window_size, str)
+
         if time_based_window:
+            if self.sort_column is None:
+                raise ValueError("A 'sort_column' must be specified when using a time-based window.")
+        
+            try:
+                # Check if sort_column is datetime-based
+                sample_point = next(data_stream)  # Get the first data point to check format
+                if not pd.to_datetime(sample_point[self.sort_column], errors='coerce'):
+                    raise ValueError(f"Column '{self.sort_column}' does not contain valid datetime values.")
+                # Put the sample back into the generator stream
+                data_stream = iter([sample_point] + list(data_stream))
+            except Exception as e:
+                raise ValueError(f"Error in validating time-based column: {e}")
+
             try:
                 window_offset = to_offset(self.window_size)
             except ValueError:
