@@ -76,7 +76,7 @@ class FeatureExtractor:
         self.task_manager._validate_parameters(features, feature_params, window_size, stride, id_column, sort_column)
         self.feature_metadata = load_metadata()
 
-    def validate_data_frequency(self, data):
+    def validate_data_frequency(self, grouped_data):
         """
         Validate that data has a consistent and defined frequency if window_size or stride are time-based.
 
@@ -91,17 +91,21 @@ class FeatureExtractor:
             If data frequency is not defined or inconsistent.
         """
         if isinstance(self.window_size, str) or isinstance(self.stride, str):
-            if not isinstance(data.index, pd.DatetimeIndex):
-                raise ValueError(
-                    "Time-based window_size and stride require a time-indexed DataFrame with regular frequency."
-                )
-            if data.index.freq is None:
-                inferred_freq = pd.infer_freq(data.index)
-                if inferred_freq is None:
+            for _, group in grouped_data:
+                if not isinstance(group.index, pd.DatetimeIndex):
                     raise ValueError(
-                        "Data index does not have a defined frequency. Use `.resample()` to align your data."
-                    )
-                data.index.freq = inferred_freq
+                        "Time-based window_size and stride require a time-indexed DataFrame with regular frequency."
+                    )                
+                if group.index.freq is None:
+                    if len(group) < 3:
+                        inferred_freq = None
+                    else:
+                        inferred_freq = pd.infer_freq(group.index)
+                    if inferred_freq is None:
+                        raise ValueError(
+                            "Data index does not have a defined frequency. Use `.resample()` to align your data."
+                        )
+                    group.index.freq = inferred_freq
     
     def head(self, features_df, n=5):
         """
@@ -160,13 +164,13 @@ class FeatureExtractor:
             print("Warning: Input data is empty. Returning an empty DataFrame.")
             return pd.DataFrame()
         
-        self.validate_data_frequency(data)
-
         if self.sort_column:
             data = data.sort_values(by=self.sort_column)
 
         feature_columns = [self.feature_column] if self.feature_column else [col for col in data.columns if col not in {self.id_column, self.sort_column}]
         grouped_data = self.group_data(data)
+
+        self.validate_data_frequency(grouped_data)
 
         if mode == 'dask':
             return self.task_manager._execute_dask(grouped_data, feature_columns, progress_callback)
@@ -226,6 +230,8 @@ class FeatureExtractor:
         if time_based_window:
             if self.sort_column is None:
                 raise ValueError("A 'sort_column' must be specified when using a time-based window.")
+            
+            data_stream = iter(data_stream)
         
             try:
                 # Check if sort_column is datetime-based
