@@ -5,6 +5,7 @@ pytest
 langchain_community
 langchain 
 openai
+streamlit
 scikit-learn
 joblib
 tqdm

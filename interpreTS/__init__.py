@@ -46,6 +46,7 @@ import sys
 import logging
 from packaging import version
 
+
 # Set up logger
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger(__name__)
@@ -59,6 +60,7 @@ required_libraries = {
     "pandas": "1.1.0",
     "numpy": "1.18.0",
     "statsmodels": "0.12.0",
+    "streamlit": None,
     "langchain_community" : None,
     "langchain" : None,
     "openai" : None,
@@ -86,7 +88,7 @@ from .utils.feature_loader import FeatureLoader, Features
 from .utils.data_validation import validate_time_series_data
 from .utils.data_manager import generate_feature_descriptions
 
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 
 __all__ = [
     "FeatureExtractor",
@@ -94,4 +96,5 @@ __all__ = [
     "FeatureLoader",
     "validate_time_series_data",
     "generate_feature_descriptions"
+  #   "start_gui",
 ]
