@@ -54,14 +54,27 @@ class TaskManager:
             isinstance(window_size, str) or
             np.isnan(window_size)
         ):
-            raise ValueError("Window size must  be one of the following: "
+            raise ValueError("Window size must be one of the following: "
                 "a positive integer (number of samples), a time-based string (e.g., '1s', '5min', '1h'), or np.nan."
             )
         if isinstance(window_size, str):
             try:
-                to_offset(window_size)
-            except ValueError:
-                raise ValueError(f"Invalid window size format: {window_size}. Accepted formats are for example: '1s', '5min', '0.5h', '1d', '1w'.")
+                offset = to_offset(window_size)
+                if not hasattr(offset, "nanos"):
+                    raise ValueError(
+                        f"Unsupported format: {window_size}. '{type(offset).__name__}' is a non-fixed frequency. "
+                        "Please use a fixed frequency like '1s', '5min', '0.5h', '1d', '1d1h'."
+                    )
+            except ValueError as e:
+                if "is a non-fixed frequency" in str(e):
+                    raise ValueError(
+                        f"Unsupported format: {window_size}. '{type(offset).__name__}' is a non-fixed frequency. "
+                        "Please use a fixed frequency like '1s', '5min', '0.5h', '1d', '1d1h'."
+                    )
+                raise ValueError(
+                    f"Invalid window size format: {window_size}. Accepted formats are for example: '1s', '5min', '0.5h', '1d', '1d1h'."
+                )
+            
         if not (
             isinstance(stride, int) and stride > 0 or
             isinstance(stride, str)
@@ -72,9 +85,20 @@ class TaskManager:
             )
         if isinstance(stride, str):
             try:
-                to_offset(stride)
-            except ValueError:
-                raise ValueError(f"Invalid stride format: {stride}. Accepted formats are for example: '1s', '5min', '0.5h', '1d', '1w'.")
+                offset = to_offset(stride)
+                if not hasattr(offset, "nanos"):
+                    raise ValueError(
+                        f"Unsupported format: {stride}. '{type(offset).__name__}' is a non-fixed frequency. "
+                        "Please use a fixed frequency like '1s', '5min', '0.5h', '1d', '1d1h'."
+                    )
+            except ValueError as e:
+                if "is a non-fixed frequency" in str(e):
+                    raise ValueError(
+                        f"Unsupported format: {stride}. '{type(offset).__name__}' is a non-fixed frequency. "
+                        "Please use a fixed frequency like '1s', '5min', '0.5h', '1d', '1d1h'."
+                    )
+                raise ValueError(f"Invalid stride format: {stride}. Accepted formats are for example: '1s', '5min', '0.5h', '1d', '1d1h'.")
+                
         if id_column is not None and not isinstance(id_column, str):
             raise ValueError("ID column must be a string or None.")
         if sort_column is not None and not isinstance(sort_column, str):

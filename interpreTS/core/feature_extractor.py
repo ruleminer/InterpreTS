@@ -26,13 +26,23 @@ class FeatureExtractor:
             The size of the window for feature extraction. 
             - np.nan (entire series is used as a single window),
             - int (number of samples in the window),
-            - str (time-based format, e.g., '1s', '5min')
+            - str (time-based format).
             Default is np.nan.
+            If a string is provided, it must follow a fixed frequency format. 
+            Supported formats include:
+                - '1s' for 1 second
+                - '5min' for 5 minutes
+                - '0.5h' for 30 minutes
+                - '1h' for 1 hour
+                - '1d' for 1 day
+                - A combination of time units, e.g., '1h15min' for 1 hour and 15 minutes.
+            Only fixed frequencies are allowed. The window size cannot be a non-fixed frequency, such as business days ('1B') or other irregular intervals.
         stride : int or str, optional
             The step size for moving the window. Can be:
             - int (number of samples to shift),
-            - str (time-based format, e.g., '1s', '5min').
+            - str (time-based format).
             Default is 1.
+            If a string is provided, it must follow the same fixed frequency format as the `window_size`.
         id_column : str, optional
             The name of the column used to identify different time series.
         sort_column : str, optional
