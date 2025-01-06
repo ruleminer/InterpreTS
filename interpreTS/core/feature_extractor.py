@@ -78,7 +78,90 @@ class FeatureExtractor:
         if len(features_df) < n:
             print(f"Warning: Only {len(features_df)} rows available in DataFrame.")
         return features_df.head(n)
+    def _generate_tasks(self, grouped_data, feature_columns):
+        """
+        Generate tasks for feature extraction.
 
+        Parameters
+        ----------
+        grouped_data : iterable
+            Grouped data from `group_data`.
+        feature_columns : list
+            List of columns for which features will be extracted.
+
+        Returns
+        -------
+        list
+            A list of tasks for processing.
+        """
+        tasks = []
+
+        for group_key, group_data in grouped_data:
+            for feature_name in self.features:
+                feature_info = self.feature_functions[feature_name]
+                function = feature_info['function']
+                requires_pair = feature_info.get('requires_pair', False)
+
+                if requires_pair:
+                    # Generate tasks for all pairs of feature columns
+                    for col1 in feature_columns:
+                        for col2 in feature_columns:
+                            if col1 != col2:  # Exclude self-pairs
+                                tasks.append({
+                                    'function': function,
+                                    'params': self.feature_params.get(feature_name, {}),
+                                    'data': group_data,
+                                    'columns': (col1, col2),
+                                    'group_key': group_key
+                                })
+                else:
+                    # Generate tasks for single columns
+                    for col in feature_columns:
+                        tasks.append({
+                            'function': function,
+                            'params': self.feature_params.get(feature_name, {}),
+                            'data': group_data,
+                            'columns': (col,),
+                            'group_key': group_key
+                        })
+
+        return tasks
+
+    def _process_window(self, window_data, feature_columns):
+        """
+        Process a single window of data to extract features.
+
+        Parameters
+        ----------
+        window_data : pd.DataFrame
+            A DataFrame representing the data for a single window.
+        feature_columns : list
+            List of columns for which features will be calculated.
+
+        Returns
+        -------
+        dict
+            A dictionary of calculated features.
+        """
+        results = {}
+
+        for feature_name in self.features:
+            feature_info = self.feature_functions[feature_name]
+            function = feature_info['function']
+            requires_pair = feature_info.get('requires_pair', False)
+
+            if requires_pair:
+                for col1 in feature_columns:
+                    for col2 in feature_columns:
+                        if col1 != col2:
+                            feature_key = f"{feature_name}_{col1}_vs_{col2}"
+                            results[feature_key] = function(window_data[col1], window_data[col2], **self.feature_params.get(feature_name, {}))
+            else:
+                for col in feature_columns:
+                    feature_key = f"{feature_name}_{col}"
+                    results[feature_key] = function(window_data[col], **self.feature_params.get(feature_name, {}))
+
+        return results
     def extract_features(self, data, progress_callback=None, mode='sequential', n_jobs=-1):
         """
         Extract features from a time series dataset.
