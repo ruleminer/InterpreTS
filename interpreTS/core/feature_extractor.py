@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 from pandas.tseries.frequencies import to_offset
-
 from ..utils.feature_loader import Features
 from ..utils.data_manager import load_metadata, load_feature_functions, load_validation_requirements
 from ..utils.task_manager import TaskManager
@@ -121,7 +120,7 @@ class FeatureExtractor:
             self.feature_functions, self.window_size, self.features, self.stride, 
             self.feature_params, self.validation_requirements
         )
-        self.task_manager._validate_parameters(features, feature_params, window_size, stride, id_column, sort_column)
+        self.task_manager._validate_parameters(self.features, self.feature_params, self.window_size, self.stride, self.id_column, self.sort_column)
         self.feature_metadata = load_metadata()
 
     def validate_data_frequency(self, grouped_data):
