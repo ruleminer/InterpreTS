@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 import numpy as np
-from interpreTS.core.features.variability_in_sub_periods import calculate_variability_in_sub_periods
+from interpreTS.core.features.feature_variability_in_sub_periods import calculate_variability_in_sub_periods
 
 # Test for evenly spaced data with a basic setup
 def test_variability_basic_case():

@@ -1,7 +1,6 @@
 import pytest
 import pandas as pd
 import numpy as np
-from interpreTS.utils.data_validation import validate_time_series_data
 from interpreTS.core.features.feature_peak import calculate_peak  # Adjust module path as necessary
 
 # Test peak calculation for the full series

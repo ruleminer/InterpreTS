@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 import numpy as np
-from interpreTS.core.features.variance_change import calculate_change_in_variance
+from interpreTS.core.features.feature_variance_change import calculate_change_in_variance
 
 # Test for basic functionality with evenly spaced data
 def test_change_in_variance_basic_case():

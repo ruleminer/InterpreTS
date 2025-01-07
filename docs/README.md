@@ -60,6 +60,12 @@ Once installed, you can launch the GUI by navigating to the GUI directory,:
     streamlit run gui.py
 ```
 
+4. To upgrate to new version of relase 
+
+ ```bash
+pip install interpreTS --upgrade
+ ```
+
 ## Verifying Installation - Example: Basic Feature Extraction
  Once installed, you can verify the installation by running a simple feature extraction example:
 

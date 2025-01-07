@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 import numpy as np
-from interpreTS.core.features.histogram_dominant import calculate_dominant
+from interpreTS.core.features.feature_histogram_dominant import calculate_dominant
 
 # Test for a basic case with a dominant value
 def test_dominant_basic_case():
