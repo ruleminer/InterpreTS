@@ -111,7 +111,10 @@ class TaskManager:
         dask_tasks = []
 
         for _, group in grouped_data:
-            group_ddf = dd.from_pandas(group, npartitions=4)
+            print(f"Group size: {len(group)}")
+
+            group_ddf = dd.from_pandas(group, npartitions=max(1, len(group) // 1000))
+            # window_size = self.window_size if not pd.isna(self.window_size) else len(group)
             window_size = self._convert_window_to_observations(self.window_size, group) if not pd.isna(self.window_size) else len(group)
             stride = self._convert_window_to_observations(self.stride, group)
 
@@ -121,9 +124,10 @@ class TaskManager:
 
             meta = pd.DataFrame(columns=[f"{feature}_{col}" for feature in self.features for col in feature_columns])
 
-            dask_tasks.append(group_ddf.map_partitions(
-                lambda partition: self._process_partition(partition, feature_columns, window_size, stride),
-                meta=meta
+            dask_tasks.append(
+                group_ddf.map_partitions(
+                    lambda partition: self._process_partition(partition, feature_columns, window_size, stride),
+                    meta=meta
             ))
 
         with ProgressBar():

@@ -18,19 +18,19 @@ Available imports:
         A function that generates human-readable descriptions for extracted features, aiding interpretability.
         
 Dependencies:
-    - pandas>=1.1.0
-    - numpy>=1.18.0
-    - statsmodels>=0.12.0
-    - langchain_community
-    - langchain 
-    - openai
-    - scikit-learn
-    - joblib
-    - tqdm
-    - dask
-    - nbsphinx
-    - myst-parser
-    - scipy
+    - pandas: 2.1.2
+    - numpy: 1.26.1
+    - statsmodels: 0.14.0
+    - langchain_community: 0.0.17
+    - langchain: 0.1.5
+    - openai: 0.28.0
+    - streamlit: 1.26.0
+    - scikit-learn: 1.4.0
+    - joblib: 1.4.2
+    - tqdm: 4.66.1
+    - dask: 2023.10.1
+    - scipy: 1.11.3
+
     
 Authors:
     - Sławomir Put,
@@ -57,20 +57,18 @@ if sys.version_info < (3, 8):
 
 # Check required dependencies
 required_libraries = {
-    "pandas": "1.1.0",
-    "numpy": "1.18.0",
-    "statsmodels": "0.12.0",
-    "streamlit": None,
-    "langchain_community" : None,
-    "langchain" : None,
-    "openai" : None,
-    "scikit-learn" : None,
-    "joblib" : None,
-    "tqdm" : None,
-    "dask" : None,
-    "nbsphinx" : None,
-    "myst-parser" : None,
-    "scipy" : None
+    "pandas": "2.1.2",
+    "numpy": "1.26.1",
+    "statsmodels": "0.14.0",
+    "langchain_community": "0.0.17",
+    "langchain": "0.1.5",
+    "openai": "0.28.0",
+    "streamlit": "1.26.0",
+    "scikit-learn": "1.4.0",
+    "joblib": "1.4.2",
+    "tqdm": "4.66.1",
+    "dask": "2023.10.1",
+    "scipy": "1.11.3"
 }
 
 for library, min_version in required_libraries.items():
