@@ -38,6 +38,10 @@ class FeatureExtractor:
     Features.SEASONALITY_STRENGTH, Features.TREND_STRENGTH
     ]
     
+    CAN_USE_NAN = [
+    Features.MISSING_POINTS, Features.PEAK, Features.SPIKENESS, Features.TROUGH, Features.SEASONALITY_STRENGTH
+    ]
+    
     def __init__(self, features=None, feature_params=None, window_size=np.nan, stride=1, id_column=None, sort_column=None, feature_column=None, group_by=None):
         """
         Initialize the FeatureExtractor with a list of features to calculate and optional parameters for each feature.
@@ -45,7 +49,7 @@ class FeatureExtractor:
         Parameters
         ----------
         features : list of Features constants or str, optional
-            A list of features to calculate, or a keyword ('small', 'big', 'all', 'forML').
+            A list of features to calculate, or a keyword ('small', 'big', 'all', 'for-ML', 'can-use-nan', 'empty').
             Default is None, which calculates the small default feature set.
         feature_params : dict, optional
             Parameters for specific features, where keys are feature names and values are dicts of parameters.
@@ -76,10 +80,14 @@ class FeatureExtractor:
                 self.features = self.DEFAULT_FEATURES_BIG
             elif features.lower() == 'all':
                 self.features = self.FEATURES_ALL
-            elif features.lower() == 'forml':
+            elif features.lower() == 'for-ml':
                 self.features = self.FOR_ML
+            elif features.lower() == 'can-use-nan':
+                self.features = self.FOR_ML
+            elif features.lower() == 'empty':
+                self.features = []
             else:
-                raise ValueError(f"Invalid feature keyword '{features}'. Accepted values are: 'default-small', 'default-big', 'all', 'forML'.")
+                raise ValueError(f"Invalid feature keyword '{features}'. Accepted values are: 'default-small', 'default-big', 'all', 'for-ML', 'can-use-nan', 'empty'.")
         else:
             self.features = features if features is not None else self.DEFAULT_FEATURES_SMALL
 
