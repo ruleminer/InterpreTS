@@ -9,3 +9,4 @@ joblib
 tqdm
 dask
 scipy
+dask[dataframe]
