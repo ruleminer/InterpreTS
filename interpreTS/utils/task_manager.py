@@ -104,15 +104,13 @@ class TaskManager:
         if sort_column is not None and not isinstance(sort_column, str):
             raise ValueError("Sort column must be a string or None.")
 
-    def _execute_dask(self, grouped_data, feature_columns, progress_callback):
+    def _execute_dask(self, grouped_data, feature_columns):
         """
         Execute feature extraction using Dask.
         """
         dask_tasks = []
 
         for _, group in grouped_data:
-            print(f"Group size: {len(group)}")
-
             group_ddf = dd.from_pandas(group, npartitions=max(1, len(group) // 1000))
             # window_size = self.window_size if not pd.isna(self.window_size) else len(group)
             window_size = self._convert_window_to_observations(self.window_size, group) if not pd.isna(self.window_size) else len(group)

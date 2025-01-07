@@ -177,7 +177,7 @@ class FeatureExtractor:
         self.validate_data_frequency(grouped_data)
 
         if mode == 'dask':
-            return self.task_manager._execute_dask(grouped_data, feature_columns, progress_callback)
+            return self.task_manager._execute_dask(grouped_data, feature_columns)
 
         tasks = self.task_manager._generate_tasks(grouped_data, feature_columns)
         total_steps = len(tasks)
