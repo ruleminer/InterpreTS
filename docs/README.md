@@ -53,6 +53,12 @@ pip install -r requirements.txt
  ```bash
 pip install .
  ```
+## GUI
+Once installed, you can launch the GUI by navigating to the GUI directory,:
+```bash 
+    cd interpreTS/core/gui
+    streamlit run gui.py
+```
 
 4. To upgrate to new version of relase 
 

@@ -33,8 +33,8 @@ Projekt zrealizował szereg kluczowych celów:
 
 1. Stworzono bibliotekę w języku Python umożliwiającą automatyczną ekstrakcję cech z szeregów czasowych, zaimplementowano 30 cech.  
 2. Opracowano mechanizmy pozwalające na uruchamianie obliczeń w środowiskach rozproszonych, za pocą Dash.  
-3. Dodano funkcjonalności do interpretowania zaimplementowanych cech, obsłyga streamimgu, presonalizowanie listy cech w Ekstraktrze.
-4. Zaprojektowano i wdrożono intuicyjny interfejs graficzny działający w przeglądarce internetowej, umożliwiający przetwarzanie danych bez konieczności pisania kodu, za pomocą Strimly.  
+3. Dodano funkcjonalności do interpretowania zaimplementowanych cech, obsłyga streamimgu, presonalizowanie listy cech w Ekstraktorze.
+4. Zaprojektowano i wdrożono intuicyjny interfejs graficzny działający w przeglądarce internetowej, umożliwiający przetwarzanie danych bez konieczności pisania kodu, za pomocą Streamlit.   
 5. Dokonano ewaluacji narzędzia, wykorzystując benchmarkowe zbiory danych do porównania efektywności i jakości w stosunku do istniejących bibliotek, takich jak `tsfresh`.  
 6. Udokumentowano i opublikowano wyniki w postaci repozytorium na GitHub oraz pakietu w repozytorium PyPI. Stworzono pełną dokumentację projektu za pomocą Sphinx.
 
