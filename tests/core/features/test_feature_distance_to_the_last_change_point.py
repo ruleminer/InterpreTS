@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 import numpy as np
-from features.feature_distance_to_the_last_change_point import calculate_distance_to_last_trend_change
+from interpreTS.core.features.feature_distance_to_the_last_change_point import calculate_distance_to_last_trend_change
 
 # Test a basic case with one trend change
 def test_trend_change_basic_case():
