@@ -14,6 +14,7 @@ Contents:
    Feature_Extractors
    Tutorials
    API_Documentation
+   gui
 
 **Quickstart**:
 To install the library, run:
