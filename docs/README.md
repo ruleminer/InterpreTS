@@ -54,6 +54,12 @@ pip install -r requirements.txt
 pip install .
  ```
 
+4. To upgrate to new version of relase 
+
+ ```bash
+pip install interpreTS --upgrade
+ ```
+
 ## Verifying Installation - Example: Basic Feature Extraction
  Once installed, you can verify the installation by running a simple feature extraction example:
 

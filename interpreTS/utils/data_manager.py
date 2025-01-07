@@ -4,14 +4,14 @@ from ..core.features.feature_entropy import calculate_entropy
 from ..core.features.feature_stability import calculate_stability
 from ..core.features.feature_length import calculate_length
 from ..core.features.feature_mean import calculate_mean
-from ..core.features.seasonality_strength import calculate_seasonality_strength
+from ..core.features.feature_seasonality_strength import calculate_seasonality_strength
 from ..core.features.feature_variance import calculate_variance
 from ..core.features.feature_peak import calculate_peak
 from ..core.features.feature_trough import calculate_trough
 from ..core.features.feature_heterogeneity import calculate_heterogeneity
 from ..core.features.feature_absolute_energy import calculate_absolute_energy
 from ..core.features.feature_missing_points import calculate_missing_points
-from ..core.features.distance_to_the_last_change_point import calculate_distance_to_last_trend_change
+from ..core.features.feature_distance_to_the_last_change_point import calculate_distance_to_last_trend_change
 from ..core.features.feature_above_9th_decile import calculate_above_9th_decile
 from ..core.features.feature_below_1st_decile import calculate_below_1st_decile
 from ..core.features.feature_binarize_mean import calculate_binarize_mean
@@ -20,12 +20,12 @@ from ..core.features.feature_flat_spots import calculate_flat_spots
 from ..core.features.feature_outliers_iqr import calculate_outliers_iqr
 from ..core.features.feature_outliers_std import calculate_outliers_std
 from ..core.features.feature_std_1st_der import calculate_std_1st_der
-from ..core.features.histogram_dominant import calculate_dominant
-from ..core.features.mean_change import calculate_mean_change
-from ..core.features.trend_strength import calculate_trend_strength
+from ..core.features.feature_histogram_dominant import calculate_dominant
+from ..core.features.feature_mean_change import calculate_mean_change
+from ..core.features.feature_trend_strength import calculate_trend_strength
 from ..core.features.feature_significant_changes import calculate_significant_changes
-from ..core.features.variability_in_sub_periods import calculate_variability_in_sub_periods
-from ..core.features.variance_change import calculate_change_in_variance
+from ..core.features.feature_variability_in_sub_periods import calculate_variability_in_sub_periods
+from ..core.features.feature_variance_change import calculate_change_in_variance
 from ..core.features.feature_linearity import calculate_linearity
 
 def load_metadata():

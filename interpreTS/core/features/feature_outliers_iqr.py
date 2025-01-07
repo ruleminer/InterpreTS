@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-from interpreTS.utils.data_validation import validate_time_series_data
 
 def calculate_outliers_iqr(data, training_data, epsilon=1e-6):
     """
