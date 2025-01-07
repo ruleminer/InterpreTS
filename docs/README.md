@@ -12,19 +12,17 @@
 
 ## Requirements
  - Python 3.8 or above
- - `pandas>=1.1.0`
- - `numpy>=1.18.0`
- - `statsmodels`
- - `langchain_community`
- - `langchain`
- - `openai`
- - `scikit-learn`
- - `joblib`
- - `tqdm`
- - `dask`
- - `nbsphinx`
- - `myst-parser`
- - `scipy`
+ - `pandas==2.1.2`
+ - `numpy==1.26.1`
+ - `statsmodels==0.14.0`
+ - `langchain_community==0.0.17`
+ - `langchain==0.1.5`
+ - `openai==0.28.0`
+ - `streamlit==1.26.0`
+ - `joblib==1.4.2`
+ - `tqdm==4.66.1`
+ - `dask==2023.10.1`
+ - `scipy==1.11.3`
 
 ## Installation Guide
  Follow these steps to install InterpreTS and its dependencies:
@@ -98,7 +96,6 @@ data = pd.DataFrame({
 # Initialize the FeatureExtractor
 feature_extractor = FeatureExtractor(
 features=[Features.ENTROPY],
-feature_params={Features.ENTROPY: {'bins': 2}},  # Specify parameters for entropy
 feature_column="value",
 id_column="id",
 window_size=5,  # Rolling window size

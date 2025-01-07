@@ -38,6 +38,7 @@ class TaskManager:
         """
         available_features = FeatureLoader.available_features()
 
+        # Validate features
         if features is not None:
             if not isinstance(features, list):
                 raise ValueError("Features must be a list or None.")
@@ -47,63 +48,74 @@ class TaskManager:
                     f"The following features are invalid or not implemented: {invalid_features}. "
                     f"Available features are: {available_features}."
                 )
+
+        # Validate feature_params
         if feature_params is not None and not isinstance(feature_params, dict):
             raise ValueError("Feature parameters must be a dictionary or None.")
-        if not (
-            isinstance(window_size, int) and window_size > 0 or
-            isinstance(window_size, str) or
-            np.isnan(window_size)
-        ):
-            raise ValueError("Window size must be one of the following: "
-                "a positive integer (number of samples), a time-based string (e.g., '1s', '5min', '1h'), or np.nan."
-            )
-        if isinstance(window_size, str):
-            try:
-                offset = to_offset(window_size)
-                if not hasattr(offset, "nanos"):
-                    raise ValueError(
-                        f"Unsupported format: {window_size}. '{type(offset).__name__}' is a non-fixed frequency. "
-                        "Please use a fixed frequency like '1s', '5min', '0.5h', '1d', '1d1h'."
-                    )
-            except ValueError as e:
-                if "is a non-fixed frequency" in str(e):
-                    raise ValueError(
-                        f"Unsupported format: {window_size}. '{type(offset).__name__}' is a non-fixed frequency. "
-                        "Please use a fixed frequency like '1s', '5min', '0.5h', '1d', '1d1h'."
-                    )
-                raise ValueError(
-                    f"Invalid window size format: {window_size}. Accepted formats are for example: '1s', '5min', '0.5h', '1d', '1d1h'."
-                )
-            
-        if not (
-            isinstance(stride, int) and stride > 0 or
-            isinstance(stride, str)
-        ):
-            raise ValueError(
-                "Stride must be one of the following: "
-                "a positive integer (number of samples) or a time-based string (e.g., '1s', '5min', '1h')."
-            )
-        if isinstance(stride, str):
-            try:
-                offset = to_offset(stride)
-                if not hasattr(offset, "nanos"):
-                    raise ValueError(
-                        f"Unsupported format: {stride}. '{type(offset).__name__}' is a non-fixed frequency. "
-                        "Please use a fixed frequency like '1s', '5min', '0.5h', '1d', '1d1h'."
-                    )
-            except ValueError as e:
-                if "is a non-fixed frequency" in str(e):
-                    raise ValueError(
-                        f"Unsupported format: {stride}. '{type(offset).__name__}' is a non-fixed frequency. "
-                        "Please use a fixed frequency like '1s', '5min', '0.5h', '1d', '1d1h'."
-                    )
-                raise ValueError(f"Invalid stride format: {stride}. Accepted formats are for example: '1s', '5min', '0.5h', '1d', '1d1h'.")
-                
+
+        # Validate window_size
+        TaskManager._validate_time_or_numeric_parameter(
+            window_size, "window_size", allow_nan=True
+        )
+
+        # Validate stride
+        TaskManager._validate_time_or_numeric_parameter(
+            stride, "stride", allow_nan=False
+        )
+
+        # Validate id_column
         if id_column is not None and not isinstance(id_column, str):
             raise ValueError("ID column must be a string or None.")
+
+        # Validate sort_column
         if sort_column is not None and not isinstance(sort_column, str):
             raise ValueError("Sort column must be a string or None.")
 
+    @staticmethod
+    def _validate_time_or_numeric_parameter(param, param_name, allow_nan):
+        """
+        Validate a parameter that can be either a numeric value or a time-based string.
+
+        Parameters
+        ----------
+        param : int, float, str, or None
+            The parameter to validate.
+        param_name : str
+            Name of the parameter (for error messages).
+        allow_nan : bool
+            Whether to allow NaN as a valid value.
+
+        Raises
+        ------
+        ValueError
+            If the parameter is invalid.
+        """
+        from pandas.tseries.frequencies import to_offset
+
+        if isinstance(param, (int, float)):
+            if param <= 0:
+                raise ValueError(f"{param_name} must be a positive number.")
+        elif isinstance(param, str):
+            try:
+                offset = to_offset(param)
+                if not hasattr(offset, "nanos"):
+                    raise ValueError(
+                        f"Unsupported format: {param}. '{type(offset).__name__}' is a non-fixed frequency. "
+                        f"Please use a fixed frequency like '1s', '5min', '0.5h', '1d', '1d1h'."
+                    )
+            except ValueError:
+                raise ValueError(
+                    f"Invalid {param_name} format: {param}. Accepted formats are for example: '1s', '5min', '0.5h', '1d', '1d1h'."
+                )
+        elif allow_nan and isinstance(param, float) and np.isnan(param):
+            pass  # Allow NaN if specified
+        else:
+            raise ValueError(
+                f"{param_name} must be one of the following: "
+                "a positive number, a valid time-based string (e.g., '1s', '5min', '1h'), "
+                f"or {'NaN' if allow_nan else 'not NaN'}."
+            )
+            
     def _execute_dask(self, grouped_data, feature_columns):
         """
         Execute feature extraction using Dask.

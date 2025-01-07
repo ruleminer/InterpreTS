@@ -12,7 +12,6 @@ setup(
         "langchain==0.1.5",
         "openai==0.28.0",
         "streamlit==1.26.0",
-        "scikit-learn==1.4.0",
         "joblib==1.4.2",
         "tqdm==4.66.1",
         "dask==2023.10.1",
