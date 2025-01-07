@@ -58,20 +58,19 @@ if sys.version_info < (3, 8):
 
 # Check required dependencies
 required_libraries = {
-    "pandas": None,
-    "numpy": None,
-    "statsmodels": None,
-    "langchain_community": None,
-    "langchain": None,
-    "openai": None,
-    "streamlit": None,
-    "scikit-learn": None,
-    "joblib": None,
-    "tqdm": None,
-    "dask": None,
-    "scipy": None,
-    "pillow": None,
-    "InterpreTS": None
+    "pandas": "2.2.3",
+    "numpy": "2.2.1",
+    "statsmodels": "0.14.4",
+    "langchain_community": "0.3.14",
+    "langchain": "0.3.14",
+    "openai": "1.59.4",
+    "streamlit": "1.41.1",
+    "scikit-learn": "1.6.0",
+    "joblib": "1.4.2",
+    "tqdm": "4.67.1",
+    "dask": "2024.12.1",
+    "scipy": "1.15.0",
+    "pillow": "11.1.0"
 }
 
 for library, min_version in required_libraries.items():
