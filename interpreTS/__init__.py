@@ -30,6 +30,8 @@ Dependencies:
     - tqdm: 4.66.1
     - dask: 2023.10.1
     - scipy: 1.11.3
+    - pillow: 9.5.0
+    - zlib
 
     
 Authors:
@@ -68,7 +70,9 @@ required_libraries = {
     "joblib": "1.4.2",
     "tqdm": "4.66.1",
     "dask": "2023.10.1",
-    "scipy": "1.11.3"
+    "scipy": "1.11.3",
+    "pillow": "9.5.0",
+    "zlib": None
 }
 
 for library, min_version in required_libraries.items():
