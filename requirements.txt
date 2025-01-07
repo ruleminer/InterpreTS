@@ -10,3 +10,4 @@ joblib==1.4.2
 tqdm==4.66.1
 dask==2023.10.1
 scipy==1.11.3
+pillow==9.5.0
