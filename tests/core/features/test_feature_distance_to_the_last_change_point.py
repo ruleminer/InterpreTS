@@ -1,8 +1,7 @@
 import pytest
 import pandas as pd
 import numpy as np
-from interpreTS.utils.data_validation import validate_time_series_data
-from interpreTS.core.features.distance_to_the_last_change_point import calculate_distance_to_last_trend_change
+from features.feature_distance_to_the_last_change_point import calculate_distance_to_last_trend_change
 
 # Test a basic case with one trend change
 def test_trend_change_basic_case():
