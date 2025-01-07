@@ -8,7 +8,7 @@ Get started with these tutorials. In the next pages you can check the case study
    :titlesonly:
 
    Feature Extraction Notebook <notebooks/feature_extraction.ipynb>
-   Feature Peak Notebook <notebooks/feature_peak.ipynb>
+   Basic Usage of interpreTS Library <notebooks/basic_usage.ipynb>
    Classification Notebook <notebooks/classification.ipynb>
    Regression Notebook <notebooks/regression.ipynb>
    Dimensionality Reduction and Clustering <notebooks/dimensionality_reduction_and_clustering.ipynb>
