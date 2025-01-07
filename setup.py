@@ -17,8 +17,7 @@ setup(
         "tqdm==4.66.1",
         "dask==2023.10.1",
         "scipy==1.11.3",
-        "pilllow==9.5.0",
-        "zlib"
+        "pilllow==9.5.0"
     ],
     description="Feature extraction from time series to support the creation of interpretable and explainable predictive models.",
     long_description=open("docs/README.md").read(),
