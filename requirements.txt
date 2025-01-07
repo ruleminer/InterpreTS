@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿pandas==2.1.2
 numpy==1.26.1
 statsmodels==0.14.0
@@ -9,3 +10,18 @@ joblib==1.4.2
 tqdm==4.66.1
 dask==2023.10.1
 scipy==1.11.3
+=======
+﻿pandas==2.2.3
+numpy==2.2.1
+statsmodels==0.14.4
+langchain_community==0.3.14
+langchain==0.3.14
+openai==1.59.4
+streamlit==1.41.1
+scikit-learn==1.6.0
+joblib==1.4.2
+tqdm==4.67.1
+dask==2024.12.1
+scipy==1.15.0
+pillow==11.1.0
+>>>>>>> development

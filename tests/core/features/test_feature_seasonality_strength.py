@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import pytest
-from interpreTS.core.features.seasonality_strength import calculate_seasonality_strength
+from interpreTS.core.features.feature_seasonality_strength import calculate_seasonality_strength
 
 # Test seasonality strength for periodic data
 def test_seasonality_strength_valid_periodic():

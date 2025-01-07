@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 from statsmodels.tsa.stattools import acf
-from interpreTS.utils.data_validation import validate_time_series_data
 
 def calculate_stability(data, max_lag=None):
     """

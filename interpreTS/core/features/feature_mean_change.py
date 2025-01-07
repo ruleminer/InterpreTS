@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-from interpreTS.utils.data_validation import validate_time_series_data
 
 def calculate_mean_change(data, window_size=5):
     """
