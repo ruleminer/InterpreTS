@@ -83,18 +83,27 @@ def test_extract_features_stream(mock_feature_extractor):
     assert len(results) == 0  # Mocked results do not yield any real features
 
 # Test add_custom_feature
-def test_add_custom_feature(mock_feature_extractor):
-    def custom_feature(data, **params):
-        return data.max() - data.min()
-
-    mock_feature_extractor.add_custom_feature(
-        name="range",
-        function=custom_feature,
-        metadata={"level": "easy", "description": "Range of values."}
+def test_add_custom_feature():
+    def custom_feature(data):
+        return data.mean()
+    extractor = FeatureExtractor()
+    data = pd.DataFrame({
+        "id": [1, 1, 2, 2],
+        "time": [1, 2, 1, 2],
+        "value": [10, 20, 30, 40]
+    })
+        
+    extractor.add_custom_feature(
+        name="custom",
+        function=custom_feature
     )
+    
+    features = extractor.extract_features(data)
 
-    assert "range" in mock_feature_extractor.feature_functions
-    assert mock_feature_extractor.feature_metadata["range"]["description"] == "Range of values."
+    
+    assert "custom" in extractor.feature_functions
+    assert not features.empty
+    assert features.columns.__len__() == FeatureExtractor.DEFAULT_FEATURES_SMALL.__len__()*3+3
 
 # Test invalid custom feature addition
 def test_add_invalid_custom_feature(mock_feature_extractor):
@@ -109,3 +118,41 @@ def test_group_features_by_interpretability(mock_feature_extractor):
     groups = mock_feature_extractor.group_features_by_interpretability()
     assert "easy" in groups
     assert isinstance(groups["easy"], list)
+
+def test_add_custom_feature_with_params():
+    def custom_feature(data, param):
+        return param
+    extractor = FeatureExtractor()
+    data = pd.DataFrame({
+        "id": [1, 1, 2, 2],
+        "time": [1, 2, 1, 2],
+        "value": [10, 20, 30, 40]
+    })
+        
+    extractor.add_custom_feature(
+        name="custom",
+        function=custom_feature,
+        params={"param": 5}
+    )
+    
+    features = extractor.extract_features(data)
+
+    
+    assert "custom" in extractor.feature_functions
+    assert extractor.feature_params["custom"] == {"param": 5}
+    assert not features.empty
+    assert features.columns.__len__() == FeatureExtractor.FOR_ML.__len__()*3 + 3
+    
+def test_create_extractor_with_feature_list():
+    extractor = FeatureExtractor(features = "forML")
+    data = pd.DataFrame({
+        "id": [1, 1, 2, 2],
+        "time": [1, 2, 1, 2],
+        "value": [10, 20, 30, 40]
+    })
+        
+    features = extractor.extract_features(data)
+    
+    assert extractor.features.__len__() == FeatureExtractor.FOR_ML.__len__()
+    assert not features.empty
+    assert features.columns.__len__() == FeatureExtractor.FOR_ML.__len__()*3

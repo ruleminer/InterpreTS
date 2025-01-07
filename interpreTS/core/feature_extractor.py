@@ -6,19 +6,47 @@ from ..utils.data_manager import load_metadata, load_feature_functions, load_val
 from ..utils.task_manager import TaskManager
 
 class FeatureExtractor:
-    DEFAULT_FEATURES = [
+    DEFAULT_FEATURES_SMALL = [
         Features.LENGTH, Features.MEAN, Features.VARIANCE, Features.STABILITY,
         Features.ENTROPY, Features.SPIKENESS, Features.SEASONALITY_STRENGTH
     ]
+    
+    DEFAULT_FEATURES_BIG = [
+    Features.ABSOLUTE_ENERGY, Features.BINARIZE_MEAN,
+    Features.CHANGE_IN_VARIANCE, Features.CROSSING_POINTS, Features.DISTANCE_TO_LAST_TREND_CHANGE, Features.DOMINANT,
+    Features.ENTROPY, Features.FLAT_SPOTS, Features.HETEROGENEITY,
+    Features.LINEARITY, Features.LENGTH, Features.MEAN, Features.MISSING_POINTS,
+    Features.PEAK, Features.SIGNIFICANT_CHANGES, Features.SPIKENESS, Features.STABILITY,
+    Features.STD_1ST_DER, Features.TROUGH, Features.VARIANCE, Features.MEAN_CHANGE,
+    Features.SEASONALITY_STRENGTH, Features.TREND_STRENGTH, Features.CHANGE_IN_VARIANCE
+    ]
+    
+    FEATURES_ALL = [
+    Features.ABOVE_9TH_DECILE, Features.BELOW_1ST_DECILE, Features.ABSOLUTE_ENERGY, Features.BINARIZE_MEAN,
+    Features.CHANGE_IN_VARIANCE, Features.CROSSING_POINTS, Features.DISTANCE_TO_LAST_TREND_CHANGE, Features.DOMINANT,
+    Features.ENTROPY, Features.FLAT_SPOTS, Features.HETEROGENEITY,
+    Features.LINEARITY, Features.LENGTH, Features.MEAN, Features.MISSING_POINTS, Features.OUTLIERS_IQR, Features.OUTLIERS_STD,
+    Features.PEAK, Features.SIGNIFICANT_CHANGES, Features.SPIKENESS, Features.STABILITY,
+    Features.STD_1ST_DER, Features.TROUGH, Features.VARIANCE, Features.MEAN_CHANGE,
+    Features.SEASONALITY_STRENGTH, Features.TREND_STRENGTH, Features.VARIABILITY_IN_SUB_PERIODS, Features.CHANGE_IN_VARIANCE
+    ]
 
+    FOR_ML = [
+    Features.ABSOLUTE_ENERGY,Features.BINARIZE_MEAN,Features.DOMINANT,Features.ENTROPY,Features.FLAT_SPOTS,
+    Features.HETEROGENEITY,Features.LINEARITY,Features.LENGTH,Features.MEAN,Features.MISSING_POINTS,Features.PEAK,
+    Features.SIGNIFICANT_CHANGES,Features.SPIKENESS,Features.STABILITY,Features.STD_1ST_DER,Features.TROUGH,Features.VARIANCE,
+    Features.SEASONALITY_STRENGTH, Features.TREND_STRENGTH
+    ]
+    
     def __init__(self, features=None, feature_params=None, window_size=np.nan, stride=1, id_column=None, sort_column=None, feature_column=None, group_by=None):
         """
         Initialize the FeatureExtractor with a list of features to calculate and optional parameters for each feature.
 
         Parameters
         ----------
-        features : list of Features constants, optional
-            A list of features to calculate. Default is None, which calculates all available features.
+        features : list of Features constants or str, optional
+            A list of features to calculate, or a keyword ('small', 'big', 'all', 'forML').
+            Default is None, which calculates the small default feature set.
         feature_params : dict, optional
             Parameters for specific features, where keys are feature names and values are dicts of parameters.
         window_size : int or float, optional
@@ -40,7 +68,21 @@ class FeatureExtractor:
             If any parameter is invalid.
         """        
         self.group_by = group_by
-        self.features = features if features is not None else self.DEFAULT_FEATURES
+
+        if isinstance(features, str):
+            if features.lower() == 'default-small':
+                self.features = self.DEFAULT_FEATURES_SMALL
+            elif features.lower() == 'default-big':
+                self.features = self.DEFAULT_FEATURES_BIG
+            elif features.lower() == 'all':
+                self.features = self.FEATURES_ALL
+            elif features.lower() == 'forml':
+                self.features = self.FOR_ML
+            else:
+                raise ValueError(f"Invalid feature keyword '{features}'. Accepted values are: 'default-small', 'default-big', 'all', 'forML'.")
+        else:
+            self.features = features if features is not None else self.DEFAULT_FEATURES_SMALL
+
         self.feature_params = feature_params if feature_params is not None else {}
         self.window_size = window_size
         self.stride = stride
@@ -52,7 +94,7 @@ class FeatureExtractor:
         self.validation_requirements = load_validation_requirements()
 
         self.task_manager = TaskManager(self.feature_functions, self.window_size, self.features, self.stride, self.feature_params, self.validation_requirements)
-        self.task_manager._validate_parameters(features, feature_params, window_size, stride, id_column, sort_column)
+        self.task_manager._validate_parameters(self.features, self.feature_params, self.window_size, self.stride, self.id_column, self.sort_column)
         self.feature_metadata = load_metadata()
     
     def head(self, features_df, n=5):
@@ -210,9 +252,9 @@ class FeatureExtractor:
             groups[level].append(feature_name)
         return groups
 
-    def add_custom_feature(self, name, function, metadata=None):
+    def add_custom_feature(self, name, function, metadata=None, params=None):
         """
-        Add a custom feature to the FeatureExtractor.
+        Add a custom feature to the FeatureExtractor with optional parameters.
 
         Parameters
         ----------
@@ -224,19 +266,28 @@ class FeatureExtractor:
             A dictionary containing metadata about the feature, such as its interpretability level and description.
             - level (str): Interpretability level ('easy', 'moderate', 'advanced').
             - description (str): Description of the feature.
+        params : dict, optional
+            A dictionary of parameters to be passed to the feature function when it is executed.
 
         Raises
         ------
         ValueError
             If the feature name already exists or the function is not callable.
         """
+        if not hasattr(self, '_local_feature_functions'):
+            self.feature_functions = self.feature_functions.copy()
+            self.features = list(self.features)
+            self.feature_metadata = self.feature_metadata.copy()
+            self.feature_params = self.feature_params.copy()
+
         if name in self.feature_functions:
             raise ValueError(f"Feature '{name}' already exists.")
         if not callable(function):
             raise ValueError("The provided function is not callable.")
-        
+
         self.feature_functions[name] = function
         self.features.append(name)
+        self.feature_params[name] = params or {}
 
         if metadata:
             if 'level' not in metadata or 'description' not in metadata:
@@ -244,4 +295,3 @@ class FeatureExtractor:
             self.feature_metadata[name] = metadata
 
         print(f"Custom feature '{name}' added successfully.")
-
