@@ -1,9 +1,7 @@
 from itertools import groupby
-
 import numpy as np
 import pandas as pd
 
-from interpreTS.utils.data_validation import validate_time_series_data
 
 def calculate_flat_spots(data, window_size=5):
     """
