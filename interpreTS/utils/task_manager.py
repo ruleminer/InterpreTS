@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from pandas.tseries.frequencies import to_offset
 import dask.dataframe as dd
 from joblib import Parallel, delayed
 from dask.diagnostics import ProgressBar
@@ -48,10 +49,56 @@ class TaskManager:
                 )
         if feature_params is not None and not isinstance(feature_params, dict):
             raise ValueError("Feature parameters must be a dictionary or None.")
-        if not (np.isnan(window_size) or (isinstance(window_size, (int, float)) and window_size > 0)):
-            raise ValueError("Window size must be a positive number or NaN.")
-        if not isinstance(stride, int) or stride <= 0:
-            raise ValueError("Stride must be a positive integer.")
+        if not (
+            isinstance(window_size, int) and window_size > 0 or
+            isinstance(window_size, str) or
+            np.isnan(window_size)
+        ):
+            raise ValueError("Window size must be one of the following: "
+                "a positive integer (number of samples), a time-based string (e.g., '1s', '5min', '1h'), or np.nan."
+            )
+        if isinstance(window_size, str):
+            try:
+                offset = to_offset(window_size)
+                if not hasattr(offset, "nanos"):
+                    raise ValueError(
+                        f"Unsupported format: {window_size}. '{type(offset).__name__}' is a non-fixed frequency. "
+                        "Please use a fixed frequency like '1s', '5min', '0.5h', '1d', '1d1h'."
+                    )
+            except ValueError as e:
+                if "is a non-fixed frequency" in str(e):
+                    raise ValueError(
+                        f"Unsupported format: {window_size}. '{type(offset).__name__}' is a non-fixed frequency. "
+                        "Please use a fixed frequency like '1s', '5min', '0.5h', '1d', '1d1h'."
+                    )
+                raise ValueError(
+                    f"Invalid window size format: {window_size}. Accepted formats are for example: '1s', '5min', '0.5h', '1d', '1d1h'."
+                )
+            
+        if not (
+            isinstance(stride, int) and stride > 0 or
+            isinstance(stride, str)
+        ):
+            raise ValueError(
+                "Stride must be one of the following: "
+                "a positive integer (number of samples) or a time-based string (e.g., '1s', '5min', '1h')."
+            )
+        if isinstance(stride, str):
+            try:
+                offset = to_offset(stride)
+                if not hasattr(offset, "nanos"):
+                    raise ValueError(
+                        f"Unsupported format: {stride}. '{type(offset).__name__}' is a non-fixed frequency. "
+                        "Please use a fixed frequency like '1s', '5min', '0.5h', '1d', '1d1h'."
+                    )
+            except ValueError as e:
+                if "is a non-fixed frequency" in str(e):
+                    raise ValueError(
+                        f"Unsupported format: {stride}. '{type(offset).__name__}' is a non-fixed frequency. "
+                        "Please use a fixed frequency like '1s', '5min', '0.5h', '1d', '1d1h'."
+                    )
+                raise ValueError(f"Invalid stride format: {stride}. Accepted formats are for example: '1s', '5min', '0.5h', '1d', '1d1h'.")
+                
         if id_column is not None and not isinstance(id_column, str):
             raise ValueError("ID column must be a string or None.")
         if sort_column is not None and not isinstance(sort_column, str):
@@ -67,7 +114,9 @@ class TaskManager:
             print(f"Group size: {len(group)}")
 
             group_ddf = dd.from_pandas(group, npartitions=max(1, len(group) // 1000))
-            window_size = self.window_size if not pd.isna(self.window_size) else len(group)
+            # window_size = self.window_size if not pd.isna(self.window_size) else len(group)
+            window_size = self._convert_window_to_observations(self.window_size, group) if not pd.isna(self.window_size) else len(group)
+            stride = self._convert_window_to_observations(self.stride, group)
 
             if window_size > len(group):
                 print(f"Warning: Window size ({window_size}) exceeds group length ({len(group)}). Skipping group.")
@@ -77,7 +126,7 @@ class TaskManager:
 
             dask_tasks.append(
                 group_ddf.map_partitions(
-                    lambda partition: self._process_partition(partition, feature_columns, window_size),
+                    lambda partition: self._process_partition(partition, feature_columns, window_size, stride),
                     meta=meta
             ))
 
@@ -86,7 +135,7 @@ class TaskManager:
 
         return dask_result
 
-    def _process_partition(self, partition, feature_columns, window_size):
+    def _process_partition(self, partition, feature_columns, window_size, stride):
         """
         Process a single partition of data to calculate features.
 
@@ -106,7 +155,7 @@ class TaskManager:
         """
         results = []
 
-        for start in range(0, len(partition) - window_size + 1, self.stride):
+        for start in range(0, len(partition) - window_size + 1, stride):
             window = partition.iloc[start : start + window_size]
             results.append(self._process_window(window, feature_columns))
 
@@ -119,13 +168,14 @@ class TaskManager:
         tasks = []
         for _, group in grouped_data:
             group_length = len(group)
-            window_size = group_length if pd.isna(self.window_size) else int(self.window_size)
+            window_size = group_length if pd.isna(self.window_size) else self._convert_window_to_observations(self.window_size, group)
+            stride = self._convert_window_to_observations(self.stride, group)
 
             if window_size > group_length:
                 print(f"Warning: Window size ({window_size}) exceeds group length ({group_length}). Skipping group.")
                 continue
 
-            for start in range(0, group_length - window_size + 1, self.stride):
+            for start in range(0, group_length - window_size + 1, stride):
                 window = group.iloc[start : start + window_size]
                 tasks.append((window, feature_columns))
         return tasks
@@ -211,3 +261,17 @@ class TaskManager:
         requirements = self.validation_requirements.get(feature_name, {'allow_nan': False, 'require_datetime_index': False})
         validate_time_series_data(data, require_datetime_index=requirements['require_datetime_index'], allow_nan=requirements['allow_nan'])
 
+    def _convert_window_to_observations(self, value, data=None):
+        """
+        Converts a symbolic time value into a number of observations, based on the data frequency.
+        """
+        if isinstance(value, (int)):
+            return value  # Return numeric values directly
+
+        if isinstance(value, str):
+            # Convert the symbolic time to a number of observations
+            offset = to_offset(value)
+            freq_in_nanos = pd.to_timedelta(data.index.freq).value
+            return max(1, offset.nanos // freq_in_nanos)
+
+        raise ValueError(f"Invalid window size or stride value: {value}")
