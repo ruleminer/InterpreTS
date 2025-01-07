@@ -5,15 +5,6 @@ setup(
     version="0.4.1",
     packages=find_packages(),
     install_requires=[
-<<<<<<< HEAD
-        "pandas==2.1.2",
-        "numpy==1.26.1",
-        "statsmodels==0.14.0",
-        "langchain_community==0.0.17",
-        "langchain==0.1.5",
-        "openai==0.28.0",
-        "streamlit==1.26.0",
-=======
         "pandas==2.2.3",
         "numpy==2.2.1",
         "statsmodels==0.14.4",
@@ -22,7 +13,6 @@ setup(
         "openai==1.59.4",
         "streamlit==1.41.1",
         "scikit-learn==1.6.0",
->>>>>>> development
         "joblib==1.4.2",
         "tqdm==4.67.1",
         "dask==2024.12.1",
