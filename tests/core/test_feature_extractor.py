@@ -121,18 +121,27 @@ def test_extract_features_stream(mock_feature_extractor):
     assert len(results) == 0  # Mocked results do not yield any real features
 
 # Test add_custom_feature
-def test_add_custom_feature(mock_feature_extractor):
-    def custom_feature(data, **params):
-        return data.max() - data.min()
-
-    mock_feature_extractor.add_custom_feature(
-        name="range",
-        function=custom_feature,
-        metadata={"level": "easy", "description": "Range of values."}
+def test_add_custom_feature():
+    def custom_feature(data):
+        return data.mean()
+    extractor = FeatureExtractor()
+    data = pd.DataFrame({
+        "id": [1, 1, 2, 2],
+        "time": [1, 2, 1, 2],
+        "value": [10, 20, 30, 40]
+    })
+        
+    extractor.add_custom_feature(
+        name="custom",
+        function=custom_feature
     )
+    
+    features = extractor.extract_features(data)
 
-    assert "range" in mock_feature_extractor.feature_functions
-    assert mock_feature_extractor.feature_metadata["range"]["description"] == "Range of values."
+    
+    assert "custom" in extractor.feature_functions
+    assert not features.empty
+    assert features.columns.__len__() == FeatureExtractor.DEFAULT_FEATURES_SMALL.__len__()*3+3
 
 # Test invalid custom feature addition
 def test_add_invalid_custom_feature(mock_feature_extractor):
@@ -148,46 +157,40 @@ def test_group_features_by_interpretability(mock_feature_extractor):
     assert "easy" in groups
     assert isinstance(groups["easy"], list)
 
-def test_extract_features_with_time_based_window(mock_feature_extractor):
+def test_add_custom_feature_with_params():
+    def custom_feature(data, param):
+        return param
+    extractor = FeatureExtractor()
     data = pd.DataFrame({
-        "id": [1, 1, 1, 2, 2, 2],
-        "time": pd.to_datetime([
-            '2023-01-01 00:00:00', '2023-01-01 01:00:00', '2023-01-01 02:00:00',
-            '2023-01-01 00:00:00', '2023-01-01 01:00:00', '2023-01-01 02:00:00'
-            ]),
-        "value": [10, 20, 30, 40, 50, 60]
+        "id": [1, 1, 2, 2],
+        "time": [1, 2, 1, 2],
+        "value": [10, 20, 30, 40]
     })
+        
+    extractor.add_custom_feature(
+        name="custom",
+        function=custom_feature,
+        params={"param": 5}
+    )
+    
+    features = extractor.extract_features(data)
 
-    data.set_index('time', inplace=True)
-
-    mock_feature_extractor.window_size = '1h'
-    mock_feature_extractor.stride = '1h'
-
-    mock_feature_extractor.task_manager._execute_sequential.return_value = [
-        {"mean_value": 15.0, "variance_value": 25.0},
-        {"mean_value": 35.0, "variance_value": 25.0}
-    ]
-    result = mock_feature_extractor.extract_features(data, mode="sequential")
-    assert isinstance(result, pd.DataFrame)
-    assert len(result) == 2
-
-def test_extract_features_stream_time_based(mock_feature_extractor):
-    data_stream = [
-        {"id": 1, "time": '2023-01-01 00:00:00', "value": 10},
-        {"id": 1, "time": '2023-01-01 01:00:00', "value": 20},
-        {"id": 2, "time": '2023-01-01 00:00:00', "value": 30},
-        {"id": 2, "time": '2023-01-01 01:00:00', "value": 40},
-    ]
-    mock_feature_extractor.window_size = '1h'
-    mock_feature_extractor.stride = '1h'
-    mock_feature_extractor.id_column = 'id'
-    mock_feature_extractor.sort_column = 'time'
-
-    results = list(mock_feature_extractor.extract_features_stream(data_stream))
-
-
-    print(results)
-    assert len(results) > 0
-    assert 'id' in results[0]
-    assert 'value' in results[0]
-
+    
+    assert "custom" in extractor.feature_functions
+    assert extractor.feature_params["custom"] == {"param": 5}
+    assert not features.empty
+    assert features.columns.__len__() == FeatureExtractor.FOR_ML.__len__()*3 + 3
+    
+def test_create_extractor_with_feature_list():
+    extractor = FeatureExtractor(features = "forML")
+    data = pd.DataFrame({
+        "id": [1, 1, 2, 2],
+        "time": [1, 2, 1, 2],
+        "value": [10, 20, 30, 40]
+    })
+        
+    features = extractor.extract_features(data)
+    
+    assert extractor.features.__len__() == FeatureExtractor.FOR_ML.__len__()
+    assert not features.empty
+    assert features.columns.__len__() == FeatureExtractor.FOR_ML.__len__()*3

@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 import numpy as np
-from interpreTS.core.features.mean_change import calculate_mean_change
+from interpreTS.core.features.feature_mean_change import calculate_mean_change
 
 # Test for a valid time series input
 def test_mean_change_valid_series():

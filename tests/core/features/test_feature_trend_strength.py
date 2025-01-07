@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 import numpy as np
-from interpreTS.core.features.trend_strength import calculate_trend_strength
+from interpreTS.core.features.feature_trend_strength import calculate_trend_strength
 
 # Test for a perfect increasing trend
 def test_trend_strength_increasing_data():

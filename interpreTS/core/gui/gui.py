@@ -1,25 +1,25 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
-import time
-from interpreTS.core.feature_extractor import FeatureExtractor, Features
-from interpreTS.core.time_series_data import TimeSeriesData
+from interpreTS.core.feature_extractor import FeatureExtractor
+from interpreTS.utils.feature_loader import FeatureLoader
 
 class InterpreTSApp:
     def __init__(self):
-        extractor = FeatureExtractor()
+        loader = FeatureLoader()
         self.data = None
         self.time_column = None
         self.value_columns = []  # Allow for multiple value columns
         self.selected_features = []
-        self.feature_options = extractor.generate_feature_options()
+        self.feature_options = loader.generate_feature_options()
+        self.sep = ','  # Default separator
 
     def configure_page(self):
         st.set_page_config(page_title="InterpreTS Feature Extraction", layout="wide")
         st.title("InterpreTS Feature Extraction GUI")
         st.write("This app allows you to upload a CSV file containing time series data and extract interpretable features using the InterpreTS library.")
         st.write("""
-                The CSV file should have at least two columns: one for time and one (or more) for values. (the order doesn't matter because they can be switched). Example format:
+                The CSV file should have at least two columns: one for time and one (or more) for values. 
+                The order doesn't matter because they can be switched. Example format:
                 """)
         
         # Create a sample DataFrame for better visualization
@@ -33,14 +33,22 @@ class InterpreTSApp:
         st.table(sample_data)
 
     def sidebar_upload(self):
+        # Step 1: Select CSV separator
         st.sidebar.header("Step 1: Upload CSV File")
+        self.sep = st.sidebar.selectbox("Select CSV Separator", [",", ";", "tab", "space"], index=0)
+
+        # File uploader
         uploaded_file = st.sidebar.file_uploader("Choose a CSV file containing time series data", type=["csv"])
         if uploaded_file is not None:
             try:
-                self.data = pd.read_csv(uploaded_file)
+                if self.sep == "tab":
+                    self.sep = "\t"
+                elif self.sep == "space":
+                    self.sep = " "
+                self.data = pd.read_csv(uploaded_file, sep=self.sep)
                 return True
             except Exception as e:
-                st.error(f"Error reading the file: {e}")
+                st.error(f"Error reading the file with the selected separator '{self.sep}': {e}")
         return False
 
     def preprocess_data(self):
@@ -106,7 +114,7 @@ class InterpreTSApp:
             self.value_columns = st.sidebar.multiselect(
                 "Select Value Columns",
                 options=[col for col in self.data.columns if col != self.time_column],
-                default=[self.data.columns[1]]
+                default=[self.data.columns[1]] if len(self.data.columns) > 1 else []
             )
 
             # Validate columns
@@ -147,7 +155,9 @@ class InterpreTSApp:
                             progress_bar.progress(progress)
                             status_text.text(f"Progress: {progress}%")
 
-                        feature_results = {}
+                        # Dictionary to store feature DataFrames for each value column
+                        feature_dfs = []
+
                         for column in self.value_columns:
                             extractor = FeatureExtractor(
                                 features=[self.feature_options[feat] for feat in self.selected_features],
@@ -165,15 +175,30 @@ class InterpreTSApp:
                                 mode='sequential'
                             )
 
-                            feature_results[column] = feature_df
+                            # Optional: Prefix feature columns to distinguish them by column name
+                            # e.g., 'Mean' becomes 'colname_Mean'
+                            feature_df = feature_df.add_prefix(f"{column}_")
+
+                            feature_dfs.append(feature_df)
 
                         progress_bar.progress(100)
                         st.success("Features extracted successfully!")
 
-                        # Display each column's features in a separate table
-                        for column, feature_df in feature_results.items():
-                            st.subheader(f"Extracted Features for Column: {column}")
-                            st.dataframe(feature_df)
+                        # Combine all feature DataFrames side-by-side
+                        combined_features = pd.concat(feature_dfs, axis=1)
+
+                        # Display only a preview of the combined table (e.g., first 50 rows)
+                        st.subheader("Extracted Features (Preview)")
+                        st.dataframe(combined_features.head(50))
+
+                        # Allow user to download the entire combined table as a CSV
+                        csv_data = combined_features.to_csv(index=False).encode('utf-8')
+                        st.download_button(
+                            label="Download Full Extracted Features as CSV",
+                            data=csv_data,
+                            file_name="extracted_features.csv",
+                            mime="text/csv"
+                        )
 
                     except Exception as e:
                         st.error(f"An error occurred while extracting features: {e}")
@@ -191,7 +216,6 @@ class InterpreTSApp:
                 stride = self.stride_slider()
                 st.write(f"Selected window size: {window_size}")
                 st.write(f"Selected stride size: {stride}")
-
 
                 if self.select_time_value_columns():
                     self.select_features()
