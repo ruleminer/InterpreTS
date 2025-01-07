@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
-from interpreTS.utils.data_validation import validate_time_series_data
 
 def calculate_linearity(data, normalize=True, use_derivative=True):
     """

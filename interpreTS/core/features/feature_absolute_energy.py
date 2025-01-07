@@ -1,5 +1,4 @@
 import numpy as np
-from interpreTS.utils.data_validation import validate_time_series_data
 
 def calculate_absolute_energy(data, start=None, end=None):
     """

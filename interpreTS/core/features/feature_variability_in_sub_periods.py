@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-from interpreTS.utils.data_validation import validate_time_series_data
 
 def calculate_variability_in_sub_periods(data, window_size, step_size=None, ddof=0):
     """
