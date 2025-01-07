@@ -16,6 +16,7 @@ class TaskManager:
         self.stride = stride
         self.feature_params = feature_params
         self.validation_requirements = validation_requirements
+        self.warning_registry = set()
     
     def _calculate_feature(self, feature_name, feature_data, params):
         """
@@ -249,7 +250,11 @@ class TaskManager:
                     else:
                         extracted_features[f"{feature_name}_{col}"] = self._calculate_feature(feature_name, feature_data, params)
                 except Exception as e:
-                    print(f"Warning: Failed to calculate {feature_name} for column {col}: {e}")
+                    warning_key = f"{feature_name}_{col}_{str(e)}"
+                    if warning_key not in self.warning_registry:
+                        print(f"Warning: Failed to calculate {feature_name} for column {col}: {e}")
+                        self.warning_registry.add(warning_key)
+
                     extracted_features[f"{feature_name}_{col}"] = pd.NA
                     
         return extracted_features
