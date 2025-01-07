@@ -4,62 +4,45 @@ import pandas as pd
 def calculate_crossing_points(data):
     """
     Calculate the number of times and the list of indices where the time series crosses its mean.
-
+    
     Parameters
     ----------
     data : pd.Series or np.ndarray
         The time series data for which mean crossings are to be calculated.
-
+    
     Returns
     -------
     dict
         A dictionary containing:
         - 'crossing_count': The total number of crossings.
         - 'crossing_points': A list of indices where crossings occur.
-
+    
     Raises
     ------
     ValueError
         If the input data is empty or contains NaN values.
-
-    Examples
-    --------
-    >>> import pandas as pd
-    >>> data = pd.Series([1, 3, 2, 4, 1, 5, 2, 6])
-    >>> calculate_crossing_points(data)
-    {'crossing_count': 7, 'crossing_points': [0, 1, 2, 3, 4, 5, 6]}
-
-    >>> data = pd.Series([2, 2, 2, 2])
-    >>> calculate_crossing_points(data)
-    {'crossing_count': 0, 'crossing_points': []}
     """
-    # Return immediately if data is empty
+     # Check if data is empty or contains NaN
     if isinstance(data, (pd.Series, pd.DataFrame)) and data.empty:
         return {'crossing_count': 0, 'crossing_points': []}
-
-    # Convert to numpy array if data is a pandas Series
     if isinstance(data, pd.Series):
         data = data.to_numpy()
 
+    if len(data) == 0 or np.any(np.isnan(data)):
+        raise ValueError("Input data should not be empty or contain NaN values.")
+
+    # Calculate the mean value
     mean_value = np.mean(data)
 
-    # Return 0 crossings if all values are strictly above or below the mean
-    epsilon = 1e-10  # tolerancja precyzji
-    if np.all(data < mean_value + epsilon) or np.all(data > mean_value - epsilon):
+    # If all values are above or all are below the mean, return no crossings
+    if np.all(data > mean_value) or np.all(data < mean_value):
         return {'crossing_count': 0, 'crossing_points': []}
 
+    crossing_points = []
 
-    # Calculate crossings, excluding points equal to mean
-    above_mean = data > mean_value
-    below_mean = data < mean_value
+    # We now check for true crossings
+    for i in range(1, len(data)):
+        if (data[i-1] < mean_value and data[i] >= mean_value) or (data[i-1] > mean_value and data[i] <= mean_value):
+            crossing_points.append(i)
 
-    # Combine conditions to ignore points equal to mean
-    effective_above_mean = np.where(above_mean, 1, np.where(below_mean, -1, 0))
-
-    # Detect crossings by analyzing changes between -1 and 1
-    crossings = np.where(np.diff(effective_above_mean) != 0)[0]
-
-    return {
-        'crossing_count': len(crossings),
-        'crossing_points': list(crossings)
-    }
+    return {'crossing_count': len(crossing_points), 'crossing_points': crossing_points}

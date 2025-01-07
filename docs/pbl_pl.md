@@ -33,8 +33,8 @@ Projekt zrealizował szereg kluczowych celów:
 
 1. Stworzono bibliotekę w języku Python umożliwiającą automatyczną ekstrakcję cech z szeregów czasowych, zaimplementowano 30 cech.  
 2. Opracowano mechanizmy pozwalające na uruchamianie obliczeń w środowiskach rozproszonych, za pocą Dash.  
-3. Dodano funkcjonalności do interpretowania zaimplementowanych cech, obsłyga streamimgu, presonalizowanie listy cech w Ekstraktorze.
-4. Zaprojektowano i wdrożono intuicyjny interfejs graficzny działający w przeglądarce internetowej, umożliwiający przetwarzanie danych bez konieczności pisania kodu, za pomocą Streamlit.   
+3. Dodano funkcjonalności do interpretowania zaimplementowanych cech, obsłyga streamimgu, presonalizowanie listy cech w Ekstraktrze oraz agregacji cech z okien i stride.
+4. Zaprojektowano i wdrożono intuicyjny interfejs graficzny działający w przeglądarce internetowej, umożliwiający przetwarzanie danych bez konieczności pisania kodu, za pomocą Strimly.  
 5. Dokonano ewaluacji narzędzia, wykorzystując benchmarkowe zbiory danych do porównania efektywności i jakości w stosunku do istniejących bibliotek, takich jak `tsfresh`.  
 6. Udokumentowano i opublikowano wyniki w postaci repozytorium na GitHub oraz pakietu w repozytorium PyPI. Stworzono pełną dokumentację projektu za pomocą Sphinx.
 
@@ -45,7 +45,7 @@ Realizacja projektu przebiegała zgodnie z nowoczesnymi standardami w tworzeniu 
 - **Dokumentacja**,  Stworzono pliki dokumentacji i skonfigurowano je w Sphinx, a także użyto docstringów do opisu funkcji biblioteki, umożliwiając automatyczne generowanie dokumentacji.
 - **Pracę zespołową na platformie GitHub**, zapewniającą kontrolę wersji, zgłaszanie problemów, dokumentację oraz wymianę informacji w zespole.  
 - **Testy jednostkowe**, za pomocą pytest przetestowano wszystkie funkcjonalności biblioteki.
-- **Benchmarkowe testy analityczne**, umożliwiające ocenę jakości wypracowanych rozwiązań oraz ich porównanie z innymi popularnymi bibliotekami.  
+- **Benchmarkowe testy analityczne**, umożliwiające ocenę jakości wypracowanych rozwiązań oraz ich porównanie z innymi popularnymi bibliotekami. Na ich podstawie powstał raport z porówywania czasów między tworzoną biblioteką a biblioteką tsfresh oraz plik z wynikami działania poszczególnych cech, które także porównano z biblioteką tsfresh.
 
 ## Osiągnięte wyniki
 Końcowo stworzono biblioteke interpreTS, zawierająca Ekstraktor Cech dla szeregów czasowych. Biblioteka posiada moduły dla Ekstraktora: kowersji danych, managera danych, walidacji danych, ładowania cech do ekstraktowa oraz managera zadań. W bibliotece zaimplememtowa 30 różnych cech (napisać wszystkie). Dodatkowo przeprowadzono testy jednostkowe, wydajnościowe oraz sparawdzające wykonywanie się cech. Dodano streming o obsługe obliczeń rozporszonych
