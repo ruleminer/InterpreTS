@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
-from ..feature_extractor import FeatureExtractor
-from ...utils.feature_loader import FeatureLoader
+from interpreTS.core.feature_extractor import FeatureExtractor
+from interpreTS.utils.feature_loader import FeatureLoader
 
 class InterpreTSApp:
     def __init__(self):

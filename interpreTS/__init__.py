@@ -70,7 +70,8 @@ required_libraries = {
     "tqdm": None,
     "dask": None,
     "scipy": None,
-    "pillow": None
+    "pillow": None,
+    "InterpreTS": None
 }
 
 for library, min_version in required_libraries.items():

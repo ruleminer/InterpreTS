@@ -17,7 +17,8 @@ setup(
         "tqdm",
         "dask",
         "scipy",
-        "pillow"
+        "pillow",
+        "InterpreTS"
     ],
     description="Feature extraction from time series to support the creation of interpretable and explainable predictive models.",
     long_description=open("docs/README.md").read(),
