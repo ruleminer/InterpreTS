@@ -298,7 +298,10 @@
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="feature_extraction.html">Feature Extraction Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_extraction_dask.html">Feature Extraction Using Dask for Large Time Series Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="streaming_feature_extraction.html">Streaming Feature Extraction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="time_based_aggregation.html">Time-Based Aggregation with window_size and stride</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_usage.html">Basic Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="classification.html">Classification Notebook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="regression.html">Regression Notebook</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Dimensionality Reduction and Clustering</a></li>
@@ -371,7 +374,7 @@
 <h2>Table of Contents<a class="headerlink" href="#Table-of-Contents" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p><a class="reference internal" href="#Objectives"><span class="std std-ref">Objectives</span></a></p></li>
-<li><p>Import Required Libraries</p></li>
+<li><p><a class="reference internal" href="#Import-Required-Libraries"><span class="std std-ref">Import Required Libraries</span></a></p></li>
 <li><p><a class="reference internal" href="#Load-and-Preview-the-Data"><span class="std std-ref">Load and Preview the Data</span></a></p></li>
 <li><p><a class="reference internal" href="#Validate-and-Convert-the-Data"><span class="std std-ref">Validate and Convert the Data</span></a></p></li>
 <li><p><a class="reference internal" href="#Feature-Extraction"><span class="std std-ref">Feature Extraction</span></a></p></li>
@@ -409,11 +412,11 @@
 <li><p>Visualizing results of dimensionality reduction and clustering.</p></li>
 </ul>
 </section>
-<section id="2.-Import-Required-Libraries">
-<h2>2. Import Required Libraries<a class="headerlink" href="#2.-Import-Required-Libraries" title="Link to this heading">#</a></h2>
+<section id="Import-Required-Libraries">
+<h2>Import Required Libraries<a class="headerlink" href="#Import-Required-Libraries" title="Link to this heading">#</a></h2>
 <p>The libraries below are used for this tutorial:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
@@ -425,12 +428,13 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans, DBSCAN
 import matplotlib.pyplot as plt
 import numpy as np
+%matplotlib inline
 </pre></div>
 </div>
 </div>
 <p>Additionally, check the version of the <code class="docutils literal notranslate"><span class="pre">interpreTS</span></code> library:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import interpreTS
@@ -451,7 +455,7 @@ interpreTS version: 0.5.0
 <h2>Load and Preview the Data<a class="headerlink" href="#Load-and-Preview-the-Data" title="Link to this heading">#</a></h2>
 <p>Load the data containing time-series data for power consumption from the provided CSV file.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df = pd.read_csv(&#39;../data/radiator.csv&#39;)
@@ -460,7 +464,7 @@ interpreTS version: 0.5.0
 </div>
 <p>Convert the <code class="docutils literal notranslate"><span class="pre">timestamp</span></code> column to datetime format and set it as the index:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df[&#39;timestamp&#39;] = pd.to_datetime(df[&#39;timestamp&#39;])
@@ -470,7 +474,7 @@ df.set_index(&#39;timestamp&#39;, inplace=True)
 </div>
 <p>Preview the dataset:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>display(df)
@@ -558,7 +562,7 @@ df.set_index(&#39;timestamp&#39;, inplace=True)
 </div>
 <p>Get information about the dataset:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.info()
@@ -585,7 +589,7 @@ memory usage: 39.6 MB
 <h2>Validate and Convert the Data<a class="headerlink" href="#Validate-and-Convert-the-Data" title="Link to this heading">#</a></h2>
 <p>Ensure the dataset adheres to time-series data standards.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>try:
@@ -606,7 +610,7 @@ Time series data validation passed.
 </div>
 <p>Transform the dataset into a TimeSeriesData object, suitable for <code class="docutils literal notranslate"><span class="pre">interpreTS</span></code> functions:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>time_series_data = convert_to_time_series(df)
@@ -615,7 +619,7 @@ Time series data validation passed.
 </div>
 <p>Priview the converted TimeSeriesData object</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(time_series_data)
@@ -628,7 +632,7 @@ display(time_series_data.data)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;interpreTS.core.time_series_data.TimeSeriesData object at 0x000001449A380100&gt;
+&lt;interpreTS.core.time_series_data.TimeSeriesData object at 0x000001A8ACFD0770&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -715,7 +719,7 @@ display(time_series_data.data)
 <h2>Feature Extraction<a class="headerlink" href="#Feature-Extraction" title="Link to this heading">#</a></h2>
 <p>Initialize the FeatureExtractor to extract statistical and time-series features, such as mean, variance, and trend strength, using a sliding window approach with specified <code class="docutils literal notranslate"><span class="pre">window_size</span></code> and <code class="docutils literal notranslate"><span class="pre">stride</span></code>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>extractor = FeatureExtractor(
@@ -726,15 +730,15 @@ display(time_series_data.data)
         Features.PEAK,
         Features.VARIANCE
     ],
-    window_size=60,
-    stride=30
+    window_size=&quot;1min&quot;,
+    stride=&quot;30s&quot;
 )
 </pre></div>
 </div>
 </div>
 <p>Extract features from the time series data.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>features = extractor.extract_features(time_series_data.data)
@@ -786,7 +790,7 @@ display(time_series_data.data)
       <td>1.0</td>
       <td>0.755769</td>
       <td>1314.0</td>
-      <td>421031.714336</td>
+      <td>414014.519097</td>
     </tr>
     <tr>
       <th>1</th>
@@ -794,7 +798,7 @@ display(time_series_data.data)
       <td>1182.7</td>
       <td>0.484017</td>
       <td>1314.0</td>
-      <td>402910.943220</td>
+      <td>396195.760833</td>
     </tr>
     <tr>
       <th>2</th>
@@ -802,7 +806,7 @@ display(time_series_data.data)
       <td>1.0</td>
       <td>0.355786</td>
       <td>1303.0</td>
-      <td>194327.422599</td>
+      <td>191088.632222</td>
     </tr>
     <tr>
       <th>3</th>
@@ -810,7 +814,7 @@ display(time_series_data.data)
       <td>1.0</td>
       <td>0.633966</td>
       <td>1314.0</td>
-      <td>347499.270904</td>
+      <td>341707.616389</td>
     </tr>
     <tr>
       <th>4</th>
@@ -818,7 +822,7 @@ display(time_series_data.data)
       <td>1182.8</td>
       <td>0.009364</td>
       <td>1314.0</td>
-      <td>359508.094915</td>
+      <td>353516.293333</td>
     </tr>
     <tr>
       <th>...</th>
@@ -834,7 +838,7 @@ display(time_series_data.data)
       <td>1090.9</td>
       <td>0.004244</td>
       <td>1212.0</td>
-      <td>251057.775141</td>
+      <td>246873.478889</td>
     </tr>
     <tr>
       <th>86395</th>
@@ -842,7 +846,7 @@ display(time_series_data.data)
       <td>1090.9</td>
       <td>0.407723</td>
       <td>1212.0</td>
-      <td>189202.150000</td>
+      <td>186048.780833</td>
     </tr>
     <tr>
       <th>86396</th>
@@ -850,7 +854,7 @@ display(time_series_data.data)
       <td>1189.5</td>
       <td>0.002166</td>
       <td>1201.0</td>
-      <td>44.249718</td>
+      <td>43.512222</td>
     </tr>
     <tr>
       <th>86397</th>
@@ -858,7 +862,7 @@ display(time_series_data.data)
       <td>1081.0</td>
       <td>0.217282</td>
       <td>1201.0</td>
-      <td>251538.936441</td>
+      <td>247346.620833</td>
     </tr>
     <tr>
       <th>86398</th>
@@ -866,7 +870,7 @@ display(time_series_data.data)
       <td>1081.0</td>
       <td>0.626586</td>
       <td>1201.0</td>
-      <td>246084.437429</td>
+      <td>241983.030139</td>
     </tr>
   </tbody>
 </table>
@@ -2236,7 +2240,7 @@ plt.show()
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Table-of-Contents">Table of Contents</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Objectives">Objectives</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#2.-Import-Required-Libraries">2. Import Required Libraries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Import-Required-Libraries">Import Required Libraries</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Load-and-Preview-the-Data">Load and Preview the Data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Validate-and-Convert-the-Data">Validate and Convert the Data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Feature-Extraction">Feature Extraction</a></li>

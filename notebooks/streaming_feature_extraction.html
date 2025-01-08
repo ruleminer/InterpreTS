@@ -1,0 +1,763 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Streaming Feature Extraction &#8212; InterpreTS 0.5.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=1dd76d02"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/streaming_feature_extraction';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Time-Based Aggregation with window_size and stride" href="time_based_aggregation.html" />
+    <link rel="prev" title="Extract Features Using Dask for Large Time Series Data" href="feature_extraction_dask.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">InterpreTS 0.5.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../Introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../Feature_Extractors.html">
+    Feature Extractors
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../Tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../API_Documentation.html">
+    API Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gui.html">
+    Graphical User Interface (GUI)
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../Introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../Feature_Extractors.html">
+    Feature Extractors
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../Tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../API_Documentation.html">
+    API Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gui.html">
+    Graphical User Interface (GUI)
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="feature_extraction.html">Feature Extraction Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_extraction_dask.html">Feature Extraction Using Dask for Large Time Series Data</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Streaming Feature Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="time_based_aggregation.html">Time-Based Aggregation with window_size and stride</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_usage.html">Basic Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classification.html">Classification Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="regression.html">Regression Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dimensionality_reduction_and_clustering.html">Dimensionality Reduction and Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="association_rules_and_sequential_patterns.html">Association Rules and Sequential Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test_examples_of_features.html">Example of Features Notebook</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../Tutorials.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Streaming Feature Extraction</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="Streaming-Feature-Extraction">
+<h1>Streaming Feature Extraction<a class="headerlink" href="#Streaming-Feature-Extraction" title="Link to this heading">#</a></h1>
+<p>This notebook demonstrates how to use the <code class="docutils literal notranslate"><span class="pre">interpreTS</span></code> library for feature extraction in a streaming context. We’ll process time series data as it arrives in real-time.</p>
+<section id="Step-1:-Import-Libraries">
+<h2>Step 1: Import Libraries<a class="headerlink" href="#Step-1:-Import-Libraries" title="Link to this heading">#</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from interpreTS.core.feature_extractor import FeatureExtractor, Features
+
+import random
+import time
+from datetime import datetime, timedelta
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Step-2:-Define-a-Data-Stream-Generator">
+<h2>Step 2: Define a Data Stream Generator<a class="headerlink" href="#Step-2:-Define-a-Data-Stream-Generator" title="Link to this heading">#</a></h2>
+<p>We’ll simulate a time series data stream where new data points are generated every 30 seconds.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def generate_stream():
+    current_time = datetime.now()
+    for i in range(200):    # Generate 200 data points
+        yield {
+            &#39;id&#39;: &#39;series_1&#39;,   # Identifier for the time series
+            &#39;time&#39;: current_time + timedelta(seconds=30 * i),   # Timestamp
+            &#39;value&#39;: random.random()    # Randomly generated value
+        }
+        time.sleep(0.01)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Step-3:-Initialize-the-FeatureExtractor-for-Streaming">
+<h2>Step 3: Initialize the FeatureExtractor for Streaming<a class="headerlink" href="#Step-3:-Initialize-the-FeatureExtractor-for-Streaming" title="Link to this heading">#</a></h2>
+<p>We’ll set up the <code class="docutils literal notranslate"><span class="pre">FeatureExtractor</span></code> to calculate the mean and variance from the <code class="docutils literal notranslate"><span class="pre">value</span></code> column using a window size of 5 data points. The <code class="docutils literal notranslate"><span class="pre">id_column</span></code> specifies the unique identifier for the time series.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>feature_extractor_stream = FeatureExtractor(
+    features=[Features.MEAN, Features.VARIANCE],    # Features to extract
+    feature_column=&quot;value&quot;, # Data column from which to extract features
+    window_size=5,  # Number of points per window
+    id_column=&quot;id&quot;  # Group by the &#39;id&#39; column
+)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Step-4:-Extract-Features-in-a-Streaming-Context">
+<h2>Step 4: Extract Features in a Streaming Context<a class="headerlink" href="#Step-4:-Extract-Features-in-a-Streaming-Context" title="Link to this heading">#</a></h2>
+<p>Using the <code class="docutils literal notranslate"><span class="pre">extract_features_stream</span></code> method, we’ll process the data stream and print the extracted features for each window of 5 data points.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for features in feature_extractor_stream.extract_features_stream(generate_stream()):
+    print(features)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;mean_value&#39;: 0.5302559014050979, &#39;variance_value&#39;: 0.05253585541039717, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5763003255145184, &#39;variance_value&#39;: 0.056443627047807934, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5002972150764308, &#39;variance_value&#39;: 0.0263593570015553, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5603844489807113, &#39;variance_value&#39;: 0.012360516245759023, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5715475273281434, &#39;variance_value&#39;: 0.008600746357379363, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5941913312223666, &#39;variance_value&#39;: 0.01244589462280257, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5599190670382057, &#39;variance_value&#39;: 0.009149717681769174, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.6225206242724437, &#39;variance_value&#39;: 0.02310858422510515, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.674171340523812, &#39;variance_value&#39;: 0.02774186833184048, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.7055771874159391, &#39;variance_value&#39;: 0.016065929277289052, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.6704200527203796, &#39;variance_value&#39;: 0.019687636663485837, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.7370312361537542, &#39;variance_value&#39;: 0.019989380605827743, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.7614573392521315, &#39;variance_value&#39;: 0.028344792272259202, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.7462062104469848, &#39;variance_value&#39;: 0.027418583408698387, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.683236658692616, &#39;variance_value&#39;: 0.0638961414415679, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.7533965696049488, &#39;variance_value&#39;: 0.06469337066438814, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.6009304314789746, &#39;variance_value&#39;: 0.12135292176383225, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.45481097398317605, &#39;variance_value&#39;: 0.09558484935286735, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.49383207269379853, &#39;variance_value&#39;: 0.12440586660297606, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.6402472662930938, &#39;variance_value&#39;: 0.14392343772065924, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.500639736837788, &#39;variance_value&#39;: 0.14952572549053306, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.6395972139230727, &#39;variance_value&#39;: 0.11825003650162931, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.7020031645584106, &#39;variance_value&#39;: 0.08529487994254997, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5351198405420222, &#39;variance_value&#39;: 0.11686757276580009, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.34296792903953705, &#39;variance_value&#39;: 0.0860058836031357, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4551534197304643, &#39;variance_value&#39;: 0.10457556910624252, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.3273042730208836, &#39;variance_value&#39;: 0.08050833819288028, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.3309938742453727, &#39;variance_value&#39;: 0.08230038798771211, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.44697101901178493, &#39;variance_value&#39;: 0.08409072663381771, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5967782821074181, &#39;variance_value&#39;: 0.051616424145450646, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.6374646332557311, &#39;variance_value&#39;: 0.07170589046907584, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.703534238312746, &#39;variance_value&#39;: 0.02683195723941485, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.7458944204102318, &#39;variance_value&#39;: 0.023647371512954124, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.6526149675845637, &#39;variance_value&#39;: 0.06950532653203104, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.6232617713365499, &#39;variance_value&#39;: 0.06500345585389512, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5060678553777406, &#39;variance_value&#39;: 0.03967319439455708, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5501643895715762, &#39;variance_value&#39;: 0.046570136385489694, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.444881200053695, &#39;variance_value&#39;: 0.039769971232088724, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.468731190991121, &#39;variance_value&#39;: 0.031330190390015965, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4208258800721806, &#39;variance_value&#39;: 0.02398170046491189, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5205838982711584, &#39;variance_value&#39;: 0.055593030297842946, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5742968175596824, &#39;variance_value&#39;: 0.08818626234312965, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.6634698689863772, &#39;variance_value&#39;: 0.0651187535947912, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.779787223325241, &#39;variance_value&#39;: 0.04387021021506346, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.8298824416680489, &#39;variance_value&#39;: 0.016028945320975412, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.7828329964264761, &#39;variance_value&#39;: 0.02030492614904039, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.6027299190753385, &#39;variance_value&#39;: 0.07718663958008352, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.641603534269809, &#39;variance_value&#39;: 0.09176362549733012, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4955262829515929, &#39;variance_value&#39;: 0.09546661616299199, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.368850875762749, &#39;variance_value&#39;: 0.11996251758527418, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.2694663983647871, &#39;variance_value&#39;: 0.1049210897459382, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.31820075648063845, &#39;variance_value&#39;: 0.09640346946379366, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.22837527257700785, &#39;variance_value&#39;: 0.02292782815967412, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.19030450745295344, &#39;variance_value&#39;: 0.031594241214092, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.38441092445655783, &#39;variance_value&#39;: 0.11572800303407331, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.430084791301055, &#39;variance_value&#39;: 0.1023279460080776, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4424055332211494, &#39;variance_value&#39;: 0.10042655780917331, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.39133140026591423, &#39;variance_value&#39;: 0.10929695241195758, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.46234855927633695, &#39;variance_value&#39;: 0.07393695557828422, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.2703644074173107, &#39;variance_value&#39;: 0.01901888772730344, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.3840244221082499, &#39;variance_value&#39;: 0.09441987827434484, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.49870864567455386, &#39;variance_value&#39;: 0.14837397954909967, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.6369013545840616, &#39;variance_value&#39;: 0.1428522081640965, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.581405141303277, &#39;variance_value&#39;: 0.18641282863668268, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.7333736130883395, &#39;variance_value&#39;: 0.11102294554151244, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.6238957163532353, &#39;variance_value&#39;: 0.11305696432439796, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5739828018482757, &#39;variance_value&#39;: 0.08914024225132963, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4488693323725254, &#39;variance_value&#39;: 0.07184993301425033, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5575254911716608, &#39;variance_value&#39;: 0.038468783520005184, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.46783694851672014, &#39;variance_value&#39;: 0.029075972646970323, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.525199383638262, &#39;variance_value&#39;: 0.033956163549422394, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5109159880164569, &#39;variance_value&#39;: 0.029386182396046213, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.6500427090761807, &#39;variance_value&#39;: 0.03914685678116329, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.544972566938711, &#39;variance_value&#39;: 0.08936077804185057, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.6274506750063292, &#39;variance_value&#39;: 0.0828956500664191, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.503479809610512, &#39;variance_value&#39;: 0.13073103318199236, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.44488568854709076, &#39;variance_value&#39;: 0.12819315182523575, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.3596759556169379, &#39;variance_value&#39;: 0.0688753579766767, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.526050670422887, &#39;variance_value&#39;: 0.09181892102875476, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5066798078590531, &#39;variance_value&#39;: 0.08451914700272774, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5030521569125957, &#39;variance_value&#39;: 0.08779366042547107, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.53011040507228, &#39;variance_value&#39;: 0.08240464427447083, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.504178720886453, &#39;variance_value&#39;: 0.0847202361596338, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.41726869681352136, &#39;variance_value&#39;: 0.04130819187895434, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4620312310542185, &#39;variance_value&#39;: 0.0707275578505622, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4913229140626121, &#39;variance_value&#39;: 0.04969741943116243, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4206400924972156, &#39;variance_value&#39;: 0.07062567264619532, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.3900075901119348, &#39;variance_value&#39;: 0.07517384396045193, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.3154284673198447, &#39;variance_value&#39;: 0.0820298108083234, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.21740023094586114, &#39;variance_value&#39;: 0.009746276176272089, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.18874103782700385, &#39;variance_value&#39;: 0.014549001959580888, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.3191959027995228, &#39;variance_value&#39;: 0.06761796848212089, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.3807548864649314, &#39;variance_value&#39;: 0.07481137926518762, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4245345144349236, &#39;variance_value&#39;: 0.05967327766592021, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4219315460424805, &#39;variance_value&#39;: 0.05988000217484864, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4974505599821528, &#39;variance_value&#39;: 0.02615907322541819, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.374615794974332, &#39;variance_value&#39;: 0.016237644230000542, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.3368923819944448, &#39;variance_value&#39;: 0.007769702907072476, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.3641823677196204, &#39;variance_value&#39;: 0.010874843022549683, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.41699373473017004, &#39;variance_value&#39;: 0.023386552774492617, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.36202213924695237, &#39;variance_value&#39;: 0.03456882216840719, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4591217175846814, &#39;variance_value&#39;: 0.03486178073818337, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.47476402839503196, &#39;variance_value&#39;: 0.03316758304784372, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5482987157944762, &#39;variance_value&#39;: 0.054927857854216576, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.46526713566002964, &#39;variance_value&#39;: 0.06709842912780846, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.46090067621227354, &#39;variance_value&#39;: 0.06992466915612668, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5224462827386638, &#39;variance_value&#39;: 0.10894704036991246, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5632832145708722, &#39;variance_value&#39;: 0.10985540907681254, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.44666801716330795, &#39;variance_value&#39;: 0.09893702340933808, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5368918648323922, &#39;variance_value&#39;: 0.09166405095896404, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5144648110532518, &#39;variance_value&#39;: 0.11199232916227533, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.49938584018866117, &#39;variance_value&#39;: 0.09938827879734466, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4716097703486435, &#39;variance_value&#39;: 0.09376967981810244, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5910882379591832, &#39;variance_value&#39;: 0.1003645378695941, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5803645838951835, &#39;variance_value&#39;: 0.09898121097923593, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.7039928576093958, &#39;variance_value&#39;: 0.020673535287390687, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5704245025761394, &#39;variance_value&#39;: 0.04310419488165011, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5008519987049243, &#39;variance_value&#39;: 0.06987164237020813, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.45315061964337155, &#39;variance_value&#39;: 0.044934416781301396, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.421745039304814, &#39;variance_value&#39;: 0.038185084095358354, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.3093254817377519, &#39;variance_value&#39;: 0.040892355166890416, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.40002160850395113, &#39;variance_value&#39;: 0.0574693571996739, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4003699788553254, &#39;variance_value&#39;: 0.05730911467210283, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.28062235372849387, &#39;variance_value&#39;: 0.06227347520213169, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.2742652616778768, &#39;variance_value&#39;: 0.060073264097181854, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.27659018264257546, &#39;variance_value&#39;: 0.05915645486250134, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.25412053128658096, &#39;variance_value&#39;: 0.04337053733566971, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.2557133756295184, &#39;variance_value&#39;: 0.04311613817919667, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.30954853143267264, &#39;variance_value&#39;: 0.029372626874139263, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.2997261655430858, &#39;variance_value&#39;: 0.02730188534235411, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.3451997117885135, &#39;variance_value&#39;: 0.015959961903110574, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.3830372698243864, &#39;variance_value&#39;: 0.037976017916535466, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.40429289484774866, &#39;variance_value&#39;: 0.03111113824382051, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4323861244867814, &#39;variance_value&#39;: 0.027822433360127085, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.38062019377504874, &#39;variance_value&#39;: 0.043396425142829646, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.43529308869312794, &#39;variance_value&#39;: 0.04778812089169252, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.30534345084705883, &#39;variance_value&#39;: 0.03363696208801194, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.3365887244959882, &#39;variance_value&#39;: 0.03629077357559507, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.44950518164376707, &#39;variance_value&#39;: 0.10839578830132088, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4738356395742665, &#39;variance_value&#39;: 0.09505379354881673, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4960298849921691, &#39;variance_value&#39;: 0.10194977210765407, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.6283371712881902, &#39;variance_value&#39;: 0.06714699935835869, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5873286666689638, &#39;variance_value&#39;: 0.08919378673518756, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4070024406940405, &#39;variance_value&#39;: 0.07237231881245142, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.3685994265638033, &#39;variance_value&#39;: 0.09045974599444373, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.40856390974445195, &#39;variance_value&#39;: 0.12299906946318406, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.44951036535444244, &#39;variance_value&#39;: 0.15860268703970037, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5548714538023447, &#39;variance_value&#39;: 0.15812139062295433, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.6897577793818732, &#39;variance_value&#39;: 0.10629616349225493, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.7711510338403761, &#39;variance_value&#39;: 0.02967698768609231, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.7457940054523255, &#39;variance_value&#39;: 0.02593779950803724, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.6116143589481036, &#39;variance_value&#39;: 0.038816841390718476, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5307520877891891, &#39;variance_value&#39;: 0.0404388259283381, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5113401451430359, &#39;variance_value&#39;: 0.0327576207240471, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4954192301891718, &#39;variance_value&#39;: 0.03530233043884507, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.42956237651628515, &#39;variance_value&#39;: 0.0166414201635181, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5327408243695155, &#39;variance_value&#39;: 0.0315110438099556, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4662577795011555, &#39;variance_value&#39;: 0.0722928966479524, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.3602323747586749, &#39;variance_value&#39;: 0.0739776228920367, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.32195758026492677, &#39;variance_value&#39;: 0.07804407163251594, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.3227862395506274, &#39;variance_value&#39;: 0.078241667465389, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.2144455778222687, &#39;variance_value&#39;: 0.019371961647164312, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.25047902724908067, &#39;variance_value&#39;: 0.011026927425144738, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.2273664724297814, &#39;variance_value&#39;: 0.018259654276721632, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.3098042975790163, &#39;variance_value&#39;: 0.0396597570967331, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.3851831225042634, &#39;variance_value&#39;: 0.08256887171628557, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.40843877000351936, &#39;variance_value&#39;: 0.07934937767196505, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4583553923507388, &#39;variance_value&#39;: 0.06918083651059075, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.6366836139193481, &#39;variance_value&#39;: 0.04170934694170468, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.6065150027554752, &#39;variance_value&#39;: 0.04729328397580289, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5578602567550088, &#39;variance_value&#39;: 0.0359334312369662, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.505306480104087, &#39;variance_value&#39;: 0.06507317208787256, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.5112818181227915, &#39;variance_value&#39;: 0.06463072904847404, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.3995315606075998, &#39;variance_value&#39;: 0.024058088703591555, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.32121744690169135, &#39;variance_value&#39;: 0.04011678690972364, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.32251537998666124, &#39;variance_value&#39;: 0.0407882559636459, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4367678913181091, &#39;variance_value&#39;: 0.04740375218195768, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.46520690439326307, &#39;variance_value&#39;: 0.05345103537214661, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4215193106158928, &#39;variance_value&#39;: 0.07049080449779789, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.41423243258131864, &#39;variance_value&#39;: 0.0759418458925993, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.37450068086142296, &#39;variance_value&#39;: 0.06878346321956899, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.31678046830967566, &#39;variance_value&#39;: 0.045200945121324373, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.19478886550333596, &#39;variance_value&#39;: 0.028697565383925844, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.25730505484851396, &#39;variance_value&#39;: 0.037370966216009466, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.3138924915988758, &#39;variance_value&#39;: 0.02395942264754638, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.28694548986493446, &#39;variance_value&#39;: 0.023025192351318564, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.36744088417354104, &#39;variance_value&#39;: 0.06804922169662239, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.3807651697220777, &#39;variance_value&#39;: 0.0594591828429739, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.30526796462383976, &#39;variance_value&#39;: 0.07154672453189222, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.25844264500253833, &#39;variance_value&#39;: 0.0800084414703324, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.21204213896092577, &#39;variance_value&#39;: 0.08936812730544808, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.18398236728392175, &#39;variance_value&#39;: 0.05906703380558045, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.19039986472194978, &#39;variance_value&#39;: 0.05796221250405838, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.32670942285993004, &#39;variance_value&#39;: 0.10061071913200545, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.4889411537861246, &#39;variance_value&#39;: 0.12403437536000377, &#39;id&#39;: &#39;series_1&#39;}
+{&#39;mean_value&#39;: 0.6350714435402318, &#39;variance_value&#39;: 0.07192518175287235, &#39;id&#39;: &#39;series_1&#39;}
+</pre></div></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="feature_extraction_dask.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Extract Features Using Dask for Large Time Series Data</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="time_based_aggregation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Time-Based Aggregation with <code class="docutils literal notranslate"><span class="pre">window_size</span></code> and <code class="docutils literal notranslate"><span class="pre">stride</span></code></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Step-1:-Import-Libraries">Step 1: Import Libraries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Step-2:-Define-a-Data-Stream-Generator">Step 2: Define a Data Stream Generator</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Step-3:-Initialize-the-FeatureExtractor-for-Streaming">Step 3: Initialize the FeatureExtractor for Streaming</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Step-4:-Extract-Features-in-a-Streaming-Context">Step 4: Extract Features in a Streaming Context</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/notebooks/streaming_feature_extraction.ipynb.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Łukasz Wróbel, Sławomir Put, Martyna Żur, Martyna Kramarz, Jarosław Strzelczyk, Weronika Wołowczyk, Piotr Krupiński.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

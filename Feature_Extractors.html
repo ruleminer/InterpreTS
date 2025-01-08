@@ -794,14 +794,124 @@ A ddof of 1 provides the sample variance, and a ddof of 0 provides the populatio
 <section id="dominant">
 <h2>Dominant<a class="headerlink" href="#dominant" title="Link to this heading">#</a></h2>
 <p>Finds the most dominant value in a histogram representation.</p>
+<dl class="py function" id="module-interpreTS.core.features.feature_histogram_dominant">
+<dt class="sig sig-object py" id="interpreTS.core.features.feature_histogram_dominant.calculate_dominant">
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_histogram_dominant.</span></span><span class="sig-name descname"><span class="pre">calculate_dominant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_bin_center</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_histogram_dominant.html#calculate_dominant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_histogram_dominant.calculate_dominant" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the dominant value (mode) of a time series histogram.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>pd.Series</em><em> or </em><em>np.ndarray</em>) – The time series data for which the dominant value is to be calculated.</p></li>
+<li><p><strong>bins</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of bins to use for creating the histogram, by default 10.</p></li>
+<li><p><strong>return_bin_center</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, return the center of the bin with the maximum frequency.
+Otherwise, return the lower bound of the bin (default is False).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The dominant value of the histogram (either the center or the lower bound of the bin).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If the data is not a valid time series type.</p></li>
+<li><p><strong>ValueError</strong> – If the data contains NaN values.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_dominant</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">2.6</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_dominant</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">return_bin_center</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">30.0</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_dominant</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">0.8333333333333333</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </section>
 <section id="seasonality-strength">
 <h2>Seasonality Strength<a class="headerlink" href="#seasonality-strength" title="Link to this heading">#</a></h2>
 <p>Assesses the strength of seasonality patterns in the data.</p>
+<dl class="py function" id="module-interpreTS.core.features.feature_seasonality_strength">
+<dt class="sig sig-object py" id="interpreTS.core.features.feature_seasonality_strength.calculate_seasonality_strength">
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_seasonality_strength.</span></span><span class="sig-name descname"><span class="pre">calculate_seasonality_strength</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_lag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_seasonality_strength.html#calculate_seasonality_strength"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_seasonality_strength.calculate_seasonality_strength" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the strength of the seasonality in a time series based on autocorrelation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>pd.Series</em><em> or </em><em>np.ndarray</em>) – The time series data for which the seasonality strength is to be calculated.</p></li>
+<li><p><strong>period</strong> (<em>int</em><em>, </em><em>optional</em>) – The periodic interval to check for seasonality (default is 2).</p></li>
+<li><p><strong>max_lag</strong> (<em>int</em><em>, </em><em>optional</em>) – The maximum number of lags to consider for autocorrelation (default is 12).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The seasonality strength, ranging from 0 to 1, where 1 indicates strong seasonality.
+Returns np.nan if the data is insufficient or invalid.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If the data is not a valid time series type.</p></li>
+<li><p><strong>ValueError</strong> – If the data contains NaN values, is too short to calculate seasonality, or if the period is invalid.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;M&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_seasonality_strength</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </section>
 <section id="trend-strength">
 <h2>Trend Strength<a class="headerlink" href="#trend-strength" title="Link to this heading">#</a></h2>
 <p>Measures the strength of the overall trend in the series.</p>
+<dl class="py function" id="module-interpreTS.core.features.feature_trend_strength">
+<dt class="sig sig-object py" id="interpreTS.core.features.feature_trend_strength.calculate_trend_strength">
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_trend_strength.</span></span><span class="sig-name descname"><span class="pre">calculate_trend_strength</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_trend_strength.html#calculate_trend_strength"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_trend_strength.calculate_trend_strength" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the strength of the trend in a time series using linear regression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>pd.Series</em><em> or </em><em>np.ndarray</em>) – The time series data for which the trend strength is to be calculated.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The R-squared value representing the strength of the trend (0 to 1).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If the data is not a valid time series type.</p></li>
+<li><p><strong>ValueError</strong> – If the data contains NaN values or is empty.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_trend_strength</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </section>
 <section id="above-9th-decile">
 <h2>Above 9th Decile<a class="headerlink" href="#above-9th-decile" title="Link to this heading">#</a></h2>
@@ -844,6 +954,39 @@ A ddof of 1 provides the sample variance, and a ddof of 0 provides the populatio
 <section id="distance-to-the-last-change-point">
 <h2>Distance to the Last Change Point<a class="headerlink" href="#distance-to-the-last-change-point" title="Link to this heading">#</a></h2>
 <p>Measures the distance to the last change point in the time series.</p>
+<dl class="py function" id="module-interpreTS.core.features.feature_distance_to_the_last_change_point">
+<dt class="sig sig-object py" id="interpreTS.core.features.feature_distance_to_the_last_change_point.calculate_distance_to_last_trend_change">
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_distance_to_the_last_change_point.</span></span><span class="sig-name descname"><span class="pre">calculate_distance_to_last_trend_change</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_distance_to_the_last_change_point.html#calculate_distance_to_last_trend_change"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_distance_to_the_last_change_point.calculate_distance_to_last_trend_change" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the distance (in terms of indices) to the last trend change point in a time series.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>pd.Series</em><em> or </em><em>np.ndarray</em>) – The time series data for which the distance to the last trend change is to be calculated.</p></li>
+<li><p><strong>window_size</strong> (<em>int</em><em>, </em><em>optional</em>) – The size of the rolling window to calculate mean (default is 5).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The distance (in terms of indices) to the last trend change point.
+If no change is detected, returns None.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int or None</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If the data is not a valid time series type.</p></li>
+<li><p><strong>ValueError</strong> – If the data contains NaN values or <cite>window_size</cite> is invalid.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_distance_to_last_trend_change</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </section>
 <section id="absolute-energy">
 <h2>Absolute Energy<a class="headerlink" href="#absolute-energy" title="Link to this heading">#</a></h2>
@@ -1312,10 +1455,85 @@ If None, it will be set to <cite>min(12, len(data) - 1)</cite>.</p></li>
 <section id="variance-change">
 <h2>Variance Change<a class="headerlink" href="#variance-change" title="Link to this heading">#</a></h2>
 <p>Calculates the variance change over time.</p>
+<dl class="py function" id="module-interpreTS.core.features.feature_variance_change">
+<dt class="sig sig-object py" id="interpreTS.core.features.feature_variance_change.calculate_change_in_variance">
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_variance_change.</span></span><span class="sig-name descname"><span class="pre">calculate_change_in_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_variance_change.html#calculate_change_in_variance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_variance_change.calculate_change_in_variance" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the change in variance over time in a time series.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>pd.Series</em><em> or </em><em>np.ndarray</em>) – The time series data for which the change in variance is to be calculated.</p></li>
+<li><p><strong>window_size</strong> (<em>int</em><em>, </em><em>optional</em>) – The size of the rolling window to calculate variance (default is 5).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A series containing the change in variance over time, with the same index as the input.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.Series</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If the data is not a valid time series type.</p></li>
+<li><p><strong>ValueError</strong> – If the data contains NaN values or is too short to calculate variance.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_change_in_variance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">0     NaN</span>
+<span class="go">1     NaN</span>
+<span class="go">2     NaN</span>
+<span class="go">3     0.00</span>
+<span class="go">4     0.00</span>
+<span class="go">dtype: float64</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </section>
 <section id="variability-in-sub-periods">
 <h2>Variability in Sub-Periods<a class="headerlink" href="#variability-in-sub-periods" title="Link to this heading">#</a></h2>
 <p>Measures variability within sub-periods of the time series.</p>
+<dl class="py function" id="module-interpreTS.core.features.feature_variability_in_sub_periods">
+<dt class="sig sig-object py" id="interpreTS.core.features.feature_variability_in_sub_periods.calculate_variability_in_sub_periods">
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_variability_in_sub_periods.</span></span><span class="sig-name descname"><span class="pre">calculate_variability_in_sub_periods</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ddof</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_variability_in_sub_periods.html#calculate_variability_in_sub_periods"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_variability_in_sub_periods.calculate_variability_in_sub_periods" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the variance within sub-periods of a time series, providing a measure of variability.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>pd.Series</em><em> or </em><em>np.ndarray</em>) – The time series data for which the variability is to be calculated.</p></li>
+<li><p><strong>window_size</strong> (<em>int</em>) – The size of each sub-period window (number of points in each window).</p></li>
+<li><p><strong>step_size</strong> (<em>int</em><em>, </em><em>optional</em>) – The step size between sub-periods. If None, it defaults to window_size (non-overlapping windows).</p></li>
+<li><p><strong>ddof</strong> (<em>int</em><em>, </em><em>optional</em>) – The degrees of freedom to use when calculating variance within each sub-period. Default is 0 (population variance).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A series of variance values representing the variability in each sub-period.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.Series</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If the data is not a valid time series type.</p></li>
+<li><p><strong>ValueError</strong> – If the data contains NaN values or if window_size is larger than the data length.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_variability_in_sub_periods</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">0    2.5</span>
+<span class="go">1    2.5</span>
+<span class="go">dtype: float64</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </section>
 <section id="amplitude-change-rate">
 <h2>Amplitude Change Rate<a class="headerlink" href="#amplitude-change-rate" title="Link to this heading">#</a></h2>
@@ -1457,14 +1675,26 @@ defined as the mean change in amplitude between consecutive local peaks and trou
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.features.feature_variance.calculate_variance"><code class="docutils literal notranslate"><span class="pre">calculate_variance()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dominant">Dominant</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#seasonality-strength">Seasonality Strength</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trend-strength">Trend Strength</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dominant">Dominant</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.features.feature_histogram_dominant.calculate_dominant"><code class="docutils literal notranslate"><span class="pre">calculate_dominant()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#seasonality-strength">Seasonality Strength</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.features.feature_seasonality_strength.calculate_seasonality_strength"><code class="docutils literal notranslate"><span class="pre">calculate_seasonality_strength()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trend-strength">Trend Strength</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.features.feature_trend_strength.calculate_trend_strength"><code class="docutils literal notranslate"><span class="pre">calculate_trend_strength()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#above-9th-decile">Above 9th Decile</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.features.feature_above_9th_decile.calculate_above_9th_decile"><code class="docutils literal notranslate"><span class="pre">calculate_above_9th_decile()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distance-to-the-last-change-point">Distance to the Last Change Point</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distance-to-the-last-change-point">Distance to the Last Change Point</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.features.feature_distance_to_the_last_change_point.calculate_distance_to_last_trend_change"><code class="docutils literal notranslate"><span class="pre">calculate_distance_to_last_trend_change()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#absolute-energy">Absolute Energy</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.features.feature_absolute_energy.calculate_absolute_energy"><code class="docutils literal notranslate"><span class="pre">calculate_absolute_energy()</span></code></a></li>
 </ul>
@@ -1517,8 +1747,14 @@ defined as the mean change in amplitude between consecutive local peaks and trou
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.features.feature_stability.calculate_stability"><code class="docutils literal notranslate"><span class="pre">calculate_stability()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variance-change">Variance Change</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variability-in-sub-periods">Variability in Sub-Periods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variance-change">Variance Change</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.features.feature_variance_change.calculate_change_in_variance"><code class="docutils literal notranslate"><span class="pre">calculate_change_in_variance()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variability-in-sub-periods">Variability in Sub-Periods</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.features.feature_variability_in_sub_periods.calculate_variability_in_sub_periods"><code class="docutils literal notranslate"><span class="pre">calculate_variability_in_sub_periods()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#amplitude-change-rate">Amplitude Change Rate</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.features.feature_amplitude_change_rate.calculate_amplitude_change_rate"><code class="docutils literal notranslate"><span class="pre">calculate_amplitude_change_rate()</span></code></a></li>
 </ul>

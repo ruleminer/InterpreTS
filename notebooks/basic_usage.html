@@ -48,6 +48,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/basic_usage';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Data classification with interpreTS" href="classification.html" />
+    <link rel="prev" title="Time-Based Aggregation with window_size and stride" href="time_based_aggregation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -140,7 +142,7 @@
 </li>
 
 
-<li class="nav-item ">
+<li class="nav-item current active">
   <a class="nav-link nav-internal" href="../Tutorials.html">
     Tutorials
   </a>
@@ -217,10 +219,8 @@
       
       
       
-        
-      
       <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -249,7 +249,7 @@
 </li>
 
 
-<li class="nav-item ">
+<li class="nav-item current active">
   <a class="nav-link nav-internal" href="../Tutorials.html">
     Tutorials
   </a>
@@ -291,6 +291,27 @@
     
   </div>
   
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="feature_extraction.html">Feature Extraction Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_extraction_dask.html">Feature Extraction Using Dask for Large Time Series Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="streaming_feature_extraction.html">Streaming Feature Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="time_based_aggregation.html">Time-Based Aggregation with window_size and stride</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Basic Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classification.html">Classification Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="regression.html">Regression Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dimensionality_reduction_and_clustering.html">Dimensionality Reduction and Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="association_rules_and_sequential_patterns.html">Association Rules and Sequential Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test_examples_of_features.html">Example of Features Notebook</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
       <div class="sidebar-primary-item">
@@ -326,6 +347,9 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
+    
+    <li class="breadcrumb-item"><a href="../Tutorials.html" class="nav-link">Tutorials</a></li>
+    
     <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Basic Usage of interpreTS Library</span></li>
   </ul>
 </nav>
@@ -348,17 +372,23 @@
 <p>This notebook demonstrates how to use the interpreTS library for feature extraction from time series data.</p>
 <section id="Step-1:-Import-Libraries">
 <h2>Step 1: Import Libraries<a class="headerlink" href="#Step-1:-Import-Libraries" title="Link to this heading">#</a></h2>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
 import numpy as np
 from interpreTS.core.feature_extractor import FeatureExtractor, Features
-
-import interpreTS
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import interpreTS
 print(f&quot;interpreTS version: {interpreTS.__version__}&quot;)
-<br/></pre></div>
+</pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -373,7 +403,7 @@ interpreTS version: 0.5.0
 <section id="Step-2:-Prepare-Sample-Time-Series-Data">
 <h2>Step 2: Prepare Sample Time Series Data<a class="headerlink" href="#Step-2:-Prepare-Sample-Time-Series-Data" title="Link to this heading">#</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Create a sample time series DataFrame
@@ -409,7 +439,7 @@ Sample data:
 <h2>Step 3: Initialize FeatureExtractor<a class="headerlink" href="#Step-3:-Initialize-FeatureExtractor" title="Link to this heading">#</a></h2>
 <p>The FeatureExtractor class is the central component of the library. You can specify features to extract, the time window size, and other parameters.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Initialize the FeatureExtractor
@@ -433,7 +463,7 @@ extractor = FeatureExtractor(
 <h2>Step 4: Extract Features<a class="headerlink" href="#Step-4:-Extract-Features" title="Link to this heading">#</a></h2>
 <p>Use the extract_features method to calculate features for the specified rolling windows.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Extract features
@@ -464,7 +494,7 @@ Extracted features:
 <h2>Step 5: Visualize Extracted Features<a class="headerlink" href="#Step-5:-Visualize-Extracted-Features" title="Link to this heading">#</a></h2>
 <p>Visualize the extracted features to understand the time series’ behavior better.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
@@ -482,32 +512,11 @@ plt.show()
 <br/></pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/notebooks_basic_usage_10_0.png" src="../_images/notebooks_basic_usage_10_0.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/notebooks_basic_usage_10_1.png" src="../_images/notebooks_basic_usage_10_1.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/notebooks_basic_usage_10_2.png" src="../_images/notebooks_basic_usage_10_2.png" />
-</div>
-</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_basic_usage_10_3.png" src="../_images/notebooks_basic_usage_10_3.png" />
+<img alt="../_images/notebooks_basic_usage_11_0.png" src="../_images/notebooks_basic_usage_11_0.png" />
 </div>
 </div>
 </section>
@@ -515,7 +524,7 @@ plt.show()
 <h2>Step 6: Add a Custom Feature<a class="headerlink" href="#Step-6:-Add-a-Custom-Feature" title="Link to this heading">#</a></h2>
 <p>You can also add a custom feature to the library.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Define a custom feature function
@@ -560,7 +569,7 @@ Extracted features with custom feature:
 <section id="Step-7:-Use-the-Library-with-Time-Based-Windows">
 <h2>Step 7: Use the Library with Time-Based Windows<a class="headerlink" href="#Step-7:-Use-the-Library-with-Time-Based-Windows" title="Link to this heading">#</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data[&#39;timestamp&#39;] = pd.to_datetime(data[&#39;timestamp&#39;])
@@ -605,7 +614,7 @@ Extracted features with time-based windows:
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-C:\Users\slawek\AppData\Local\Temp\ipykernel_66928\2252922758.py:5: FutureWarning: DataFrame.fillna with &#39;method&#39; is deprecated and will raise in a future version. Use obj.ffill() or obj.bfill() instead.
+C:\Users\nisia\AppData\Local\Temp\ipykernel_28680\2252922758.py:5: FutureWarning: DataFrame.fillna with &#39;method&#39; is deprecated and will raise in a future version. Use obj.ffill() or obj.bfill() instead.
   data.fillna(method=&#39;ffill&#39;, inplace=True)
 </pre></div></div>
 </div>
@@ -614,7 +623,7 @@ C:\Users\slawek\AppData\Local\Temp\ipykernel_66928\2252922758.py:5: FutureWarnin
 <h2>Step 8: Use Advanced Features (e.g., HETEROGENEITY)<a class="headerlink" href="#Step-8:-Use-Advanced-Features-(e.g.,-HETEROGENEITY)" title="Link to this heading">#</a></h2>
 <p>Heterogeneity measures the coefficient of variation, providing insights into variability.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Initialize the FeatureExtractor for heterogeneity
@@ -662,6 +671,24 @@ Extracted heterogeneity features:
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="time_based_aggregation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Time-Based Aggregation with <code class="docutils literal notranslate"><span class="pre">window_size</span></code> and <code class="docutils literal notranslate"><span class="pre">stride</span></code></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="classification.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Data classification with interpreTS</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               

@@ -48,8 +48,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/time_based_aggregation';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Data classification with interpreTS" href="classification.html" />
-    <link rel="prev" title="Feature Extraction Notebook" href="feature_extraction.html" />
+    <link rel="next" title="Basic Usage of interpreTS Library" href="basic_usage.html" />
+    <link rel="prev" title="Streaming Feature Extraction" href="streaming_feature_extraction.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -298,7 +298,10 @@
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="feature_extraction.html">Feature Extraction Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_extraction_dask.html">Feature Extraction Using Dask for Large Time Series Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="streaming_feature_extraction.html">Streaming Feature Extraction</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Time-Based Aggregation with window_size and stride</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_usage.html">Basic Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="classification.html">Classification Notebook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="regression.html">Regression Notebook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dimensionality_reduction_and_clustering.html">Dimensionality Reduction and Clustering</a></li>
@@ -369,40 +372,33 @@
 <p>In this tutorial, we demonstrate how to use the time-based aggregation feature in the <code class="docutils literal notranslate"><span class="pre">interpreTS</span></code> library. This allows you to specify <code class="docutils literal notranslate"><span class="pre">window_size</span></code> and <code class="docutils literal notranslate"><span class="pre">stride</span></code> using time intervals (e.g., “5min”, “1h”, “7d”) to extract features from time-series data.</p>
 <section id="Install-and-Import-the-Library">
 <h2>Install and Import the Library<a class="headerlink" href="#Install-and-Import-the-Library" title="Link to this heading">#</a></h2>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
 import numpy as np
-import sys
-
-####### To delete after release ############
-project_path = r&quot;C:\Users\nisia\Pulpit\studia\Data Science\PBL\code\InterpreTS&quot;
-if project_path not in sys.path:
-    sys.path.insert(0, project_path)
-############################################
 from interpreTS.core.feature_extractor import FeatureExtractor, Features
 from interpreTS.utils.data_conversion import convert_to_time_series
 from interpreTS.utils.data_validation import validate_time_series_data
 </pre></div>
 </div>
 </div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import interpreTS
+print(f&quot;interpreTS version: {interpreTS.__version__}&quot;)
+</pre></div>
+</div>
+</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
+<div class="output_area docutils container">
 <div class="highlight"><pre>
-WARNING:interpreTS:streamlit is not installed. Please install it to use interpreTS.
-WARNING:interpreTS:scikit-learn is not installed. Please install it to use interpreTS.
-WARNING:interpreTS:joblib version must be &gt;= 1.4.2. Current version: 1.3.2
-C:\Users\nisia\AppData\Roaming\Python\Python312\site-packages\dask\dataframe\__init__.py:49: FutureWarning:
-Dask dataframe query planning is disabled because dask-expr is not installed.
-
-You can install it with `pip install dask[dataframe]` or `conda install dask`.
-This will raise in a future version.
-
-  warnings.warn(msg, FutureWarning)
+interpreTS version: 0.5.0
 </pre></div></div>
 </div>
 </section>
@@ -410,7 +406,7 @@ This will raise in a future version.
 <h2>Create Sample Data<a class="headerlink" href="#Create-Sample-Data" title="Link to this heading">#</a></h2>
 <p>Let’s create a simple dataset with timestamps at 5-minute intervals and random values. This will serve as our input time-series data.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Generate sample data
@@ -493,7 +489,7 @@ Sample data:
 <h2>Validate and Convert the Data<a class="headerlink" href="#Validate-and-Convert-the-Data" title="Link to this heading">#</a></h2>
 <p>The library requires data to be in a specific time-series format. We use <code class="docutils literal notranslate"><span class="pre">validate_time_series_data</span></code> to validate the input and <code class="docutils literal notranslate"><span class="pre">convert_to_time_series</span></code> to prepare the data for feature extraction.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>try:
@@ -521,7 +517,7 @@ ts_data = convert_to_time_series(data)
 <li><p><code class="docutils literal notranslate"><span class="pre">Features.VARIANCE</span></code>: The variance of the data in the window.</p></li>
 </ul>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Initialize the FeatureExtractor
@@ -628,20 +624,20 @@ Extracted Features:
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="feature_extraction.html"
+       href="streaming_feature_extraction.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Feature Extraction Notebook</p>
+        <p class="prev-next-title">Streaming Feature Extraction</p>
       </div>
     </a>
     <a class="right-next"
-       href="classification.html"
+       href="basic_usage.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Data classification with interpreTS</p>
+        <p class="prev-next-title">Basic Usage of interpreTS Library</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
