@@ -2,17 +2,17 @@ from setuptools import setup, find_packages
 
 setup(
     name="InterpreTS",
-    version="0.4.1",
+    version="0.5.0",
     packages=find_packages(),
     install_requires=[
         "pandas==2.2.3",
-        "numpy==2.2.1",
+        "numpy",
         "statsmodels==0.14.4",
         "langchain_community==0.3.14",
         "langchain==0.3.14",
         "openai==1.59.4",
         "streamlit==1.41.1",
-        "scikit-learn==1.6.0",
+        "scikit-learn",
         "joblib==1.4.2",
         "tqdm==4.67.1",
         "dask==2024.12.1",
@@ -36,7 +36,7 @@ setup(
         "Intended Audience :: Developers",
         "Intended Audience :: Science/Research",
     ],
-    python_requires=">=3.8",
+    python_requires=">=3.10",
     test_suite="tests",
     keywords="time series feature extraction interpretability explainability machine learning",
     project_urls={

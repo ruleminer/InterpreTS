@@ -18,19 +18,19 @@ Available imports:
         A function that generates human-readable descriptions for extracted features, aiding interpretability.
         
 Dependencies:
-    - pandas: 2.1.2
-    - numpy: 1.26.1
-    - statsmodels: 0.14.0
-    - langchain_community: 0.0.17
-    - langchain: 0.1.5
-    - openai: 0.28.0
-    - streamlit: 1.26.0
-    - scikit-learn: 1.4.0
+    - pandas: 2.2.3
+    - numpy: None
+    - statsmodels: 0.14.4
+    - langchain_community: 0.3.14
+    - langchain: 0.3.14
+    - openai: 1.59.4
+    - streamlit: 1.41.1
+    - scikit-learn: None
     - joblib: 1.4.2
-    - tqdm: 4.66.1
-    - dask: 2023.10.1
-    - scipy: 1.11.3
-    - pillow: 9.5.0
+    - tqdm: 4.67.1
+    - dask: 2024.12.1
+    - scipy: 1.15.0
+    - pillow: 11.1.0
 
     
 Authors:
@@ -53,19 +53,19 @@ logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger(__name__)
 
 # Check Python version
-if sys.version_info < (3, 8):
-    raise RuntimeError("interpreTS requires Python 3.8 or higher.")
+if sys.version_info < (3, 10):
+    raise RuntimeError("interpreTS requires Python 3.10 or higher.")
 
 # Check required dependencies
 required_libraries = {
     "pandas": "2.2.3",
-    "numpy": "2.2.1",
+    "numpy": None,
     "statsmodels": "0.14.4",
     "langchain_community": "0.3.14",
     "langchain": "0.3.14",
     "openai": "1.59.4",
     "streamlit": "1.41.1",
-    "scikit-learn": "1.6.0",
+    "scikit-learn": None,
     "joblib": "1.4.2",
     "tqdm": "4.67.1",
     "dask": "2024.12.1",
@@ -88,7 +88,7 @@ from .utils.feature_loader import FeatureLoader, Features
 from .utils.data_validation import validate_time_series_data
 from .utils.data_manager import generate_feature_descriptions
 
-__version__ = "0.4.1"
+__version__ = "0.5.0"
 
 __all__ = [
     "FeatureExtractor",

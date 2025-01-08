@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 from pandas.tseries.frequencies import to_offset
-
 from ..utils.feature_loader import Features
 from ..utils.data_manager import load_metadata, load_feature_functions, load_validation_requirements
 from ..utils.task_manager import TaskManager
@@ -109,6 +108,12 @@ class FeatureExtractor:
             self.features = features if features is not None else self.DEFAULT_FEATURES_SMALL
 
         self.feature_params = feature_params if feature_params is not None else {}
+        
+        for feature_name, params in self.feature_params.items():
+            if "window_size" in params:
+                print(f"Warning: 'window_size' parameter in feature_params for feature '{feature_name}' will be ignored.")
+                del params["window_size"]
+            
         self.window_size = window_size
         self.stride = stride
         self.id_column = id_column
@@ -121,7 +126,7 @@ class FeatureExtractor:
             self.feature_functions, self.window_size, self.features, self.stride, 
             self.feature_params, self.validation_requirements
         )
-        self.task_manager._validate_parameters(features, feature_params, window_size, stride, id_column, sort_column)
+        self.task_manager._validate_parameters(self.features, self.feature_params, self.window_size, self.stride, self.id_column, self.sort_column)
         self.feature_metadata = load_metadata()
 
     def validate_data_frequency(self, grouped_data):
@@ -219,14 +224,15 @@ class FeatureExtractor:
 
         feature_columns = [self.feature_column] if self.feature_column else [col for col in data.columns if col not in {self.id_column, self.sort_column}]
         grouped_data = data.groupby(self.id_column) if self.id_column else [(None, data)]
-            
+        grouped_data = data.groupby(self.id_column) if self.id_column else [(None, data)]
+
         # TODO
         # grouped_data = self.group_data(data)
 
         self.validate_data_frequency(grouped_data)
 
         if mode == 'dask':
-            return self.task_manager._execute_dask(grouped_data, feature_columns, progress_callback)
+            return self.task_manager._execute_dask(grouped_data, feature_columns)
 
         tasks = self.task_manager._generate_tasks(grouped_data, feature_columns)
         total_steps = len(tasks)

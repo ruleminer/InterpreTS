@@ -77,7 +77,7 @@ def test_execute_dask(task_manager):
 
     with patch("dask.dataframe.DataFrame.map_partitions", return_value=dask_data):
         with patch("dask.dataframe.concat", return_value=dask_data):
-            result = task_manager._execute_dask(grouped_data, feature_columns, progress_callback=None)
+            result = task_manager._execute_dask(grouped_data, feature_columns)
 
     assert result.equals(pandas_data)
 
