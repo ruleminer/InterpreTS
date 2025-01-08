@@ -12,17 +12,19 @@
 
 ## Requirements
  - Python 3.8 or above
- - `pandas==2.1.2`
- - `numpy==1.26.1`
- - `statsmodels==0.14.0`
- - `langchain_community==0.0.17`
- - `langchain==0.1.5`
- - `openai==0.28.0`
- - `streamlit==1.26.0`
+ - `pandas==2.2.3`
+ - `numpy==2.2.1`
+ - `statsmodels==0.14.4`
+ - `langchain_community==0.3.14`
+ - `langchain==0.3.14`
+ - `openai==1.59.4`
+ - `streamlit==1.41.1`
+ - `scikit-learn==1.6.0`
  - `joblib==1.4.2`
- - `tqdm==4.66.1`
- - `dask==2023.10.1`
- - `scipy==1.11.3`
+ - `tqdm==4.67.1`
+ - `dask==2024.12.1`
+ - `scipy==1.15.0`
+ - `pillow==11.1.0`
 
 ## Installation Guide
  Follow these steps to install InterpreTS and its dependencies:
@@ -51,18 +53,27 @@ pip install -r requirements.txt
  ```bash
 pip install .
  ```
+
 ## GUI
-Once installed, you can launch the GUI by navigating to the GUI directory,:
-```bash 
-    cd interpreTS/core/gui
-    streamlit run gui.py
-```
+InterpreTS offers a user-friendly GUI to facilitate time series feature extraction and model explainability.
 
-4. To upgrate to new version of relase 
+### Accessing the GUI
+The GUI is hosted online and available at [InterpreTS GUI](https://ruleminer-interprets-interpretscoreguigui-streamlit-gui--zcpuxp.streamlit.app/). 
 
+Alternatively, you can run it locally:
+1. Navigate to the GUI directory:
  ```bash
-pip install interpreTS --upgrade
+cd interpreTS/core/gui
  ```
+
+2. Launch the GUI using Streamlit:
+ ```bash
+streamlit run gui.py
+ ```
+
+### Features of the GUI
+* Feature Extraction: Easily upload time series data and extract predefined or custom features.
+* Visualization: View extracted features directly in the GUI.
 
 ## Verifying Installation - Example: Basic Feature Extraction
  Once installed, you can verify the installation by running a simple feature extraction example:

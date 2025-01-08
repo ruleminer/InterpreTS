@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
-from pandas.tseries.frequencies import to_offset
 import dask.dataframe as dd
+from pandas.tseries.frequencies import to_offset
 from joblib import Parallel, delayed
 from dask.diagnostics import ProgressBar
 from joblib import Parallel, delayed
