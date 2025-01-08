@@ -2,42 +2,45 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="./" >
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Feature Extractors &#8212; InterpreTS 0.4.1 documentation</title>
+    <title>Feature Extractors &#8212; InterpreTS 0.5.0 documentation</title>
   
   
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
-
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
-  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=ea00750a"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
-    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="_static/documentation_options.js?v=1dd76d02"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'Feature_Extractors';</script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -46,6 +49,7 @@
     <link rel="prev" title="Introduction" href="Introduction.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -53,32 +57,16 @@
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -86,7 +74,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search the docs ..."
          aria-label="Search the docs ..."
          autocomplete="off"
@@ -94,20 +81,27 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
-  <label class="sidebar-toggle primary-toggle" for="__primary">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
-  </label>
+  </button>
   
   
   <div class="col-lg-3 navbar-header-items__start">
     
       <div class="navbar-item">
 
+  
+    
   
 
 <a class="navbar-brand logo" href="index.html">
@@ -117,7 +111,7 @@
   
   
   
-    <p class="title logo__title">InterpreTS 0.4.1 documentation</p>
+    <p class="title logo__title">InterpreTS 0.5.0 documentation</p>
   
 </a></div>
     
@@ -128,42 +122,43 @@
     <div class="me-auto navbar-header-items__center">
       
         <div class="navbar-item">
-<nav class="navbar-nav">
-  <p class="sidebar-header-items__title"
-     role="heading"
-     aria-level="1"
-     aria-label="Site Navigation">
-    Site Navigation
-  </p>
+<nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="Introduction.html">
-                        Introduction
-                      </a>
-                    </li>
-                
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="Introduction.html">
+    Introduction
+  </a>
+</li>
 
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="#">
-                        Feature Extractors
-                      </a>
-                    </li>
-                
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="Tutorials.html">
-                        Tutorials
-                      </a>
-                    </li>
-                
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Feature Extractors
+  </a>
+</li>
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="API_Documentation.html">
-                        API Documentation
-                      </a>
-                    </li>
-                
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="Tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="API_Documentation.html">
+    API Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="gui.html">
+    Graphical User Interface (GUI)
+  </a>
+</li>
+
   </ul>
 </nav></div>
       
@@ -175,29 +170,21 @@
         <div class="navbar-item navbar-persistent--container">
           
 
- <script>
- document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
         </div>
       
       
         <div class="navbar-item">
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
-  </button>
-`);
-</script></div>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
       
     </div>
     
@@ -206,31 +193,31 @@ document.write(`
   
     <div class="navbar-persistent--mobile">
 
- <script>
- document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
     </div>
   
 
   
-    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
       <span class="fa-solid fa-outdent"></span>
-    </label>
+    </button>
   
 </div>
 
-    </nav>
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
-      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -239,45 +226,49 @@ document.write(`
     
       <div class="sidebar-header-items__center">
         
-          <div class="navbar-item">
-<nav class="navbar-nav">
-  <p class="sidebar-header-items__title"
-     role="heading"
-     aria-level="1"
-     aria-label="Site Navigation">
-    Site Navigation
-  </p>
+          
+          
+            <div class="navbar-item">
+<nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="Introduction.html">
-                        Introduction
-                      </a>
-                    </li>
-                
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="Introduction.html">
+    Introduction
+  </a>
+</li>
 
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="#">
-                        Feature Extractors
-                      </a>
-                    </li>
-                
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="Tutorials.html">
-                        Tutorials
-                      </a>
-                    </li>
-                
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Feature Extractors
+  </a>
+</li>
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="API_Documentation.html">
-                        API Documentation
-                      </a>
-                    </li>
-                
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="Tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="API_Documentation.html">
+    API Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="gui.html">
+    Graphical User Interface (GUI)
+  </a>
+</li>
+
   </ul>
 </nav></div>
+          
         
       </div>
     
@@ -287,45 +278,53 @@ document.write(`
         
           <div class="navbar-item">
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
-  </button>
-`);
-</script></div>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
         
       </div>
     
   </div>
   
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"></div>
+</nav></div>
+    </div>
+  
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
         <div class="header-article-item">
 
-
-
-<nav aria-label="Breadcrumb">
+<nav aria-label="Breadcrumb" class="d-print-none">
   <ul class="bd-breadcrumbs">
     
     <li class="breadcrumb-item breadcrumb-home">
@@ -333,7 +332,7 @@ document.write(`
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">Feature Extractors</li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Feature Extractors</span></li>
   </ul>
 </nav>
 </div>
@@ -348,25 +347,45 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section id="feature-extractors">
-<h1>Feature Extractors<a class="headerlink" href="#feature-extractors" title="Permalink to this heading">#</a></h1>
+<h1>Feature Extractors<a class="headerlink" href="#feature-extractors" title="Link to this heading">#</a></h1>
 <p>This section provides an overview of the feature extractor and the features available in the library.</p>
 <p>The <cite>Feature Extractor</cite> is the core component that extracts meaningful metrics and features from time-series data.</p>
-<span class="target" id="module-interpreTS.core.feature_extractor"></span><dl class="py class">
+<dl class="py class" id="module-interpreTS.core.feature_extractor">
 <dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interpreTS.core.feature_extractor.</span></span><span class="sig-name descname"><span class="pre">FeatureExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/feature_extractor.html#FeatureExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interpreTS.core.feature_extractor.</span></span><span class="sig-name descname"><span class="pre">FeatureExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/feature_extractor.html#FeatureExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor.DEFAULT_FEATURES">
-<span class="sig-name descname"><span class="pre">DEFAULT_FEATURES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['length',</span> <span class="pre">'mean',</span> <span class="pre">'variance',</span> <span class="pre">'stability',</span> <span class="pre">'entropy',</span> <span class="pre">'spikeness',</span> <span class="pre">'seasonality_strength']</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.DEFAULT_FEATURES" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor.CAN_USE_NAN">
+<span class="sig-name descname"><span class="pre">CAN_USE_NAN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['missing_points',</span> <span class="pre">'peak',</span> <span class="pre">'spikeness',</span> <span class="pre">'trough',</span> <span class="pre">'seasonality_strength']</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.CAN_USE_NAN" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor.DEFAULT_FEATURES_BIG">
+<span class="sig-name descname"><span class="pre">DEFAULT_FEATURES_BIG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['absolute_energy',</span> <span class="pre">'binarize_mean',</span> <span class="pre">'change_in_variance',</span> <span class="pre">'crossing_points',</span> <span class="pre">'distance_to_last_trend_change',</span> <span class="pre">'dominant',</span> <span class="pre">'entropy',</span> <span class="pre">'flat_spots',</span> <span class="pre">'heterogeneity',</span> <span class="pre">'linearity',</span> <span class="pre">'length',</span> <span class="pre">'mean',</span> <span class="pre">'missing_points',</span> <span class="pre">'peak',</span> <span class="pre">'significant_changes',</span> <span class="pre">'spikeness',</span> <span class="pre">'stability',</span> <span class="pre">'std_1st_der',</span> <span class="pre">'trough',</span> <span class="pre">'variance',</span> <span class="pre">'mean_change',</span> <span class="pre">'seasonality_strength',</span> <span class="pre">'trend_strength',</span> <span class="pre">'change_in_variance']</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.DEFAULT_FEATURES_BIG" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor.DEFAULT_FEATURES_SMALL">
+<span class="sig-name descname"><span class="pre">DEFAULT_FEATURES_SMALL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['length',</span> <span class="pre">'mean',</span> <span class="pre">'variance',</span> <span class="pre">'stability',</span> <span class="pre">'entropy',</span> <span class="pre">'spikeness',</span> <span class="pre">'seasonality_strength']</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.DEFAULT_FEATURES_SMALL" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor.FEATURES_ALL">
+<span class="sig-name descname"><span class="pre">FEATURES_ALL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['above_9th_decile',</span> <span class="pre">'below_1st_decile',</span> <span class="pre">'absolute_energy',</span> <span class="pre">'binarize_mean',</span> <span class="pre">'change_in_variance',</span> <span class="pre">'crossing_points',</span> <span class="pre">'distance_to_last_trend_change',</span> <span class="pre">'dominant',</span> <span class="pre">'entropy',</span> <span class="pre">'flat_spots',</span> <span class="pre">'heterogeneity',</span> <span class="pre">'linearity',</span> <span class="pre">'length',</span> <span class="pre">'mean',</span> <span class="pre">'missing_points',</span> <span class="pre">'outliers_iqr',</span> <span class="pre">'outliers_std',</span> <span class="pre">'peak',</span> <span class="pre">'significant_changes',</span> <span class="pre">'spikeness',</span> <span class="pre">'stability',</span> <span class="pre">'std_1st_der',</span> <span class="pre">'trough',</span> <span class="pre">'variance',</span> <span class="pre">'mean_change',</span> <span class="pre">'seasonality_strength',</span> <span class="pre">'trend_strength',</span> <span class="pre">'variability_in_sub_periods',</span> <span class="pre">'change_in_variance']</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.FEATURES_ALL" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor.FOR_ML">
+<span class="sig-name descname"><span class="pre">FOR_ML</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['absolute_energy',</span> <span class="pre">'binarize_mean',</span> <span class="pre">'dominant',</span> <span class="pre">'entropy',</span> <span class="pre">'flat_spots',</span> <span class="pre">'heterogeneity',</span> <span class="pre">'linearity',</span> <span class="pre">'length',</span> <span class="pre">'mean',</span> <span class="pre">'missing_points',</span> <span class="pre">'peak',</span> <span class="pre">'significant_changes',</span> <span class="pre">'spikeness',</span> <span class="pre">'stability',</span> <span class="pre">'std_1st_der',</span> <span class="pre">'trough',</span> <span class="pre">'variance',</span> <span class="pre">'seasonality_strength',</span> <span class="pre">'trend_strength']</span></em><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.FOR_ML" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor.add_custom_feature">
-<span class="sig-name descname"><span class="pre">add_custom_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/feature_extractor.html#FeatureExtractor.add_custom_feature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.add_custom_feature" title="Permalink to this definition">#</a></dt>
-<dd><p>Add a custom feature to the FeatureExtractor.</p>
+<span class="sig-name descname"><span class="pre">add_custom_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/feature_extractor.html#FeatureExtractor.add_custom_feature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.add_custom_feature" title="Link to this definition">#</a></dt>
+<dd><p>Add a custom feature to the FeatureExtractor with optional parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -375,6 +394,15 @@ document.write(`
 <li><p><strong>metadata</strong> (<em>dict</em><em>, </em><em>optional</em>) – A dictionary containing metadata about the feature, such as its interpretability level and description.
 - level (str): Interpretability level (‘easy’, ‘moderate’, ‘advanced’).
 - description (str): Description of the feature.</p></li>
+<li><p><strong>params</strong> (<em>dict</em><em>, </em><em>optional</em>) – <p>A dictionary of parameters to be passed to the feature function when it is executed.
+Example:
+{</p>
+<blockquote>
+<div><p>’level’: ‘easy’ | ‘moderate’ | ‘advanced’,
+‘description’: ‘Description of the feature.’</p>
+</div></blockquote>
+<p>}</p>
+</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
@@ -385,7 +413,7 @@ document.write(`
 
 <dl class="py method">
 <dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor.extract_features">
-<span class="sig-name descname"><span class="pre">extract_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progress_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sequential'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/feature_extractor.html#FeatureExtractor.extract_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.extract_features" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">extract_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progress_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sequential'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/feature_extractor.html#FeatureExtractor.extract_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.extract_features" title="Link to this definition">#</a></dt>
 <dd><p>Extract features from a time series dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -403,15 +431,12 @@ or ‘sequential’ for single-threaded processing with real-time progress repor
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>pd.DataFrame</p>
 </dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If the mode is not one of [‘parallel’, ‘sequential’, ‘dask’].</p>
-</dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor.extract_features_stream">
-<span class="sig-name descname"><span class="pre">extract_features_stream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_stream</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progress_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/feature_extractor.html#FeatureExtractor.extract_features_stream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.extract_features_stream" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">extract_features_stream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_stream</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progress_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/feature_extractor.html#FeatureExtractor.extract_features_stream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.extract_features_stream" title="Link to this definition">#</a></dt>
 <dd><p>Extract features from a stream of time series data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -428,7 +453,7 @@ or ‘sequential’ for single-threaded processing with real-time progress repor
 
 <dl class="py method">
 <dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor.group_data">
-<span class="sig-name descname"><span class="pre">group_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/feature_extractor.html#FeatureExtractor.group_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.group_data" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">group_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/feature_extractor.html#FeatureExtractor.group_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.group_data" title="Link to this definition">#</a></dt>
 <dd><p>Group data based on the group_by column.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -445,7 +470,7 @@ or ‘sequential’ for single-threaded processing with real-time progress repor
 
 <dl class="py method">
 <dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor.group_features_by_interpretability">
-<span class="sig-name descname"><span class="pre">group_features_by_interpretability</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/feature_extractor.html#FeatureExtractor.group_features_by_interpretability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.group_features_by_interpretability" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">group_features_by_interpretability</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/feature_extractor.html#FeatureExtractor.group_features_by_interpretability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.group_features_by_interpretability" title="Link to this definition">#</a></dt>
 <dd><p>Group features by their interpretability levels.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -460,14 +485,13 @@ and values are lists of feature names.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor.head">
-<span class="sig-name descname"><span class="pre">head</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/feature_extractor.html#FeatureExtractor.head"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.head" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">head</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/feature_extractor.html#FeatureExtractor.head"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.head" title="Link to this definition">#</a></dt>
 <dd><p>Returns the first n rows of the resulting DataFrame from the extract_features function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>features_df</strong> (<em>pd.DataFrame</em>) – The resulting DataFrame from the extract_features function.</p></li>
-<li><p><strong>n</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of rows to return (default is 5). If n is negative,
-returns all rows except the last abs(n) rows.</p></li>
+<li><p><strong>n</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default 5</em><em>)</em>) – The number of rows to return. If n is negative, returns all rows except the last <a href="#id1"><span class="problematic" id="id2">|n|</span></a> rows.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -479,18 +503,32 @@ returns all rows except the last abs(n) rows.</p></li>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="interpreTS.core.feature_extractor.FeatureExtractor.validate_data_frequency">
+<span class="sig-name descname"><span class="pre">validate_data_frequency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grouped_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/feature_extractor.html#FeatureExtractor.validate_data_frequency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.feature_extractor.FeatureExtractor.validate_data_frequency" title="Link to this definition">#</a></dt>
+<dd><p>Validate that data has a consistent and defined frequency if window_size or stride are time-based.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>pd.DataFrame</em>) – The time series data to validate.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If data frequency is not defined or inconsistent.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
 <section id="available-features">
-<h1>Available Features<a class="headerlink" href="#available-features" title="Permalink to this heading">#</a></h1>
+<h1>Available Features<a class="headerlink" href="#available-features" title="Link to this heading">#</a></h1>
 <p>Below is a list of the available features in the library. Each feature is automatically documented from the code, with a brief description.</p>
 <section id="length">
-<h2>Length<a class="headerlink" href="#length" title="Permalink to this heading">#</a></h2>
+<h2>Length<a class="headerlink" href="#length" title="Link to this heading">#</a></h2>
 <p>Extracts the total length of a time series.</p>
-<span class="target" id="module-interpreTS.core.features.feature_length"></span><dl class="py function">
+<dl class="py function" id="module-interpreTS.core.features.feature_length">
 <dt class="sig sig-object py" id="interpreTS.core.features.feature_length.calculate_length">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_length.</span></span><span class="sig-name descname"><span class="pre">calculate_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_length.html#calculate_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_length.calculate_length" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_length.</span></span><span class="sig-name descname"><span class="pre">calculate_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_length.html#calculate_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_length.calculate_length" title="Link to this definition">#</a></dt>
 <dd><p>Calculate the number of data points in a time series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -510,7 +548,7 @@ returns all rows except the last abs(n) rows.</p></li>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_length</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="go">5</span>
@@ -520,11 +558,11 @@ returns all rows except the last abs(n) rows.</p></li>
 
 </section>
 <section id="mean">
-<h2>Mean<a class="headerlink" href="#mean" title="Permalink to this heading">#</a></h2>
+<h2>Mean<a class="headerlink" href="#mean" title="Link to this heading">#</a></h2>
 <p>Calculates the mean value of a time series.</p>
-<span class="target" id="module-interpreTS.core.features.feature_mean"></span><dl class="py function">
+<dl class="py function" id="module-interpreTS.core.features.feature_mean">
 <dt class="sig sig-object py" id="interpreTS.core.features.feature_mean.calculate_mean">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_mean.</span></span><span class="sig-name descname"><span class="pre">calculate_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_mean.html#calculate_mean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_mean.calculate_mean" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_mean.</span></span><span class="sig-name descname"><span class="pre">calculate_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_mean.html#calculate_mean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_mean.calculate_mean" title="Link to this definition">#</a></dt>
 <dd><p>Calculate the mean value of a time series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -544,7 +582,7 @@ returns all rows except the last abs(n) rows.</p></li>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="go">3.0</span>
@@ -554,11 +592,11 @@ returns all rows except the last abs(n) rows.</p></li>
 
 </section>
 <section id="peak">
-<h2>Peak<a class="headerlink" href="#peak" title="Permalink to this heading">#</a></h2>
+<h2>Peak<a class="headerlink" href="#peak" title="Link to this heading">#</a></h2>
 <p>Identifies the maximum peak value.</p>
-<span class="target" id="module-interpreTS.core.features.feature_peak"></span><dl class="py function">
+<dl class="py function" id="module-interpreTS.core.features.feature_peak">
 <dt class="sig sig-object py" id="interpreTS.core.features.feature_peak.calculate_peak">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_peak.</span></span><span class="sig-name descname"><span class="pre">calculate_peak</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_peak.html#calculate_peak"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_peak.calculate_peak" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_peak.</span></span><span class="sig-name descname"><span class="pre">calculate_peak</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_peak.html#calculate_peak"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_peak.calculate_peak" title="Link to this definition">#</a></dt>
 <dd><p>Calculate the local maximum of a time series within an optional range.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -584,7 +622,7 @@ If None, the series ends at the last value.</p></li>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_peak</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="go">7.0</span>
@@ -596,11 +634,11 @@ If None, the series ends at the last value.</p></li>
 
 </section>
 <section id="spikeness">
-<h2>Spikeness<a class="headerlink" href="#spikeness" title="Permalink to this heading">#</a></h2>
+<h2>Spikeness<a class="headerlink" href="#spikeness" title="Link to this heading">#</a></h2>
 <p>Measures the level of spikeness in the time series.</p>
-<span class="target" id="module-interpreTS.core.features.feature_spikeness"></span><dl class="py function">
+<dl class="py function" id="module-interpreTS.core.features.feature_spikeness">
 <dt class="sig sig-object py" id="interpreTS.core.features.feature_spikeness.calculate_spikeness">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_spikeness.</span></span><span class="sig-name descname"><span class="pre">calculate_spikeness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_spikeness.html#calculate_spikeness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_spikeness.calculate_spikeness" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_spikeness.</span></span><span class="sig-name descname"><span class="pre">calculate_spikeness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_spikeness.html#calculate_spikeness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_spikeness.calculate_spikeness" title="Link to this definition">#</a></dt>
 <dd><p>Calculate the spikeness (skewness) of a time series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -620,7 +658,7 @@ If None, the series ends at the last value.</p></li>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_spikeness</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="go">0.0</span>
@@ -630,11 +668,11 @@ If None, the series ends at the last value.</p></li>
 
 </section>
 <section id="standard-deviation-of-the-first-derivative-std-1st-der">
-<h2>Standard Deviation of the First Derivative (Std_1st_der)<a class="headerlink" href="#standard-deviation-of-the-first-derivative-std-1st-der" title="Permalink to this heading">#</a></h2>
+<h2>Standard Deviation of the First Derivative (Std_1st_der)<a class="headerlink" href="#standard-deviation-of-the-first-derivative-std-1st-der" title="Link to this heading">#</a></h2>
 <p>Calculates the standard deviation of the first derivative of the series.</p>
-<span class="target" id="module-interpreTS.core.features.feature_std_1st_der"></span><dl class="py function">
+<dl class="py function" id="module-interpreTS.core.features.feature_std_1st_der">
 <dt class="sig sig-object py" id="interpreTS.core.features.feature_std_1st_der.calculate_std_1st_der">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_std_1st_der.</span></span><span class="sig-name descname"><span class="pre">calculate_std_1st_der</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_std_1st_der.html#calculate_std_1st_der"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_std_1st_der.calculate_std_1st_der" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_std_1st_der.</span></span><span class="sig-name descname"><span class="pre">calculate_std_1st_der</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_std_1st_der.html#calculate_std_1st_der"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_std_1st_der.calculate_std_1st_der" title="Link to this definition">#</a></dt>
 <dd><p>Calculate the standard deviation of the first derivative of a time series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -664,11 +702,11 @@ Returns np.nan if the input data is empty.</p>
 
 </section>
 <section id="trough">
-<h2>Trough<a class="headerlink" href="#trough" title="Permalink to this heading">#</a></h2>
+<h2>Trough<a class="headerlink" href="#trough" title="Link to this heading">#</a></h2>
 <p>Identifies the lowest point in the time series.</p>
-<span class="target" id="module-interpreTS.core.features.feature_trough"></span><dl class="py function">
+<dl class="py function" id="module-interpreTS.core.features.feature_trough">
 <dt class="sig sig-object py" id="interpreTS.core.features.feature_trough.calculate_trough">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_trough.</span></span><span class="sig-name descname"><span class="pre">calculate_trough</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_trough.html#calculate_trough"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_trough.calculate_trough" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_trough.</span></span><span class="sig-name descname"><span class="pre">calculate_trough</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_trough.html#calculate_trough"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_trough.calculate_trough" title="Link to this definition">#</a></dt>
 <dd><p>Calculate the local minimum of a time series within an optional range.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -705,11 +743,11 @@ If None, the series ends at the last value.</p></li>
 
 </section>
 <section id="variance">
-<h2>Variance<a class="headerlink" href="#variance" title="Permalink to this heading">#</a></h2>
+<h2>Variance<a class="headerlink" href="#variance" title="Link to this heading">#</a></h2>
 <p>Computes the variance of the series.</p>
-<span class="target" id="module-interpreTS.core.features.feature_variance"></span><dl class="py function">
+<dl class="py function" id="module-interpreTS.core.features.feature_variance">
 <dt class="sig sig-object py" id="interpreTS.core.features.feature_variance.calculate_variance">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_variance.</span></span><span class="sig-name descname"><span class="pre">calculate_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ddof</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_variance.html#calculate_variance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_variance.calculate_variance" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_variance.</span></span><span class="sig-name descname"><span class="pre">calculate_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ddof</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_variance.html#calculate_variance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_variance.calculate_variance" title="Link to this definition">#</a></dt>
 <dd><p>Calculate the variance value of a time series with specified degrees of freedom.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -733,8 +771,8 @@ A ddof of 1 provides the sample variance, and a ddof of 0 provides the populatio
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">18</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_variance</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="go">10.0</span>
@@ -754,133 +792,23 @@ A ddof of 1 provides the sample variance, and a ddof of 0 provides the populatio
 
 </section>
 <section id="dominant">
-<h2>Dominant<a class="headerlink" href="#dominant" title="Permalink to this heading">#</a></h2>
+<h2>Dominant<a class="headerlink" href="#dominant" title="Link to this heading">#</a></h2>
 <p>Finds the most dominant value in a histogram representation.</p>
-<span class="target" id="module-interpreTS.core.features.histogram_dominant"></span><dl class="py function">
-<dt class="sig sig-object py" id="interpreTS.core.features.histogram_dominant.calculate_dominant">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.histogram_dominant.</span></span><span class="sig-name descname"><span class="pre">calculate_dominant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_bin_center</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/histogram_dominant.html#calculate_dominant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.histogram_dominant.calculate_dominant" title="Permalink to this definition">#</a></dt>
-<dd><p>Calculate the dominant value (mode) of a time series histogram.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>pd.Series</em><em> or </em><em>np.ndarray</em>) – The time series data for which the dominant value is to be calculated.</p></li>
-<li><p><strong>bins</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of bins to use for creating the histogram, by default 10.</p></li>
-<li><p><strong>return_bin_center</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, return the center of the bin with the maximum frequency.
-Otherwise, return the lower bound of the bin (default is False).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The dominant value of the histogram (either the center or the lower bound of the bin).</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>TypeError</strong> – If the data is not a valid time series type.</p></li>
-<li><p><strong>ValueError</strong> – If the data contains NaN values.</p></li>
-</ul>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_dominant</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="go">2.6</span>
-</pre></div>
-</div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_dominant</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">return_bin_center</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="go">30.0</span>
-</pre></div>
-</div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_dominant</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="go">0.8333333333333333</span>
-</pre></div>
-</div>
-</dd></dl>
-
 </section>
 <section id="seasonality-strength">
-<h2>Seasonality Strength<a class="headerlink" href="#seasonality-strength" title="Permalink to this heading">#</a></h2>
+<h2>Seasonality Strength<a class="headerlink" href="#seasonality-strength" title="Link to this heading">#</a></h2>
 <p>Assesses the strength of seasonality patterns in the data.</p>
-<span class="target" id="module-interpreTS.core.features.seasonality_strength"></span><dl class="py function">
-<dt class="sig sig-object py" id="interpreTS.core.features.seasonality_strength.calculate_seasonality_strength">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.seasonality_strength.</span></span><span class="sig-name descname"><span class="pre">calculate_seasonality_strength</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_lag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/seasonality_strength.html#calculate_seasonality_strength"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.seasonality_strength.calculate_seasonality_strength" title="Permalink to this definition">#</a></dt>
-<dd><p>Calculate the strength of the seasonality in a time series based on autocorrelation.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>pd.Series</em><em> or </em><em>np.ndarray</em>) – The time series data for which the seasonality strength is to be calculated.</p></li>
-<li><p><strong>period</strong> (<em>int</em><em>, </em><em>optional</em>) – The periodic interval to check for seasonality (default is 2).</p></li>
-<li><p><strong>max_lag</strong> (<em>int</em><em>, </em><em>optional</em>) – The maximum number of lags to consider for autocorrelation (default is 12).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The seasonality strength, ranging from 0 to 1, where 1 indicates strong seasonality.
-Returns np.nan if the data is insufficient or invalid.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>TypeError</strong> – If the data is not a valid time series type.</p></li>
-<li><p><strong>ValueError</strong> – If the data contains NaN values, is too short to calculate seasonality, or if the period is invalid.</p></li>
-</ul>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;M&quot;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_seasonality_strength</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="go">1.0</span>
-</pre></div>
-</div>
-</dd></dl>
-
 </section>
 <section id="trend-strength">
-<h2>Trend Strength<a class="headerlink" href="#trend-strength" title="Permalink to this heading">#</a></h2>
+<h2>Trend Strength<a class="headerlink" href="#trend-strength" title="Link to this heading">#</a></h2>
 <p>Measures the strength of the overall trend in the series.</p>
-<span class="target" id="module-interpreTS.core.features.trend_strength"></span><dl class="py function">
-<dt class="sig sig-object py" id="interpreTS.core.features.trend_strength.calculate_trend_strength">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.trend_strength.</span></span><span class="sig-name descname"><span class="pre">calculate_trend_strength</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/trend_strength.html#calculate_trend_strength"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.trend_strength.calculate_trend_strength" title="Permalink to this definition">#</a></dt>
-<dd><p>Calculate the strength of the trend in a time series using linear regression.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>pd.Series</em><em> or </em><em>np.ndarray</em>) – The time series data for which the trend strength is to be calculated.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The R-squared value representing the strength of the trend (0 to 1).</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>TypeError</strong> – If the data is not a valid time series type.</p></li>
-<li><p><strong>ValueError</strong> – If the data contains NaN values or is empty.</p></li>
-</ul>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_trend_strength</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="go">1.0</span>
-</pre></div>
-</div>
-</dd></dl>
-
 </section>
 <section id="above-9th-decile">
-<h2>Above 9th Decile<a class="headerlink" href="#above-9th-decile" title="Permalink to this heading">#</a></h2>
+<h2>Above 9th Decile<a class="headerlink" href="#above-9th-decile" title="Link to this heading">#</a></h2>
 <p>Calculates whether the values in the time series are above the 9th decile.</p>
-<span class="target" id="module-interpreTS.core.features.feature_above_9th_decile"></span><dl class="py function">
+<dl class="py function" id="module-interpreTS.core.features.feature_above_9th_decile">
 <dt class="sig sig-object py" id="interpreTS.core.features.feature_above_9th_decile.calculate_above_9th_decile">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_above_9th_decile.</span></span><span class="sig-name descname"><span class="pre">calculate_above_9th_decile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_above_9th_decile.html#calculate_above_9th_decile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_above_9th_decile.calculate_above_9th_decile" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_above_9th_decile.</span></span><span class="sig-name descname"><span class="pre">calculate_above_9th_decile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_above_9th_decile.html#calculate_above_9th_decile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_above_9th_decile.calculate_above_9th_decile" title="Link to this definition">#</a></dt>
 <dd><p>Calculate the fraction of values in the window above the 9th decile of the training data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -903,7 +831,7 @@ Returns np.nan if the data is insufficient or invalid.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">training_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_above_9th_decile</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">training_data</span><span class="p">)</span>
@@ -914,48 +842,15 @@ Returns np.nan if the data is insufficient or invalid.</p>
 
 </section>
 <section id="distance-to-the-last-change-point">
-<h2>Distance to the Last Change Point<a class="headerlink" href="#distance-to-the-last-change-point" title="Permalink to this heading">#</a></h2>
+<h2>Distance to the Last Change Point<a class="headerlink" href="#distance-to-the-last-change-point" title="Link to this heading">#</a></h2>
 <p>Measures the distance to the last change point in the time series.</p>
-<span class="target" id="module-interpreTS.core.features.distance_to_the_last_change_point"></span><dl class="py function">
-<dt class="sig sig-object py" id="interpreTS.core.features.distance_to_the_last_change_point.calculate_distance_to_last_trend_change">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.distance_to_the_last_change_point.</span></span><span class="sig-name descname"><span class="pre">calculate_distance_to_last_trend_change</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/distance_to_the_last_change_point.html#calculate_distance_to_last_trend_change"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.distance_to_the_last_change_point.calculate_distance_to_last_trend_change" title="Permalink to this definition">#</a></dt>
-<dd><p>Calculate the distance (in terms of indices) to the last trend change point in a time series.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>pd.Series</em><em> or </em><em>np.ndarray</em>) – The time series data for which the distance to the last trend change is to be calculated.</p></li>
-<li><p><strong>window_size</strong> (<em>int</em><em>, </em><em>optional</em>) – The size of the rolling window to calculate mean (default is 5).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The distance (in terms of indices) to the last trend change point.
-If no change is detected, returns None.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int or None</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>TypeError</strong> – If the data is not a valid time series type.</p></li>
-<li><p><strong>ValueError</strong> – If the data contains NaN values or <cite>window_size</cite> is invalid.</p></li>
-</ul>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_distance_to_last_trend_change</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="go">1</span>
-</pre></div>
-</div>
-</dd></dl>
-
 </section>
 <section id="absolute-energy">
-<h2>Absolute Energy<a class="headerlink" href="#absolute-energy" title="Permalink to this heading">#</a></h2>
+<h2>Absolute Energy<a class="headerlink" href="#absolute-energy" title="Link to this heading">#</a></h2>
 <p>Calculates the absolute energy of the time series.</p>
-<span class="target" id="module-interpreTS.core.features.feature_absolute_energy"></span><dl class="py function">
+<dl class="py function" id="module-interpreTS.core.features.feature_absolute_energy">
 <dt class="sig sig-object py" id="interpreTS.core.features.feature_absolute_energy.calculate_absolute_energy">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_absolute_energy.</span></span><span class="sig-name descname"><span class="pre">calculate_absolute_energy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_absolute_energy.html#calculate_absolute_energy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_absolute_energy.calculate_absolute_energy" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_absolute_energy.</span></span><span class="sig-name descname"><span class="pre">calculate_absolute_energy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_absolute_energy.html#calculate_absolute_energy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_absolute_energy.calculate_absolute_energy" title="Link to this definition">#</a></dt>
 <dd><p>Calculate the absolute energy of a time series within an optional range.</p>
 <p>Absolute energy is defined as the sum of squared values in the time series.</p>
 <dl class="field-list simple">
@@ -982,7 +877,7 @@ If None, the series ends at the last value.</p></li>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_absolute_energy</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="go">30.0</span>
@@ -994,11 +889,11 @@ If None, the series ends at the last value.</p></li>
 
 </section>
 <section id="below-1st-decile">
-<h2>Below 1st Decile<a class="headerlink" href="#below-1st-decile" title="Permalink to this heading">#</a></h2>
+<h2>Below 1st Decile<a class="headerlink" href="#below-1st-decile" title="Link to this heading">#</a></h2>
 <p>Calculates whether the values in the time series are below the 1st decile.</p>
-<span class="target" id="module-interpreTS.core.features.feature_below_1st_decile"></span><dl class="py function">
+<dl class="py function" id="module-interpreTS.core.features.feature_below_1st_decile">
 <dt class="sig sig-object py" id="interpreTS.core.features.feature_below_1st_decile.calculate_below_1st_decile">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_below_1st_decile.</span></span><span class="sig-name descname"><span class="pre">calculate_below_1st_decile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_below_1st_decile.html#calculate_below_1st_decile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_below_1st_decile.calculate_below_1st_decile" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_below_1st_decile.</span></span><span class="sig-name descname"><span class="pre">calculate_below_1st_decile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_below_1st_decile.html#calculate_below_1st_decile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_below_1st_decile.calculate_below_1st_decile" title="Link to this definition">#</a></dt>
 <dd><p>Calculate the fraction of values in the window below the 1st decile of the training data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1021,7 +916,7 @@ If None, the series ends at the last value.</p></li>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">training_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_below_1st_decile</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">training_data</span><span class="p">)</span>
@@ -1032,11 +927,11 @@ If None, the series ends at the last value.</p></li>
 
 </section>
 <section id="binarize-mean">
-<h2>Binarize Mean<a class="headerlink" href="#binarize-mean" title="Permalink to this heading">#</a></h2>
+<h2>Binarize Mean<a class="headerlink" href="#binarize-mean" title="Link to this heading">#</a></h2>
 <p>Binarizes the mean value of the time series.</p>
-<span class="target" id="module-interpreTS.core.features.feature_binarize_mean"></span><dl class="py function">
+<dl class="py function" id="module-interpreTS.core.features.feature_binarize_mean">
 <dt class="sig sig-object py" id="interpreTS.core.features.feature_binarize_mean.calculate_binarize_mean">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_binarize_mean.</span></span><span class="sig-name descname"><span class="pre">calculate_binarize_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_binarize_mean.html#calculate_binarize_mean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_binarize_mean.calculate_binarize_mean" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_binarize_mean.</span></span><span class="sig-name descname"><span class="pre">calculate_binarize_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_binarize_mean.html#calculate_binarize_mean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_binarize_mean.calculate_binarize_mean" title="Link to this definition">#</a></dt>
 <dd><p>Calculate the binarize mean of a time series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1056,7 +951,7 @@ If None, the series ends at the last value.</p></li>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_binarize_mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="go">0.6</span>
@@ -1066,11 +961,11 @@ If None, the series ends at the last value.</p></li>
 
 </section>
 <section id="crossing-points">
-<h2>Crossing Points<a class="headerlink" href="#crossing-points" title="Permalink to this heading">#</a></h2>
+<h2>Crossing Points<a class="headerlink" href="#crossing-points" title="Link to this heading">#</a></h2>
 <p>Counts the crossing points in the time series.</p>
-<span class="target" id="module-interpreTS.core.features.feature_crossing_points"></span><dl class="py function">
+<dl class="py function" id="module-interpreTS.core.features.feature_crossing_points">
 <dt class="sig sig-object py" id="interpreTS.core.features.feature_crossing_points.calculate_crossing_points">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_crossing_points.</span></span><span class="sig-name descname"><span class="pre">calculate_crossing_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_crossing_points.html#calculate_crossing_points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_crossing_points.calculate_crossing_points" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_crossing_points.</span></span><span class="sig-name descname"><span class="pre">calculate_crossing_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_crossing_points.html#calculate_crossing_points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_crossing_points.calculate_crossing_points" title="Link to this definition">#</a></dt>
 <dd><p>Calculate the number of times and the list of indices where the time series crosses its mean.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1088,27 +983,15 @@ If None, the series ends at the last value.</p></li>
 <dd class="field-even"><p><strong>ValueError</strong> – If the input data is empty or contains NaN values.</p>
 </dd>
 </dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_crossing_points</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="go">{&#39;crossing_count&#39;: 7, &#39;crossing_points&#39;: [0, 1, 2, 3, 4, 5, 6]}</span>
-</pre></div>
-</div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_crossing_points</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="go">{&#39;crossing_count&#39;: 0, &#39;crossing_points&#39;: []}</span>
-</pre></div>
-</div>
 </dd></dl>
 
 </section>
 <section id="entropy">
-<h2>Entropy<a class="headerlink" href="#entropy" title="Permalink to this heading">#</a></h2>
+<h2>Entropy<a class="headerlink" href="#entropy" title="Link to this heading">#</a></h2>
 <p>Calculates the entropy of the time series.</p>
-<span class="target" id="module-interpreTS.core.features.feature_entropy"></span><dl class="py function">
+<dl class="py function" id="module-interpreTS.core.features.feature_entropy">
 <dt class="sig sig-object py" id="interpreTS.core.features.feature_entropy.calculate_entropy">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_entropy.</span></span><span class="sig-name descname"><span class="pre">calculate_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_entropy.html#calculate_entropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_entropy.calculate_entropy" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_entropy.</span></span><span class="sig-name descname"><span class="pre">calculate_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_entropy.html#calculate_entropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_entropy.calculate_entropy" title="Link to this definition">#</a></dt>
 <dd><p>Calculate the normalized Shannon entropy of a dataset.</p>
 <p>This function estimates the probability density of the data using Kernel Density Estimation (KDE)
 and calculates the Shannon entropy based on the estimated probabilities.</p>
@@ -1146,11 +1029,11 @@ or poorly estimated probability distribution.</p></li>
 
 </section>
 <section id="flat-spots">
-<h2>Flat Spots<a class="headerlink" href="#flat-spots" title="Permalink to this heading">#</a></h2>
+<h2>Flat Spots<a class="headerlink" href="#flat-spots" title="Link to this heading">#</a></h2>
 <p>Identifies flat spots within the time series.</p>
-<span class="target" id="module-interpreTS.core.features.feature_flat_spots"></span><dl class="py function">
+<dl class="py function" id="module-interpreTS.core.features.feature_flat_spots">
 <dt class="sig sig-object py" id="interpreTS.core.features.feature_flat_spots.calculate_flat_spots">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_flat_spots.</span></span><span class="sig-name descname"><span class="pre">calculate_flat_spots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_flat_spots.html#calculate_flat_spots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_flat_spots.calculate_flat_spots" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_flat_spots.</span></span><span class="sig-name descname"><span class="pre">calculate_flat_spots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_flat_spots.html#calculate_flat_spots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_flat_spots.calculate_flat_spots" title="Link to this definition">#</a></dt>
 <dd><p>Calculate the number of flat spots in the time series.</p>
 <p>Flat spots are defined as maximum run-lengths across equally-sized segments of the time series.</p>
 <dl class="field-list simple">
@@ -1168,7 +1051,7 @@ or poorly estimated probability distribution.</p></li>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_flat_spots</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="go">4</span>
@@ -1178,11 +1061,11 @@ or poorly estimated probability distribution.</p></li>
 
 </section>
 <section id="heterogeneity">
-<h2>Heterogeneity<a class="headerlink" href="#heterogeneity" title="Permalink to this heading">#</a></h2>
+<h2>Heterogeneity<a class="headerlink" href="#heterogeneity" title="Link to this heading">#</a></h2>
 <p>Measures the heterogeneity of the time series.</p>
-<span class="target" id="module-interpreTS.core.features.feature_heterogeneity"></span><dl class="py function">
+<dl class="py function" id="module-interpreTS.core.features.feature_heterogeneity">
 <dt class="sig sig-object py" id="interpreTS.core.features.feature_heterogeneity.calculate_heterogeneity">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_heterogeneity.</span></span><span class="sig-name descname"><span class="pre">calculate_heterogeneity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_heterogeneity.html#calculate_heterogeneity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_heterogeneity.calculate_heterogeneity" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_heterogeneity.</span></span><span class="sig-name descname"><span class="pre">calculate_heterogeneity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_heterogeneity.html#calculate_heterogeneity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_heterogeneity.calculate_heterogeneity" title="Link to this definition">#</a></dt>
 <dd><p>Calculate the heterogeneity (coefficient of variation) of a time series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1202,7 +1085,7 @@ or poorly estimated probability distribution.</p></li>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_heterogeneity</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="go">0.5270462766947299</span>
@@ -1212,11 +1095,11 @@ or poorly estimated probability distribution.</p></li>
 
 </section>
 <section id="linearity">
-<h2>Linearity<a class="headerlink" href="#linearity" title="Permalink to this heading">#</a></h2>
+<h2>Linearity<a class="headerlink" href="#linearity" title="Link to this heading">#</a></h2>
 <p>Calculates the linearity of the time series.</p>
-<span class="target" id="module-interpreTS.core.features.feature_linearity"></span><dl class="py function">
+<dl class="py function" id="module-interpreTS.core.features.feature_linearity">
 <dt class="sig sig-object py" id="interpreTS.core.features.feature_linearity.calculate_linearity">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_linearity.</span></span><span class="sig-name descname"><span class="pre">calculate_linearity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_derivative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_linearity.html#calculate_linearity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_linearity.calculate_linearity" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_linearity.</span></span><span class="sig-name descname"><span class="pre">calculate_linearity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_derivative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_linearity.html#calculate_linearity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_linearity.calculate_linearity" title="Link to this definition">#</a></dt>
 <dd><p>Calculate the linearity of a time series, similar to tsflex or sktime implementations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1241,7 +1124,7 @@ A value closer to 1 indicates higher linearity.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_linearity</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="go">1.0</span>
@@ -1254,11 +1137,11 @@ A value closer to 1 indicates higher linearity.</p>
 
 </section>
 <section id="missing-points">
-<h2>Missing Points<a class="headerlink" href="#missing-points" title="Permalink to this heading">#</a></h2>
+<h2>Missing Points<a class="headerlink" href="#missing-points" title="Link to this heading">#</a></h2>
 <p>Identifies missing points within the time series.</p>
-<span class="target" id="module-interpreTS.core.features.feature_missing_points"></span><dl class="py function">
+<dl class="py function" id="module-interpreTS.core.features.feature_missing_points">
 <dt class="sig sig-object py" id="interpreTS.core.features.feature_missing_points.calculate_missing_points">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_missing_points.</span></span><span class="sig-name descname"><span class="pre">calculate_missing_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">percentage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_missing_points.html#calculate_missing_points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_missing_points.calculate_missing_points" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_missing_points.</span></span><span class="sig-name descname"><span class="pre">calculate_missing_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">percentage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_missing_points.html#calculate_missing_points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_missing_points.calculate_missing_points" title="Link to this definition">#</a></dt>
 <dd><p>Calculate the percentage or count of missing (NaN or None) values in a time series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1280,7 +1163,7 @@ Default is True.</p></li>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">missing_points</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="go">0.4</span>
@@ -1292,11 +1175,11 @@ Default is True.</p></li>
 
 </section>
 <section id="outliers-iqr">
-<h2>Outliers IQR<a class="headerlink" href="#outliers-iqr" title="Permalink to this heading">#</a></h2>
+<h2>Outliers IQR<a class="headerlink" href="#outliers-iqr" title="Link to this heading">#</a></h2>
 <p>Identifies outliers based on the interquartile range (IQR).</p>
-<span class="target" id="module-interpreTS.core.features.feature_outliers_iqr"></span><dl class="py function">
+<dl class="py function" id="module-interpreTS.core.features.feature_outliers_iqr">
 <dt class="sig sig-object py" id="interpreTS.core.features.feature_outliers_iqr.calculate_outliers_iqr">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_outliers_iqr.</span></span><span class="sig-name descname"><span class="pre">calculate_outliers_iqr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_outliers_iqr.html#calculate_outliers_iqr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_outliers_iqr.calculate_outliers_iqr" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_outliers_iqr.</span></span><span class="sig-name descname"><span class="pre">calculate_outliers_iqr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_outliers_iqr.html#calculate_outliers_iqr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_outliers_iqr.calculate_outliers_iqr" title="Link to this definition">#</a></dt>
 <dd><p>Calculates the percentage of observations in a given window that fall below (Q1 - 1.5 * IQR)
 or above (Q3 + 1.5 * IQR) using the Interquartile Range (IQR) method.</p>
 <dl class="field-list simple">
@@ -1316,7 +1199,7 @@ or above (Q3 + 1.5 * IQR) using the Interquartile Range (IQR) method.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">training_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">9</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_outliers_iqr</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">training_data</span><span class="p">)</span>
@@ -1327,11 +1210,11 @@ or above (Q3 + 1.5 * IQR) using the Interquartile Range (IQR) method.</p>
 
 </section>
 <section id="outliers-std">
-<h2>Outliers STD<a class="headerlink" href="#outliers-std" title="Permalink to this heading">#</a></h2>
+<h2>Outliers STD<a class="headerlink" href="#outliers-std" title="Link to this heading">#</a></h2>
 <p>Identifies outliers based on standard deviation (STD).</p>
-<span class="target" id="module-interpreTS.core.features.feature_outliers_std"></span><dl class="py function">
+<dl class="py function" id="module-interpreTS.core.features.feature_outliers_std">
 <dt class="sig sig-object py" id="interpreTS.core.features.feature_outliers_std.calculate_outliers_std">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_outliers_std.</span></span><span class="sig-name descname"><span class="pre">calculate_outliers_std</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_outliers_std.html#calculate_outliers_std"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_outliers_std.calculate_outliers_std" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_outliers_std.</span></span><span class="sig-name descname"><span class="pre">calculate_outliers_std</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_outliers_std.html#calculate_outliers_std"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_outliers_std.calculate_outliers_std" title="Link to this definition">#</a></dt>
 <dd><p>Calculates the percentage of observations in a window that are above or below
 3 standard deviations from the mean, based on the training dataset.</p>
 <dl class="field-list simple">
@@ -1349,8 +1232,8 @@ or above (Q3 + 1.5 * IQR) using the Interquartile Range (IQR) method.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">training_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">15</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_outliers_std</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">training_data</span><span class="p">)</span>
@@ -1361,11 +1244,11 @@ or above (Q3 + 1.5 * IQR) using the Interquartile Range (IQR) method.</p>
 
 </section>
 <section id="significant-changes">
-<h2>Significant Changes<a class="headerlink" href="#significant-changes" title="Permalink to this heading">#</a></h2>
+<h2>Significant Changes<a class="headerlink" href="#significant-changes" title="Link to this heading">#</a></h2>
 <p>Detects significant changes in the time series.</p>
-<span class="target" id="module-interpreTS.core.features.feature_significant_changes"></span><dl class="py function">
+<dl class="py function" id="module-interpreTS.core.features.feature_significant_changes">
 <dt class="sig sig-object py" id="interpreTS.core.features.feature_significant_changes.calculate_significant_changes">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_significant_changes.</span></span><span class="sig-name descname"><span class="pre">calculate_significant_changes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_significant_changes.html#calculate_significant_changes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_significant_changes.calculate_significant_changes" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_significant_changes.</span></span><span class="sig-name descname"><span class="pre">calculate_significant_changes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_significant_changes.html#calculate_significant_changes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_significant_changes.calculate_significant_changes" title="Link to this definition">#</a></dt>
 <dd><p>Calculate the proportion of significant increases or decreases in the signal within the given window.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1379,7 +1262,7 @@ or above (Q3 + 1.5 * IQR) using the Interquartile Range (IQR) method.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_significant_changes</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="go">0.0</span>
@@ -1389,11 +1272,11 @@ or above (Q3 + 1.5 * IQR) using the Interquartile Range (IQR) method.</p>
 
 </section>
 <section id="stability">
-<h2>Stability<a class="headerlink" href="#stability" title="Permalink to this heading">#</a></h2>
+<h2>Stability<a class="headerlink" href="#stability" title="Link to this heading">#</a></h2>
 <p>Measures the stability of the time series.</p>
-<span class="target" id="module-interpreTS.core.features.feature_stability"></span><dl class="py function">
+<dl class="py function" id="module-interpreTS.core.features.feature_stability">
 <dt class="sig sig-object py" id="interpreTS.core.features.feature_stability.calculate_stability">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_stability.</span></span><span class="sig-name descname"><span class="pre">calculate_stability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_lag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_stability.html#calculate_stability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_stability.calculate_stability" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_stability.</span></span><span class="sig-name descname"><span class="pre">calculate_stability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_lag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_stability.html#calculate_stability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_stability.calculate_stability" title="Link to this definition">#</a></dt>
 <dd><p>Calculate the stability of a time series based on autocorrelation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1411,7 +1294,7 @@ If None, it will be set to <cite>min(12, len(data) - 1)</cite>.</p></li>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">13</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_stability</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="go">0.8410385081084804</span>
@@ -1427,94 +1310,19 @@ If None, it will be set to <cite>min(12, len(data) - 1)</cite>.</p></li>
 
 </section>
 <section id="variance-change">
-<h2>Variance Change<a class="headerlink" href="#variance-change" title="Permalink to this heading">#</a></h2>
+<h2>Variance Change<a class="headerlink" href="#variance-change" title="Link to this heading">#</a></h2>
 <p>Calculates the variance change over time.</p>
-<span class="target" id="module-interpreTS.core.features.variance_change"></span><dl class="py function">
-<dt class="sig sig-object py" id="interpreTS.core.features.variance_change.calculate_change_in_variance">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.variance_change.</span></span><span class="sig-name descname"><span class="pre">calculate_change_in_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/variance_change.html#calculate_change_in_variance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.variance_change.calculate_change_in_variance" title="Permalink to this definition">#</a></dt>
-<dd><p>Calculate the change in variance over time in a time series.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>pd.Series</em><em> or </em><em>np.ndarray</em>) – The time series data for which the change in variance is to be calculated.</p></li>
-<li><p><strong>window_size</strong> (<em>int</em><em>, </em><em>optional</em>) – The size of the rolling window to calculate variance (default is 5).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A series containing the change in variance over time, with the same index as the input.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pd.Series</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>TypeError</strong> – If the data is not a valid time series type.</p></li>
-<li><p><strong>ValueError</strong> – If the data contains NaN values or is too short to calculate variance.</p></li>
-</ul>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_change_in_variance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="go">0     NaN</span>
-<span class="go">1     NaN</span>
-<span class="go">2     NaN</span>
-<span class="go">3     0.00</span>
-<span class="go">4     0.00</span>
-<span class="go">dtype: float64</span>
-</pre></div>
-</div>
-</dd></dl>
-
 </section>
 <section id="variability-in-sub-periods">
-<h2>Variability in Sub-Periods<a class="headerlink" href="#variability-in-sub-periods" title="Permalink to this heading">#</a></h2>
+<h2>Variability in Sub-Periods<a class="headerlink" href="#variability-in-sub-periods" title="Link to this heading">#</a></h2>
 <p>Measures variability within sub-periods of the time series.</p>
-<span class="target" id="module-interpreTS.core.features.variability_in_sub_periods"></span><dl class="py function">
-<dt class="sig sig-object py" id="interpreTS.core.features.variability_in_sub_periods.calculate_variability_in_sub_periods">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.variability_in_sub_periods.</span></span><span class="sig-name descname"><span class="pre">calculate_variability_in_sub_periods</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ddof</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/variability_in_sub_periods.html#calculate_variability_in_sub_periods"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.variability_in_sub_periods.calculate_variability_in_sub_periods" title="Permalink to this definition">#</a></dt>
-<dd><p>Calculate the variance within sub-periods of a time series, providing a measure of variability.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>pd.Series</em><em> or </em><em>np.ndarray</em>) – The time series data for which the variability is to be calculated.</p></li>
-<li><p><strong>window_size</strong> (<em>int</em>) – The size of each sub-period window (number of points in each window).</p></li>
-<li><p><strong>step_size</strong> (<em>int</em><em>, </em><em>optional</em>) – The step size between sub-periods. If None, it defaults to window_size (non-overlapping windows).</p></li>
-<li><p><strong>ddof</strong> (<em>int</em><em>, </em><em>optional</em>) – The degrees of freedom to use when calculating variance within each sub-period. Default is 0 (population variance).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A series of variance values representing the variability in each sub-period.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pd.Series</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>TypeError</strong> – If the data is not a valid time series type.</p></li>
-<li><p><strong>ValueError</strong> – If the data contains NaN values or if window_size is larger than the data length.</p></li>
-</ul>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_variability_in_sub_periods</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="go">0    2.5</span>
-<span class="go">1    2.5</span>
-<span class="go">dtype: float64</span>
-</pre></div>
-</div>
-</dd></dl>
-
 </section>
 <section id="amplitude-change-rate">
-<h2>Amplitude Change Rate<a class="headerlink" href="#amplitude-change-rate" title="Permalink to this heading">#</a></h2>
+<h2>Amplitude Change Rate<a class="headerlink" href="#amplitude-change-rate" title="Link to this heading">#</a></h2>
 <p>Calculates the rate of amplitude change in the time series.</p>
-<span class="target" id="module-interpreTS.core.features.feature_amplitude_change_rate"></span><dl class="py function">
+<dl class="py function" id="module-interpreTS.core.features.feature_amplitude_change_rate">
 <dt class="sig sig-object py" id="interpreTS.core.features.feature_amplitude_change_rate.calculate_amplitude_change_rate">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_amplitude_change_rate.</span></span><span class="sig-name descname"><span class="pre">calculate_amplitude_change_rate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_amplitude_change_rate.html#calculate_amplitude_change_rate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_amplitude_change_rate.calculate_amplitude_change_rate" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">interpreTS.core.features.feature_amplitude_change_rate.</span></span><span class="sig-name descname"><span class="pre">calculate_amplitude_change_rate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/core/features/feature_amplitude_change_rate.html#calculate_amplitude_change_rate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.core.features.feature_amplitude_change_rate.calculate_amplitude_change_rate" title="Link to this definition">#</a></dt>
 <dd><p>Calculate the average amplitude change rate in a time series,
 defined as the mean change in amplitude between consecutive local peaks and troughs.</p>
 <dl class="field-list simple">
@@ -1535,7 +1343,7 @@ defined as the mean change in amplitude between consecutive local peaks and trou
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_amplitude_change_rate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="go">2.0</span>
@@ -1550,7 +1358,7 @@ defined as the mean change in amplitude between consecutive local peaks and trou
 
 </section>
 <section id="notes">
-<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this heading">#</a></h2>
+<h2>Notes<a class="headerlink" href="#notes" title="Link to this heading">#</a></h2>
 <p>Each feature is designed to provide specific insights into time-series data. For detailed usage, refer to the module documentation linked above.</p>
 </section>
 </section>
@@ -1562,7 +1370,7 @@ defined as the mean change in amplitude between consecutive local peaks and trou
               
               
               
-                <footer class="prev-next-footer">
+                <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -1590,24 +1398,32 @@ defined as the mean change in amplitude between consecutive local peaks and trou
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
-
-  <div class="page-toc tocsection onthispage">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> On this page
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Feature Extractors</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.FeatureExtractor"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.FeatureExtractor.DEFAULT_FEATURES"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.DEFAULT_FEATURES</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.FeatureExtractor.CAN_USE_NAN"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.CAN_USE_NAN</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.FeatureExtractor.DEFAULT_FEATURES_BIG"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.DEFAULT_FEATURES_BIG</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.FeatureExtractor.DEFAULT_FEATURES_SMALL"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.DEFAULT_FEATURES_SMALL</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.FeatureExtractor.FEATURES_ALL"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.FEATURES_ALL</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.FeatureExtractor.FOR_ML"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.FOR_ML</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.FeatureExtractor.add_custom_feature"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.add_custom_feature()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.FeatureExtractor.extract_features"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.extract_features()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.FeatureExtractor.extract_features_stream"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.extract_features_stream()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.FeatureExtractor.group_data"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.group_data()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.FeatureExtractor.group_features_by_interpretability"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.group_features_by_interpretability()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.FeatureExtractor.head"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.head()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.feature_extractor.FeatureExtractor.validate_data_frequency"><code class="docutils literal notranslate"><span class="pre">FeatureExtractor.validate_data_frequency()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -1641,26 +1457,14 @@ defined as the mean change in amplitude between consecutive local peaks and trou
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.features.feature_variance.calculate_variance"><code class="docutils literal notranslate"><span class="pre">calculate_variance()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dominant">Dominant</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.features.histogram_dominant.calculate_dominant"><code class="docutils literal notranslate"><span class="pre">calculate_dominant()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#seasonality-strength">Seasonality Strength</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.features.seasonality_strength.calculate_seasonality_strength"><code class="docutils literal notranslate"><span class="pre">calculate_seasonality_strength()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trend-strength">Trend Strength</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.features.trend_strength.calculate_trend_strength"><code class="docutils literal notranslate"><span class="pre">calculate_trend_strength()</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dominant">Dominant</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#seasonality-strength">Seasonality Strength</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trend-strength">Trend Strength</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#above-9th-decile">Above 9th Decile</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.features.feature_above_9th_decile.calculate_above_9th_decile"><code class="docutils literal notranslate"><span class="pre">calculate_above_9th_decile()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distance-to-the-last-change-point">Distance to the Last Change Point</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.features.distance_to_the_last_change_point.calculate_distance_to_last_trend_change"><code class="docutils literal notranslate"><span class="pre">calculate_distance_to_last_trend_change()</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distance-to-the-last-change-point">Distance to the Last Change Point</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#absolute-energy">Absolute Energy</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.features.feature_absolute_energy.calculate_absolute_energy"><code class="docutils literal notranslate"><span class="pre">calculate_absolute_energy()</span></code></a></li>
 </ul>
@@ -1713,14 +1517,8 @@ defined as the mean change in amplitude between consecutive local peaks and trou
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.features.feature_stability.calculate_stability"><code class="docutils literal notranslate"><span class="pre">calculate_stability()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variance-change">Variance Change</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.features.variance_change.calculate_change_in_variance"><code class="docutils literal notranslate"><span class="pre">calculate_change_in_variance()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variability-in-sub-periods">Variability in Sub-Periods</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.features.variability_in_sub_periods.calculate_variability_in_sub_periods"><code class="docutils literal notranslate"><span class="pre">calculate_variability_in_sub_periods()</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variance-change">Variance Change</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variability-in-sub-periods">Variability in Sub-Periods</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#amplitude-change-rate">Amplitude Change Rate</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.core.features.feature_amplitude_change_rate.calculate_amplitude_change_rate"><code class="docutils literal notranslate"><span class="pre">calculate_amplitude_change_rate()</span></code></a></li>
 </ul>
@@ -1733,13 +1531,13 @@ defined as the mean change in amplitude between consecutive local peaks and trou
   </nav></div>
 
   <div class="sidebar-secondary-item">
-
-  <div class="tocsection sourcelink">
-    <a href="_sources/Feature_Extractors.rst.txt">
-      <i class="fa-solid fa-file-lines"></i> Show Source
-    </a>
-  </div>
-</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Feature_Extractors.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
 
 </div></div>
               
@@ -1754,8 +1552,8 @@ defined as the mean change in amplitude between consecutive local peaks and trou
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -1775,7 +1573,7 @@ defined as the mean change in amplitude between consecutive local peaks and trou
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
     <br/>
   </p>
 </div>
@@ -1788,7 +1586,8 @@ defined as the mean change in amplitude between consecutive local peaks and trou
       
         <div class="footer-item">
 <p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.4.
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
 </p></div>
       
     </div>

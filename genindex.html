@@ -2,47 +2,51 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="./" >
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Index &#8212; InterpreTS 0.4.1 documentation</title>
+    <title>Index &#8212; InterpreTS 0.5.0 documentation</title>
   
   
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
-
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
-  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=ea00750a"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
-    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="_static/documentation_options.js?v=1dd76d02"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -50,32 +54,16 @@
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -83,7 +71,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search the docs ..."
          aria-label="Search the docs ..."
          autocomplete="off"
@@ -91,20 +78,27 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
-  <label class="sidebar-toggle primary-toggle" for="__primary">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
-  </label>
+  </button>
   
   
   <div class="col-lg-3 navbar-header-items__start">
     
       <div class="navbar-item">
 
+  
+    
   
 
 <a class="navbar-brand logo" href="index.html">
@@ -114,7 +108,7 @@
   
   
   
-    <p class="title logo__title">InterpreTS 0.4.1 documentation</p>
+    <p class="title logo__title">InterpreTS 0.5.0 documentation</p>
   
 </a></div>
     
@@ -125,42 +119,43 @@
     <div class="me-auto navbar-header-items__center">
       
         <div class="navbar-item">
-<nav class="navbar-nav">
-  <p class="sidebar-header-items__title"
-     role="heading"
-     aria-level="1"
-     aria-label="Site Navigation">
-    Site Navigation
-  </p>
+<nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="Introduction.html">
-                        Introduction
-                      </a>
-                    </li>
-                
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="Introduction.html">
+    Introduction
+  </a>
+</li>
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="Feature_Extractors.html">
-                        Feature Extractors
-                      </a>
-                    </li>
-                
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="Tutorials.html">
-                        Tutorials
-                      </a>
-                    </li>
-                
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="Feature_Extractors.html">
+    Feature Extractors
+  </a>
+</li>
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="API_Documentation.html">
-                        API Documentation
-                      </a>
-                    </li>
-                
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="Tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="API_Documentation.html">
+    API Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="gui.html">
+    Graphical User Interface (GUI)
+  </a>
+</li>
+
   </ul>
 </nav></div>
       
@@ -172,29 +167,21 @@
         <div class="navbar-item navbar-persistent--container">
           
 
- <script>
- document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
         </div>
       
       
         <div class="navbar-item">
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
-  </button>
-`);
-</script></div>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
       
     </div>
     
@@ -203,27 +190,29 @@ document.write(`
   
     <div class="navbar-persistent--mobile">
 
- <script>
- document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
     </div>
   
 
   
 </div>
 
-    </nav>
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
-      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
         
 
   
@@ -232,45 +221,49 @@ document.write(`
     
       <div class="sidebar-header-items__center">
         
-          <div class="navbar-item">
-<nav class="navbar-nav">
-  <p class="sidebar-header-items__title"
-     role="heading"
-     aria-level="1"
-     aria-label="Site Navigation">
-    Site Navigation
-  </p>
+          
+          
+            <div class="navbar-item">
+<nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="Introduction.html">
-                        Introduction
-                      </a>
-                    </li>
-                
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="Introduction.html">
+    Introduction
+  </a>
+</li>
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="Feature_Extractors.html">
-                        Feature Extractors
-                      </a>
-                    </li>
-                
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="Tutorials.html">
-                        Tutorials
-                      </a>
-                    </li>
-                
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="Feature_Extractors.html">
+    Feature Extractors
+  </a>
+</li>
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="API_Documentation.html">
-                        API Documentation
-                      </a>
-                    </li>
-                
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="Tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="API_Documentation.html">
+    API Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="gui.html">
+    Graphical User Interface (GUI)
+  </a>
+</li>
+
   </ul>
 </nav></div>
+          
         
       </div>
     
@@ -280,15 +273,11 @@ document.write(`
         
           <div class="navbar-item">
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
-  </button>
-`);
-</script></div>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
         
       </div>
     
@@ -296,26 +285,31 @@ document.write(`
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article"></div>
+              <div class="bd-header-article d-print-none"></div>
               
               
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
 
 <h1 id="index">Index</h1>
@@ -338,6 +332,7 @@ document.write(`
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
  | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
  
 </div>
 <h2 id="A">A</h2>
@@ -405,13 +400,7 @@ document.write(`
 </li>
       <li><a href="Feature_Extractors.html#interpreTS.core.features.feature_binarize_mean.calculate_binarize_mean">calculate_binarize_mean() (in module interpreTS.core.features.feature_binarize_mean)</a>
 </li>
-      <li><a href="Feature_Extractors.html#interpreTS.core.features.variance_change.calculate_change_in_variance">calculate_change_in_variance() (in module interpreTS.core.features.variance_change)</a>
-</li>
       <li><a href="Feature_Extractors.html#interpreTS.core.features.feature_crossing_points.calculate_crossing_points">calculate_crossing_points() (in module interpreTS.core.features.feature_crossing_points)</a>
-</li>
-      <li><a href="Feature_Extractors.html#interpreTS.core.features.distance_to_the_last_change_point.calculate_distance_to_last_trend_change">calculate_distance_to_last_trend_change() (in module interpreTS.core.features.distance_to_the_last_change_point)</a>
-</li>
-      <li><a href="Feature_Extractors.html#interpreTS.core.features.histogram_dominant.calculate_dominant">calculate_dominant() (in module interpreTS.core.features.histogram_dominant)</a>, <a href="interpreTS.core.features.html#interpreTS.core.features.histogram_dominant.calculate_dominant">[1]</a>
 </li>
       <li><a href="Feature_Extractors.html#interpreTS.core.features.feature_entropy.calculate_entropy">calculate_entropy() (in module interpreTS.core.features.feature_entropy)</a>
 </li>
@@ -427,15 +416,13 @@ document.write(`
 </li>
       <li><a href="Feature_Extractors.html#interpreTS.core.features.feature_missing_points.calculate_missing_points">calculate_missing_points() (in module interpreTS.core.features.feature_missing_points)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="Feature_Extractors.html#interpreTS.core.features.feature_outliers_iqr.calculate_outliers_iqr">calculate_outliers_iqr() (in module interpreTS.core.features.feature_outliers_iqr)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="Feature_Extractors.html#interpreTS.core.features.feature_outliers_std.calculate_outliers_std">calculate_outliers_std() (in module interpreTS.core.features.feature_outliers_std)</a>
 </li>
       <li><a href="Feature_Extractors.html#interpreTS.core.features.feature_peak.calculate_peak">calculate_peak() (in module interpreTS.core.features.feature_peak)</a>, <a href="interpreTS.core.features.html#interpreTS.core.features.feature_peak.calculate_peak">[1]</a>
-</li>
-      <li><a href="Feature_Extractors.html#interpreTS.core.features.seasonality_strength.calculate_seasonality_strength">calculate_seasonality_strength() (in module interpreTS.core.features.seasonality_strength)</a>, <a href="interpreTS.core.features.html#interpreTS.core.features.seasonality_strength.calculate_seasonality_strength">[1]</a>
 </li>
       <li><a href="Feature_Extractors.html#interpreTS.core.features.feature_significant_changes.calculate_significant_changes">calculate_significant_changes() (in module interpreTS.core.features.feature_significant_changes)</a>
 </li>
@@ -445,14 +432,16 @@ document.write(`
 </li>
       <li><a href="Feature_Extractors.html#interpreTS.core.features.feature_std_1st_der.calculate_std_1st_der">calculate_std_1st_der() (in module interpreTS.core.features.feature_std_1st_der)</a>, <a href="interpreTS.core.features.html#interpreTS.core.features.feature_std_1st_der.calculate_std_1st_der">[1]</a>
 </li>
-      <li><a href="Feature_Extractors.html#interpreTS.core.features.trend_strength.calculate_trend_strength">calculate_trend_strength() (in module interpreTS.core.features.trend_strength)</a>, <a href="interpreTS.core.features.html#interpreTS.core.features.trend_strength.calculate_trend_strength">[1]</a>
-</li>
       <li><a href="Feature_Extractors.html#interpreTS.core.features.feature_trough.calculate_trough">calculate_trough() (in module interpreTS.core.features.feature_trough)</a>, <a href="interpreTS.core.features.html#interpreTS.core.features.feature_trough.calculate_trough">[1]</a>
-</li>
-      <li><a href="Feature_Extractors.html#interpreTS.core.features.variability_in_sub_periods.calculate_variability_in_sub_periods">calculate_variability_in_sub_periods() (in module interpreTS.core.features.variability_in_sub_periods)</a>
 </li>
       <li><a href="Feature_Extractors.html#interpreTS.core.features.feature_variance.calculate_variance">calculate_variance() (in module interpreTS.core.features.feature_variance)</a>, <a href="interpreTS.core.features.html#interpreTS.core.features.feature_variance.calculate_variance">[1]</a>
 </li>
+      <li><a href="Feature_Extractors.html#interpreTS.core.feature_extractor.FeatureExtractor.CAN_USE_NAN">CAN_USE_NAN (interpreTS.core.feature_extractor.FeatureExtractor attribute)</a>, <a href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.CAN_USE_NAN">[1]</a>
+
+      <ul>
+        <li><a href="interpreTS.html#interpreTS.FeatureExtractor.CAN_USE_NAN">(interpreTS.FeatureExtractor attribute)</a>
+</li>
+      </ul></li>
       <li><a href="interpreTS.html#interpreTS.Features.CHANGE_IN_VARIANCE">CHANGE_IN_VARIANCE (interpreTS.Features attribute)</a>
 
       <ul>
@@ -473,20 +462,26 @@ document.write(`
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="Feature_Extractors.html#interpreTS.core.feature_extractor.FeatureExtractor.DEFAULT_FEATURES">DEFAULT_FEATURES (interpreTS.core.feature_extractor.FeatureExtractor attribute)</a>, <a href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.DEFAULT_FEATURES">[1]</a>
+      <li><a href="Feature_Extractors.html#interpreTS.core.feature_extractor.FeatureExtractor.DEFAULT_FEATURES_BIG">DEFAULT_FEATURES_BIG (interpreTS.core.feature_extractor.FeatureExtractor attribute)</a>, <a href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.DEFAULT_FEATURES_BIG">[1]</a>
 
       <ul>
-        <li><a href="interpreTS.html#interpreTS.FeatureExtractor.DEFAULT_FEATURES">(interpreTS.FeatureExtractor attribute)</a>
+        <li><a href="interpreTS.html#interpreTS.FeatureExtractor.DEFAULT_FEATURES_BIG">(interpreTS.FeatureExtractor attribute)</a>
 </li>
       </ul></li>
+      <li><a href="Feature_Extractors.html#interpreTS.core.feature_extractor.FeatureExtractor.DEFAULT_FEATURES_SMALL">DEFAULT_FEATURES_SMALL (interpreTS.core.feature_extractor.FeatureExtractor attribute)</a>, <a href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.DEFAULT_FEATURES_SMALL">[1]</a>
+
+      <ul>
+        <li><a href="interpreTS.html#interpreTS.FeatureExtractor.DEFAULT_FEATURES_SMALL">(interpreTS.FeatureExtractor attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="interpreTS.html#interpreTS.Features.DISTANCE_TO_LAST_TREND_CHANGE">DISTANCE_TO_LAST_TREND_CHANGE (interpreTS.Features attribute)</a>
 
       <ul>
         <li><a href="API_Documentation.html#interpreTS.utils.feature_loader.Features.DISTANCE_TO_LAST_TREND_CHANGE">(interpreTS.utils.feature_loader.Features attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="interpreTS.html#interpreTS.Features.DOMINANT">DOMINANT (interpreTS.Features attribute)</a>
 
       <ul>
@@ -525,6 +520,10 @@ document.write(`
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="API_Documentation.html#interpreTS.utils.task_manager.TaskManager.feature_functions">feature_functions (interpreTS.utils.task_manager.TaskManager attribute)</a>
+</li>
+      <li><a href="API_Documentation.html#interpreTS.utils.task_manager.TaskManager.feature_params">feature_params (interpreTS.utils.task_manager.TaskManager attribute)</a>
+</li>
       <li><a href="interpreTS.html#interpreTS.FeatureExtractor">FeatureExtractor (class in interpreTS)</a>
 
       <ul>
@@ -537,18 +536,32 @@ document.write(`
         <li><a href="API_Documentation.html#interpreTS.utils.feature_loader.FeatureLoader">(class in interpreTS.utils.feature_loader)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="interpreTS.html#interpreTS.Features">Features (class in interpreTS)</a>
 
       <ul>
         <li><a href="API_Documentation.html#interpreTS.utils.feature_loader.Features">(class in interpreTS.utils.feature_loader)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="API_Documentation.html#interpreTS.utils.task_manager.TaskManager.features">features (interpreTS.utils.task_manager.TaskManager attribute)</a>
+</li>
+      <li><a href="Feature_Extractors.html#interpreTS.core.feature_extractor.FeatureExtractor.FEATURES_ALL">FEATURES_ALL (interpreTS.core.feature_extractor.FeatureExtractor attribute)</a>, <a href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.FEATURES_ALL">[1]</a>
+
+      <ul>
+        <li><a href="interpreTS.html#interpreTS.FeatureExtractor.FEATURES_ALL">(interpreTS.FeatureExtractor attribute)</a>
+</li>
+      </ul></li>
       <li><a href="interpreTS.html#interpreTS.Features.FLAT_SPOTS">FLAT_SPOTS (interpreTS.Features attribute)</a>
 
       <ul>
         <li><a href="API_Documentation.html#interpreTS.utils.feature_loader.Features.FLAT_SPOTS">(interpreTS.utils.feature_loader.Features attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="Feature_Extractors.html#interpreTS.core.feature_extractor.FeatureExtractor.FOR_ML">FOR_ML (interpreTS.core.feature_extractor.FeatureExtractor attribute)</a>, <a href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.FOR_ML">[1]</a>
+
+      <ul>
+        <li><a href="interpreTS.html#interpreTS.FeatureExtractor.FOR_ML">(interpreTS.FeatureExtractor attribute)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -635,13 +648,6 @@ document.write(`
 
       <ul>
         <li><a href="interpreTS.core.features.html#module-interpreTS.core.features">module</a>
-</li>
-      </ul></li>
-      <li>
-    interpreTS.core.features.distance_to_the_last_change_point
-
-      <ul>
-        <li><a href="Feature_Extractors.html#module-interpreTS.core.features.distance_to_the_last_change_point">module</a>
 </li>
       </ul></li>
       <li>
@@ -735,6 +741,8 @@ document.write(`
         <li><a href="Feature_Extractors.html#module-interpreTS.core.features.feature_missing_points">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     interpreTS.core.features.feature_outliers_iqr
 
@@ -749,8 +757,6 @@ document.write(`
         <li><a href="Feature_Extractors.html#module-interpreTS.core.features.feature_outliers_std">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     interpreTS.core.features.feature_peak
 
@@ -798,41 +804,6 @@ document.write(`
 
       <ul>
         <li><a href="Feature_Extractors.html#module-interpreTS.core.features.feature_variance">module</a>, <a href="interpreTS.core.features.html#module-interpreTS.core.features.feature_variance">[1]</a>
-</li>
-      </ul></li>
-      <li>
-    interpreTS.core.features.histogram_dominant
-
-      <ul>
-        <li><a href="Feature_Extractors.html#module-interpreTS.core.features.histogram_dominant">module</a>, <a href="interpreTS.core.features.html#module-interpreTS.core.features.histogram_dominant">[1]</a>
-</li>
-      </ul></li>
-      <li>
-    interpreTS.core.features.seasonality_strength
-
-      <ul>
-        <li><a href="Feature_Extractors.html#module-interpreTS.core.features.seasonality_strength">module</a>, <a href="interpreTS.core.features.html#module-interpreTS.core.features.seasonality_strength">[1]</a>
-</li>
-      </ul></li>
-      <li>
-    interpreTS.core.features.trend_strength
-
-      <ul>
-        <li><a href="Feature_Extractors.html#module-interpreTS.core.features.trend_strength">module</a>, <a href="interpreTS.core.features.html#module-interpreTS.core.features.trend_strength">[1]</a>
-</li>
-      </ul></li>
-      <li>
-    interpreTS.core.features.variability_in_sub_periods
-
-      <ul>
-        <li><a href="Feature_Extractors.html#module-interpreTS.core.features.variability_in_sub_periods">module</a>
-</li>
-      </ul></li>
-      <li>
-    interpreTS.core.features.variance_change
-
-      <ul>
-        <li><a href="Feature_Extractors.html#module-interpreTS.core.features.variance_change">module</a>
 </li>
       </ul></li>
       <li>
@@ -946,8 +917,6 @@ document.write(`
 </li>
         <li><a href="interpreTS.core.features.html#module-interpreTS.core.features">interpreTS.core.features</a>
 </li>
-        <li><a href="Feature_Extractors.html#module-interpreTS.core.features.distance_to_the_last_change_point">interpreTS.core.features.distance_to_the_last_change_point</a>
-</li>
         <li><a href="Feature_Extractors.html#module-interpreTS.core.features.feature_above_9th_decile">interpreTS.core.features.feature_above_9th_decile</a>
 </li>
         <li><a href="Feature_Extractors.html#module-interpreTS.core.features.feature_absolute_energy">interpreTS.core.features.feature_absolute_energy</a>
@@ -991,16 +960,6 @@ document.write(`
         <li><a href="Feature_Extractors.html#module-interpreTS.core.features.feature_trough">interpreTS.core.features.feature_trough</a>, <a href="interpreTS.core.features.html#module-interpreTS.core.features.feature_trough">[1]</a>
 </li>
         <li><a href="Feature_Extractors.html#module-interpreTS.core.features.feature_variance">interpreTS.core.features.feature_variance</a>, <a href="interpreTS.core.features.html#module-interpreTS.core.features.feature_variance">[1]</a>
-</li>
-        <li><a href="Feature_Extractors.html#module-interpreTS.core.features.histogram_dominant">interpreTS.core.features.histogram_dominant</a>, <a href="interpreTS.core.features.html#module-interpreTS.core.features.histogram_dominant">[1]</a>
-</li>
-        <li><a href="Feature_Extractors.html#module-interpreTS.core.features.seasonality_strength">interpreTS.core.features.seasonality_strength</a>, <a href="interpreTS.core.features.html#module-interpreTS.core.features.seasonality_strength">[1]</a>
-</li>
-        <li><a href="Feature_Extractors.html#module-interpreTS.core.features.trend_strength">interpreTS.core.features.trend_strength</a>, <a href="interpreTS.core.features.html#module-interpreTS.core.features.trend_strength">[1]</a>
-</li>
-        <li><a href="Feature_Extractors.html#module-interpreTS.core.features.variability_in_sub_periods">interpreTS.core.features.variability_in_sub_periods</a>
-</li>
-        <li><a href="Feature_Extractors.html#module-interpreTS.core.features.variance_change">interpreTS.core.features.variance_change</a>
 </li>
         <li><a href="interpreTS.core.html#module-interpreTS.core.time_series_data">interpreTS.core.time_series_data</a>
 </li>
@@ -1097,6 +1056,8 @@ document.write(`
         <li><a href="API_Documentation.html#interpreTS.utils.feature_loader.Features.STD_1ST_DER">(interpreTS.utils.feature_loader.Features attribute)</a>
 </li>
       </ul></li>
+      <li><a href="API_Documentation.html#interpreTS.utils.task_manager.TaskManager.stride">stride (interpreTS.utils.task_manager.TaskManager attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -1127,26 +1088,46 @@ document.write(`
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="Feature_Extractors.html#interpreTS.core.feature_extractor.FeatureExtractor.validate_data_frequency">validate_data_frequency() (interpreTS.core.feature_extractor.FeatureExtractor method)</a>, <a href="interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.validate_data_frequency">[1]</a>
+
+      <ul>
+        <li><a href="interpreTS.html#interpreTS.FeatureExtractor.validate_data_frequency">(interpreTS.FeatureExtractor method)</a>
+</li>
+      </ul></li>
       <li><a href="interpreTS.html#interpreTS.validate_time_series_data">validate_time_series_data() (in module interpreTS)</a>
 
       <ul>
         <li><a href="API_Documentation.html#interpreTS.utils.data_validation.validate_time_series_data">(in module interpreTS.utils.data_validation)</a>, <a href="interpreTS.utils.html#interpreTS.utils.data_validation.validate_time_series_data">[1]</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="API_Documentation.html#interpreTS.utils.task_manager.TaskManager.validation_requirements">validation_requirements (interpreTS.utils.task_manager.TaskManager attribute)</a>
+</li>
       <li><a href="interpreTS.html#interpreTS.Features.VARIABILITY_IN_SUB_PERIODS">VARIABILITY_IN_SUB_PERIODS (interpreTS.Features attribute)</a>
 
       <ul>
         <li><a href="API_Documentation.html#interpreTS.utils.feature_loader.Features.VARIABILITY_IN_SUB_PERIODS">(interpreTS.utils.feature_loader.Features attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="interpreTS.html#interpreTS.Features.VARIANCE">VARIANCE (interpreTS.Features attribute)</a>
 
       <ul>
         <li><a href="API_Documentation.html#interpreTS.utils.feature_loader.Features.VARIANCE">(interpreTS.utils.feature_loader.Features attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="API_Documentation.html#interpreTS.utils.task_manager.TaskManager.warning_registry">warning_registry (interpreTS.utils.task_manager.TaskManager attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="API_Documentation.html#interpreTS.utils.task_manager.TaskManager.window_size">window_size (interpreTS.utils.task_manager.TaskManager attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -1158,7 +1139,7 @@ document.write(`
               
               
               
-                <footer class="prev-next-footer">
+                <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
 </div>
@@ -1179,8 +1160,8 @@ document.write(`
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -1200,7 +1181,7 @@ document.write(`
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
     <br/>
   </p>
 </div>
@@ -1213,7 +1194,8 @@ document.write(`
       
         <div class="footer-item">
 <p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.4.
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
 </p></div>
       
     </div>

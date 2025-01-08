@@ -1,0 +1,1128 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Association Rules and Sequential Patterns"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "This notebook focuses on mining association rules and discovering sequential patterns using a time-series dataset. We'll extract relevant features, discretize them, and then apply algorithms to uncover interesting relationships and sequences in the extracted features of data."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Table of Contents\n",
+    "1. [Objectives](#objectives)  \n",
+    "2. [Installation and Imports](#installation-and-imports)  \n",
+    "3. [Load and Preview Data](#load-and-preview-data)  \n",
+    "4. [Validate and Convert the Data](#validate-and-convert-the-data)  \n",
+    "5. [Feature Extraction](#feature-extraction)  \n",
+    "6. [Feature Discretization](#feature-discretization)  \n",
+    "7. [Association Rule Mining](#association-rule-mining)  \n",
+    "8. [Sequential Pattern Mining](#sequential-pattern-mining)  \n",
+    "9. [Results and Analysis](#results-and-analysis)  \n",
+    "10. [Conclusion](#conclusion)  "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Objectives <a id=\"objectives\">"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "This tutorial covers:\n",
+    "\n",
+    "- How to extract features from time-series data.\n",
+    "- Mining association rules to identify relationships between discretized features.\n",
+    "- Discovering sequential patterns to analyze the most frequent sequences among features.\n",
+    "- Key differences:\n",
+    "    - **Association Rules:** Show which feature categories frequently occur together and which features often follow or are dependent on others.\n",
+    "    - **Sequential Patterns:** Highlight the most frequent sequences and temporal order among feature categories.\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Installation and Imports <a id=\"installation-and-imports\"></a>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "First, we ensure that the required libraries are installed"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "%pip install prefixspan"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Import necessary libraries"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "from interpreTS.utils.data_validation import validate_time_series_data\n",
+    "from interpreTS.utils.data_conversion import convert_to_time_series\n",
+    "from interpreTS.core.feature_extractor import FeatureExtractor, Features\n",
+    "from mlxtend.frequent_patterns import apriori, association_rules\n",
+    "from prefixspan import PrefixSpan"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Version check for interpreTS"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Version: 0.5.0\n"
+     ]
+    }
+   ],
+   "source": [
+    "import interpreTS\n",
+    "print(f\"Version: {interpreTS.__version__}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Load and Preview Data <a id=\"load-and-preview-data\"></a>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Load the data"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df = pd.read_csv('../data/radiator.csv')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Convert the 'timestamp' column to datetime and set it as the index\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df['timestamp'] = pd.to_datetime(df['timestamp'])\n",
+    "df.set_index('timestamp', inplace=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Preview the data"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>power</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>timestamp</th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>2020-12-23 16:42:05+00:00</th>\n",
+       "      <td>1.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2020-12-23 16:42:06+00:00</th>\n",
+       "      <td>1.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2020-12-23 16:42:07+00:00</th>\n",
+       "      <td>1.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2020-12-23 16:42:08+00:00</th>\n",
+       "      <td>2.5</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2020-12-23 16:42:09+00:00</th>\n",
+       "      <td>3.0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                           power\n",
+       "timestamp                       \n",
+       "2020-12-23 16:42:05+00:00    1.0\n",
+       "2020-12-23 16:42:06+00:00    1.0\n",
+       "2020-12-23 16:42:07+00:00    1.0\n",
+       "2020-12-23 16:42:08+00:00    2.5\n",
+       "2020-12-23 16:42:09+00:00    3.0"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "display(df.head())"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Check dataset information"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<class 'pandas.core.frame.DataFrame'>\n",
+      "DatetimeIndex: 2592001 entries, 2020-12-23 16:42:05+00:00 to 2021-01-22 16:42:05+00:00\n",
+      "Data columns (total 1 columns):\n",
+      " #   Column  Dtype  \n",
+      "---  ------  -----  \n",
+      " 0   power   float64\n",
+      "dtypes: float64(1)\n",
+      "memory usage: 39.6 MB\n"
+     ]
+    }
+   ],
+   "source": [
+    "df.info()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Validate and Convert the data <a id=\"validate-and-convert-the-data\"></a>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "To ensure the dataset is suitable for time-series analysis, we validate it using the `validate_time_series_data` function."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Time series data validation passed.\n"
+     ]
+    }
+   ],
+   "source": [
+    "try:\n",
+    "    validate_time_series_data(df)\n",
+    "    print(\"Time series data validation passed.\")\n",
+    "except (TypeError, ValueError) as e:\n",
+    "    print(f\"Validation error: {e}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The data is converted into an interpreTS `TimeSeriesData` object for further analysis."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "time_series_data = convert_to_time_series(df)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<interpreTS.core.time_series_data.TimeSeriesData object at 0x00000124D7017A60>\n"
+     ]
+    },
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>power</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>timestamp</th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>2020-12-23 16:42:05+00:00</th>\n",
+       "      <td>1.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2020-12-23 16:42:06+00:00</th>\n",
+       "      <td>1.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2020-12-23 16:42:07+00:00</th>\n",
+       "      <td>1.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2020-12-23 16:42:08+00:00</th>\n",
+       "      <td>2.5</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2020-12-23 16:42:09+00:00</th>\n",
+       "      <td>3.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2021-01-22 16:42:01+00:00</th>\n",
+       "      <td>1178.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2021-01-22 16:42:02+00:00</th>\n",
+       "      <td>1167.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2021-01-22 16:42:03+00:00</th>\n",
+       "      <td>1178.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2021-01-22 16:42:04+00:00</th>\n",
+       "      <td>1190.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2021-01-22 16:42:05+00:00</th>\n",
+       "      <td>1190.0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>2592001 rows × 1 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                            power\n",
+       "timestamp                        \n",
+       "2020-12-23 16:42:05+00:00     1.0\n",
+       "2020-12-23 16:42:06+00:00     1.0\n",
+       "2020-12-23 16:42:07+00:00     1.0\n",
+       "2020-12-23 16:42:08+00:00     2.5\n",
+       "2020-12-23 16:42:09+00:00     3.0\n",
+       "...                           ...\n",
+       "2021-01-22 16:42:01+00:00  1178.0\n",
+       "2021-01-22 16:42:02+00:00  1167.0\n",
+       "2021-01-22 16:42:03+00:00  1178.0\n",
+       "2021-01-22 16:42:04+00:00  1190.0\n",
+       "2021-01-22 16:42:05+00:00  1190.0\n",
+       "\n",
+       "[2592001 rows x 1 columns]"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "# Print the converted TimeSeriesData object and its underlying data\n",
+    "print(time_series_data)\n",
+    "display(time_series_data.data)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Feature Extraction <a id=\"feature-extraction\"></a>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We extract statistical features from the time-series data, such as mean, peak, trough, variance, and spikeness, using a sliding window approach."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "extractor = FeatureExtractor(\n",
+    "    features=[\n",
+    "        Features.MEAN,\n",
+    "        Features.PEAK,\n",
+    "        Features.TROUGH,\n",
+    "        Features.VARIANCE,\n",
+    "        Features.SPIKENESS\n",
+    "    ],\n",
+    "    window_size=60,\n",
+    "    stride=30\n",
+    ")\n",
+    "features = extractor.extract_features(time_series_data.data)\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Display the extracted features"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>mean_power</th>\n",
+       "      <th>peak_power</th>\n",
+       "      <th>trough_power</th>\n",
+       "      <th>variance_power</th>\n",
+       "      <th>spikeness_power</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>601.708333</td>\n",
+       "      <td>1314.0</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>414014.519097</td>\n",
+       "      <td>0.156262</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>775.850000</td>\n",
+       "      <td>1314.0</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>396195.760833</td>\n",
+       "      <td>-0.398615</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>176.033333</td>\n",
+       "      <td>1303.0</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>191088.632222</td>\n",
+       "      <td>2.212143</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>380.816667</td>\n",
+       "      <td>1314.0</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>341707.616389</td>\n",
+       "      <td>0.942842</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>808.200000</td>\n",
+       "      <td>1314.0</td>\n",
+       "      <td>2.0</td>\n",
+       "      <td>353516.293333</td>\n",
+       "      <td>-0.441064</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>86394</th>\n",
+       "      <td>901.433333</td>\n",
+       "      <td>1212.0</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>246873.478889</td>\n",
+       "      <td>-1.182936</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>86395</th>\n",
+       "      <td>1003.950000</td>\n",
+       "      <td>1212.0</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>186048.780833</td>\n",
+       "      <td>-1.834241</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>86396</th>\n",
+       "      <td>1193.233333</td>\n",
+       "      <td>1201.0</td>\n",
+       "      <td>1178.0</td>\n",
+       "      <td>43.512222</td>\n",
+       "      <td>-0.296779</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>86397</th>\n",
+       "      <td>828.750000</td>\n",
+       "      <td>1201.0</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>247346.620833</td>\n",
+       "      <td>-0.703579</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>86398</th>\n",
+       "      <td>821.283333</td>\n",
+       "      <td>1201.0</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>241983.030139</td>\n",
+       "      <td>-0.704786</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>86399 rows × 5 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "        mean_power  peak_power  trough_power  variance_power  spikeness_power\n",
+       "0       601.708333      1314.0           1.0   414014.519097         0.156262\n",
+       "1       775.850000      1314.0           1.0   396195.760833        -0.398615\n",
+       "2       176.033333      1303.0           1.0   191088.632222         2.212143\n",
+       "3       380.816667      1314.0           1.0   341707.616389         0.942842\n",
+       "4       808.200000      1314.0           2.0   353516.293333        -0.441064\n",
+       "...            ...         ...           ...             ...              ...\n",
+       "86394   901.433333      1212.0           1.0   246873.478889        -1.182936\n",
+       "86395  1003.950000      1212.0           1.0   186048.780833        -1.834241\n",
+       "86396  1193.233333      1201.0        1178.0       43.512222        -0.296779\n",
+       "86397   828.750000      1201.0           1.0   247346.620833        -0.703579\n",
+       "86398   821.283333      1201.0           1.0   241983.030139        -0.704786\n",
+       "\n",
+       "[86399 rows x 5 columns]"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "display(features)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Feature Discretization <a id=\"feature-discretication\"></a>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The extracted features are discretized into three bins (`low`, `medium`, and `high`) to simplify analysis."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "columns_to_discretize = [\n",
+    "    'mean_power',\n",
+    "    'peak_power',\n",
+    "    'trough_power',\n",
+    "    'variance_power',\n",
+    "    'spikeness_power'\n",
+    "    ]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Discretize features into bins"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "binned_features = pd.DataFrame()\n",
+    "for col in columns_to_discretize:\n",
+    "    binned_features[f\"{col}_bin\"] = pd.cut(features[col], bins=3, labels=[\"low\", \"medium\", \"high\"])\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Encode the binned features into one-hot encoding"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "encoded_features = pd.get_dummies(binned_features, prefix=binned_features.columns)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Association Rule Mining <a id=\"association-rule-mining\"></a>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Using the Apriori algorithm, we extract frequent itemsets with a minimum support threshold of 0.35."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "frequent_itemsets = apriori(encoded_features, min_support=0.35, use_colnames=True)\n",
+    "num_itemsets = len(frequent_itemsets)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We generate association rules using `lift` as the evaluation metric."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "rules = association_rules(frequent_itemsets, num_itemsets, metric=\"lift\", min_threshold=1.0)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Display the results"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Association Rules:\n"
+     ]
+    },
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>antecedents</th>\n",
+       "      <th>consequents</th>\n",
+       "      <th>antecedent support</th>\n",
+       "      <th>consequent support</th>\n",
+       "      <th>support</th>\n",
+       "      <th>confidence</th>\n",
+       "      <th>lift</th>\n",
+       "      <th>representativity</th>\n",
+       "      <th>leverage</th>\n",
+       "      <th>conviction</th>\n",
+       "      <th>zhangs_metric</th>\n",
+       "      <th>jaccard</th>\n",
+       "      <th>certainty</th>\n",
+       "      <th>kulczynski</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>(mean_power_bin_medium)</td>\n",
+       "      <td>(peak_power_bin_high)</td>\n",
+       "      <td>0.362527</td>\n",
+       "      <td>0.936643</td>\n",
+       "      <td>0.362527</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>1.067643</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>0.022969</td>\n",
+       "      <td>inf</td>\n",
+       "      <td>0.099388</td>\n",
+       "      <td>0.387050</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>0.693525</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>(peak_power_bin_high)</td>\n",
+       "      <td>(mean_power_bin_medium)</td>\n",
+       "      <td>0.936643</td>\n",
+       "      <td>0.362527</td>\n",
+       "      <td>0.362527</td>\n",
+       "      <td>0.387050</td>\n",
+       "      <td>1.067643</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>0.022969</td>\n",
+       "      <td>1.040007</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>0.387050</td>\n",
+       "      <td>0.038468</td>\n",
+       "      <td>0.693525</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>(mean_power_bin_medium)</td>\n",
+       "      <td>(trough_power_bin_low)</td>\n",
+       "      <td>0.362527</td>\n",
+       "      <td>0.883922</td>\n",
+       "      <td>0.362527</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>1.131321</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>0.042081</td>\n",
+       "      <td>inf</td>\n",
+       "      <td>0.182091</td>\n",
+       "      <td>0.410135</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>0.705067</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>(trough_power_bin_low)</td>\n",
+       "      <td>(mean_power_bin_medium)</td>\n",
+       "      <td>0.883922</td>\n",
+       "      <td>0.362527</td>\n",
+       "      <td>0.362527</td>\n",
+       "      <td>0.410135</td>\n",
+       "      <td>1.131321</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>0.042081</td>\n",
+       "      <td>1.080709</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>0.410135</td>\n",
+       "      <td>0.074682</td>\n",
+       "      <td>0.705067</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>(mean_power_bin_medium)</td>\n",
+       "      <td>(spikeness_power_bin_medium)</td>\n",
+       "      <td>0.362527</td>\n",
+       "      <td>0.880774</td>\n",
+       "      <td>0.362527</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>1.135365</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>0.043223</td>\n",
+       "      <td>inf</td>\n",
+       "      <td>0.187029</td>\n",
+       "      <td>0.411601</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>0.705800</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "               antecedents                   consequents  antecedent support  \\\n",
+       "0  (mean_power_bin_medium)         (peak_power_bin_high)            0.362527   \n",
+       "1    (peak_power_bin_high)       (mean_power_bin_medium)            0.936643   \n",
+       "2  (mean_power_bin_medium)        (trough_power_bin_low)            0.362527   \n",
+       "3   (trough_power_bin_low)       (mean_power_bin_medium)            0.883922   \n",
+       "4  (mean_power_bin_medium)  (spikeness_power_bin_medium)            0.362527   \n",
+       "\n",
+       "   consequent support   support  confidence      lift  representativity  \\\n",
+       "0            0.936643  0.362527    1.000000  1.067643               1.0   \n",
+       "1            0.362527  0.362527    0.387050  1.067643               1.0   \n",
+       "2            0.883922  0.362527    1.000000  1.131321               1.0   \n",
+       "3            0.362527  0.362527    0.410135  1.131321               1.0   \n",
+       "4            0.880774  0.362527    1.000000  1.135365               1.0   \n",
+       "\n",
+       "   leverage  conviction  zhangs_metric   jaccard  certainty  kulczynski  \n",
+       "0  0.022969         inf       0.099388  0.387050   1.000000    0.693525  \n",
+       "1  0.022969    1.040007       1.000000  0.387050   0.038468    0.693525  \n",
+       "2  0.042081         inf       0.182091  0.410135   1.000000    0.705067  \n",
+       "3  0.042081    1.080709       1.000000  0.410135   0.074682    0.705067  \n",
+       "4  0.043223         inf       0.187029  0.411601   1.000000    0.705800  "
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "print(\"Association Rules:\")\n",
+    "display(rules.head())"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Sequential Pattern Mining <a id=\"sequential-pattern-mining\"></a>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We prepare the sequence data by combining feature names with their discretized categories (e.g., `mean_power: low`)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "sequences = []\n",
+    "for index, row in binned_features.iterrows():\n",
+    "    sequence = []\n",
+    "    for i, value in enumerate(row):\n",
+    "        feature_name = columns_to_discretize[i]\n",
+    "        sequence.append(f\"{feature_name}: {value}\")\n",
+    "    sequences.append(sequence)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Display a sample of the sequences"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[['mean_power: medium',\n",
+       "  'peak_power: high',\n",
+       "  'trough_power: low',\n",
+       "  'variance_power: high',\n",
+       "  'spikeness_power: medium'],\n",
+       " ['mean_power: medium',\n",
+       "  'peak_power: high',\n",
+       "  'trough_power: low',\n",
+       "  'variance_power: high',\n",
+       "  'spikeness_power: medium'],\n",
+       " ['mean_power: low',\n",
+       "  'peak_power: high',\n",
+       "  'trough_power: low',\n",
+       "  'variance_power: medium',\n",
+       "  'spikeness_power: medium'],\n",
+       " ['mean_power: low',\n",
+       "  'peak_power: high',\n",
+       "  'trough_power: low',\n",
+       "  'variance_power: high',\n",
+       "  'spikeness_power: medium'],\n",
+       " ['mean_power: medium',\n",
+       "  'peak_power: high',\n",
+       "  'trough_power: low',\n",
+       "  'variance_power: high',\n",
+       "  'spikeness_power: medium']]"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "display(sequences[:5])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The PrefixSpan algorithm is used to find frequent sequential patterns with a minimum support of 0.9."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "ps = PrefixSpan(sequences)\n",
+    "patterns = ps.frequent(minsup=0.9)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Display the top 20 patterns"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "(31322, ['mean_power: medium'])\n",
+      "(31322, ['mean_power: medium', 'peak_power: high'])\n",
+      "(31322, ['mean_power: medium', 'peak_power: high', 'trough_power: low'])\n",
+      "(25850, ['mean_power: medium', 'peak_power: high', 'trough_power: low', 'variance_power: high'])\n",
+      "(25850, ['mean_power: medium', 'peak_power: high', 'trough_power: low', 'variance_power: high', 'spikeness_power: medium'])\n",
+      "(31322, ['mean_power: medium', 'peak_power: high', 'trough_power: low', 'spikeness_power: medium'])\n",
+      "(5472, ['mean_power: medium', 'peak_power: high', 'trough_power: low', 'variance_power: medium'])\n",
+      "(5472, ['mean_power: medium', 'peak_power: high', 'trough_power: low', 'variance_power: medium', 'spikeness_power: medium'])\n",
+      "(25850, ['mean_power: medium', 'peak_power: high', 'variance_power: high'])\n",
+      "(25850, ['mean_power: medium', 'peak_power: high', 'variance_power: high', 'spikeness_power: medium'])\n",
+      "(31322, ['mean_power: medium', 'peak_power: high', 'spikeness_power: medium'])\n",
+      "(5472, ['mean_power: medium', 'peak_power: high', 'variance_power: medium'])\n",
+      "(5472, ['mean_power: medium', 'peak_power: high', 'variance_power: medium', 'spikeness_power: medium'])\n",
+      "(31322, ['mean_power: medium', 'trough_power: low'])\n",
+      "(25850, ['mean_power: medium', 'trough_power: low', 'variance_power: high'])\n",
+      "(25850, ['mean_power: medium', 'trough_power: low', 'variance_power: high', 'spikeness_power: medium'])\n",
+      "(31322, ['mean_power: medium', 'trough_power: low', 'spikeness_power: medium'])\n",
+      "(5472, ['mean_power: medium', 'trough_power: low', 'variance_power: medium'])\n",
+      "(5472, ['mean_power: medium', 'trough_power: low', 'variance_power: medium', 'spikeness_power: medium'])\n",
+      "(25850, ['mean_power: medium', 'variance_power: high'])\n"
+     ]
+    }
+   ],
+   "source": [
+    "\n",
+    "for pattern in patterns[:20]:\n",
+    "    print(pattern)\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Results and Analysis <a id=\"results-and-analysis\"></a>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Association Rule Results**\n",
+    "\n",
+    "- Association rules reveal which feature categories often occur together or imply each other.\n",
+    "- Key metrics such as **support**, **confidence**, and **lift** are used to evaluate the rules.\n",
+    "\n",
+    "**Sequential Pattern Results**\n",
+    "\n",
+    "- Sequential patterns show the most common sequences among feature categories, helping to identify temporal dependencies and trends."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Conclusion <a id=\"conclusion\"></a>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "1. **Association Rules:**\n",
+    "\n",
+    "- Apriori successfully identified frequent itemsets and meaningful rules.\n",
+    "- The rules provide insights into co-occurring feature behaviors.\n",
+    "\n",
+    "2. **Sequential Patterns:**\n",
+    "\n",
+    "- PrefixSpan uncovered frequent temporal patterns, which can be leveraged to understand the sequence of events in the data.\n",
+    "\n",
+    "This approach demonstrates the power of feature engineering and pattern discovery for time-series data."
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.11"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

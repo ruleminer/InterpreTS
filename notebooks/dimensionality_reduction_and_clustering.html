@@ -1,0 +1,2330 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Dimensionality Reduction and Clustering &#8212; InterpreTS 0.5.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=1dd76d02"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/dimensionality_reduction_and_clustering';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Association Rules and Sequential Patterns" href="association_rules_and_sequential_patterns.html" />
+    <link rel="prev" title="Regression with interpreTS" href="regression.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">InterpreTS 0.5.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../Introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../Feature_Extractors.html">
+    Feature Extractors
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../Tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../API_Documentation.html">
+    API Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gui.html">
+    Graphical User Interface (GUI)
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../Introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../Feature_Extractors.html">
+    Feature Extractors
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../Tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../API_Documentation.html">
+    API Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gui.html">
+    Graphical User Interface (GUI)
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="feature_extraction.html">Feature Extraction Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="time_based_aggregation.html">Time-Based Aggregation with window_size and stride</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classification.html">Classification Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="regression.html">Regression Notebook</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Dimensionality Reduction and Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="association_rules_and_sequential_patterns.html">Association Rules and Sequential Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test_examples_of_features.html">Example of Features Notebook</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../Tutorials.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Dimensionality Reduction and Clustering</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="Dimensionality-Reduction-and-Clustering">
+<h1>Dimensionality Reduction and Clustering<a class="headerlink" href="#Dimensionality-Reduction-and-Clustering" title="Link to this heading">#</a></h1>
+<p>In this tutorial, we explore the process of analyzing and clustering time-series data for power consumption of a radiator. We will leverage methods such as Principal Component Analysis (PCA) for dimensionality reduction and K-means &amp; DBSCAN for clustering. Along the way, we will visualize the data using scatter plots.</p>
+<section id="Table-of-Contents">
+<h2>Table of Contents<a class="headerlink" href="#Table-of-Contents" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#Objectives"><span class="std std-ref">Objectives</span></a></p></li>
+<li><p>Import Required Libraries</p></li>
+<li><p><a class="reference internal" href="#Load-and-Preview-the-Data"><span class="std std-ref">Load and Preview the Data</span></a></p></li>
+<li><p><a class="reference internal" href="#Validate-and-Convert-the-Data"><span class="std std-ref">Validate and Convert the Data</span></a></p></li>
+<li><p><a class="reference internal" href="#Feature-Extraction"><span class="std std-ref">Feature Extraction</span></a></p></li>
+<li><p><a class="reference internal" href="#Standardize-the-Features"><span class="std std-ref">Standardize the Features</span></a></p></li>
+<li><p><a class="reference internal" href="#PCA-for-Dimensionality-Reduction"><span class="std std-ref">PCA for Dimensionality Reduction</span></a></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Determine-the-Number-of-Components"><span class="std std-ref">Determine the Number of Components</span></a></p></li>
+<li><p><a class="reference internal" href="#Apply-PCA-with-Optimal-Components"><span class="std std-ref">Apply PCA with Optimal Components</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#K-means-Clustering"><span class="std std-ref">K-means Clustering</span></a></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Determine-the-Optimal-Number-of-Clusters"><span class="std std-ref">Determine the Optimal Number of Clusters</span></a></p></li>
+<li><p><a class="reference internal" href="#Apply-K-means-with-Optimal-Clusters"><span class="std std-ref">Apply K-means with Optimal Clusters</span></a></p></li>
+<li><p><a class="reference internal" href="#Visualize-K-means-Clustering"><span class="std std-ref">Visualize K-means Clustering</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#DBSCAN-Clustering"><span class="std std-ref">DBSCAN Clustering</span></a></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#Apply-DBSCAN"><span class="std std-ref">Apply DBSCAN</span></a></p></li>
+<li><p><a class="reference internal" href="#Visualize-DBSCAN-clustering"><span class="std std-ref">Visualize DBSCAN clustering</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#Conclusion"><span class="std std-ref">Conclusion</span></a></p></li>
+</ol>
+</section>
+<section id="Objectives">
+<h2>Objectives<a class="headerlink" href="#Objectives" title="Link to this heading">#</a></h2>
+<p>This tutorial covers:</p>
+<ul class="simple">
+<li><p>Loading and preprocessing time-series data.</p></li>
+<li><p>Extracting features from the time-series data.</p></li>
+<li><p>Performing dimensionality reduction using Principal Component Analysis (PCA).</p></li>
+<li><p>Clustering data using K-means and DBSCAN.</p></li>
+<li><p>Visualizing results of dimensionality reduction and clustering.</p></li>
+</ul>
+</section>
+<section id="2.-Import-Required-Libraries">
+<h2>2. Import Required Libraries<a class="headerlink" href="#2.-Import-Required-Libraries" title="Link to this heading">#</a></h2>
+<p>The libraries below are used for this tutorial:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+from interpreTS.utils.data_validation import validate_time_series_data
+from interpreTS.utils.data_conversion import convert_to_time_series
+from interpreTS.core.feature_extractor import FeatureExtractor, Features
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans, DBSCAN
+import matplotlib.pyplot as plt
+import numpy as np
+</pre></div>
+</div>
+</div>
+<p>Additionally, check the version of the <code class="docutils literal notranslate"><span class="pre">interpreTS</span></code> library:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import interpreTS
+print(f&quot;interpreTS version: {interpreTS.__version__}&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+interpreTS version: 0.5.0
+</pre></div></div>
+</div>
+</section>
+<section id="Load-and-Preview-the-Data">
+<h2>Load and Preview the Data<a class="headerlink" href="#Load-and-Preview-the-Data" title="Link to this heading">#</a></h2>
+<p>Load the data containing time-series data for power consumption from the provided CSV file.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df = pd.read_csv(&#39;../data/radiator.csv&#39;)
+</pre></div>
+</div>
+</div>
+<p>Convert the <code class="docutils literal notranslate"><span class="pre">timestamp</span></code> column to datetime format and set it as the index:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df[&#39;timestamp&#39;] = pd.to_datetime(df[&#39;timestamp&#39;])
+df.set_index(&#39;timestamp&#39;, inplace=True)
+</pre></div>
+</div>
+</div>
+<p>Preview the dataset:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>display(df)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>power</th>
+    </tr>
+    <tr>
+      <th>timestamp</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-12-23 16:42:05+00:00</th>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2020-12-23 16:42:06+00:00</th>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2020-12-23 16:42:07+00:00</th>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2020-12-23 16:42:08+00:00</th>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <th>2020-12-23 16:42:09+00:00</th>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2021-01-22 16:42:01+00:00</th>
+      <td>1178.0</td>
+    </tr>
+    <tr>
+      <th>2021-01-22 16:42:02+00:00</th>
+      <td>1167.0</td>
+    </tr>
+    <tr>
+      <th>2021-01-22 16:42:03+00:00</th>
+      <td>1178.0</td>
+    </tr>
+    <tr>
+      <th>2021-01-22 16:42:04+00:00</th>
+      <td>1190.0</td>
+    </tr>
+    <tr>
+      <th>2021-01-22 16:42:05+00:00</th>
+      <td>1190.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>2592001 rows × 1 columns</p>
+</div></div>
+</div>
+<p>Get information about the dataset:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.info()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+DatetimeIndex: 2592001 entries, 2020-12-23 16:42:05+00:00 to 2021-01-22 16:42:05+00:00
+Data columns (total 1 columns):
+ #   Column  Dtype
+---  ------  -----
+ 0   power   float64
+dtypes: float64(1)
+memory usage: 39.6 MB
+</pre></div></div>
+</div>
+</section>
+<section id="Validate-and-Convert-the-Data">
+<h2>Validate and Convert the Data<a class="headerlink" href="#Validate-and-Convert-the-Data" title="Link to this heading">#</a></h2>
+<p>Ensure the dataset adheres to time-series data standards.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>try:
+    validate_time_series_data(df)
+    print(&quot;Time series data validation passed.&quot;)
+except (TypeError, ValueError) as e:
+    print(f&quot;Validation error: {e}&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Time series data validation passed.
+</pre></div></div>
+</div>
+<p>Transform the dataset into a TimeSeriesData object, suitable for <code class="docutils literal notranslate"><span class="pre">interpreTS</span></code> functions:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>time_series_data = convert_to_time_series(df)
+</pre></div>
+</div>
+</div>
+<p>Priview the converted TimeSeriesData object</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(time_series_data)
+display(time_series_data.data)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;interpreTS.core.time_series_data.TimeSeriesData object at 0x000001449A380100&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>power</th>
+    </tr>
+    <tr>
+      <th>timestamp</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-12-23 16:42:05+00:00</th>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2020-12-23 16:42:06+00:00</th>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2020-12-23 16:42:07+00:00</th>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2020-12-23 16:42:08+00:00</th>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <th>2020-12-23 16:42:09+00:00</th>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2021-01-22 16:42:01+00:00</th>
+      <td>1178.0</td>
+    </tr>
+    <tr>
+      <th>2021-01-22 16:42:02+00:00</th>
+      <td>1167.0</td>
+    </tr>
+    <tr>
+      <th>2021-01-22 16:42:03+00:00</th>
+      <td>1178.0</td>
+    </tr>
+    <tr>
+      <th>2021-01-22 16:42:04+00:00</th>
+      <td>1190.0</td>
+    </tr>
+    <tr>
+      <th>2021-01-22 16:42:05+00:00</th>
+      <td>1190.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>2592001 rows × 1 columns</p>
+</div></div>
+</div>
+</section>
+<section id="Feature-Extraction">
+<h2>Feature Extraction<a class="headerlink" href="#Feature-Extraction" title="Link to this heading">#</a></h2>
+<p>Initialize the FeatureExtractor to extract statistical and time-series features, such as mean, variance, and trend strength, using a sliding window approach with specified <code class="docutils literal notranslate"><span class="pre">window_size</span></code> and <code class="docutils literal notranslate"><span class="pre">stride</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>extractor = FeatureExtractor(
+    features=[
+        Features.MEAN,
+        Features.DOMINANT,
+        Features.TREND_STRENGTH,
+        Features.PEAK,
+        Features.VARIANCE
+    ],
+    window_size=60,
+    stride=30
+)
+</pre></div>
+</div>
+</div>
+<p>Extract features from the time series data.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>features = extractor.extract_features(time_series_data.data)
+</pre></div>
+</div>
+</div>
+<p>Display the extracted features.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>display(features)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mean_power</th>
+      <th>dominant_power</th>
+      <th>trend_strength_power</th>
+      <th>peak_power</th>
+      <th>variance_power</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>601.708333</td>
+      <td>1.0</td>
+      <td>0.755769</td>
+      <td>1314.0</td>
+      <td>421031.714336</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>775.850000</td>
+      <td>1182.7</td>
+      <td>0.484017</td>
+      <td>1314.0</td>
+      <td>402910.943220</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>176.033333</td>
+      <td>1.0</td>
+      <td>0.355786</td>
+      <td>1303.0</td>
+      <td>194327.422599</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>380.816667</td>
+      <td>1.0</td>
+      <td>0.633966</td>
+      <td>1314.0</td>
+      <td>347499.270904</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>808.200000</td>
+      <td>1182.8</td>
+      <td>0.009364</td>
+      <td>1314.0</td>
+      <td>359508.094915</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>86394</th>
+      <td>901.433333</td>
+      <td>1090.9</td>
+      <td>0.004244</td>
+      <td>1212.0</td>
+      <td>251057.775141</td>
+    </tr>
+    <tr>
+      <th>86395</th>
+      <td>1003.950000</td>
+      <td>1090.9</td>
+      <td>0.407723</td>
+      <td>1212.0</td>
+      <td>189202.150000</td>
+    </tr>
+    <tr>
+      <th>86396</th>
+      <td>1193.233333</td>
+      <td>1189.5</td>
+      <td>0.002166</td>
+      <td>1201.0</td>
+      <td>44.249718</td>
+    </tr>
+    <tr>
+      <th>86397</th>
+      <td>828.750000</td>
+      <td>1081.0</td>
+      <td>0.217282</td>
+      <td>1201.0</td>
+      <td>251538.936441</td>
+    </tr>
+    <tr>
+      <th>86398</th>
+      <td>821.283333</td>
+      <td>1081.0</td>
+      <td>0.626586</td>
+      <td>1201.0</td>
+      <td>246084.437429</td>
+    </tr>
+  </tbody>
+</table>
+<p>86399 rows × 5 columns</p>
+</div></div>
+</div>
+</section>
+<section id="Standardize-the-Features">
+<h2>Standardize the Features<a class="headerlink" href="#Standardize-the-Features" title="Link to this heading">#</a></h2>
+<p>Standardization ensures that all features have a mean of 0 and a standard deviation of 1, making them suitable for PCA and clustering.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>scaler = StandardScaler()
+features_scaled = scaler.fit_transform(features)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="PCA-for-Dimensionality-Reduction">
+<h2>PCA for Dimensionality Reduction<a class="headerlink" href="#PCA-for-Dimensionality-Reduction" title="Link to this heading">#</a></h2>
+<section id="Determine-the-Number-of-Components">
+<h3>Determine the Number of Components<a class="headerlink" href="#Determine-the-Number-of-Components" title="Link to this heading">#</a></h3>
+<p>Perform PCA with all components.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pca = PCA()
+pca_result = pca.fit_transform(features_scaled)
+</pre></div>
+</div>
+</div>
+<p>Calculate the cumulative explained variance ratio.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>explained_variance_ratio = np.cumsum(pca.explained_variance_ratio_)
+</pre></div>
+</div>
+</div>
+<p>Plot the Scree Plot:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(10, 6))
+plt.plot(range(1, len(explained_variance_ratio) + 1), explained_variance_ratio, marker=&#39;o&#39;, linestyle=&#39;--&#39;)
+plt.axhline(y=0.9, color=&#39;r&#39;, linestyle=&#39;--&#39;, label=&#39;90% Variance&#39;)
+plt.title(&quot;Scree Plot - Cumulative Explained Variance&quot;)
+plt.xlabel(&quot;Number of Components&quot;)
+plt.ylabel(&quot;Cumulative Explained Variance&quot;)
+plt.legend()
+plt.grid()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_dimensionality_reduction_and_clustering_43_0.png" src="../_images/notebooks_dimensionality_reduction_and_clustering_43_0.png" />
+</div>
+</div>
+<p>Determine the number of components required to explain at least 90% of the variance.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>n_components_90 = np.argmax(explained_variance_ratio &gt;= 0.9) + 1
+print(f&quot;Number of components explaining at least 90% variance: {n_components_90}&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number of components explaining at least 90% variance: 3
+</pre></div></div>
+</div>
+</section>
+<section id="Apply-PCA-with-Optimal-Components">
+<h3>Apply PCA with Optimal Components<a class="headerlink" href="#Apply-PCA-with-Optimal-Components" title="Link to this heading">#</a></h3>
+<p>Applies PCA to reduce the feature dimensions while retaining the maximum amount of information. Perform PCA with the optimal number of components.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pca_final = PCA(n_components=n_components_90)
+pca_final_result = pca_final.fit_transform(features_scaled)
+</pre></div>
+</div>
+</div>
+<p>Get the PCA loadings (coefficients)</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>loadings = pca_final.components_
+loading_df = pd.DataFrame(
+    loadings.T,
+    columns=[f&quot;PC{i+1}&quot; for i in range(n_components_90)],
+    index=features.columns
+)
+</pre></div>
+</div>
+</div>
+<p>To interpret the results of PCA, we display the PCA loadings. These loadings show how each feature contributes to the principal components.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>display(loading_df)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PC1</th>
+      <th>PC2</th>
+      <th>PC3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>mean_power</th>
+      <td>-0.629927</td>
+      <td>0.181104</td>
+      <td>0.174236</td>
+    </tr>
+    <tr>
+      <th>dominant_power</th>
+      <td>-0.597785</td>
+      <td>0.165984</td>
+      <td>0.157005</td>
+    </tr>
+    <tr>
+      <th>trend_strength_power</th>
+      <td>0.008113</td>
+      <td>-0.590912</td>
+      <td>0.800670</td>
+    </tr>
+    <tr>
+      <th>peak_power</th>
+      <td>-0.492595</td>
+      <td>-0.366028</td>
+      <td>-0.351975</td>
+    </tr>
+    <tr>
+      <th>variance_power</th>
+      <td>-0.055940</td>
+      <td>-0.675646</td>
+      <td>-0.424303</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Visualize the results in 3D to observe how data separates into clusters:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pca_df = pd.DataFrame(
+    pca_final_result[:, :3],
+    columns=[&quot;PC1&quot;, &quot;PC2&quot;, &quot;PC3&quot;]
+)
+
+x = pca_df[&quot;PC1&quot;]
+y = pca_df[&quot;PC2&quot;]
+z = pca_df[&quot;PC3&quot;]
+
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection=&#39;3d&#39;)
+scatter = ax.scatter(x, y, z, c=&#39;blue&#39;, alpha=0.6)
+ax.set_title(&quot;3D Visualization of PCA Results&quot;)
+ax.set_xlabel(&quot;Principal Component 1&quot;)
+ax.set_ylabel(&quot;Principal Component 2&quot;)
+ax.set_zlabel(&quot;Principal Component 3&quot;)
+ax.view_init(elev=15, azim=80)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_dimensionality_reduction_and_clustering_54_0.png" src="../_images/notebooks_dimensionality_reduction_and_clustering_54_0.png" />
+</div>
+</div>
+<p>The following visualization provides a different perspective of the 3D PCA scatter plot.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection=&#39;3d&#39;)
+scatter = ax.scatter(x, y, z, c=&#39;blue&#39;, alpha=0.6)
+ax.set_title(&quot;3D Visualization of PCA Results&quot;)
+ax.set_xlabel(&quot;Principal Component 1&quot;)
+ax.set_ylabel(&quot;Principal Component 2&quot;)
+ax.set_zlabel(&quot;Principal Component 3&quot;)
+ax.view_init(elev=55, azim=70)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_dimensionality_reduction_and_clustering_56_0.png" src="../_images/notebooks_dimensionality_reduction_and_clustering_56_0.png" />
+</div>
+</div>
+<p><strong>Observation:</strong> The 3D PCA scatter plot reveals distinct groupings, suggesting the potential for clustering.</p>
+</section>
+</section>
+<section id="K-means-Clustering">
+<h2>K-means Clustering<a class="headerlink" href="#K-means-Clustering" title="Link to this heading">#</a></h2>
+<section id="Determine-the-Optimal-Number-of-Clusters">
+<h3>Determine the Optimal Number of Clusters<a class="headerlink" href="#Determine-the-Optimal-Number-of-Clusters" title="Link to this heading">#</a></h3>
+<p>Use the Elbow Method to find the optimal number of clusters</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>inertia = []
+cluster_range = range(2, 6)  # Range of clusters to try
+
+for k in cluster_range:
+    kmeans = KMeans(n_clusters=k, random_state=42)
+    kmeans.fit(pca_final_result)
+    inertia.append(kmeans.inertia_)
+</pre></div>
+</div>
+</div>
+<p>Plot the Elbow Method</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(10, 6))
+plt.plot(cluster_range, inertia, &#39;bo-&#39;, label=&#39;Inertia&#39;)
+plt.title(&quot;Elbow Method - Optimal Number of Clusters&quot;)
+plt.xlabel(&quot;Number of Clusters (k)&quot;)
+plt.ylabel(&quot;Inertia&quot;)
+plt.legend()
+plt.grid()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_dimensionality_reduction_and_clustering_63_0.png" src="../_images/notebooks_dimensionality_reduction_and_clustering_63_0.png" />
+</div>
+</div>
+<p>Interpretation: The “elbow” of the plot indicates the optimal number of clusters. For this data, the elbow occurs at k=3, suggesting three clusters.</p>
+</section>
+<section id="Apply-K-means-with-Optimal-Clusters">
+<h3>Apply K-means with Optimal Clusters<a class="headerlink" href="#Apply-K-means-with-Optimal-Clusters" title="Link to this heading">#</a></h3>
+<p>Based on the Elbow Method, K-Means is applied with k=3. Additionally, we experiment with a custom number of clusters (k=2) for comparison.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>optimal_k = 3
+kmeans = KMeans(n_clusters=optimal_k, random_state=42)
+kmeans.fit(pca_final_result)
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<style>#sk-container-id-1 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: black;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-1 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-1 pre {
+  padding: 0;
+}
+
+#sk-container-id-1 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-1 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-1 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-1 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-1 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-1 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-1 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-1 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-1 label.sk-toggleable__label {
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-1 div.sk-toggleable__content {
+  max-height: 0;
+  max-width: 0;
+  overflow: hidden;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  max-height: 200px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label label.sk-toggleable__label,
+#sk-container-id-1 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-1 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-1 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-1 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-1 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 1ex;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-1 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-1 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>KMeans(n_clusters=3, random_state=42)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;KMeans<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.4/modules/generated/sklearn.cluster.KMeans.html">?<span>Documentation for KMeans</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>KMeans(n_clusters=3, random_state=42)</pre></div> </div></div></div></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>custom_k = 2
+kmeans2 = KMeans(n_clusters=custom_k, random_state=42)
+kmeans2.fit(pca_final_result)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<style>#sk-container-id-2 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: black;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-2 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-2 pre {
+  padding: 0;
+}
+
+#sk-container-id-2 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-2 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-2 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-2 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-2 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-2 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-2 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-2 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-2 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-2 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-2 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-2 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-2 label.sk-toggleable__label {
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#sk-container-id-2 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-2 div.sk-toggleable__content {
+  max-height: 0;
+  max-width: 0;
+  overflow: hidden;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  max-height: 200px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-2 div.sk-label label.sk-toggleable__label,
+#sk-container-id-2 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-2 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-2 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-2 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-2 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-2 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 1ex;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-2 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-2 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-2 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-2 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>KMeans(n_clusters=2, random_state=42)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;KMeans<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.4/modules/generated/sklearn.cluster.KMeans.html">?<span>Documentation for KMeans</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>KMeans(n_clusters=2, random_state=42)</pre></div> </div></div></div></div></div>
+</div>
+<p>K-means clustering labels</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>clusters = kmeans.labels_
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>clusters2 = kmeans2.labels_
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Visualize-K-means-Clustering">
+<h3>Visualize K-means Clustering<a class="headerlink" href="#Visualize-K-means-Clustering" title="Link to this heading">#</a></h3>
+<p>Visualizes clustering results in 3D space because PCA reduced the number of columns to 3.</p>
+<p>Visualization for <code class="docutils literal notranslate"><span class="pre">k=3</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pca_df = pd.DataFrame(
+    pca_final_result[:, :3],
+    columns=[&quot;PC1&quot;, &quot;PC2&quot;, &quot;PC3&quot;]
+)
+
+x, y, z = pca_df[&quot;PC1&quot;], pca_df[&quot;PC2&quot;], pca_df[&quot;PC3&quot;]
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection=&#39;3d&#39;)
+scatter = ax.scatter(x, y, z, c=clusters, cmap=&#39;viridis&#39;, alpha=0.6)
+ax.set_title(&quot;3D Visualization of K-means Clustering&quot;)
+ax.set_xlabel(&quot;Principal Component 1&quot;)
+ax.set_ylabel(&quot;Principal Component 2&quot;)
+ax.set_zlabel(&quot;Principal Component 3&quot;)
+ax.view_init(elev=15, azim=80)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_dimensionality_reduction_and_clustering_75_0.png" src="../_images/notebooks_dimensionality_reduction_and_clustering_75_0.png" />
+</div>
+</div>
+<p>Alternative Perspective:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>x, y, z = pca_df[&quot;PC1&quot;], pca_df[&quot;PC2&quot;], pca_df[&quot;PC3&quot;]
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection=&#39;3d&#39;)
+scatter = ax.scatter(x, y, z, c=clusters, cmap=&#39;viridis&#39;, alpha=0.6)
+ax.set_title(&quot;3D Visualization of K-means Clustering&quot;)
+ax.set_xlabel(&quot;Principal Component 1&quot;)
+ax.set_ylabel(&quot;Principal Component 2&quot;)
+ax.set_zlabel(&quot;Principal Component 3&quot;)
+ax.view_init(elev=65, azim=30)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_dimensionality_reduction_and_clustering_77_0.png" src="../_images/notebooks_dimensionality_reduction_and_clustering_77_0.png" />
+</div>
+</div>
+<p>Visualization for <code class="docutils literal notranslate"><span class="pre">k=2</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pca_df = pd.DataFrame(
+    pca_final_result[:, :3],
+    columns=[&quot;PC1&quot;, &quot;PC2&quot;, &quot;PC3&quot;]
+)
+
+x, y, z = pca_df[&quot;PC1&quot;], pca_df[&quot;PC2&quot;], pca_df[&quot;PC3&quot;]
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection=&#39;3d&#39;)
+scatter = ax.scatter(x, y, z, c=clusters2, cmap=&#39;viridis&#39;, alpha=0.6)
+ax.set_title(&quot;3D Visualization of K-means Clustering&quot;)
+ax.set_xlabel(&quot;Principal Component 1&quot;)
+ax.set_ylabel(&quot;Principal Component 2&quot;)
+ax.set_zlabel(&quot;Principal Component 3&quot;)
+ax.view_init(elev=15, azim=80)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_dimensionality_reduction_and_clustering_79_0.png" src="../_images/notebooks_dimensionality_reduction_and_clustering_79_0.png" />
+</div>
+</div>
+<p>Alternative Perspective:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>x, y, z = pca_df[&quot;PC1&quot;], pca_df[&quot;PC2&quot;], pca_df[&quot;PC3&quot;]
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection=&#39;3d&#39;)
+scatter = ax.scatter(x, y, z, c=clusters2, cmap=&#39;viridis&#39;, alpha=0.6)
+ax.set_title(&quot;3D Visualization of K-means Clustering&quot;)
+ax.set_xlabel(&quot;Principal Component 1&quot;)
+ax.set_ylabel(&quot;Principal Component 2&quot;)
+ax.set_zlabel(&quot;Principal Component 3&quot;)
+ax.view_init(elev=65, azim=30)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_dimensionality_reduction_and_clustering_81_0.png" src="../_images/notebooks_dimensionality_reduction_and_clustering_81_0.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="DBSCAN-Clustering">
+<h2>DBSCAN Clustering<a class="headerlink" href="#DBSCAN-Clustering" title="Link to this heading">#</a></h2>
+<section id="Apply-DBSCAN">
+<h3>Apply DBSCAN<a class="headerlink" href="#Apply-DBSCAN" title="Link to this heading">#</a></h3>
+<p>DBSCAN clustering is applied to the data. This algorithm groups points based on density and handles non-linear clusters well. The parameters <code class="docutils literal notranslate"><span class="pre">eps</span></code> (maximum distance between points) and <code class="docutils literal notranslate"><span class="pre">min_samples</span></code> (minimum points in a neighborhood) require tuning for optimal performance.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dbscan = DBSCAN(eps=0.5, min_samples=15)
+dbscan_labels = dbscan.fit_predict(pca_final_result)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Visualize-DBSCAN-clustering">
+<h3>Visualize DBSCAN clustering<a class="headerlink" href="#Visualize-DBSCAN-clustering" title="Link to this heading">#</a></h3>
+<p>The clustering results are visualized in 3D space using the three principal components.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>x, y, z = pca_final_result[:, 0], pca_final_result[:, 1], pca_final_result[:, 2]
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection=&#39;3d&#39;)
+scatter = ax.scatter(x, y, z, c=dbscan_labels, cmap=&#39;viridis&#39;, alpha=0.6)
+ax.set_title(&quot;3D Visualization of DBSCAN Clustering&quot;)
+ax.set_xlabel(&quot;Principal Component 1&quot;)
+ax.set_ylabel(&quot;Principal Component 2&quot;)
+ax.set_zlabel(&quot;Principal Component 3&quot;)
+ax.view_init(elev=15, azim=80)
+plt.show()
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_dimensionality_reduction_and_clustering_88_0.png" src="../_images/notebooks_dimensionality_reduction_and_clustering_88_0.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="Conclusion">
+<h2>Conclusion<a class="headerlink" href="#Conclusion" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>K-Means</strong>: Identifies global clusters but may struggle with non-linear shapes.</p></li>
+<li><p><strong>DBSCAN</strong>: Handles non-linear clusters and noise effectively but requires parameter tuning.</p></li>
+<li><p><strong>PCA</strong> proved valuable for visualization and clustering.</p></li>
+</ul>
+<p>This analysis illustrates the power of <code class="docutils literal notranslate"><span class="pre">interpreTS</span></code> in feature extraction and clustering for time-series data.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="regression.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Regression with interpreTS</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="association_rules_and_sequential_patterns.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Association Rules and Sequential Patterns</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Table-of-Contents">Table of Contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Objectives">Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#2.-Import-Required-Libraries">2. Import Required Libraries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Load-and-Preview-the-Data">Load and Preview the Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Validate-and-Convert-the-Data">Validate and Convert the Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Feature-Extraction">Feature Extraction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Standardize-the-Features">Standardize the Features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#PCA-for-Dimensionality-Reduction">PCA for Dimensionality Reduction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Determine-the-Number-of-Components">Determine the Number of Components</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Apply-PCA-with-Optimal-Components">Apply PCA with Optimal Components</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#K-means-Clustering">K-means Clustering</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Determine-the-Optimal-Number-of-Clusters">Determine the Optimal Number of Clusters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Apply-K-means-with-Optimal-Clusters">Apply K-means with Optimal Clusters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Visualize-K-means-Clustering">Visualize K-means Clustering</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#DBSCAN-Clustering">DBSCAN Clustering</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Apply-DBSCAN">Apply DBSCAN</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Visualize-DBSCAN-clustering">Visualize DBSCAN clustering</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Conclusion">Conclusion</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/notebooks/dimensionality_reduction_and_clustering.ipynb.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Łukasz Wróbel, Sławomir Put, Martyna Żur, Martyna Kramarz, Jarosław Strzelczyk, Weronika Wołowczyk, Piotr Krupiński.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1308 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Association Rules and Sequential Patterns &#8212; InterpreTS 0.5.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=1dd76d02"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/association_rules_and_sequential_patterns';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Notebook Test Example of Features" href="test_examples_of_features.html" />
+    <link rel="prev" title="Dimensionality Reduction and Clustering" href="dimensionality_reduction_and_clustering.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">InterpreTS 0.5.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../Introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../Feature_Extractors.html">
+    Feature Extractors
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../Tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../API_Documentation.html">
+    API Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gui.html">
+    Graphical User Interface (GUI)
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../Introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../Feature_Extractors.html">
+    Feature Extractors
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../Tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../API_Documentation.html">
+    API Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gui.html">
+    Graphical User Interface (GUI)
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="feature_extraction.html">Feature Extraction Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="time_based_aggregation.html">Time-Based Aggregation with window_size and stride</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classification.html">Classification Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="regression.html">Regression Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dimensionality_reduction_and_clustering.html">Dimensionality Reduction and Clustering</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Association Rules and Sequential Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test_examples_of_features.html">Example of Features Notebook</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../Tutorials.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Association Rules and Sequential Patterns</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="Association-Rules-and-Sequential-Patterns">
+<h1>Association Rules and Sequential Patterns<a class="headerlink" href="#Association-Rules-and-Sequential-Patterns" title="Link to this heading">#</a></h1>
+<p>This notebook focuses on mining association rules and discovering sequential patterns using a time-series dataset. We’ll extract relevant features, discretize them, and then apply algorithms to uncover interesting relationships and sequences in the extracted features of data.</p>
+<section id="Table-of-Contents">
+<h2>Table of Contents<a class="headerlink" href="#Table-of-Contents" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#Objectives"><span class="std std-ref">Objectives</span></a></p></li>
+<li><p><a class="reference internal" href="#Installation-and-Imports"><span class="std std-ref">Installation and Imports</span></a></p></li>
+<li><p><a class="reference internal" href="#Load-and-Preview-Data"><span class="std std-ref">Load and Preview Data</span></a></p></li>
+<li><p><a class="reference internal" href="#Validate-and-Convert-the-data"><span class="std std-ref">Validate and Convert the Data</span></a></p></li>
+<li><p><a class="reference internal" href="#Feature-Extraction"><span class="std std-ref">Feature Extraction</span></a></p></li>
+<li><p><a class="reference internal" href="#Feature-Discretization"><span class="std std-ref">Feature Discretization</span></a></p></li>
+<li><p><a class="reference internal" href="#Association-Rule-Mining"><span class="std std-ref">Association Rule Mining</span></a></p></li>
+<li><p><a class="reference internal" href="#Sequential-Pattern-Mining"><span class="std std-ref">Sequential Pattern Mining</span></a></p></li>
+<li><p><a class="reference internal" href="#Results-and-Analysis"><span class="std std-ref">Results and Analysis</span></a></p></li>
+<li><p><a class="reference internal" href="#Conclusion"><span class="std std-ref">Conclusion</span></a></p></li>
+</ol>
+</section>
+<section id="Objectives">
+<h2>Objectives<a class="headerlink" href="#Objectives" title="Link to this heading">#</a></h2>
+<p>This tutorial covers:</p>
+<ul class="simple">
+<li><p>How to extract features from time-series data.</p></li>
+<li><p>Mining association rules to identify relationships between discretized features.</p></li>
+<li><p>Discovering sequential patterns to analyze the most frequent sequences among features.</p></li>
+<li><p>Key differences:</p>
+<ul>
+<li><p><strong>Association Rules:</strong> Show which feature categories frequently occur together and which features often follow or are dependent on others.</p></li>
+<li><p><strong>Sequential Patterns:</strong> Highlight the most frequent sequences and temporal order among feature categories.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="Installation-and-Imports">
+<h2>Installation and Imports<a class="headerlink" href="#Installation-and-Imports" title="Link to this heading">#</a></h2>
+<p>First, we ensure that the required libraries are installed</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%pip install prefixspan
+</pre></div>
+</div>
+</div>
+<p>Import necessary libraries</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+from interpreTS.utils.data_validation import validate_time_series_data
+from interpreTS.utils.data_conversion import convert_to_time_series
+from interpreTS.core.feature_extractor import FeatureExtractor, Features
+from mlxtend.frequent_patterns import apriori, association_rules
+from prefixspan import PrefixSpan
+</pre></div>
+</div>
+</div>
+<p>Version check for interpreTS</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import interpreTS
+print(f&quot;Version: {interpreTS.__version__}&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Version: 0.5.0
+</pre></div></div>
+</div>
+</section>
+<section id="Load-and-Preview-Data">
+<h2>Load and Preview Data<a class="headerlink" href="#Load-and-Preview-Data" title="Link to this heading">#</a></h2>
+<p>Load the data</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df = pd.read_csv(&#39;../data/radiator.csv&#39;)
+</pre></div>
+</div>
+</div>
+<p>Convert the ‘timestamp’ column to datetime and set it as the index</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df[&#39;timestamp&#39;] = pd.to_datetime(df[&#39;timestamp&#39;])
+df.set_index(&#39;timestamp&#39;, inplace=True)
+</pre></div>
+</div>
+</div>
+<p>Preview the data</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>display(df.head())
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>power</th>
+    </tr>
+    <tr>
+      <th>timestamp</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-12-23 16:42:05+00:00</th>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2020-12-23 16:42:06+00:00</th>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2020-12-23 16:42:07+00:00</th>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2020-12-23 16:42:08+00:00</th>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <th>2020-12-23 16:42:09+00:00</th>
+      <td>3.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Check dataset information</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.info()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+DatetimeIndex: 2592001 entries, 2020-12-23 16:42:05+00:00 to 2021-01-22 16:42:05+00:00
+Data columns (total 1 columns):
+ #   Column  Dtype
+---  ------  -----
+ 0   power   float64
+dtypes: float64(1)
+memory usage: 39.6 MB
+</pre></div></div>
+</div>
+</section>
+<section id="Validate-and-Convert-the-data">
+<h2>Validate and Convert the data<a class="headerlink" href="#Validate-and-Convert-the-data" title="Link to this heading">#</a></h2>
+<p>To ensure the dataset is suitable for time-series analysis, we validate it using the <code class="docutils literal notranslate"><span class="pre">validate_time_series_data</span></code> function.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>try:
+    validate_time_series_data(df)
+    print(&quot;Time series data validation passed.&quot;)
+except (TypeError, ValueError) as e:
+    print(f&quot;Validation error: {e}&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Time series data validation passed.
+</pre></div></div>
+</div>
+<p>The data is converted into an interpreTS <code class="docutils literal notranslate"><span class="pre">TimeSeriesData</span></code> object for further analysis.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>time_series_data = convert_to_time_series(df)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Print the converted TimeSeriesData object and its underlying data
+print(time_series_data)
+display(time_series_data.data)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;interpreTS.core.time_series_data.TimeSeriesData object at 0x00000124D7017A60&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>power</th>
+    </tr>
+    <tr>
+      <th>timestamp</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-12-23 16:42:05+00:00</th>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2020-12-23 16:42:06+00:00</th>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2020-12-23 16:42:07+00:00</th>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2020-12-23 16:42:08+00:00</th>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <th>2020-12-23 16:42:09+00:00</th>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2021-01-22 16:42:01+00:00</th>
+      <td>1178.0</td>
+    </tr>
+    <tr>
+      <th>2021-01-22 16:42:02+00:00</th>
+      <td>1167.0</td>
+    </tr>
+    <tr>
+      <th>2021-01-22 16:42:03+00:00</th>
+      <td>1178.0</td>
+    </tr>
+    <tr>
+      <th>2021-01-22 16:42:04+00:00</th>
+      <td>1190.0</td>
+    </tr>
+    <tr>
+      <th>2021-01-22 16:42:05+00:00</th>
+      <td>1190.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>2592001 rows × 1 columns</p>
+</div></div>
+</div>
+</section>
+<section id="Feature-Extraction">
+<h2>Feature Extraction<a class="headerlink" href="#Feature-Extraction" title="Link to this heading">#</a></h2>
+<p>We extract statistical features from the time-series data, such as mean, peak, trough, variance, and spikeness, using a sliding window approach.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>extractor = FeatureExtractor(
+    features=[
+        Features.MEAN,
+        Features.PEAK,
+        Features.TROUGH,
+        Features.VARIANCE,
+        Features.SPIKENESS
+    ],
+    window_size=60,
+    stride=30
+)
+features = extractor.extract_features(time_series_data.data)
+<br/></pre></div>
+</div>
+</div>
+<p>Display the extracted features</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>display(features)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mean_power</th>
+      <th>peak_power</th>
+      <th>trough_power</th>
+      <th>variance_power</th>
+      <th>spikeness_power</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>601.708333</td>
+      <td>1314.0</td>
+      <td>1.0</td>
+      <td>414014.519097</td>
+      <td>0.156262</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>775.850000</td>
+      <td>1314.0</td>
+      <td>1.0</td>
+      <td>396195.760833</td>
+      <td>-0.398615</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>176.033333</td>
+      <td>1303.0</td>
+      <td>1.0</td>
+      <td>191088.632222</td>
+      <td>2.212143</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>380.816667</td>
+      <td>1314.0</td>
+      <td>1.0</td>
+      <td>341707.616389</td>
+      <td>0.942842</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>808.200000</td>
+      <td>1314.0</td>
+      <td>2.0</td>
+      <td>353516.293333</td>
+      <td>-0.441064</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>86394</th>
+      <td>901.433333</td>
+      <td>1212.0</td>
+      <td>1.0</td>
+      <td>246873.478889</td>
+      <td>-1.182936</td>
+    </tr>
+    <tr>
+      <th>86395</th>
+      <td>1003.950000</td>
+      <td>1212.0</td>
+      <td>1.0</td>
+      <td>186048.780833</td>
+      <td>-1.834241</td>
+    </tr>
+    <tr>
+      <th>86396</th>
+      <td>1193.233333</td>
+      <td>1201.0</td>
+      <td>1178.0</td>
+      <td>43.512222</td>
+      <td>-0.296779</td>
+    </tr>
+    <tr>
+      <th>86397</th>
+      <td>828.750000</td>
+      <td>1201.0</td>
+      <td>1.0</td>
+      <td>247346.620833</td>
+      <td>-0.703579</td>
+    </tr>
+    <tr>
+      <th>86398</th>
+      <td>821.283333</td>
+      <td>1201.0</td>
+      <td>1.0</td>
+      <td>241983.030139</td>
+      <td>-0.704786</td>
+    </tr>
+  </tbody>
+</table>
+<p>86399 rows × 5 columns</p>
+</div></div>
+</div>
+</section>
+<section id="Feature-Discretization">
+<h2>Feature Discretization<a class="headerlink" href="#Feature-Discretization" title="Link to this heading">#</a></h2>
+<p>The extracted features are discretized into three bins (<code class="docutils literal notranslate"><span class="pre">low</span></code>, <code class="docutils literal notranslate"><span class="pre">medium</span></code>, and <code class="docutils literal notranslate"><span class="pre">high</span></code>) to simplify analysis.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>columns_to_discretize = [
+    &#39;mean_power&#39;,
+    &#39;peak_power&#39;,
+    &#39;trough_power&#39;,
+    &#39;variance_power&#39;,
+    &#39;spikeness_power&#39;
+    ]
+</pre></div>
+</div>
+</div>
+<p>Discretize features into bins</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>binned_features = pd.DataFrame()
+for col in columns_to_discretize:
+    binned_features[f&quot;{col}_bin&quot;] = pd.cut(features[col], bins=3, labels=[&quot;low&quot;, &quot;medium&quot;, &quot;high&quot;])
+<br/></pre></div>
+</div>
+</div>
+<p>Encode the binned features into one-hot encoding</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>encoded_features = pd.get_dummies(binned_features, prefix=binned_features.columns)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Association-Rule-Mining">
+<h2>Association Rule Mining<a class="headerlink" href="#Association-Rule-Mining" title="Link to this heading">#</a></h2>
+<p>Using the Apriori algorithm, we extract frequent itemsets with a minimum support threshold of 0.35.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>frequent_itemsets = apriori(encoded_features, min_support=0.35, use_colnames=True)
+num_itemsets = len(frequent_itemsets)
+</pre></div>
+</div>
+</div>
+<p>We generate association rules using <code class="docutils literal notranslate"><span class="pre">lift</span></code> as the evaluation metric.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>rules = association_rules(frequent_itemsets, num_itemsets, metric=&quot;lift&quot;, min_threshold=1.0)
+</pre></div>
+</div>
+</div>
+<p>Display the results</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&quot;Association Rules:&quot;)
+display(rules.head())
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Association Rules:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>antecedents</th>
+      <th>consequents</th>
+      <th>antecedent support</th>
+      <th>consequent support</th>
+      <th>support</th>
+      <th>confidence</th>
+      <th>lift</th>
+      <th>representativity</th>
+      <th>leverage</th>
+      <th>conviction</th>
+      <th>zhangs_metric</th>
+      <th>jaccard</th>
+      <th>certainty</th>
+      <th>kulczynski</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>(mean_power_bin_medium)</td>
+      <td>(peak_power_bin_high)</td>
+      <td>0.362527</td>
+      <td>0.936643</td>
+      <td>0.362527</td>
+      <td>1.000000</td>
+      <td>1.067643</td>
+      <td>1.0</td>
+      <td>0.022969</td>
+      <td>inf</td>
+      <td>0.099388</td>
+      <td>0.387050</td>
+      <td>1.000000</td>
+      <td>0.693525</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>(peak_power_bin_high)</td>
+      <td>(mean_power_bin_medium)</td>
+      <td>0.936643</td>
+      <td>0.362527</td>
+      <td>0.362527</td>
+      <td>0.387050</td>
+      <td>1.067643</td>
+      <td>1.0</td>
+      <td>0.022969</td>
+      <td>1.040007</td>
+      <td>1.000000</td>
+      <td>0.387050</td>
+      <td>0.038468</td>
+      <td>0.693525</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>(mean_power_bin_medium)</td>
+      <td>(trough_power_bin_low)</td>
+      <td>0.362527</td>
+      <td>0.883922</td>
+      <td>0.362527</td>
+      <td>1.000000</td>
+      <td>1.131321</td>
+      <td>1.0</td>
+      <td>0.042081</td>
+      <td>inf</td>
+      <td>0.182091</td>
+      <td>0.410135</td>
+      <td>1.000000</td>
+      <td>0.705067</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>(trough_power_bin_low)</td>
+      <td>(mean_power_bin_medium)</td>
+      <td>0.883922</td>
+      <td>0.362527</td>
+      <td>0.362527</td>
+      <td>0.410135</td>
+      <td>1.131321</td>
+      <td>1.0</td>
+      <td>0.042081</td>
+      <td>1.080709</td>
+      <td>1.000000</td>
+      <td>0.410135</td>
+      <td>0.074682</td>
+      <td>0.705067</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>(mean_power_bin_medium)</td>
+      <td>(spikeness_power_bin_medium)</td>
+      <td>0.362527</td>
+      <td>0.880774</td>
+      <td>0.362527</td>
+      <td>1.000000</td>
+      <td>1.135365</td>
+      <td>1.0</td>
+      <td>0.043223</td>
+      <td>inf</td>
+      <td>0.187029</td>
+      <td>0.411601</td>
+      <td>1.000000</td>
+      <td>0.705800</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="Sequential-Pattern-Mining">
+<h2>Sequential Pattern Mining<a class="headerlink" href="#Sequential-Pattern-Mining" title="Link to this heading">#</a></h2>
+<p>We prepare the sequence data by combining feature names with their discretized categories (e.g., <code class="docutils literal notranslate"><span class="pre">mean_power:</span> <span class="pre">low</span></code>).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sequences = []
+for index, row in binned_features.iterrows():
+    sequence = []
+    for i, value in enumerate(row):
+        feature_name = columns_to_discretize[i]
+        sequence.append(f&quot;{feature_name}: {value}&quot;)
+    sequences.append(sequence)
+</pre></div>
+</div>
+</div>
+<p>Display a sample of the sequences</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>display(sequences[:5])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[&#39;mean_power: medium&#39;,
+  &#39;peak_power: high&#39;,
+  &#39;trough_power: low&#39;,
+  &#39;variance_power: high&#39;,
+  &#39;spikeness_power: medium&#39;],
+ [&#39;mean_power: medium&#39;,
+  &#39;peak_power: high&#39;,
+  &#39;trough_power: low&#39;,
+  &#39;variance_power: high&#39;,
+  &#39;spikeness_power: medium&#39;],
+ [&#39;mean_power: low&#39;,
+  &#39;peak_power: high&#39;,
+  &#39;trough_power: low&#39;,
+  &#39;variance_power: medium&#39;,
+  &#39;spikeness_power: medium&#39;],
+ [&#39;mean_power: low&#39;,
+  &#39;peak_power: high&#39;,
+  &#39;trough_power: low&#39;,
+  &#39;variance_power: high&#39;,
+  &#39;spikeness_power: medium&#39;],
+ [&#39;mean_power: medium&#39;,
+  &#39;peak_power: high&#39;,
+  &#39;trough_power: low&#39;,
+  &#39;variance_power: high&#39;,
+  &#39;spikeness_power: medium&#39;]]
+</pre></div></div>
+</div>
+<p>The PrefixSpan algorithm is used to find frequent sequential patterns with a minimum support of 0.9.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ps = PrefixSpan(sequences)
+patterns = ps.frequent(minsup=0.9)
+</pre></div>
+</div>
+</div>
+<p>Display the top 20 patterns</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><span></span>for pattern in patterns[:20]:
+    print(pattern)
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(31322, [&#39;mean_power: medium&#39;])
+(31322, [&#39;mean_power: medium&#39;, &#39;peak_power: high&#39;])
+(31322, [&#39;mean_power: medium&#39;, &#39;peak_power: high&#39;, &#39;trough_power: low&#39;])
+(25850, [&#39;mean_power: medium&#39;, &#39;peak_power: high&#39;, &#39;trough_power: low&#39;, &#39;variance_power: high&#39;])
+(25850, [&#39;mean_power: medium&#39;, &#39;peak_power: high&#39;, &#39;trough_power: low&#39;, &#39;variance_power: high&#39;, &#39;spikeness_power: medium&#39;])
+(31322, [&#39;mean_power: medium&#39;, &#39;peak_power: high&#39;, &#39;trough_power: low&#39;, &#39;spikeness_power: medium&#39;])
+(5472, [&#39;mean_power: medium&#39;, &#39;peak_power: high&#39;, &#39;trough_power: low&#39;, &#39;variance_power: medium&#39;])
+(5472, [&#39;mean_power: medium&#39;, &#39;peak_power: high&#39;, &#39;trough_power: low&#39;, &#39;variance_power: medium&#39;, &#39;spikeness_power: medium&#39;])
+(25850, [&#39;mean_power: medium&#39;, &#39;peak_power: high&#39;, &#39;variance_power: high&#39;])
+(25850, [&#39;mean_power: medium&#39;, &#39;peak_power: high&#39;, &#39;variance_power: high&#39;, &#39;spikeness_power: medium&#39;])
+(31322, [&#39;mean_power: medium&#39;, &#39;peak_power: high&#39;, &#39;spikeness_power: medium&#39;])
+(5472, [&#39;mean_power: medium&#39;, &#39;peak_power: high&#39;, &#39;variance_power: medium&#39;])
+(5472, [&#39;mean_power: medium&#39;, &#39;peak_power: high&#39;, &#39;variance_power: medium&#39;, &#39;spikeness_power: medium&#39;])
+(31322, [&#39;mean_power: medium&#39;, &#39;trough_power: low&#39;])
+(25850, [&#39;mean_power: medium&#39;, &#39;trough_power: low&#39;, &#39;variance_power: high&#39;])
+(25850, [&#39;mean_power: medium&#39;, &#39;trough_power: low&#39;, &#39;variance_power: high&#39;, &#39;spikeness_power: medium&#39;])
+(31322, [&#39;mean_power: medium&#39;, &#39;trough_power: low&#39;, &#39;spikeness_power: medium&#39;])
+(5472, [&#39;mean_power: medium&#39;, &#39;trough_power: low&#39;, &#39;variance_power: medium&#39;])
+(5472, [&#39;mean_power: medium&#39;, &#39;trough_power: low&#39;, &#39;variance_power: medium&#39;, &#39;spikeness_power: medium&#39;])
+(25850, [&#39;mean_power: medium&#39;, &#39;variance_power: high&#39;])
+</pre></div></div>
+</div>
+</section>
+<section id="Results-and-Analysis">
+<h2>Results and Analysis<a class="headerlink" href="#Results-and-Analysis" title="Link to this heading">#</a></h2>
+<p><strong>Association Rule Results</strong></p>
+<ul class="simple">
+<li><p>Association rules reveal which feature categories often occur together or imply each other.</p></li>
+<li><p>Key metrics such as <strong>support</strong>, <strong>confidence</strong>, and <strong>lift</strong> are used to evaluate the rules.</p></li>
+</ul>
+<p><strong>Sequential Pattern Results</strong></p>
+<ul class="simple">
+<li><p>Sequential patterns show the most common sequences among feature categories, helping to identify temporal dependencies and trends.</p></li>
+</ul>
+</section>
+<section id="Conclusion">
+<h2>Conclusion<a class="headerlink" href="#Conclusion" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Association Rules:</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p>Apriori successfully identified frequent itemsets and meaningful rules.</p></li>
+<li><p>The rules provide insights into co-occurring feature behaviors.</p></li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p><strong>Sequential Patterns:</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p>PrefixSpan uncovered frequent temporal patterns, which can be leveraged to understand the sequence of events in the data.</p></li>
+</ul>
+<p>This approach demonstrates the power of feature engineering and pattern discovery for time-series data.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="dimensionality_reduction_and_clustering.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Dimensionality Reduction and Clustering</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="test_examples_of_features.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Notebook Test Example of Features</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Table-of-Contents">Table of Contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Objectives">Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Installation-and-Imports">Installation and Imports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Load-and-Preview-Data">Load and Preview Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Validate-and-Convert-the-data">Validate and Convert the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Feature-Extraction">Feature Extraction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Feature-Discretization">Feature Discretization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Association-Rule-Mining">Association Rule Mining</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Sequential-Pattern-Mining">Sequential Pattern Mining</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Results-and-Analysis">Results and Analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Conclusion">Conclusion</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/notebooks/association_rules_and_sequential_patterns.ipynb.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Łukasz Wróbel, Sławomir Put, Martyna Żur, Martyna Kramarz, Jarosław Strzelczyk, Weronika Wołowczyk, Piotr Krupiński.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
