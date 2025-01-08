@@ -83,7 +83,7 @@ Dominant
 --------
 Finds the most dominant value in a histogram representation.
 
-.. automodule:: interpreTS.core.features.histogram_dominant
+.. automodule:: interpreTS.core.features.feature_histogram_dominant
    :members:
    :undoc-members:
    :show-inheritance:
@@ -92,7 +92,7 @@ Seasonality Strength
 --------------------
 Assesses the strength of seasonality patterns in the data.
 
-.. automodule:: interpreTS.core.features.seasonality_strength
+.. automodule:: interpreTS.core.features.feature_seasonality_strength
    :members:
    :undoc-members:
    :show-inheritance:
@@ -101,7 +101,7 @@ Trend Strength
 --------------
 Measures the strength of the overall trend in the series.
 
-.. automodule:: interpreTS.core.features.trend_strength
+.. automodule:: interpreTS.core.features.feature_trend_strength
    :members:
    :undoc-members:
    :show-inheritance:
@@ -119,7 +119,7 @@ Distance to the Last Change Point
 ---------------------------------
 Measures the distance to the last change point in the time series.
 
-.. automodule:: interpreTS.core.features.distance_to_the_last_change_point
+.. automodule:: interpreTS.core.features.feature_distance_to_the_last_change_point
    :members:
    :undoc-members:
    :show-inheritance:
@@ -245,7 +245,7 @@ Variance Change
 ---------------
 Calculates the variance change over time.
 
-.. automodule:: interpreTS.core.features.variance_change
+.. automodule:: interpreTS.core.features.feature_variance_change
    :members:
    :undoc-members:
    :show-inheritance:
@@ -254,7 +254,7 @@ Variability in Sub-Periods
 --------------------------
 Measures variability within sub-periods of the time series.
 
-.. automodule:: interpreTS.core.features.variability_in_sub_periods
+.. automodule:: interpreTS.core.features.feature_variability_in_sub_periods
    :members:
    :undoc-members:
    :show-inheritance:

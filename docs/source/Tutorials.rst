@@ -8,7 +8,10 @@ Get started with these tutorials. In the next pages you can check the case study
    :titlesonly:
 
    Feature Extraction Notebook <notebooks/feature_extraction.ipynb>
+   Feature Extraction Using Dask for Large Time Series Data <notebooks/feature_extraction_dask.ipynb>
+   Streaming Feature Extraction <notebooks/streaming_feature_extraction.ipynb>
    Time-Based Aggregation with window_size and stride <notebooks/time_based_aggregation.ipynb>
+   Basic Usage <notebooks/basic_usage.ipynb>
    Feature Peak Notebook <notebooks/feature_peak.ipynb>
    Classification Notebook <notebooks/classification.ipynb>
    Regression Notebook <notebooks/regression.ipynb>
