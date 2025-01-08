@@ -82,6 +82,9 @@ class TaskManager:
             If the feature is not supported.
         """
         if feature_name in self.feature_functions:
+            params = params.copy()
+            if "window_size" in params:
+                params["window_size"] = self.window_size
             return self.feature_functions[feature_name](feature_data, **params)
         else:
             raise ValueError(f"Feature '{feature_name}' is not supported.")
@@ -214,7 +217,7 @@ class TaskManager:
 
         for _, group in grouped_data:
             group_ddf = dd.from_pandas(group, npartitions=max(1, len(group) // 1000))
-            # window_size = self.window_size if not pd.isna(self.window_size) else len(group)
+
             window_size = self._convert_window_to_observations(self.window_size, group) if not pd.isna(self.window_size) else len(group)
             stride = self._convert_window_to_observations(self.stride, group)
 

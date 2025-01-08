@@ -108,6 +108,12 @@ class FeatureExtractor:
             self.features = features if features is not None else self.DEFAULT_FEATURES_SMALL
 
         self.feature_params = feature_params if feature_params is not None else {}
+        
+        for feature_name, params in self.feature_params.items():
+            if "window_size" in params:
+                print(f"Warning: 'window_size' parameter in feature_params for feature '{feature_name}' will be ignored.")
+                del params["window_size"]
+            
         self.window_size = window_size
         self.stride = stride
         self.id_column = id_column
@@ -218,7 +224,8 @@ class FeatureExtractor:
 
         feature_columns = [self.feature_column] if self.feature_column else [col for col in data.columns if col not in {self.id_column, self.sort_column}]
         grouped_data = data.groupby(self.id_column) if self.id_column else [(None, data)]
-            
+        grouped_data = data.groupby(self.id_column) if self.id_column else [(None, data)]
+
         # TODO
         # grouped_data = self.group_data(data)
 

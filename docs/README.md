@@ -11,15 +11,15 @@
  - **Validation**: Ensures input data meets the required format and quality using built-in validators.
 
 ## Requirements
- - Python 3.8 or above
+ - Python 3.10 or above
  - `pandas==2.2.3`
- - `numpy==2.2.1`
+ - `numpy`
  - `statsmodels==0.14.4`
  - `langchain_community==0.3.14`
  - `langchain==0.3.14`
  - `openai==1.59.4`
  - `streamlit==1.41.1`
- - `scikit-learn==1.6.0`
+ - `scikit-learn`
  - `joblib==1.4.2`
  - `tqdm==4.67.1`
  - `dask==2024.12.1`
