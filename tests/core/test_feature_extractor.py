@@ -1,3 +1,4 @@
+import re
 import pytest
 import pandas as pd
 import numpy as np
@@ -17,6 +18,8 @@ def mock_feature_extractor():
     mock_task_manager._generate_tasks = MagicMock(return_value=[])
     mock_task_manager._execute_parallel = MagicMock()
     mock_task_manager._execute_sequential = MagicMock()
+    mock_task_manager._process_window = MagicMock(return_value={'id': 1, 'value': 30})
+
 
     feature_extractor = FeatureExtractor(
         features=[Features.MEAN, Features.VARIANCE],
@@ -40,6 +43,14 @@ def test_feature_extractor_initialization(mock_feature_extractor):
     assert mock_feature_extractor.window_size == 5
     assert mock_feature_extractor.stride == 1
 
+# Test window_size and stride with a valid time-based string
+def test_feature_extractor_initialization_time_based(mock_feature_extractor):
+    mock_feature_extractor.window_size = '1h'
+    mock_feature_extractor.stride = '5min'
+
+    assert mock_feature_extractor.window_size == '1h'
+    assert mock_feature_extractor.stride == '5min'
+
 # Test extract_features with empty data
 def test_extract_features_empty_data(mock_feature_extractor):
     data = pd.DataFrame()
@@ -60,6 +71,33 @@ def test_extract_features_sequential(mock_feature_extractor):
     result = mock_feature_extractor.extract_features(data, mode="sequential")
     assert isinstance(result, pd.DataFrame)
     assert len(result) == 2
+
+def test_validate_time_based_window_and_stride(mock_feature_extractor):
+    # Test with missing datetime index
+    data = pd.DataFrame({
+        'id': [1, 1, 2, 2],
+        'time': [1, 2, 1, 2],
+        'value': [10, 20, 30, 40]
+    })
+    data.set_index('time', inplace=True)
+
+    mock_feature_extractor.window_size = '1h'
+    mock_feature_extractor.stride = '5min'
+
+    grouped_data = data.groupby('id')
+
+    with pytest.raises(ValueError, match=re.escape("Time-based window_size and stride require a time-indexed DataFrame with regular frequency.")):
+        mock_feature_extractor.validate_data_frequency(grouped_data)
+
+    # Test with datetime index but no frequency
+    data.index = pd.to_datetime(data.index)
+    data.index.freq = None
+
+    grouped_data = data.groupby('id')
+
+    with pytest.raises(ValueError, match=re.escape("Data index does not have a defined frequency. Use `.resample()` to align your data.")):
+        mock_feature_extractor.validate_data_frequency(grouped_data)
+
 
 # Test group_data
 def test_group_data(mock_feature_extractor):
@@ -83,18 +121,27 @@ def test_extract_features_stream(mock_feature_extractor):
     assert len(results) == 0  # Mocked results do not yield any real features
 
 # Test add_custom_feature
-def test_add_custom_feature(mock_feature_extractor):
-    def custom_feature(data, **params):
-        return data.max() - data.min()
-
-    mock_feature_extractor.add_custom_feature(
-        name="range",
-        function=custom_feature,
-        metadata={"level": "easy", "description": "Range of values."}
+def test_add_custom_feature():
+    def custom_feature(data):
+        return data.mean()
+    extractor = FeatureExtractor()
+    data = pd.DataFrame({
+        "id": [1, 1, 2, 2],
+        "time": [1, 2, 1, 2],
+        "value": [10, 20, 30, 40]
+    })
+        
+    extractor.add_custom_feature(
+        name="custom",
+        function=custom_feature
     )
+    
+    features = extractor.extract_features(data)
 
-    assert "range" in mock_feature_extractor.feature_functions
-    assert mock_feature_extractor.feature_metadata["range"]["description"] == "Range of values."
+    
+    assert "custom" in extractor.feature_functions
+    assert not features.empty
+    assert features.columns.__len__() == FeatureExtractor.DEFAULT_FEATURES_SMALL.__len__()*3+3
 
 # Test invalid custom feature addition
 def test_add_invalid_custom_feature(mock_feature_extractor):
@@ -109,3 +156,41 @@ def test_group_features_by_interpretability(mock_feature_extractor):
     groups = mock_feature_extractor.group_features_by_interpretability()
     assert "easy" in groups
     assert isinstance(groups["easy"], list)
+
+def test_add_custom_feature_with_params():
+    def custom_feature(data, param):
+        return param
+    extractor = FeatureExtractor()
+    data = pd.DataFrame({
+        "id": [1, 1, 2, 2],
+        "time": [1, 2, 1, 2],
+        "value": [10, 20, 30, 40]
+    })
+        
+    extractor.add_custom_feature(
+        name="custom",
+        function=custom_feature,
+        params={"param": 5}
+    )
+    
+    features = extractor.extract_features(data)
+
+    
+    assert "custom" in extractor.feature_functions
+    assert extractor.feature_params["custom"] == {"param": 5}
+    assert not features.empty
+    assert features.columns.__len__() == FeatureExtractor.FOR_ML.__len__()*3 + 3
+    
+def test_create_extractor_with_feature_list():
+    extractor = FeatureExtractor(features = "forML")
+    data = pd.DataFrame({
+        "id": [1, 1, 2, 2],
+        "time": [1, 2, 1, 2],
+        "value": [10, 20, 30, 40]
+    })
+        
+    features = extractor.extract_features(data)
+    
+    assert extractor.features.__len__() == FeatureExtractor.FOR_ML.__len__()
+    assert not features.empty
+    assert features.columns.__len__() == FeatureExtractor.FOR_ML.__len__()*3

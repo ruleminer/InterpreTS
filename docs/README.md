@@ -11,20 +11,20 @@
  - **Validation**: Ensures input data meets the required format and quality using built-in validators.
 
 ## Requirements
- - Python 3.8 or above
- - `pandas>=1.1.0`
- - `numpy>=1.18.0`
- - `statsmodels`
- - `langchain_community`
- - `langchain`
- - `openai`
+ - Python 3.10 or above
+ - `pandas==2.2.3`
+ - `numpy`
+ - `statsmodels==0.14.4`
+ - `langchain_community==0.3.14`
+ - `langchain==0.3.14`
+ - `openai==1.59.4`
+ - `streamlit==1.41.1`
  - `scikit-learn`
- - `joblib`
- - `tqdm`
- - `dask`
- - `nbsphinx`
- - `myst-parser`
- - `scipy`
+ - `joblib==1.4.2`
+ - `tqdm==4.67.1`
+ - `dask==2024.12.1`
+ - `scipy==1.15.0`
+ - `pillow==11.1.0`
 
 ## Installation Guide
  Follow these steps to install InterpreTS and its dependencies:
@@ -53,6 +53,27 @@ pip install -r requirements.txt
  ```bash
 pip install .
  ```
+
+## GUI
+InterpreTS offers a user-friendly GUI to facilitate time series feature extraction and model explainability.
+
+### Accessing the GUI
+The GUI is hosted online and available at [InterpreTS GUI](https://ruleminer-interprets-interpretscoreguigui-streamlit-gui--zcpuxp.streamlit.app/). 
+
+Alternatively, you can run it locally:
+1. Navigate to the GUI directory:
+ ```bash
+cd interpreTS/core/gui
+ ```
+
+2. Launch the GUI using Streamlit:
+ ```bash
+streamlit run gui.py
+ ```
+
+### Features of the GUI
+* Feature Extraction: Easily upload time series data and extract predefined or custom features.
+* Visualization: View extracted features directly in the GUI.
 
 ## Verifying Installation - Example: Basic Feature Extraction
  Once installed, you can verify the installation by running a simple feature extraction example:
@@ -98,7 +119,6 @@ data = pd.DataFrame({
 # Initialize the FeatureExtractor
 feature_extractor = FeatureExtractor(
 features=[Features.ENTROPY],
-feature_params={Features.ENTROPY: {'bins': 2}},  # Specify parameters for entropy
 feature_column="value",
 id_column="id",
 window_size=5,  # Rolling window size

@@ -77,14 +77,14 @@ def test_execute_dask(task_manager):
 
     with patch("dask.dataframe.DataFrame.map_partitions", return_value=dask_data):
         with patch("dask.dataframe.concat", return_value=dask_data):
-            result = task_manager._execute_dask(grouped_data, feature_columns, progress_callback=None)
+            result = task_manager._execute_dask(grouped_data, feature_columns)
 
     assert result.equals(pandas_data)
 
 # Test processing a single partition for feature extraction
 def test_process_partition(task_manager):
     data = pd.DataFrame({"value": [1, 2, 3, 4, 5]})
-    result = task_manager._process_partition(data, ["value"], 3)
+    result = task_manager._process_partition(data, ["value"], 3, 1)
     assert isinstance(result, pd.DataFrame)
 
 # Test generation of tasks for feature extraction based on input data
@@ -146,3 +146,23 @@ def test_validate_feature_data_invalid(task_manager):
     data = pd.Series([np.nan, np.nan])
     with pytest.raises(ValueError, match="Data contains NaN values."):
         task_manager._validate_feature_data("mock_feature", data)
+
+# Test conversion of window size to number of observations
+def test_convert_window_to_observations(task_manager):
+    time_index = pd.date_range("2025-01-01", periods=10, freq="5min")
+    data = pd.DataFrame({"value": np.arange(10)}, index=time_index)
+
+    task_manager.window_size = '10min'
+    observations = task_manager._convert_window_to_observations(task_manager.window_size, data)
+    
+    assert observations == 2
+
+# Test conversion of stride to number of observations
+def test_convert_stride_to_observation(task_manager):
+    time_index = pd.date_range("2025-01-01", periods=10, freq="5min")
+    data = pd.DataFrame({"value": np.arange(10)}, index=time_index)
+
+    task_manager.stride = '5min'
+    observations = task_manager._convert_window_to_observations(task_manager.stride, data)
+    
+    assert observations == 1

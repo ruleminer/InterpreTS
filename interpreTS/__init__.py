@@ -18,19 +18,20 @@ Available imports:
         A function that generates human-readable descriptions for extracted features, aiding interpretability.
         
 Dependencies:
-    - pandas>=1.1.0
-    - numpy>=1.18.0
-    - statsmodels>=0.12.0
-    - langchain_community
-    - langchain 
-    - openai
-    - scikit-learn
-    - joblib
-    - tqdm
-    - dask
-    - nbsphinx
-    - myst-parser
-    - scipy
+    - pandas: 2.2.3
+    - numpy: None
+    - statsmodels: 0.14.4
+    - langchain_community: 0.3.14
+    - langchain: 0.3.14
+    - openai: 1.59.4
+    - streamlit: 1.41.1
+    - scikit-learn: None
+    - joblib: 1.4.2
+    - tqdm: 4.67.1
+    - dask: 2024.12.1
+    - scipy: 1.15.0
+    - pillow: 11.1.0
+
     
 Authors:
     - Sławomir Put,
@@ -46,29 +47,30 @@ import sys
 import logging
 from packaging import version
 
+
 # Set up logger
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger(__name__)
 
 # Check Python version
-if sys.version_info < (3, 8):
-    raise RuntimeError("interpreTS requires Python 3.8 or higher.")
+if sys.version_info < (3, 10):
+    raise RuntimeError("interpreTS requires Python 3.10 or higher.")
 
 # Check required dependencies
 required_libraries = {
-    "pandas": "1.1.0",
-    "numpy": "1.18.0",
-    "statsmodels": "0.12.0",
-    "langchain_community" : None,
-    "langchain" : None,
-    "openai" : None,
-    "scikit-learn" : None,
-    "joblib" : None,
-    "tqdm" : None,
-    "dask" : None,
-    "nbsphinx" : None,
-    "myst-parser" : None,
-    "scipy" : None
+    "pandas": "2.2.3",
+    "numpy": None,
+    "statsmodels": "0.14.4",
+    "langchain_community": "0.3.14",
+    "langchain": "0.3.14",
+    "openai": "1.59.4",
+    "streamlit": "1.41.1",
+    "scikit-learn": None,
+    "joblib": "1.4.2",
+    "tqdm": "4.67.1",
+    "dask": "2024.12.1",
+    "scipy": "1.15.0",
+    "pillow": "11.1.0"
 }
 
 for library, min_version in required_libraries.items():
@@ -86,7 +88,7 @@ from .utils.feature_loader import FeatureLoader, Features
 from .utils.data_validation import validate_time_series_data
 from .utils.data_manager import generate_feature_descriptions
 
-__version__ = "0.4.1"
+__version__ = "0.5.0"
 
 __all__ = [
     "FeatureExtractor",
@@ -94,4 +96,5 @@ __all__ = [
     "FeatureLoader",
     "validate_time_series_data",
     "generate_feature_descriptions"
+  #   "start_gui",
 ]

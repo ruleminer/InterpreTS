@@ -2,23 +2,24 @@ from setuptools import setup, find_packages
 
 setup(
     name="InterpreTS",
-    version="0.4.1",
+    version="0.5.0",
     packages=find_packages(),
     install_requires=[
-        "pandas>=1.1.0",
-        "numpy>=1.18.0",
-        "statsmodels>=0.12.0",
-        "langchain_community",
-        "langchain",
-        "openai",
+        "pandas==2.2.3",
+        "numpy",
+        "statsmodels==0.14.4",
+        "langchain_community==0.3.14",
+        "langchain==0.3.14",
+        "openai==1.59.4",
+        "streamlit==1.41.1",
         "scikit-learn",
-        "joblib",
-        "tqdm",
-        "dask",
-        "nbsphinx",
-        "myst-parser",
-        "scipy"
+        "joblib==1.4.2",
+        "tqdm==4.67.1",
+        "dask==2024.12.1",
+        "scipy==1.15.0",
+        "pillow==11.1.0"
     ],
+    
     description="Feature extraction from time series to support the creation of interpretable and explainable predictive models.",
     long_description=open("docs/README.md").read(),
     long_description_content_type="text/markdown",
@@ -35,7 +36,7 @@ setup(
         "Intended Audience :: Developers",
         "Intended Audience :: Science/Research",
     ],
-    python_requires=">=3.8",
+    python_requires=">=3.10",
     test_suite="tests",
     keywords="time series feature extraction interpretability explainability machine learning",
     project_urls={

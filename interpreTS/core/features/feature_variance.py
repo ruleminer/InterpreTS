@@ -1,8 +1,7 @@
 import pandas as pd
 import numpy as np
-from interpreTS.utils.data_validation import validate_time_series_data
 
-def calculate_variance(data, ddof=1):
+def calculate_variance(data, ddof=0):
     """
     Calculate the variance value of a time series with specified degrees of freedom.
     
