@@ -10,7 +10,7 @@ setup(
         "statsmodels==0.14.4",
         "langchain_community==0.3.14",
         "langchain==0.3.14",
-        "openai==1.59.4",
+        "openai==1.59.8",
         "streamlit==1.41.1",
         "scikit-learn",
         "joblib==1.4.2",
