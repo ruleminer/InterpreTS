@@ -9,7 +9,7 @@ setup(
         "numpy",
         "statsmodels==0.14.4",
         "langchain_community==0.3.14",
-        "langchain==0.3.14",
+        "langchain==0.3.17",
         "openai==1.59.4",
         "streamlit==1.41.1",
         "scikit-learn",
