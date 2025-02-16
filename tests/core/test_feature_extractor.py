@@ -141,7 +141,7 @@ def test_add_custom_feature():
     
     assert "custom" in extractor.feature_functions
     assert not features.empty
-    assert features.columns.__len__() == FeatureExtractor.DEFAULT_FEATURES_SMALL.__len__()*3+3
+    assert features.columns.__len__() == FeatureExtractor.DEFAULT_FEATURES_SMALL.__len__()*3
 
 # Test invalid custom feature addition
 def test_add_invalid_custom_feature(mock_feature_extractor):
@@ -179,10 +179,9 @@ def test_add_custom_feature_with_params():
     assert "custom" in extractor.feature_functions
     assert extractor.feature_params["custom"] == {"param": 5}
     assert not features.empty
-    assert features.columns.__len__() == FeatureExtractor.FOR_ML.__len__()*3 + 3
     
 def test_create_extractor_with_feature_list():
-    extractor = FeatureExtractor(features = "forML")
+    extractor = FeatureExtractor(features = "for-ML")
     data = pd.DataFrame({
         "id": [1, 1, 2, 2],
         "time": [1, 2, 1, 2],

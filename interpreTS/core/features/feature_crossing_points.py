@@ -35,7 +35,7 @@ def calculate_crossing_points(data):
     mean_value = np.mean(data)
 
     # If all values are above or all are below the mean, return no crossings
-    if np.all(data > mean_value) or np.all(data < mean_value):
+    if np.all(data >= mean_value) or np.all(data <= mean_value):
         return {'crossing_count': 0, 'crossing_points': []}
 
     crossing_points = []
