@@ -11,18 +11,18 @@ def test_crossing_points_basic_case():
     assert result == expected, f"Expected {expected}, got {result}"
 
 
-# Test when all data points are above the mean
+# Test when all data points are the same the mean
 def test_crossing_points_no_crossings_all_above():
-    data = pd.Series([2, 3, 4, 5])
+    data = pd.Series([10, 10, 10, 10]) 
     result = calculate_crossing_points(data)
     expected = {'crossing_count': 0, 'crossing_points': []}
     assert result == expected, f"Expected {expected}, got {result}"
 
 # Test when all data points are below the mean
 def test_crossing_points_no_crossings_all_below():
-    data = pd.Series([-5, -4, -3, -2])
+    data = pd.Series([2, 2, 2, 20]) 
     result = calculate_crossing_points(data)
-    expected = {'crossing_count': 0, 'crossing_points': []}
+    expected = {'crossing_count': 1, 'crossing_points': [3]}
     assert result == expected, f"Expected {expected}, got {result}"
 
 
