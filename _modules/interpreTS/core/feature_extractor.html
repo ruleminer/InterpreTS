@@ -1,0 +1,853 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>interpreTS.core.feature_extractor &#8212; InterpreTS 0.5.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=1dd76d02"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/interpreTS/core/feature_extractor';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">InterpreTS 0.5.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../Introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../Feature_Extractors.html">
+    Feature Extractors
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../Tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../API_Documentation.html">
+    API Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../gui.html">
+    Graphical User Interface (GUI)
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../Introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../Feature_Extractors.html">
+    Feature Extractors
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../Tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../API_Documentation.html">
+    API Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../gui.html">
+    Graphical User Interface (GUI)
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">interpreTS.core.feature_extractor</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for interpreTS.core.feature_extractor</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pandas.tseries.frequencies</span><span class="w"> </span><span class="kn">import</span> <span class="n">to_offset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..utils.feature_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">Features</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..utils.data_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_metadata</span><span class="p">,</span> <span class="n">load_feature_functions</span><span class="p">,</span> <span class="n">load_validation_requirements</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..utils.task_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TaskManager</span>
+
+<div class="viewcode-block" id="FeatureExtractor">
+<a class="viewcode-back" href="../../../interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">FeatureExtractor</span><span class="p">:</span>
+    <span class="n">DEFAULT_FEATURES_SMALL</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">LENGTH</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">MEAN</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">VARIANCE</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">STABILITY</span><span class="p">,</span>
+        <span class="n">Features</span><span class="o">.</span><span class="n">ENTROPY</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">SPIKENESS</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">SEASONALITY_STRENGTH</span>
+    <span class="p">]</span>
+    
+    <span class="n">DEFAULT_FEATURES_BIG</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Features</span><span class="o">.</span><span class="n">ABSOLUTE_ENERGY</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">BINARIZE_MEAN</span><span class="p">,</span>
+    <span class="n">Features</span><span class="o">.</span><span class="n">CHANGE_IN_VARIANCE</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">CROSSING_POINTS</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">DISTANCE_TO_LAST_TREND_CHANGE</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">DOMINANT</span><span class="p">,</span>
+    <span class="n">Features</span><span class="o">.</span><span class="n">ENTROPY</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">FLAT_SPOTS</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">HETEROGENEITY</span><span class="p">,</span>
+    <span class="n">Features</span><span class="o">.</span><span class="n">LINEARITY</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">LENGTH</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">MEAN</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">MISSING_POINTS</span><span class="p">,</span>
+    <span class="n">Features</span><span class="o">.</span><span class="n">PEAK</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">SIGNIFICANT_CHANGES</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">SPIKENESS</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">STABILITY</span><span class="p">,</span>
+    <span class="n">Features</span><span class="o">.</span><span class="n">STD_1ST_DER</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">TROUGH</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">VARIANCE</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">MEAN_CHANGE</span><span class="p">,</span>
+    <span class="n">Features</span><span class="o">.</span><span class="n">SEASONALITY_STRENGTH</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">TREND_STRENGTH</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">CHANGE_IN_VARIANCE</span>
+    <span class="p">]</span>
+    
+    <span class="n">FEATURES_ALL</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Features</span><span class="o">.</span><span class="n">ABOVE_9TH_DECILE</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">BELOW_1ST_DECILE</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">ABSOLUTE_ENERGY</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">BINARIZE_MEAN</span><span class="p">,</span>
+    <span class="n">Features</span><span class="o">.</span><span class="n">CHANGE_IN_VARIANCE</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">CROSSING_POINTS</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">DISTANCE_TO_LAST_TREND_CHANGE</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">DOMINANT</span><span class="p">,</span>
+    <span class="n">Features</span><span class="o">.</span><span class="n">ENTROPY</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">FLAT_SPOTS</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">HETEROGENEITY</span><span class="p">,</span>
+    <span class="n">Features</span><span class="o">.</span><span class="n">LINEARITY</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">LENGTH</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">MEAN</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">MISSING_POINTS</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">OUTLIERS_IQR</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">OUTLIERS_STD</span><span class="p">,</span>
+    <span class="n">Features</span><span class="o">.</span><span class="n">PEAK</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">SIGNIFICANT_CHANGES</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">SPIKENESS</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">STABILITY</span><span class="p">,</span>
+    <span class="n">Features</span><span class="o">.</span><span class="n">STD_1ST_DER</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">TROUGH</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">VARIANCE</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">MEAN_CHANGE</span><span class="p">,</span>
+    <span class="n">Features</span><span class="o">.</span><span class="n">SEASONALITY_STRENGTH</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">TREND_STRENGTH</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">VARIABILITY_IN_SUB_PERIODS</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">CHANGE_IN_VARIANCE</span>
+    <span class="p">]</span>
+
+    <span class="n">FOR_ML</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Features</span><span class="o">.</span><span class="n">ABSOLUTE_ENERGY</span><span class="p">,</span><span class="n">Features</span><span class="o">.</span><span class="n">BINARIZE_MEAN</span><span class="p">,</span><span class="n">Features</span><span class="o">.</span><span class="n">DOMINANT</span><span class="p">,</span><span class="n">Features</span><span class="o">.</span><span class="n">ENTROPY</span><span class="p">,</span><span class="n">Features</span><span class="o">.</span><span class="n">FLAT_SPOTS</span><span class="p">,</span>
+    <span class="n">Features</span><span class="o">.</span><span class="n">HETEROGENEITY</span><span class="p">,</span><span class="n">Features</span><span class="o">.</span><span class="n">LINEARITY</span><span class="p">,</span><span class="n">Features</span><span class="o">.</span><span class="n">LENGTH</span><span class="p">,</span><span class="n">Features</span><span class="o">.</span><span class="n">MEAN</span><span class="p">,</span><span class="n">Features</span><span class="o">.</span><span class="n">MISSING_POINTS</span><span class="p">,</span><span class="n">Features</span><span class="o">.</span><span class="n">PEAK</span><span class="p">,</span>
+    <span class="n">Features</span><span class="o">.</span><span class="n">SIGNIFICANT_CHANGES</span><span class="p">,</span><span class="n">Features</span><span class="o">.</span><span class="n">SPIKENESS</span><span class="p">,</span><span class="n">Features</span><span class="o">.</span><span class="n">STABILITY</span><span class="p">,</span><span class="n">Features</span><span class="o">.</span><span class="n">STD_1ST_DER</span><span class="p">,</span><span class="n">Features</span><span class="o">.</span><span class="n">TROUGH</span><span class="p">,</span><span class="n">Features</span><span class="o">.</span><span class="n">VARIANCE</span><span class="p">,</span>
+    <span class="n">Features</span><span class="o">.</span><span class="n">SEASONALITY_STRENGTH</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">TREND_STRENGTH</span>
+    <span class="p">]</span>
+    
+    <span class="n">CAN_USE_NAN</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Features</span><span class="o">.</span><span class="n">MISSING_POINTS</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">PEAK</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">SPIKENESS</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">TROUGH</span><span class="p">,</span> <span class="n">Features</span><span class="o">.</span><span class="n">SEASONALITY_STRENGTH</span>
+    <span class="p">]</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">feature_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">id_column</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sort_column</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">feature_column</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">group_by</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the FeatureExtractor with a list of features to calculate and optional parameters for each feature.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        features : list of Features constants or str, optional</span>
+<span class="sd">            A list of features to calculate, or a keyword (&#39;small&#39;, &#39;big&#39;, &#39;all&#39;, &#39;for-ML&#39;, &#39;can-use-nan&#39;, &#39;empty&#39;).</span>
+<span class="sd">            Default is None, which calculates the small default feature set.</span>
+<span class="sd">        feature_params : dict, optional</span>
+<span class="sd">            Parameters for specific features, where keys are feature names and values are dicts of parameters.</span>
+<span class="sd">        window_size : int or str, optional</span>
+<span class="sd">            The size of the window for feature extraction. </span>
+<span class="sd">            - np.nan (entire series is used as a single window),</span>
+<span class="sd">            - int (number of samples in the window),</span>
+<span class="sd">            - str (time-based format).</span>
+<span class="sd">            Default is np.nan.</span>
+<span class="sd">            If a string is provided, it must follow a fixed frequency format. </span>
+<span class="sd">            Supported formats include:</span>
+<span class="sd">                - &#39;1s&#39; for 1 second</span>
+<span class="sd">                - &#39;5min&#39; for 5 minutes</span>
+<span class="sd">                - &#39;0.5h&#39; for 30 minutes</span>
+<span class="sd">                - &#39;1h&#39; for 1 hour</span>
+<span class="sd">                - &#39;1d&#39; for 1 day</span>
+<span class="sd">                - A combination of time units, e.g., &#39;1h15min&#39; for 1 hour and 15 minutes.</span>
+<span class="sd">            Only fixed frequencies are allowed. The window size cannot be a non-fixed frequency, such as business days (&#39;1B&#39;) or other irregular intervals.</span>
+<span class="sd">        stride : int or str, optional</span>
+<span class="sd">            The step size for moving the window. Can be:</span>
+<span class="sd">            - int (number of samples to shift),</span>
+<span class="sd">            - str (time-based format).</span>
+<span class="sd">            Default is 1.</span>
+<span class="sd">            If a string is provided, it must follow the same fixed frequency format as the `window_size`.</span>
+<span class="sd">        id_column : str, optional</span>
+<span class="sd">            The name of the column used to identify different time series (optional).</span>
+<span class="sd">        sort_column : str, optional</span>
+<span class="sd">            The column to sort by before feature extraction (optional).</span>
+<span class="sd">        feature_column : str or None, optional</span>
+<span class="sd">            The column containing feature data. If None, features are calculated for all columns except ID and sort columns.</span>
+<span class="sd">        group_by : str or None, optional</span>
+<span class="sd">            Column name to group by. If None, no grouping is performed.</span>
+<span class="sd">        Raises</span>
+<span class="sd">        -------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If any parameter is invalid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_by</span> <span class="o">=</span> <span class="n">group_by</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">features</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;default-small&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_FEATURES_SMALL</span>
+            <span class="k">elif</span> <span class="n">features</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;default-big&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_FEATURES_BIG</span>
+            <span class="k">elif</span> <span class="n">features</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;all&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FEATURES_ALL</span>
+            <span class="k">elif</span> <span class="n">features</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;for-ml&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FOR_ML</span>
+            <span class="k">elif</span> <span class="n">features</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;can-use-nan&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FOR_ML</span>
+            <span class="k">elif</span> <span class="n">features</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;empty&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid feature keyword &#39;</span><span class="si">{</span><span class="n">features</span><span class="si">}</span><span class="s2">&#39;. Accepted values are: &#39;default-small&#39;, &#39;default-big&#39;, &#39;all&#39;, &#39;for-ML&#39;, &#39;can-use-nan&#39;, &#39;empty&#39;.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="n">features</span> <span class="k">if</span> <span class="n">features</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_FEATURES_SMALL</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_params</span> <span class="o">=</span> <span class="n">feature_params</span> <span class="k">if</span> <span class="n">feature_params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
+        
+        <span class="k">for</span> <span class="n">feature_name</span><span class="p">,</span> <span class="n">params</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="s2">&quot;window_size&quot;</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: &#39;window_size&#39; parameter in feature_params for feature &#39;</span><span class="si">{</span><span class="n">feature_name</span><span class="si">}</span><span class="s2">&#39; will be ignored.&quot;</span><span class="p">)</span>
+                <span class="k">del</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;window_size&quot;</span><span class="p">]</span>
+            
+        <span class="bp">self</span><span class="o">.</span><span class="n">window_size</span> <span class="o">=</span> <span class="n">window_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stride</span> <span class="o">=</span> <span class="n">stride</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_column</span> <span class="o">=</span> <span class="n">id_column</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sort_column</span> <span class="o">=</span> <span class="n">sort_column</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_column</span> <span class="o">=</span> <span class="n">feature_column</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_functions</span> <span class="o">=</span> <span class="n">load_feature_functions</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validation_requirements</span> <span class="o">=</span> <span class="n">load_validation_requirements</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">task_manager</span> <span class="o">=</span> <span class="n">TaskManager</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">feature_functions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">feature_params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">validation_requirements</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">task_manager</span><span class="o">.</span><span class="n">_validate_parameters</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_column</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort_column</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_metadata</span> <span class="o">=</span> <span class="n">load_metadata</span><span class="p">()</span>
+
+<div class="viewcode-block" id="FeatureExtractor.validate_data_frequency">
+<a class="viewcode-back" href="../../../interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.validate_data_frequency">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_data_frequency</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grouped_data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Validate that data has a consistent and defined frequency if window_size or stride are time-based.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : pd.DataFrame</span>
+<span class="sd">            The time series data to validate.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If data frequency is not defined or inconsistent.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window_size</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">grouped_data</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;Time-based window_size and stride require a time-indexed DataFrame with regular frequency.&quot;</span>
+                    <span class="p">)</span>                
+                <span class="k">if</span> <span class="n">group</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">freq</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">group</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+                        <span class="n">inferred_freq</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">inferred_freq</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">infer_freq</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">inferred_freq</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                            <span class="s2">&quot;Data index does not have a defined frequency. Use `.resample()` to align your data.&quot;</span>
+                        <span class="p">)</span>
+                    <span class="n">group</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">freq</span> <span class="o">=</span> <span class="n">inferred_freq</span></div>
+
+    
+<div class="viewcode-block" id="FeatureExtractor.head">
+<a class="viewcode-back" href="../../../interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.head">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">head</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features_df</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the first n rows of the resulting DataFrame from the extract_features function.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        features_df : pd.DataFrame</span>
+<span class="sd">            The resulting DataFrame from the extract_features function.</span>
+<span class="sd">        n : int, optional (default 5)</span>
+<span class="sd">            The number of rows to return. If n is negative, returns all rows except the last |n| rows.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            The first n rows of the DataFrame.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">features_df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input must be a DataFrame.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">features_df</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: Only </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">features_df</span><span class="p">)</span><span class="si">}</span><span class="s2"> rows available in DataFrame.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">features_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="p">)</span></div>
+
+            
+<div class="viewcode-block" id="FeatureExtractor.extract_features">
+<a class="viewcode-back" href="../../../interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.extract_features">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">extract_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">progress_callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;sequential&#39;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract features from a time series dataset.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : pd.DataFrame or pd.Series</span>
+<span class="sd">            The time series data for which features are to be extracted.</span>
+<span class="sd">        progress_callback : function, optional</span>
+<span class="sd">            A function to report progress, which takes a single argument: progress percentage (0-100).</span>
+<span class="sd">        mode : str, optional</span>
+<span class="sd">            The mode of processing. Can be &#39;parallel&#39; for multi-threaded processing</span>
+<span class="sd">            or &#39;sequential&#39; for single-threaded processing with real-time progress reporting.</span>
+<span class="sd">        n_jobs : int, optional</span>
+<span class="sd">            The number of jobs (processes) to run in parallel. Default is -1 (use all available CPUs).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            A DataFrame containing calculated features for each window.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;parallel&#39;</span><span class="p">,</span> <span class="s1">&#39;sequential&#39;</span><span class="p">,</span> <span class="s1">&#39;dask&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid mode &#39;</span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2">&#39;. Accepted values are: [&#39;parallel&#39;, &#39;sequential&#39;]&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_column</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">feature_column</span> <span class="o">=</span> <span class="s1">&#39;value&#39;</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning: Input data is empty. Returning an empty DataFrame.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort_column</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sort_column</span><span class="p">)</span>
+
+        <span class="n">feature_columns</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_column</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_column</span> <span class="k">else</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id_column</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort_column</span><span class="p">}]</span>
+        <span class="n">grouped_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_column</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_column</span> <span class="k">else</span> <span class="p">[(</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="p">)]</span>
+        <span class="n">grouped_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_column</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_column</span> <span class="k">else</span> <span class="p">[(</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="p">)]</span>
+
+        <span class="c1"># TODO</span>
+        <span class="c1"># grouped_data = self.group_data(data)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">validate_data_frequency</span><span class="p">(</span><span class="n">grouped_data</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;dask&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_manager</span><span class="o">.</span><span class="n">_execute_dask</span><span class="p">(</span><span class="n">grouped_data</span><span class="p">,</span> <span class="n">feature_columns</span><span class="p">)</span>
+
+        <span class="n">tasks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_manager</span><span class="o">.</span><span class="n">_generate_tasks</span><span class="p">(</span><span class="n">grouped_data</span><span class="p">,</span> <span class="n">feature_columns</span><span class="p">)</span>
+        <span class="n">total_steps</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tasks</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;parallel&#39;</span><span class="p">:</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_manager</span><span class="o">.</span><span class="n">_execute_parallel</span><span class="p">(</span><span class="n">tasks</span><span class="p">,</span> <span class="n">n_jobs</span><span class="p">,</span> <span class="n">progress_callback</span><span class="p">,</span> <span class="n">total_steps</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_manager</span><span class="o">.</span><span class="n">_execute_sequential</span><span class="p">(</span><span class="n">tasks</span><span class="p">,</span> <span class="n">progress_callback</span><span class="p">,</span> <span class="n">total_steps</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="FeatureExtractor.group_data">
+<a class="viewcode-back" href="../../../interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.group_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">group_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Group data based on the group_by column.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : pd.DataFrame</span>
+<span class="sd">            Input data.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        iterable</span>
+<span class="sd">            Grouped data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_by</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_by</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="p">)]</span></div>
+
+    
+<div class="viewcode-block" id="FeatureExtractor.extract_features_stream">
+<a class="viewcode-back" href="../../../interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.extract_features_stream">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">extract_features_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_stream</span><span class="p">,</span> <span class="n">progress_callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract features from a stream of time series data.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data_stream : iterable</span>
+<span class="sd">            An iterable that yields incoming data points as dictionaries with keys corresponding to column names.</span>
+<span class="sd">        progress_callback : function, optional</span>
+<span class="sd">            A function to report progress, which takes a single argument: the total number of processed points.</span>
+
+<span class="sd">        Yields</span>
+<span class="sd">        ------</span>
+<span class="sd">        dict</span>
+<span class="sd">            A dictionary containing the calculated features for the current window.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_column</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_column</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Feature column and ID column must be specified for streaming mode.&quot;</span><span class="p">)</span>
+
+        <span class="n">buffers</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">total_points</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">time_based_window</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window_size</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">time_based_window</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort_column</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;A &#39;sort_column&#39; must be specified when using a time-based window.&quot;</span><span class="p">)</span>
+            
+            <span class="n">data_stream</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">data_stream</span><span class="p">)</span>
+        
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Check if sort_column is datetime-based</span>
+                <span class="n">sample_point</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">data_stream</span><span class="p">)</span>  <span class="c1"># Get the first data point to check format</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">sample_point</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sort_column</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;coerce&#39;</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Column &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">sort_column</span><span class="si">}</span><span class="s2">&#39; does not contain valid datetime values.&quot;</span><span class="p">)</span>
+                <span class="c1"># Put the sample back into the generator stream</span>
+                <span class="n">data_stream</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([</span><span class="n">sample_point</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">data_stream</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in validating time-based column: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">window_offset</span> <span class="o">=</span> <span class="n">to_offset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window_size</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid time-based window_size format: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">window_size</span><span class="si">}</span><span class="s2">. Supported formats are for example: &#39;1s&#39;, &#39;5min&#39;, &#39;1h&#39;.&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">new_point</span> <span class="ow">in</span> <span class="n">data_stream</span><span class="p">:</span>
+            <span class="n">total_points</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">series_id</span> <span class="o">=</span> <span class="n">new_point</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id_column</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">series_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">buffers</span><span class="p">:</span>
+                <span class="n">buffers</span><span class="p">[</span><span class="n">series_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="n">buffers</span><span class="p">[</span><span class="n">series_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_point</span><span class="p">)</span>
+
+            <span class="c1"># Handle time-based windows</span>
+            <span class="k">if</span> <span class="n">time_based_window</span><span class="p">:</span>
+                <span class="c1"># Convert buffer to a DataFrame and check time range</span>
+                <span class="n">buffer_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">buffers</span><span class="p">[</span><span class="n">series_id</span><span class="p">])</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">buffer_df</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># Ensure at least two points to calculate a range</span>
+                    <span class="n">start_time</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">buffer_df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sort_column</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="n">end_time</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">buffer_df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sort_column</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">window_offset</span><span class="p">:</span>
+                        <span class="c1"># Extract features for the current buffer</span>
+                        <span class="n">feature_columns</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_column</span><span class="p">]</span>
+                        <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_manager</span><span class="o">.</span><span class="n">_process_window</span><span class="p">(</span><span class="n">buffer_df</span><span class="p">,</span> <span class="n">feature_columns</span><span class="p">)</span>
+                        <span class="n">features</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">series_id</span>
+                        <span class="k">yield</span> <span class="n">features</span>
+                        <span class="n">buffers</span><span class="p">[</span><span class="n">series_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">buffers</span><span class="p">[</span><span class="n">series_id</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span>  <span class="c1"># Remove oldest point</span>
+
+            <span class="c1"># Handle numeric windows</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">buffers</span><span class="p">[</span><span class="n">series_id</span><span class="p">])</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_size</span><span class="p">:</span>
+                    <span class="n">buffers</span><span class="p">[</span><span class="n">series_id</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">buffers</span><span class="p">[</span><span class="n">series_id</span><span class="p">])</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_size</span><span class="p">:</span>
+                    <span class="n">buffer_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">buffers</span><span class="p">[</span><span class="n">series_id</span><span class="p">])</span>
+                    <span class="n">feature_columns</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_column</span><span class="p">]</span>
+
+                    <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_manager</span><span class="o">.</span><span class="n">_process_window</span><span class="p">(</span><span class="n">buffer_df</span><span class="p">,</span> <span class="n">feature_columns</span><span class="p">)</span>
+                    <span class="n">features</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">series_id</span>
+                    <span class="k">yield</span> <span class="n">features</span>
+
+            <span class="k">if</span> <span class="n">progress_callback</span><span class="p">:</span>
+                <span class="n">progress_callback</span><span class="p">(</span><span class="n">total_points</span><span class="p">)</span></div>
+
+            
+<div class="viewcode-block" id="FeatureExtractor.group_features_by_interpretability">
+<a class="viewcode-back" href="../../../interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.group_features_by_interpretability">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">group_features_by_interpretability</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Group features by their interpretability levels.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            A dictionary where keys are interpretability levels (&#39;easy&#39;, &#39;moderate&#39;, &#39;advanced&#39;),</span>
+<span class="sd">            and values are lists of feature names.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">groups</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;easy&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;moderate&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;advanced&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="k">for</span> <span class="n">feature_name</span><span class="p">,</span> <span class="n">metadata</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_metadata</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">level</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span>
+            <span class="n">groups</span><span class="p">[</span><span class="n">level</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feature_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">groups</span></div>
+
+
+<div class="viewcode-block" id="FeatureExtractor.add_custom_feature">
+<a class="viewcode-back" href="../../../interpreTS.core.html#interpreTS.core.feature_extractor.FeatureExtractor.add_custom_feature">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_custom_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a custom feature to the FeatureExtractor with optional parameters.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : str</span>
+<span class="sd">            The name of the custom feature.</span>
+<span class="sd">        function : callable</span>
+<span class="sd">            A function that computes the feature. It should accept a Pandas Series and optional parameters as input.</span>
+<span class="sd">        metadata : dict, optional</span>
+<span class="sd">            A dictionary containing metadata about the feature, such as its interpretability level and description.</span>
+<span class="sd">            - level (str): Interpretability level (&#39;easy&#39;, &#39;moderate&#39;, &#39;advanced&#39;).</span>
+<span class="sd">            - description (str): Description of the feature.</span>
+<span class="sd">        params : dict, optional</span>
+<span class="sd">            A dictionary of parameters to be passed to the feature function when it is executed.</span>
+<span class="sd">            Example:</span>
+<span class="sd">            {</span>
+<span class="sd">                &#39;level&#39;: &#39;easy&#39; | &#39;moderate&#39; | &#39;advanced&#39;,</span>
+<span class="sd">                &#39;description&#39;: &#39;Description of the feature.&#39;</span>
+<span class="sd">            }</span>
+
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the feature name already exists or the function is not callable.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_local_feature_functions&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">feature_functions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_functions</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">feature_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_metadata</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">feature_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_params</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_functions</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; already exists.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="n">function</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The provided function is not callable.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_functions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_params</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span> <span class="ow">or</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="n">metadata</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;level&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">metadata</span> <span class="ow">or</span> <span class="s1">&#39;description&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">metadata</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Metadata must include &#39;level&#39; and &#39;description&#39;.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">feature_metadata</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">metadata</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Custom feature &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; added successfully.&quot;</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Łukasz Wróbel, Sławomir Put, Martyna Żur, Martyna Kramarz, Jarosław Strzelczyk, Weronika Wołowczyk, Piotr Krupiński.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
