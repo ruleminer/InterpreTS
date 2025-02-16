@@ -8,7 +8,7 @@ setup(
         "pandas==2.2.3",
         "numpy",
         "statsmodels==0.14.4",
-        "langchain_community==0.3.14",
+        "langchain_community==0.3.17",
         "langchain==0.3.14",
         "openai==1.59.4",
         "streamlit==1.41.1",
