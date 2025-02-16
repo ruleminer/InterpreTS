@@ -357,71 +357,10 @@
 <section id="convert-to-data-series-functions">
 <h2>Convert to Data Series Functions<a class="headerlink" href="#convert-to-data-series-functions" title="Link to this heading">#</a></h2>
 <p>This module provides utilities for converting various data formats into time-series compatible structures. These utilities ensure the data is properly formatted and ready for analysis.</p>
-<dl class="py function" id="module-interpreTS.utils.data_conversion">
-<dt class="sig sig-object py" id="interpreTS.utils.data_conversion.convert_to_time_series">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.utils.data_conversion.</span></span><span class="sig-name descname"><span class="pre">convert_to_time_series</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/utils/data_conversion.html#convert_to_time_series"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.utils.data_conversion.convert_to_time_series" title="Link to this definition">#</a></dt>
-<dd><p>Convert input data to a TimeSeriesData object.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>pd.DataFrame</em><em>, </em><em>pd.Series</em><em>, or </em><em>np.ndarray</em>) – The data to be converted into a TimeSeriesData object.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of TimeSeriesData wrapping the input data.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="interpreTS.core.html#interpreTS.core.time_series_data.TimeSeriesData" title="interpreTS.core.time_series_data.TimeSeriesData">TimeSeriesData</a></p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>TypeError</strong> – If the input data is not of type pd.DataFrame, pd.Series, or np.ndarray.</p></li>
-<li><p><strong>ValueError</strong> – If the input data is empty or has invalid dimensions.</p></li>
-</ul>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ts_data</span> <span class="o">=</span> <span class="n">convert_to_time_series</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
 </section>
 <section id="data-manager">
 <h2>Data Manager<a class="headerlink" href="#data-manager" title="Link to this heading">#</a></h2>
 <p>This module handles operations related to managing metadata, feature functions, and validation requirements necessary for extracting features from time-series data.</p>
-<dl class="py function" id="module-interpreTS.utils.data_manager">
-<dt class="sig sig-object py" id="interpreTS.utils.data_manager.generate_feature_descriptions">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.utils.data_manager.</span></span><span class="sig-name descname"><span class="pre">generate_feature_descriptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extracted_features</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/utils/data_manager.html#generate_feature_descriptions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.utils.data_manager.generate_feature_descriptions" title="Link to this definition">#</a></dt>
-<dd><p>Generate textual descriptions for extracted features.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>extracted_features</strong> (<em>dict</em>) – A dictionary where keys are feature names and values are their calculated values.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A dictionary where keys are feature names and values are textual descriptions.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="interpreTS.utils.data_manager.load_feature_functions">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.utils.data_manager.</span></span><span class="sig-name descname"><span class="pre">load_feature_functions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/utils/data_manager.html#load_feature_functions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.utils.data_manager.load_feature_functions" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="interpreTS.utils.data_manager.load_metadata">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.utils.data_manager.</span></span><span class="sig-name descname"><span class="pre">load_metadata</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/utils/data_manager.html#load_metadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.utils.data_manager.load_metadata" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="interpreTS.utils.data_manager.load_validation_requirements">
-<span class="sig-prename descclassname"><span class="pre">interpreTS.utils.data_manager.</span></span><span class="sig-name descname"><span class="pre">load_validation_requirements</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/interpreTS/utils/data_manager.html#load_validation_requirements"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#interpreTS.utils.data_manager.load_validation_requirements" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
 </section>
 <section id="data-validation">
 <h2>Data Validation<a class="headerlink" href="#data-validation" title="Link to this heading">#</a></h2>
@@ -779,17 +718,8 @@ parameters such as window size, stride, and specific feature functions.</p>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convert-to-data-series-functions">Convert to Data Series Functions</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.utils.data_conversion.convert_to_time_series"><code class="docutils literal notranslate"><span class="pre">convert_to_time_series()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-manager">Data Manager</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.utils.data_manager.generate_feature_descriptions"><code class="docutils literal notranslate"><span class="pre">generate_feature_descriptions()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.utils.data_manager.load_feature_functions"><code class="docutils literal notranslate"><span class="pre">load_feature_functions()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.utils.data_manager.load_metadata"><code class="docutils literal notranslate"><span class="pre">load_metadata()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.utils.data_manager.load_validation_requirements"><code class="docutils literal notranslate"><span class="pre">load_validation_requirements()</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convert-to-data-series-functions">Convert to Data Series Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-manager">Data Manager</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-validation">Data Validation</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreTS.utils.data_validation.validate_time_series_data"><code class="docutils literal notranslate"><span class="pre">validate_time_series_data()</span></code></a></li>
 </ul>
