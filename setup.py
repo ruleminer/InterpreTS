@@ -15,7 +15,7 @@ setup(
         "scikit-learn",
         "joblib==1.4.2",
         "tqdm==4.67.1",
-        "dask==2024.12.1",
+        "dask==2025.2.0",
         "scipy==1.15.1",
         "pillow==11.1.0"
     ],
