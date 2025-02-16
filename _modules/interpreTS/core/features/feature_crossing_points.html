@@ -378,7 +378,7 @@
     <span class="n">mean_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
     <span class="c1"># If all values are above or all are below the mean, return no crossings</span>
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">data</span> <span class="o">&gt;</span> <span class="n">mean_value</span><span class="p">)</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">data</span> <span class="o">&lt;</span> <span class="n">mean_value</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">data</span> <span class="o">&gt;=</span> <span class="n">mean_value</span><span class="p">)</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">data</span> <span class="o">&lt;=</span> <span class="n">mean_value</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;crossing_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;crossing_points&#39;</span><span class="p">:</span> <span class="p">[]}</span>
 
     <span class="n">crossing_points</span> <span class="o">=</span> <span class="p">[]</span>
