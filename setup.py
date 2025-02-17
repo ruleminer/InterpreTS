@@ -11,7 +11,7 @@ setup(
         "langchain_community==0.3.14",
         "langchain==0.3.14",
         "openai==1.59.4",
-        "streamlit==1.41.1",
+        "streamlit==1.42.0",
         "scikit-learn",
         "joblib==1.4.2",
         "tqdm==4.67.1",
